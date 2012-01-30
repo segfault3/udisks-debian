@@ -1,0 +1,6 @@
+udisks2 (1.90.0-0ubuntu1~ppa3) precise; urgency=low
+
+  * Initial release. Packaging based on udisks, thanks to Ayan George for
+    helping with the packaging!
+
+ -- Martin Pitt <martin.pitt@ubuntu.com>  Mon, 30 Jan 2012 12:03:21 +0100
