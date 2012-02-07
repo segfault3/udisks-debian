@@ -1,4 +1,4 @@
-AC_INIT([udisks],[1.90.0],[http://bugs.freedesktop.org/enter_bug.cgi?product=udisks],[udisks])
+AC_INIT([udisks],[1.91.0],[http://bugs.freedesktop.org/enter_bug.cgi?product=udisks],[udisks])
 
 AM_INIT_AUTOMAKE([1.9 foreign dist-bzip2 no-dist-gzip])
 AC_CONFIG_SRCDIR([src])
@@ -37,11 +37,11 @@ PKG_CHECK_MODULES(GUDEV, [gudev-1.0 >= 147])
 AC_SUBST(GUDEV_CFLAGS)
 AC_SUBST(GUDEV_LIBS)
 
-PKG_CHECK_MODULES(GLIB, [glib-2.0 >= 2.31.0])
+PKG_CHECK_MODULES(GLIB, [glib-2.0 >= 2.31.13])
 AC_SUBST(GLIB_CFLAGS)
 AC_SUBST(GLIB_LIBS)
 
-PKG_CHECK_MODULES(GIO, [gio-unix-2.0 >= 2.31.0])
+PKG_CHECK_MODULES(GIO, [gio-unix-2.0 >= 2.31.13])
 AC_SUBST(GIO_CFLAGS)
 AC_SUBST(GIO_LIBS)
 
@@ -56,6 +56,16 @@ AC_SUBST(POLKIT_AGENT_1_LIBS)
 PKG_CHECK_MODULES(LIBATASMART, [libatasmart >= 0.17])
 AC_SUBST(LIBATASMART_CFLAGS)
 AC_SUBST(LIBATASMART_LIBS)
+
+# systemd
+AC_ARG_WITH([systemdsystemunitdir],
+            AS_HELP_STRING([--with-systemdsystemunitdir=DIR], [Directory for systemd service files]),
+            [],
+            [with_systemdsystemunitdir=$($PKG_CONFIG --variable=systemdsystemunitdir systemd)])
+if test "x$with_systemdsystemunitdir" != "xno"; then
+  AC_SUBST([systemdsystemunitdir], [$with_systemdsystemunitdir])
+fi
+AM_CONDITIONAL(HAVE_SYSTEMD, [test -n "$systemdsystemunitdir"])
 
 # Internationalization
 #
@@ -97,7 +107,6 @@ doc/Makefile
 doc/version.xml
 doc/man/Makefile
 po/Makefile.in
-policy/Makefile
 ])
 
 dnl ==========================================================================
@@ -117,7 +126,8 @@ echo "
         privlibdir:                 ${privlibdir}
         slashlibdir:                ${slashlibdir}
         slashsbindir:               ${slashsbindir}
-	introspection:		    ${found_introspection}
+        introspection:              ${found_introspection}
+        systemdsystemunitdir:       ${systemdsystemunitdir}
 
         compiler:                   ${CC}
         cflags:                     ${CFLAGS}

@@ -1,3 +1,4 @@
+<ONLINE href="http://udisks.freedesktop.org/docs/latest/">
 <ANCHOR id="gdbus-org.freedesktop.UDisks2.Manager" href="udisks2/gdbus-org.freedesktop.UDisks2.Manager.html">
 <ANCHOR id="gdbus-interface-org-freedesktop-UDisks2-Manager" href="udisks2/gdbus-org.freedesktop.UDisks2.Manager.html#gdbus-interface-org-freedesktop-UDisks2-Manager">
 <ANCHOR id="gdbus-methods-org.freedesktop.UDisks2.Manager" href="udisks2/gdbus-org.freedesktop.UDisks2.Manager.html#gdbus-methods-org.freedesktop.UDisks2.Manager">
@@ -994,6 +995,7 @@
 <ANCHOR id="udisks-daemon-util-check-authorization-sync" href="udisks2/udisks2-Utilities.html#udisks-daemon-util-check-authorization-sync">
 <ANCHOR id="udisks-daemon-util-get-caller-uid-sync" href="udisks2/udisks2-Utilities.html#udisks-daemon-util-get-caller-uid-sync">
 <ANCHOR id="udisks-daemon-util-setup-by-user" href="udisks2/udisks2-Utilities.html#udisks-daemon-util-setup-by-user">
+<ANCHOR id="udisks-daemon-util-dup-object" href="udisks2/udisks2-Utilities.html#udisks-daemon-util-dup-object">
 <ANCHOR id="udisks2-Logging" href="udisks2/udisks2-Logging.html">
 <ANCHOR id="udisks2-Logging.synopsis" href="udisks2/udisks2-Logging.html#udisks2-Logging.synopsis">
 <ANCHOR id="udisks2-Logging.description" href="udisks2/udisks2-Logging.html#udisks2-Logging.description">

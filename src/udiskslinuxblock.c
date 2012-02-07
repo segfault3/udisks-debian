@@ -414,13 +414,12 @@ find_crypttab_entries_for_device (UDisksLinuxBlock *block,
       UDisksCrypttabEntry *entry = UDISKS_CRYPTTAB_ENTRY (l->data);
       const gchar *const *symlinks;
       const gchar *device_in_entry;
-      const gchar *device;
-      const gchar *label;
-      const gchar *uuid;
+      const gchar *device = NULL;
+      const gchar *label = NULL;
+      const gchar *uuid = NULL;
       guint n;
 
       device_in_entry = udisks_crypttab_entry_get_device (entry);
-      device = NULL;
       if (g_str_has_prefix (device_in_entry, "UUID="))
         {
           uuid = device_in_entry + 5;
@@ -790,7 +789,14 @@ handle_get_secret_configuration (UDisksBlock           *_block,
   GVariant *configuration;
   GError *error;
 
-  object = UDISKS_LINUX_BLOCK_OBJECT (g_dbus_interface_get_object (G_DBUS_INTERFACE (block)));
+  error = NULL;
+  object = udisks_daemon_util_dup_object (block, &error);
+  if (object == NULL)
+    {
+      g_dbus_method_invocation_take_error (invocation, error);
+      goto out;
+    }
+
   daemon = udisks_linux_block_object_get_daemon (object);
 
   error = NULL;
@@ -817,6 +823,7 @@ handle_get_secret_configuration (UDisksBlock           *_block,
                                                   configuration); /* consumes floating ref */
 
  out:
+  g_clear_object (&object);
   return TRUE; /* returning TRUE means that we handled the method invocation */
 }
 
@@ -1425,7 +1432,14 @@ handle_add_configuration_item (UDisksBlock           *_block,
   GVariant *details;
   GError *error;
 
-  object = UDISKS_LINUX_BLOCK_OBJECT (g_dbus_interface_get_object (G_DBUS_INTERFACE (block)));
+  error = NULL;
+  object = udisks_daemon_util_dup_object (block, &error);
+  if (object == NULL)
+    {
+      g_dbus_method_invocation_take_error (invocation, error);
+      goto out;
+    }
+
   daemon = udisks_linux_block_object_get_daemon (object);
 
   g_variant_get (item, "(&s@a{sv})", &type, &details);
@@ -1474,6 +1488,7 @@ handle_add_configuration_item (UDisksBlock           *_block,
 
  out:
   g_variant_unref (details);
+  g_clear_object (&object);
   return TRUE; /* returning TRUE means that we handled the method invocation */
 }
 
@@ -1492,7 +1507,14 @@ handle_remove_configuration_item (UDisksBlock           *_block,
   GVariant *details;
   GError *error;
 
-  object = UDISKS_LINUX_BLOCK_OBJECT (g_dbus_interface_get_object (G_DBUS_INTERFACE (block)));
+  error = NULL;
+  object = udisks_daemon_util_dup_object (block, &error);
+  if (object == NULL)
+    {
+      g_dbus_method_invocation_take_error (invocation, error);
+      goto out;
+    }
+
   daemon = udisks_linux_block_object_get_daemon (object);
 
   g_variant_get (item, "(&s@a{sv})", &type, &details);
@@ -1541,6 +1563,7 @@ handle_remove_configuration_item (UDisksBlock           *_block,
 
  out:
   g_variant_unref (details);
+  g_clear_object (&object);
   return TRUE; /* returning TRUE means that we handled the method invocation */
 }
 
@@ -1562,7 +1585,14 @@ handle_update_configuration_item (UDisksBlock           *_block,
   GVariant *new_details;
   GError *error;
 
-  object = UDISKS_LINUX_BLOCK_OBJECT (g_dbus_interface_get_object (G_DBUS_INTERFACE (block)));
+  error = NULL;
+  object = udisks_daemon_util_dup_object (block, &error);
+  if (object == NULL)
+    {
+      g_dbus_method_invocation_take_error (invocation, error);
+      goto out;
+    }
+
   daemon = udisks_linux_block_object_get_daemon (object);
 
   g_variant_get (old_item, "(&s@a{sv})", &old_type, &old_details);
@@ -1622,6 +1652,7 @@ handle_update_configuration_item (UDisksBlock           *_block,
  out:
   g_variant_unref (new_details);
   g_variant_unref (old_details);
+  g_clear_object (&object);
   return TRUE; /* returning TRUE means that we handled the method invocation */
 }
 
@@ -1780,8 +1811,8 @@ handle_format (UDisksBlock           *block,
   const gchar *action_id;
   const FSInfo *fs_info;
   const gchar *label;
-  gchar *escaped_label;
-  gchar *command;
+  gchar *escaped_label = NULL;
+  gchar *command = NULL;
   gchar *tmp;
   gchar *error_message;
   GError *error;
@@ -1792,7 +1823,14 @@ handle_format (UDisksBlock           *block,
   gchar *encrypt_passphrase = NULL;
   gchar *mapped_name = NULL;
 
-  object = UDISKS_OBJECT (g_dbus_interface_get_object (G_DBUS_INTERFACE (block)));
+  error = NULL;
+  object = udisks_daemon_util_dup_object (block, &error);
+  if (object == NULL)
+    {
+      g_dbus_method_invocation_take_error (invocation, error);
+      goto out;
+    }
+
   daemon = udisks_linux_block_object_get_daemon (UDISKS_LINUX_BLOCK_OBJECT (object));
   cleanup = udisks_daemon_get_cleanup (daemon);
   escaped_label = g_shell_quote("");
@@ -1805,7 +1843,7 @@ handle_format (UDisksBlock           *block,
     action_id = "org.freedesktop.udisks2.modify-device-system";
 
   error = NULL;
-  if (!udisks_daemon_util_get_caller_uid_sync (daemon, invocation, NULL /* GCancellable */, &caller_uid, &caller_gid, &error))
+  if (!udisks_daemon_util_get_caller_uid_sync (daemon, invocation, NULL /* GCancellable */, &caller_uid, &caller_gid, NULL, &error))
     {
       g_dbus_method_invocation_return_gerror (invocation, error);
       g_error_free (error);
@@ -2113,6 +2151,7 @@ handle_format (UDisksBlock           *block,
   g_clear_object (&cleartext_block);
   g_clear_object (&udev_cleartext_device);
   g_free (wait_data);
+  g_clear_object (&object);
   return TRUE; /* returning true means that we handled the method invocation */
 }
 
@@ -2129,9 +2168,17 @@ handle_open_for_backup (UDisksBlock           *block,
   const gchar *action_id;
   const gchar *device;
   GUnixFDList *out_fd_list = NULL;
+  GError *error;
   gint fd;
 
-  object = UDISKS_OBJECT (g_dbus_interface_get_object (G_DBUS_INTERFACE (block)));
+  error = NULL;
+  object = udisks_daemon_util_dup_object (block, &error);
+  if (object == NULL)
+    {
+      g_dbus_method_invocation_take_error (invocation, error);
+      goto out;
+    }
+
   daemon = udisks_linux_block_object_get_daemon (UDISKS_LINUX_BLOCK_OBJECT (object));
 
   action_id = "org.freedesktop.udisks2.open-device";
@@ -2162,6 +2209,7 @@ handle_open_for_backup (UDisksBlock           *block,
 
  out:
   g_clear_object (&out_fd_list);
+  g_clear_object (&object);
   return TRUE; /* returning true means that we handled the method invocation */
 }
 
@@ -2178,9 +2226,17 @@ handle_open_for_restore (UDisksBlock           *block,
   const gchar *action_id;
   const gchar *device;
   GUnixFDList *out_fd_list = NULL;
+  GError *error;
   gint fd;
 
-  object = UDISKS_OBJECT (g_dbus_interface_get_object (G_DBUS_INTERFACE (block)));
+  error = NULL;
+  object = udisks_daemon_util_dup_object (block, &error);
+  if (object == NULL)
+    {
+      g_dbus_method_invocation_take_error (invocation, error);
+      goto out;
+    }
+
   daemon = udisks_linux_block_object_get_daemon (UDISKS_LINUX_BLOCK_OBJECT (object));
 
   action_id = "org.freedesktop.udisks2.open-device";
@@ -2211,6 +2267,7 @@ handle_open_for_restore (UDisksBlock           *block,
 
  out:
   g_clear_object (&out_fd_list);
+  g_clear_object (&object);
   return TRUE; /* returning true means that we handled the method invocation */
 }
 

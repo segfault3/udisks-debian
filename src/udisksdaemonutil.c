@@ -521,10 +521,11 @@ udisks_daemon_util_check_authorization_sync (UDisksDaemon          *daemon,
  * @cancellable: (allow-none): A #GCancellable or %NULL.
  * @out_uid: (out): Return location for resolved uid or %NULL.
  * @out_gid: (out) (allow-none): Return location for resolved gid or %NULL.
+ * @out_user_name: (out) (allow-none): Return location for resolved user name or %NULL.
  * @error: Return location for error.
  *
- * Gets the UNIX user id (and possibly group id) of the peer
- * represented by @invocation.
+ * Gets the UNIX user id (and possibly group id and user name) of the
+ * peer represented by @invocation.
  *
  * Returns: %TRUE if the user id (and possibly group id) was obtained, %FALSE otherwise
  */
@@ -534,6 +535,7 @@ udisks_daemon_util_get_caller_uid_sync (UDisksDaemon            *daemon,
                                         GCancellable            *cancellable,
                                         uid_t                   *out_uid,
                                         gid_t                   *out_gid,
+                                        gchar                  **out_user_name,
                                         GError                 **error)
 {
   gboolean ret;
@@ -579,7 +581,7 @@ udisks_daemon_util_get_caller_uid_sync (UDisksDaemon            *daemon,
   if (out_uid != NULL)
     *out_uid = uid;
 
-  if (out_gid != NULL)
+  if (out_gid != NULL || out_user_name != NULL)
     {
       struct passwd pwstruct;
       gchar pwbuf[8192];
@@ -602,7 +604,10 @@ udisks_daemon_util_get_caller_uid_sync (UDisksDaemon            *daemon,
                        "Error looking up passwd struct for uid %d: %m", (gint) uid);
           goto out;
         }
-      *out_gid = pw->pw_gid;
+      if (out_gid != NULL)
+        *out_gid = pw->pw_gid;
+      if (out_user_name != NULL)
+        *out_user_name = g_strdup (pwstruct.pw_name);
     }
 
   ret = TRUE;
@@ -612,3 +617,35 @@ udisks_daemon_util_get_caller_uid_sync (UDisksDaemon            *daemon,
 }
 
 /* ---------------------------------------------------------------------------------------------------- */
+
+/**
+ * udisks_daemon_util_dup_object:
+ * @interface_: (type GDBusInterface): A #GDBusInterface<!-- -->-derived instance.
+ * @error: %NULL, or an unset #GError to set if the return value is %NULL.
+ *
+ * Gets the enclosing #UDisksObject for @interface, if any.
+ *
+ * Returns: (transfer full) (type UDisksObject): Either %NULL or a
+ * #UDisksObject<!-- -->-derived instance that must be released with
+ * g_object_unref().
+ */
+gpointer
+udisks_daemon_util_dup_object (gpointer   interface_,
+                               GError   **error)
+{
+  gpointer ret;
+
+  g_return_val_if_fail (G_IS_DBUS_INTERFACE (interface_), NULL);
+  g_return_val_if_fail (error == NULL || *error == NULL, NULL);
+
+  ret = g_dbus_interface_dup_object (interface_);
+  if (ret == NULL)
+    {
+      g_set_error (error,
+                   UDISKS_ERROR,
+                   UDISKS_ERROR_FAILED,
+                   "No enclosing object for interface");
+    }
+
+  return ret;
+}

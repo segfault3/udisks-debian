@@ -1322,7 +1322,7 @@ handle_command_unlock_lock (gint        *argc,
  out:
   if (passphrase != NULL)
     {
-      memset (passphrase, strlen (passphrase), '\0');
+      memset (passphrase, '\0', strlen (passphrase));
       g_free (passphrase);
     }
   if (options != NULL)
@@ -1939,6 +1939,18 @@ obj_proxy_cmp (GDBusObject *a,
   return g_strcmp0 (g_dbus_object_get_object_path (a), g_dbus_object_get_object_path (b));
 }
 
+static gint
+obj_proxy_drive_sortkey_cmp (GDBusObject *a,
+                             GDBusObject *b)
+{
+  UDisksDrive *da = udisks_object_peek_drive (UDISKS_OBJECT (a));
+  UDisksDrive *db = udisks_object_peek_drive (UDISKS_OBJECT (b));
+  if (da != NULL && db != NULL)
+    return g_strcmp0 (udisks_drive_get_sort_key (da), udisks_drive_get_sort_key (db));
+  else
+    return obj_proxy_cmp (a, b);
+}
+
 
 static const GOptionEntry command_dump_entries[] =
 {
@@ -2446,13 +2458,13 @@ handle_command_status (gint        *argc,
    *  - revision  <= 8    (SCSI: 6, ATA: 8)
    *  - serial    <= 20   (SCSI: 16, ATA: 20)
    */
-  g_print ("PORT  MODEL                     REVISION  SERIAL               DEVICE\n"
-           "--------------------------------------------------------------------------------\n");
-         /*       SEAGATE ST3300657SS       0006      3SJ1QNMQ00009052NECM sdaa sdab dm-32   */
+  g_print ("MODEL                     REVISION  SERIAL               DEVICE\n"
+           "--------------------------------------------------------------------------\n");
+         /* SEAGATE ST3300657SS       0006      3SJ1QNMQ00009052NECM sdaa sdab dm-32   */
          /* 01234567890123456789012345678901234567890123456789012345678901234567890123456789 */
 
-  /* TODO: sort */
-  objects = g_list_sort (objects, (GCompareFunc) obj_proxy_cmp);
+  /* sort on Drive:SortKey */
+  objects = g_list_sort (objects, (GCompareFunc) obj_proxy_drive_sortkey_cmp);
   for (l = objects; l != NULL; l = l->next)
     {
       UDisksObject *object = UDISKS_OBJECT (l->data);
@@ -2516,9 +2528,8 @@ handle_command_status (gint        *argc,
       else
         vendor_model = g_strdup ("-");
 
-      /* TODO: need to figure out LOCATION */
-      g_print ("%-5s %-25s %-9s %-20s %-8s\n",
-               "",
+      /* TODO: would be nice to show the port/slot if disk is in a SES-2 enclosure */
+      g_print ("%-25s %-9s %-20s %-8s\n",
                vendor_model,
                revision,
                serial,

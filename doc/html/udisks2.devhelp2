@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" standalone="no"?>
 <!DOCTYPE book PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "">
-<book xmlns="http://www.devhelp.net/book" title="UDisks Reference Manual" link="index.html" author="David Zeuthen" name="udisks2" version="2" language="c">
+<book xmlns="http://www.devhelp.net/book" title="UDisks Reference Manual" link="index.html" author="" name="udisks2" version="2" language="c">
   <chapters>
     <sub name="UDisks Overview" link="overview.html"/>
     <sub name="D-Bus API Reference" link="ref-dbus.html">
@@ -843,6 +843,7 @@
     <keyword type="function" name="udisks_daemon_util_check_authorization_sync ()" link="udisks2-Utilities.html#udisks-daemon-util-check-authorization-sync"/>
     <keyword type="function" name="udisks_daemon_util_get_caller_uid_sync ()" link="udisks2-Utilities.html#udisks-daemon-util-get-caller-uid-sync"/>
     <keyword type="function" name="udisks_daemon_util_setup_by_user ()" link="udisks2-Utilities.html#udisks-daemon-util-setup-by-user"/>
+    <keyword type="function" name="udisks_daemon_util_dup_object ()" link="udisks2-Utilities.html#udisks-daemon-util-dup-object"/>
     <keyword type="enum" name="enum UDisksLogLevel" link="udisks2-Logging.html#UDisksLogLevel"/>
     <keyword type="function" name="udisks_log ()" link="udisks2-Logging.html#udisks-log"/>
     <keyword type="macro" name="udisks_debug()" link="udisks2-Logging.html#udisks-debug"/>

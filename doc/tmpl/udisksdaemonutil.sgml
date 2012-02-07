@@ -95,6 +95,7 @@ udisksdaemonutil
 @cancellable: 
 @out_uid: 
 @out_gid: 
+@out_user_name: 
 @error: 
 @Returns: 
 
@@ -107,6 +108,16 @@ udisksdaemonutil
 @daemon: 
 @object: 
 @user: 
+@Returns: 
+
+
+<!-- ##### FUNCTION udisks_daemon_util_dup_object ##### -->
+<para>
+
+</para>
+
+@interface_: 
+@error: 
 @Returns: 
 
 
