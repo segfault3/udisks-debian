@@ -1,0 +1,112 @@
+<!-- ##### SECTION Title ##### -->
+udisksdaemonutil
+
+<!-- ##### SECTION Short_Description ##### -->
+
+
+<!-- ##### SECTION Long_Description ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### SECTION See_Also ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### SECTION Stability_Level ##### -->
+
+
+<!-- ##### SECTION Image ##### -->
+
+
+<!-- ##### FUNCTION udisks_decode_udev_string ##### -->
+<para>
+
+</para>
+
+@str: 
+@Returns: 
+
+
+<!-- ##### FUNCTION udisks_safe_append_to_object_path ##### -->
+<para>
+
+</para>
+
+@str: 
+@s: 
+
+
+<!-- ##### FUNCTION udisks_daemon_util_block_get_size ##### -->
+<para>
+
+</para>
+
+@device: 
+@out_media_available: 
+@out_media_change_detected: 
+@Returns: 
+
+
+<!-- ##### FUNCTION udisks_daemon_util_resolve_link ##### -->
+<para>
+
+</para>
+
+@path: 
+@name: 
+@Returns: 
+
+
+<!-- ##### FUNCTION udisks_daemon_util_resolve_links ##### -->
+<para>
+
+</para>
+
+@path: 
+@dir_name: 
+@Returns: 
+
+
+<!-- ##### FUNCTION udisks_daemon_util_check_authorization_sync ##### -->
+<para>
+
+</para>
+
+@daemon: 
+@object: 
+@action_id: 
+@options: 
+@message: 
+@invocation: 
+@Returns: 
+
+
+<!-- ##### FUNCTION udisks_daemon_util_get_caller_uid_sync ##### -->
+<para>
+
+</para>
+
+@daemon: 
+@invocation: 
+@cancellable: 
+@out_uid: 
+@out_gid: 
+@error: 
+@Returns: 
+
+
+<!-- ##### FUNCTION udisks_daemon_util_setup_by_user ##### -->
+<para>
+
+</para>
+
+@daemon: 
+@object: 
+@user: 
+@Returns: 
+
+

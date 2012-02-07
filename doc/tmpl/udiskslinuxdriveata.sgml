@@ -1,0 +1,73 @@
+<!-- ##### SECTION Title ##### -->
+udiskslinuxdriveata
+
+<!-- ##### SECTION Short_Description ##### -->
+
+
+<!-- ##### SECTION Long_Description ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### SECTION See_Also ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### SECTION Stability_Level ##### -->
+
+
+<!-- ##### SECTION Image ##### -->
+
+
+<!-- ##### STRUCT UDisksLinuxDriveAta ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### FUNCTION udisks_linux_drive_ata_new ##### -->
+<para>
+
+</para>
+
+@void: 
+@Returns: 
+
+
+<!-- ##### FUNCTION udisks_linux_drive_ata_update ##### -->
+<para>
+
+</para>
+
+@drive: 
+@object: 
+
+
+<!-- ##### FUNCTION udisks_linux_drive_ata_refresh_smart_sync ##### -->
+<para>
+
+</para>
+
+@drive: 
+@nowakeup: 
+@simulate_path: 
+@cancellable: 
+@error: 
+@Returns: 
+
+
+<!-- ##### FUNCTION udisks_linux_drive_ata_smart_selftest_sync ##### -->
+<para>
+
+</para>
+
+@drive: 
+@type: 
+@cancellable: 
+@error: 
+@Returns: 
+
+

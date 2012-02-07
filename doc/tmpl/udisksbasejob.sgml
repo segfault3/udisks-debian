@@ -1,0 +1,69 @@
+<!-- ##### SECTION Title ##### -->
+UDisksBaseJob
+
+<!-- ##### SECTION Short_Description ##### -->
+
+
+<!-- ##### SECTION Long_Description ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### SECTION See_Also ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### SECTION Stability_Level ##### -->
+
+
+<!-- ##### SECTION Image ##### -->
+
+
+<!-- ##### STRUCT UDisksBaseJob ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### ARG UDisksBaseJob:cancellable ##### -->
+<para>
+
+</para>
+
+<!-- ##### STRUCT UDisksBaseJobClass ##### -->
+<para>
+
+</para>
+
+@parent_class: 
+
+<!-- ##### FUNCTION udisks_base_job_add_object ##### -->
+<para>
+
+</para>
+
+@job: 
+@object: 
+
+
+<!-- ##### FUNCTION udisks_base_job_remove_object ##### -->
+<para>
+
+</para>
+
+@job: 
+@object: 
+
+
+<!-- ##### FUNCTION udisks_base_job_get_cancellable ##### -->
+<para>
+
+</para>
+
+@job: 
+@Returns: 
+
+

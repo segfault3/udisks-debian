@@ -1,0 +1,14 @@
+------------
+udisks 1.90.0
+------------
+
+The udisks project provides a daemon, tools and libraries to access
+and manipulate disks and storage devices. This is the first release of
+the new 2.x series. This release is parallel-installable with udisks
+1.x.
+
+Thanks to all our contributors.
+
+David Zeuthen,
+Jan 20, 2012
+

@@ -1,0 +1,147 @@
+<!-- ##### SECTION Title ##### -->
+UDisksCleanup
+
+<!-- ##### SECTION Short_Description ##### -->
+
+
+<!-- ##### SECTION Long_Description ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### SECTION See_Also ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### SECTION Stability_Level ##### -->
+
+
+<!-- ##### SECTION Image ##### -->
+
+
+<!-- ##### STRUCT UDisksCleanup ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### ARG UDisksCleanup:daemon ##### -->
+<para>
+
+</para>
+
+<!-- ##### FUNCTION udisks_cleanup_new ##### -->
+<para>
+
+</para>
+
+@daemon: 
+@Returns: 
+
+
+<!-- ##### FUNCTION udisks_cleanup_start ##### -->
+<para>
+
+</para>
+
+@cleanup: 
+
+
+<!-- ##### FUNCTION udisks_cleanup_stop ##### -->
+<para>
+
+</para>
+
+@cleanup: 
+
+
+<!-- ##### FUNCTION udisks_cleanup_check ##### -->
+<para>
+
+</para>
+
+@cleanup: 
+
+
+<!-- ##### FUNCTION udisks_cleanup_get_daemon ##### -->
+<para>
+
+</para>
+
+@cleanup: 
+@Returns: 
+
+
+<!-- ##### FUNCTION udisks_cleanup_add_mounted_fs ##### -->
+<para>
+
+</para>
+
+@cleanup: 
+@mount_point: 
+@block_device: 
+@uid: 
+@fstab_mount: 
+
+
+<!-- ##### FUNCTION udisks_cleanup_find_mounted_fs ##### -->
+<para>
+
+</para>
+
+@cleanup: 
+@block_device: 
+@out_uid: 
+@out_fstab_mount: 
+@Returns: 
+
+
+<!-- ##### FUNCTION udisks_cleanup_add_unlocked_luks ##### -->
+<para>
+
+</para>
+
+@cleanup: 
+@cleartext_device: 
+@crypto_device: 
+@dm_uuid: 
+@uid: 
+
+
+<!-- ##### FUNCTION udisks_cleanup_find_unlocked_luks ##### -->
+<para>
+
+</para>
+
+@cleanup: 
+@crypto_device: 
+@out_uid: 
+@Returns: 
+
+
+<!-- ##### FUNCTION udisks_cleanup_add_loop ##### -->
+<para>
+
+</para>
+
+@cleanup: 
+@device_file: 
+@backing_file: 
+@backing_file_device: 
+@uid: 
+
+
+<!-- ##### FUNCTION udisks_cleanup_has_loop ##### -->
+<para>
+
+</para>
+
+@cleanup: 
+@device_file: 
+@out_uid: 
+@Returns: 
+
+
