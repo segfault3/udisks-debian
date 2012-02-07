@@ -2,6 +2,7 @@ udisks2 (1.90.1-0ubuntu1) UNRELEASED; urgency=low
 
   * New upstream release.
   * debian/control: Bump glib build dependency as per configure.ac.
+  * debian/rules, debian/udisks2.install: Enable and install systemd unit file.
 
  -- Martin Pitt <martin.pitt@ubuntu.com>  Tue, 07 Feb 2012 09:03:51 +0100
 

@@ -1,6 +1,7 @@
 etc/
 lib/udev/
 lib/udisks2/
+lib/systemd/
 sbin/
 usr/bin/
 usr/share/dbus-1/
