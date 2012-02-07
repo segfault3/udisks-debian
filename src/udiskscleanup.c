@@ -751,7 +751,7 @@ udisks_cleanup_check_mounted_fs (UDisksCleanup *cleanup,
   /* load existing entries */
   error = NULL;
   value = udisks_persistent_store_get (cleanup->persistent_store,
-                                       UDISKS_PERSISTENT_FLAGS_NORMAL_STORE,
+                                       UDISKS_PERSISTENT_FLAGS_TEMPORARY_STORE,
                                        "mounted-fs",
                                        G_VARIANT_TYPE ("a{sa{sv}}"),
                                        &error);
@@ -788,7 +788,7 @@ udisks_cleanup_check_mounted_fs (UDisksCleanup *cleanup,
     {
       error = NULL;
       if (!udisks_persistent_store_set (cleanup->persistent_store,
-                                        UDISKS_PERSISTENT_FLAGS_NORMAL_STORE,
+                                        UDISKS_PERSISTENT_FLAGS_TEMPORARY_STORE,
                                         "mounted-fs",
                                         G_VARIANT_TYPE ("a{sa{sv}}"),
                                         new_value, /* consumes new_value */
@@ -846,7 +846,7 @@ udisks_cleanup_add_mounted_fs (UDisksCleanup  *cleanup,
   /* load existing entries */
   error = NULL;
   value = udisks_persistent_store_get (cleanup->persistent_store,
-                                       UDISKS_PERSISTENT_FLAGS_NORMAL_STORE,
+                                       UDISKS_PERSISTENT_FLAGS_TEMPORARY_STORE,
                                        "mounted-fs",
                                        G_VARIANT_TYPE ("a{sa{sv}}"),
                                        &error);
@@ -900,7 +900,7 @@ udisks_cleanup_add_mounted_fs (UDisksCleanup  *cleanup,
   /* save new entries */
   error = NULL;
   if (!udisks_persistent_store_set (cleanup->persistent_store,
-                                    UDISKS_PERSISTENT_FLAGS_NORMAL_STORE,
+                                    UDISKS_PERSISTENT_FLAGS_TEMPORARY_STORE,
                                     "mounted-fs",
                                     G_VARIANT_TYPE ("a{sa{sv}}"),
                                     new_value, /* consumes new_value */
@@ -948,7 +948,7 @@ udisks_cleanup_find_mounted_fs (UDisksCleanup   *cleanup,
   /* load existing entries */
   error = NULL;
   value = udisks_persistent_store_get (cleanup->persistent_store,
-                                       UDISKS_PERSISTENT_FLAGS_NORMAL_STORE,
+                                       UDISKS_PERSISTENT_FLAGS_TEMPORARY_STORE,
                                        "mounted-fs",
                                        G_VARIANT_TYPE ("a{sa{sv}}"),
                                        &error);
@@ -1561,6 +1561,7 @@ udisks_cleanup_check_loop_entry (UDisksCleanup  *cleanup,
       attempt_no_cleanup = TRUE;
       goto out;
     }
+  memset (&li64, '\0', sizeof (struct loop_info64));
   if (ioctl (loop_device_fd, LOOP_GET_STATUS64, &li64) == -1)
     {
       udisks_info ("error issuing LOOP_GET_STATUS64 ioctl on %s: %m", loop_device);

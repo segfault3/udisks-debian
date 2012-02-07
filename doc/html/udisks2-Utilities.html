@@ -60,10 +60,13 @@
                                                          <em class="parameter"><code><a href="http://library.gnome.org/devel/gio/unstable/GCancellable.html"><span class="type">GCancellable</span></a> *cancellable</code></em>,
                                                          <em class="parameter"><code><span class="type">uid_t</span> *out_uid</code></em>,
                                                          <em class="parameter"><code><span class="type">gid_t</span> *out_gid</code></em>,
+                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> **out_user_name</code></em>,
                                                          <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Error-Reporting.html#GError"><span class="type">GError</span></a> **error</code></em>);
 <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>            <a class="link" href="udisks2-Utilities.html#udisks-daemon-util-setup-by-user" title="udisks_daemon_util_setup_by_user ()">udisks_daemon_util_setup_by_user</a>    (<em class="parameter"><code><a class="link" href="UDisksDaemon.html" title="UDisksDaemon"><span class="type">UDisksDaemon</span></a> *daemon</code></em>,
                                                          <em class="parameter"><code><a class="link" href="UDisksObject.html" title="UDisksObject"><span class="type">UDisksObject</span></a> *object</code></em>,
                                                          <em class="parameter"><code><span class="type">uid_t</span> user</code></em>);
+<a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gpointer"><span class="returnvalue">gpointer</span></a>            <a class="link" href="udisks2-Utilities.html#udisks-daemon-util-dup-object" title="udisks_daemon_util_dup_object ()">udisks_daemon_util_dup_object</a>       (<em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gpointer"><span class="type">gpointer</span></a> interface_</code></em>,
+                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Error-Reporting.html#GError"><span class="type">GError</span></a> **error</code></em>);
 </pre>
 </div>
 <div class="refsect1">
@@ -87,7 +90,7 @@ If the string is not valid UTF-8, try as hard as possible to convert to UTF-8.
 If <a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a> is passed, then <a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a> is returned.
 </p>
 <p>
-See <code class="function">udev_util_encode_string()</code> in libudev/libudev-util.c in the udev
+See <a href="/usr/share/gtk-doc/html/libudev/libudev-udev-util.html#udev-util-encode-string"><code class="function">udev_util_encode_string()</code></a> in libudev/libudev-util.c in the udev
 tree for what kinds of strings can be used.
 </p>
 <div class="variablelist"><table border="0">
@@ -296,10 +299,11 @@ The follow variables can be used in <em class="parameter"><code>message</code></
                                                          <em class="parameter"><code><a href="http://library.gnome.org/devel/gio/unstable/GCancellable.html"><span class="type">GCancellable</span></a> *cancellable</code></em>,
                                                          <em class="parameter"><code><span class="type">uid_t</span> *out_uid</code></em>,
                                                          <em class="parameter"><code><span class="type">gid_t</span> *out_gid</code></em>,
+                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> **out_user_name</code></em>,
                                                          <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Error-Reporting.html#GError"><span class="type">GError</span></a> **error</code></em>);</pre>
 <p>
-Gets the UNIX user id (and possibly group id) of the peer
-represented by <em class="parameter"><code>invocation</code></em>.
+Gets the UNIX user id (and possibly group id and user name) of the
+peer represented by <em class="parameter"><code>invocation</code></em>.
 </p>
 <div class="variablelist"><table border="0">
 <col align="left" valign="top">
@@ -325,6 +329,11 @@ represented by <em class="parameter"><code>invocation</code></em>.
 <tr>
 <td><p><span class="term"><em class="parameter"><code>out_gid</code></em> :</span></p></td>
 <td>Return location for resolved gid or <a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a>. <span class="annotation">[<a href="http://foldoc.org/out"><span class="acronym">out</span></a>][<a href="http://foldoc.org/allow-none"><span class="acronym">allow-none</span></a>]</span>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>out_user_name</code></em> :</span></p></td>
+<td>Return location for resolved user name or <a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a>. <span class="annotation">[<a href="http://foldoc.org/out"><span class="acronym">out</span></a>][<a href="http://foldoc.org/allow-none"><span class="acronym">allow-none</span></a>]</span>
 </td>
 </tr>
 <tr>
@@ -368,6 +377,37 @@ setup by <em class="parameter"><code>user</code></em>.
 <td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
 <td>
 <a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#TRUE:CAPS"><code class="literal">TRUE</code></a> if <em class="parameter"><code>object</code></em> has been set-up by <em class="parameter"><code>user</code></em>, <a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#FALSE:CAPS"><code class="literal">FALSE</code></a> if not.</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="udisks-daemon-util-dup-object"></a><h3>udisks_daemon_util_dup_object ()</h3>
+<pre class="programlisting"><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gpointer"><span class="returnvalue">gpointer</span></a>            udisks_daemon_util_dup_object       (<em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gpointer"><span class="type">gpointer</span></a> interface_</code></em>,
+                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Error-Reporting.html#GError"><span class="type">GError</span></a> **error</code></em>);</pre>
+<p>
+Gets the enclosing <a class="link" href="UDisksObject.html" title="UDisksObject"><span class="type">UDisksObject</span></a> for <em class="parameter"><code>interface</code></em>, if any.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>interface_</code></em> :</span></p></td>
+<td>A <a href="http://library.gnome.org/devel/gio/unstable/GDBusInterface.html"><span class="type">GDBusInterface</span></a>-derived instance. <span class="annotation">[<a href="http://foldoc.org/type"><span class="acronym">type</span></a> GDBusInterface]</span>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>error</code></em> :</span></p></td>
+<td>
+<a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a>, or an unset <a href="http://library.gnome.org/devel/glib/unstable/glib-Error-Reporting.html#GError"><span class="type">GError</span></a> to set if the return value is <a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a>.</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td>Either <a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a> or a
+<a class="link" href="UDisksObject.html" title="UDisksObject"><span class="type">UDisksObject</span></a>-derived instance that must be released with
+<a href="http://library.gnome.org/devel/gobject/unstable/gobject-The-Base-Object-Type.html#g-object-unref"><code class="function">g_object_unref()</code></a>. <span class="annotation">[<a href="http://foldoc.org/transfer%20full"><span class="acronym">transfer full</span></a>][<a href="http://foldoc.org/type"><span class="acronym">type</span></a> UDisksObject]</span>
+</td>
 </tr>
 </tbody>
 </table></div>
