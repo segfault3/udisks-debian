@@ -1,4 +1,4 @@
-udisks2 (1.90.1-0ubuntu1) UNRELEASED; urgency=low
+udisks2 (1.91.0-0ubuntu1) UNRELEASED; urgency=low
 
   * New upstream release.
   * debian/control: Bump glib build dependency as per configure.ac.
