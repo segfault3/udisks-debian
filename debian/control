@@ -16,7 +16,7 @@ Build-Depends: debhelper (>= 9),
  libgirepository1.0-dev (>= 1.30),
  gobject-introspection (>= 1.30),
  libatasmart-dev (>= 0.17)
-Standards-Version: 3.9.2
+Standards-Version: 3.9.3
 Vcs-Git: git://git.debian.org/git/pkg-utopia/udisks2.git
 Vcs-Browser: http://git.debian.org/?p=pkg-utopia/udisks2.git;a=summary
 Homepage: http://www.freedesktop.org/wiki/Software/udisks
