@@ -1,15 +1,6 @@
-udisks2 (1.91.0-0ubuntu1~ppa1) precise; urgency=low
-
-  * New upstream release.
-  * debian/control: Bump glib build dependency as per configure.ac.
-  * debian/rules, debian/udisks2.install: Enable and install systemd unit file.
-  * Drop 00git_potfiles_in.patch, upstream now.
-
- -- Martin Pitt <martin.pitt@ubuntu.com>  Tue, 07 Feb 2012 09:19:08 +0100
-
-udisks2 (1.90.0-0ubuntu1~ppa3) precise; urgency=low
+udisks2 (1.97.0-1) UNRELEASED; urgency=low
 
   * Initial release. Packaging based on udisks, thanks to Ayan George for
     helping with the packaging!
 
- -- Martin Pitt <martin.pitt@ubuntu.com>  Mon, 30 Jan 2012 12:03:21 +0100
+ -- Martin Pitt <mpitt@debian.org>  Fri, 18 May 2012 10:59:22 +0200

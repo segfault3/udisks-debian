@@ -12,6 +12,7 @@ Build-Depends: debhelper (>= 9),
  libgudev-1.0-dev (>= 147),
  libpolkit-gobject-1-dev (>= 0.97),
  libpolkit-agent-1-dev (>= 0.97),
+ libacl1-dev | acl-dev,
  libgirepository1.0-dev (>= 1.30),
  gobject-introspection (>= 1.30),
  libatasmart-dev (>= 0.17)
