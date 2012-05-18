@@ -1,9 +1,10 @@
 etc/
 lib/udev/
-lib/udisks2/
 lib/systemd/
-sbin/
 usr/bin/
+usr/sbin/
+usr/lib/udisks2/
 usr/share/dbus-1/
-usr/share/polkit-1/
+usr/share/locale/
 usr/share/man/
+usr/share/polkit-1/
