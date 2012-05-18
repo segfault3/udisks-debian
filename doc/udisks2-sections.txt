@@ -24,6 +24,10 @@ UDISKS_ERROR_NUM_ENTRIES
 <SECTION>
 <FILE>udisksclient</FILE>
 <TITLE>UDisksClient</TITLE>
+UDISKS_MAJOR_VERSION
+UDISKS_MINOR_VERSION
+UDISKS_MICRO_VERSION
+UDISKS_CHECK_VERSION
 UDisksClient
 udisks_client_new
 udisks_client_new_finish
@@ -40,6 +44,7 @@ udisks_client_get_block_for_drive
 udisks_client_get_drive_for_block
 udisks_client_get_cleartext_block
 udisks_client_get_partition_table
+udisks_client_get_loop_for_block
 udisks_client_get_partitions
 udisks_client_get_jobs_for_object
 <SUBSECTION>
@@ -86,8 +91,11 @@ udisks_daemon_get_authority
 udisks_daemon_get_cleanup
 UDisksDaemonWaitFunc
 udisks_daemon_wait_for_object_sync
+udisks_daemon_get_objects
 udisks_daemon_find_object
 udisks_daemon_find_block
+udisks_daemon_find_block_by_device_file
+udisks_daemon_find_block_by_sysfs_path
 udisks_daemon_launch_simple_job
 udisks_daemon_launch_spawned_job
 udisks_daemon_launch_spawned_job_sync
@@ -325,8 +333,12 @@ udisks_daemon_util_resolve_link
 udisks_daemon_util_resolve_links
 udisks_daemon_util_check_authorization_sync
 udisks_daemon_util_get_caller_uid_sync
+udisks_daemon_util_get_caller_pid_sync
 udisks_daemon_util_setup_by_user
+udisks_daemon_util_on_other_seat
 udisks_daemon_util_dup_object
+udisks_daemon_util_escape
+udisks_daemon_util_escape_and_quote
 </SECTION>
 
 <SECTION>
@@ -513,6 +525,8 @@ udisks_drive_call_eject_sync
 udisks_drive_complete_eject
 udisks_drive_get_connection_bus
 udisks_drive_get_removable
+udisks_drive_get_ejectable
+udisks_drive_get_seat
 udisks_drive_get_media
 udisks_drive_get_media_compatibility
 udisks_drive_get_media_removable
@@ -545,6 +559,8 @@ udisks_drive_dup_wwn
 udisks_drive_dup_sort_key
 udisks_drive_set_connection_bus
 udisks_drive_set_removable
+udisks_drive_set_ejectable
+udisks_drive_set_seat
 udisks_drive_set_media
 udisks_drive_set_media_compatibility
 udisks_drive_set_media_removable
@@ -1087,12 +1103,20 @@ UDisksLoopIface
 udisks_loop_interface_info
 udisks_loop_override_properties
 udisks_loop_get_backing_file
+udisks_loop_get_autoclear
+udisks_loop_get_setup_by_uid
 udisks_loop_dup_backing_file
 udisks_loop_set_backing_file
+udisks_loop_set_autoclear
+udisks_loop_set_setup_by_uid
 udisks_loop_call_delete
 udisks_loop_call_delete_finish
 udisks_loop_call_delete_sync
 udisks_loop_complete_delete
+udisks_loop_call_set_autoclear
+udisks_loop_call_set_autoclear_finish
+udisks_loop_call_set_autoclear_sync
+udisks_loop_complete_set_autoclear
 UDisksLoopProxy
 UDisksLoopProxyClass
 udisks_loop_proxy_new

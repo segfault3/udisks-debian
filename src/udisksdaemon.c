@@ -37,6 +37,7 @@
 #include "udisksfstabentry.h"
 #include "udiskscrypttabmonitor.h"
 #include "udiskscrypttabentry.h"
+#include "udiskslinuxblockobject.h"
 
 /**
  * SECTION:udisksdaemon
@@ -812,7 +813,8 @@ udisks_daemon_launch_spawned_job_sync (UDisksDaemon    *daemon,
  * available or until @timeout_seconds has passed (in which case the
  * function fails with %UDISKS_ERROR_TIMED_OUT).
  *
- * Note that @wait_func will be called on all objects - possibly more than once.
+ * Note that @wait_func will be called from time to time - for example
+ * if there is a device event.
  *
  * Returns: (transfer full): The object picked by @wait_func or %NULL if @error is set.
  */
@@ -848,10 +850,7 @@ udisks_daemon_wait_for_object_sync (UDisksDaemon         *daemon,
                                     guint                 timeout_seconds,
                                     GError              **error)
 {
-  GDBusObjectManagerServer *manager;
   UDisksObject *ret;
-  GList *objects;
-  GList *l;
   WaitData data;
 
   /* TODO: support GCancellable */
@@ -866,23 +865,11 @@ udisks_daemon_wait_for_object_sync (UDisksDaemon         *daemon,
   data.loop = NULL;
 
   g_object_ref (daemon);
-  manager = udisks_daemon_get_object_manager (daemon);
 
  again:
-  objects = g_dbus_object_manager_get_objects (G_DBUS_OBJECT_MANAGER (manager));
-  for (l = objects; l != NULL; l = l->next)
-    {
-      UDisksObject *object = UDISKS_OBJECT (l->data);
-      if (wait_func (daemon, object, user_data))
-        {
-          ret = g_object_ref (object);
-          break;
-        }
-    }
-  g_list_foreach (objects, (GFunc) g_object_unref, NULL);
-  g_list_free (objects);
+  ret = wait_func (daemon, user_data);
 
-  if (ret == NULL)
+  if (ret == NULL && timeout_seconds > 0)
     {
       GSource *source;
 
@@ -939,27 +926,6 @@ udisks_daemon_wait_for_object_sync (UDisksDaemon         *daemon,
 
 /* ---------------------------------------------------------------------------------------------------- */
 
-static gboolean
-wait_for_dev_t_cb (UDisksDaemon  *daemon,
-                   UDisksObject  *object,
-                   gpointer       user_data)
-{
-  dev_t *dev = user_data;
-  UDisksBlock *block;
-  gboolean ret;
-
-  ret = FALSE;
-  block = udisks_object_peek_block (object);
-  if (block == NULL)
-    goto out;
-
-  if (*dev == udisks_block_get_device_number (block))
-    ret = TRUE;
-
- out:
-  return ret;
-}
-
 /**
  * udisks_daemon_find_block:
  * @daemon: A #UDisksDaemon.
@@ -973,12 +939,111 @@ UDisksObject *
 udisks_daemon_find_block (UDisksDaemon *daemon,
                           dev_t         block_device_number)
 {
-  return udisks_daemon_wait_for_object_sync (daemon,
-                                             wait_for_dev_t_cb,
-                                             &block_device_number,
-                                             NULL, /* user_data_free_func */
-                                             0,
-                                             NULL);
+  UDisksObject *ret = NULL;
+  GList *objects, *l;
+
+  objects = g_dbus_object_manager_get_objects (G_DBUS_OBJECT_MANAGER (daemon->object_manager));
+  for (l = objects; l != NULL; l = l->next)
+    {
+      UDisksObject *object = UDISKS_OBJECT (l->data);
+      UDisksBlock *block;
+
+      block = udisks_object_peek_block (object);
+      if (block == NULL)
+        continue;
+
+      if (udisks_block_get_device_number (block) == block_device_number)
+        {
+          ret = g_object_ref (object);
+          goto out;
+        }
+    }
+ out:
+  g_list_free_full (objects, g_object_unref);
+  return ret;
+}
+
+/* ---------------------------------------------------------------------------------------------------- */
+
+/**
+ * udisks_daemon_find_block_by_device_file:
+ * @daemon: A #UDisksDaemon.
+ * @device_file: A device file.
+ *
+ * Finds a block device with device file given by @device_file.
+ *
+ * Returns: (transfer full): A #UDisksObject or %NULL if not found. Free with g_object_unref().
+ */
+UDisksObject *
+udisks_daemon_find_block_by_device_file (UDisksDaemon *daemon,
+                                         const gchar  *device_file)
+{
+  UDisksObject *ret = NULL;
+  GList *objects, *l;
+
+  objects = g_dbus_object_manager_get_objects (G_DBUS_OBJECT_MANAGER (daemon->object_manager));
+  for (l = objects; l != NULL; l = l->next)
+    {
+      UDisksObject *object = UDISKS_OBJECT (l->data);
+      UDisksBlock *block;
+
+      block = udisks_object_peek_block (object);
+      if (block == NULL)
+        continue;
+
+      if (g_strcmp0 (udisks_block_get_device (block), device_file) == 0)
+        {
+          ret = g_object_ref (object);
+          goto out;
+        }
+    }
+ out:
+  g_list_free_full (objects, g_object_unref);
+  return ret;
+}
+
+/* ---------------------------------------------------------------------------------------------------- */
+
+/**
+ * udisks_daemon_find_block_by_sysfs_path:
+ * @daemon: A #UDisksDaemon.
+ * @sysfs_path: A sysfs path.
+ *
+ * Finds a block device with a sysfs path given by @sysfs_path.
+ *
+ * Returns: (transfer full): A #UDisksObject or %NULL if not found. Free with g_object_unref().
+ */
+UDisksObject *
+udisks_daemon_find_block_by_sysfs_path (UDisksDaemon *daemon,
+                                        const gchar  *sysfs_path)
+{
+  UDisksObject *ret = NULL;
+  GList *objects, *l;
+
+  objects = g_dbus_object_manager_get_objects (G_DBUS_OBJECT_MANAGER (daemon->object_manager));
+  for (l = objects; l != NULL; l = l->next)
+    {
+      UDisksObject *object = UDISKS_OBJECT (l->data);
+      GUdevDevice *device;
+
+      if (!UDISKS_IS_LINUX_BLOCK_OBJECT (object))
+        continue;
+
+      device = udisks_linux_block_object_get_device (UDISKS_LINUX_BLOCK_OBJECT (object));
+      if (device == NULL)
+        continue;
+
+      if (g_strcmp0 (g_udev_device_get_sysfs_path (device), sysfs_path) == 0)
+        {
+          g_object_unref (device);
+          ret = g_object_ref (object);
+          goto out;
+        }
+      g_object_unref (device);
+    }
+ out:
+  g_list_free_full (objects, g_object_unref);
+  return ret;
 }
 
 /* ---------------------------------------------------------------------------------------------------- */
@@ -999,6 +1064,21 @@ udisks_daemon_find_object (UDisksDaemon         *daemon,
   return (UDisksObject *) g_dbus_object_manager_get_object (G_DBUS_OBJECT_MANAGER (daemon->object_manager),
                                                             object_path);
 }
+
+/**
+ * udisks_daemon_get_objects:
+ * @daemon: A #UDisksDaemon.
+ *
+ * Gets all D-Bus objects exported by @daemon.
+ *
+ * Returns: (transfer full) (element-type UDisksObject): A list of #UDisksObject instaces. The returned list should be freed with g_list_free() after each element has been freed with g_object_unref().
+ */
+GList *
+udisks_daemon_get_objects (UDisksDaemon *daemon)
+{
+  return g_dbus_object_manager_get_objects (G_DBUS_OBJECT_MANAGER (daemon->object_manager));
+}
+
 
 /* ---------------------------------------------------------------------------------------------------- */
 
@@ -1194,11 +1274,10 @@ udisks_daemon_mounted_fs_cleanup (UDisksDaemon *daemon)
                                         new_value, /* consumes new_value */
                                         &error))
         {
-          g_warning ("%s: Error setting mounted-fs: %s (%s, %d)",
-                     G_STRFUNC,
-                     error->message,
-                     g_quark_to_string (error->domain),
-                     error->code);
+          udisks_warning ("Error setting mounted-fs: %s (%s, %d)",
+                          error->message,
+                          g_quark_to_string (error->domain),
+                          error->code);
           g_error_free (error);
           goto out;
         }

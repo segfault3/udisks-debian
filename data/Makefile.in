@@ -87,6 +87,8 @@ DATA = $(dbusconf_DATA) $(dbusservice_DATA) $(polkit_DATA) \
 DISTFILES = $(DIST_COMMON) $(DIST_SOURCES) $(TEXINFOS) $(EXTRA_DIST)
 ACLOCAL = @ACLOCAL@
 ACLOCAL_AMFLAGS = @ACLOCAL_AMFLAGS@
+ACL_CFLAGS = @ACL_CFLAGS@
+ACL_LIBS = @ACL_LIBS@
 ALL_LINGUAS = @ALL_LINGUAS@
 AMTAR = @AMTAR@
 AM_DEFAULT_VERBOSITY = @AM_DEFAULT_VERBOSITY@
@@ -131,6 +133,7 @@ GTKDOC_MKPDF = @GTKDOC_MKPDF@
 GTKDOC_REBASE = @GTKDOC_REBASE@
 GUDEV_CFLAGS = @GUDEV_CFLAGS@
 GUDEV_LIBS = @GUDEV_LIBS@
+HAVE_LIBSYSTEMD_LOGIN = @HAVE_LIBSYSTEMD_LOGIN@
 HTML_DIR = @HTML_DIR@
 INSTALL = @INSTALL@
 INSTALL_DATA = @INSTALL_DATA@
@@ -143,6 +146,10 @@ INTLTOOL_EXTRACT = @INTLTOOL_EXTRACT@
 INTLTOOL_MERGE = @INTLTOOL_MERGE@
 INTLTOOL_PERL = @INTLTOOL_PERL@
 INTLTOOL_UPDATE = @INTLTOOL_UPDATE@
+INTLTOOL_V_MERGE = @INTLTOOL_V_MERGE@
+INTLTOOL_V_MERGE_OPTIONS = @INTLTOOL_V_MERGE_OPTIONS@
+INTLTOOL__v_MERGE_ = @INTLTOOL__v_MERGE_@
+INTLTOOL__v_MERGE_0 = @INTLTOOL__v_MERGE_0@
 INTROSPECTION_CFLAGS = @INTROSPECTION_CFLAGS@
 INTROSPECTION_COMPILER = @INTROSPECTION_COMPILER@
 INTROSPECTION_GENERATE = @INTROSPECTION_GENERATE@
@@ -157,6 +164,8 @@ LIBATASMART_CFLAGS = @LIBATASMART_CFLAGS@
 LIBATASMART_LIBS = @LIBATASMART_LIBS@
 LIBOBJS = @LIBOBJS@
 LIBS = @LIBS@
+LIBSYSTEMD_LOGIN_CFLAGS = @LIBSYSTEMD_LOGIN_CFLAGS@
+LIBSYSTEMD_LOGIN_LIBS = @LIBSYSTEMD_LOGIN_LIBS@
 LIBTOOL = @LIBTOOL@
 LIPO = @LIPO@
 LN_S = @LN_S@
@@ -199,6 +208,10 @@ SED = @SED@
 SET_MAKE = @SET_MAKE@
 SHELL = @SHELL@
 STRIP = @STRIP@
+UDISKS_MAJOR_VERSION = @UDISKS_MAJOR_VERSION@
+UDISKS_MICRO_VERSION = @UDISKS_MICRO_VERSION@
+UDISKS_MINOR_VERSION = @UDISKS_MINOR_VERSION@
+UDISKS_VERSION = @UDISKS_VERSION@
 USE_NLS = @USE_NLS@
 VERSION = @VERSION@
 WARN_CFLAGS = @WARN_CFLAGS@
@@ -237,6 +250,8 @@ htmldir = @htmldir@
 includedir = @includedir@
 infodir = @infodir@
 install_sh = @install_sh@
+intltool__v_merge_options_ = @intltool__v_merge_options_@
+intltool__v_merge_options_0 = @intltool__v_merge_options_0@
 libdir = @libdir@
 libexecdir = @libexecdir@
 localedir = @localedir@
@@ -246,13 +261,10 @@ mkdir_p = @mkdir_p@
 oldincludedir = @oldincludedir@
 pdfdir = @pdfdir@
 prefix = @prefix@
-privlibdir = @privlibdir@
 program_transform_name = @program_transform_name@
 psdir = @psdir@
 sbindir = @sbindir@
 sharedstatedir = @sharedstatedir@
-slashlibdir = @slashlibdir@
-slashsbindir = @slashsbindir@
 srcdir = @srcdir@
 sysconfdir = @sysconfdir@
 systemdsystemunitdir = @systemdsystemunitdir@
@@ -260,6 +272,7 @@ target_alias = @target_alias@
 top_build_prefix = @top_build_prefix@
 top_builddir = @top_builddir@
 top_srcdir = @top_srcdir@
+udevdir = @udevdir@
 NULL = 
 dbusservicedir = $(datadir)/dbus-1/system-services
 dbusservice_in_files = org.freedesktop.UDisks2.service.in
@@ -270,7 +283,7 @@ dbusconf_DATA = $(dbusconf_in_files:.conf.in=.conf)
 systemdservice_in_files = udisks2.service.in
 @HAVE_SYSTEMD_TRUE@systemdservicedir = $(systemdsystemunitdir)
 @HAVE_SYSTEMD_TRUE@systemdservice_DATA = $(systemdservice_in_files:.service.in=.service)
-udevrulesdir = $(slashlibdir)/udev/rules.d
+udevrulesdir = $(udevdir)/rules.d
 udevrules_DATA = 80-udisks2.rules
 polkitdir = $(datadir)/polkit-1/actions
 polkit_in_files = org.freedesktop.udisks2.policy.in
@@ -577,13 +590,13 @@ uninstall-am: uninstall-dbusconfDATA uninstall-dbusserviceDATA \
 
 
 $(dbusservice_DATA): $(dbusservice_in_files) Makefile
-	@sed -e "s|\@privlibdir\@|$(privlibdir)|" $< > $@
+	@sed -e "s|\@udisksdprivdir\@|$(prefix)/lib/udisks2|" $< > $@
 
 $(dbusconf_DATA): $(dbusconf_in_files) Makefile
 	cp $< $@
 
 @HAVE_SYSTEMD_TRUE@$(systemdservice_DATA): $(systemdservice_in_files) Makefile
-@HAVE_SYSTEMD_TRUE@	@sed -e "s|\@privlibdir\@|$(privlibdir)|" $< > $@
+@HAVE_SYSTEMD_TRUE@	@sed -e "s|\@udisksdprivdir\@|$(prefix)/lib/udisks2|" $< > $@
 
 @INTLTOOL_POLICY_RULE@
 

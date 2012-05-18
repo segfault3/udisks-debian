@@ -38,7 +38,7 @@
     <!--
         LoopSetup:
         @fd: An index for the file descriptor to use.
-        @options: Options - known options (in addition to <link linkend="udisks-std-options">standard options</link>) includes <parameter>offset</parameter> (of type 't'), <parameter>size</parameter> (of type 't') and <parameter>read-only</parameter> (of type 'b').
+        @options: Options - known options (in addition to <link linkend="udisks-std-options">standard options</link>) includes <parameter>offset</parameter> (of type 't'), <parameter>size</parameter> (of type 't'), <parameter>read-only</parameter> (of type 'b') and <parameter>no-part-scan</parameter> (of type 'b').
         @resulting_device: An object path to the object implementing the #org.freedesktop.UDisks2.Block interface.
 
         Creates a block device for the file represented by @fd.
@@ -53,10 +53,10 @@
 
   <!--
       org.freedesktop.UDisks2.Drive:
-      @short_description: Disk Drive
+      @short_description: Disk drives
 
-      This interface is used to represent disk drives with or without
-      removable media.
+      This interface is used to represent both hard disks and disk
+      drives (with or without removable media).
 
       This interface should not to be confused with the
       #org.freedesktop.UDisks2.Block interface that is used for
@@ -68,13 +68,13 @@
   -->
   <interface name="org.freedesktop.UDisks2.Drive">
     <!-- Vendor: A name for the vendor of the drive or blank if unknown. -->
-    <property name="Vendor" type="ay" access="read"/>
+    <property name="Vendor" type="s" access="read"/>
     <!-- Model: A name for the model of the drive or blank if unknown. -->
-    <property name="Model" type="ay" access="read"/>
+    <property name="Model" type="s" access="read"/>
     <!-- Revision: Firmware Revision or blank if unknown. -->
-    <property name="Revision" type="ay" access="read"/>
+    <property name="Revision" type="s" access="read"/>
     <!-- Serial: Serial number of the drive or blank if unknown. -->
-    <property name="Serial" type="ay" access="read"/>
+    <property name="Serial" type="s" access="read"/>
     <!-- WWN:
 
          The <ulink
@@ -223,6 +223,11 @@
     -->
     <property name="ConnectionBus" type="s" access="read"/>
 
+    <!-- Seat:
+         A string identifying what seat the drive is plugged into, if any.
+    -->
+    <property name="Seat" type="s" access="read"/>
+
     <!--
         Removable:
         A hint whether the drive and/or its media is considered
@@ -275,7 +280,7 @@
 
   <!--
     org.freedesktop.UDisks2.Drive.Ata:
-    @short_description: Disk drive using the ATA command-set
+    @short_description: Disk drives using the ATA command-set
 
     Objects implementing this interface also implement the
     #org.freedesktop.UDisks2.Drive interface.
@@ -461,7 +466,7 @@
 
   <!--
     org.freedesktop.UDisks2.Block:
-    @short_description: Low-level Block Device
+    @short_description: Block device
 
     This interface represents a block device.
 
@@ -585,7 +590,7 @@
 
          This property is blank if there is no label or the label is unknown.
     -->
-    <property name="IdLabel" type="ay" access="read"/>
+    <property name="IdLabel" type="s" access="read"/>
     <!-- IdUUID:
          The <ulink url="http://en.wikipedia.org/wiki/UUID">UUID</ulink> of the
          filesystem or other structured data on the block device. Do not make
@@ -594,7 +599,7 @@
 
          This property is blank if there is no UUID or the UUID is unknown.
     -->
-    <property name="IdUUID" type="ay" access="read"/>
+    <property name="IdUUID" type="s" access="read"/>
 
     <!-- Configuration:
          The configuration for the device.
@@ -980,10 +985,10 @@
     <property name="Size" type="t" access="read"/>
 
     <!-- Name: Label of partition or blank if not supported or unknown. -->
-    <property name="Name" type="ay" access="read"/>
+    <property name="Name" type="s" access="read"/>
 
     <!-- UUID: The UUID of the partition or blank if not supported or unknown. -->
-    <property name="UUID" type="ay" access="read"/>
+    <property name="UUID" type="s" access="read"/>
 
     <!-- Table:
          The object path of the #org.freedesktop.UDisks2.PartitionTable
@@ -1075,7 +1080,7 @@
         Sets the filesystem label.
     -->
     <method name="SetLabel">
-      <arg name="label" direction="in" type="ay"/>
+      <arg name="label" direction="in" type="s"/>
       <arg name="options" direction="in" type="a{sv}"/>
     </method>
 
@@ -1091,13 +1096,40 @@
         @options: Options - known options (in addition to <link linkend="udisks-std-options">standard options</link>) includes <parameter>fstype</parameter> (of type 's') and <parameter>options</parameter> (of type 's').
         @mount_path: The filesystem path where the device was mounted.
 
-        Mount a filesystem on the device.
+        Mounts the filesystem.
 
-        The directory the device will be mounted in is determined by
-        looking at data related to the device (such the filesystem
-        UUID and label) and will be created automatically. It is
-        returned in @mount_path and is normally a sub-directory of
-        <filename class='directory'>/media</filename>.
+        The directory the filesystem will be mounted in is determined
+        by looking at data related to the device or filesystem (such
+        the filesystem UUID and label) and will be created
+        automatically except if the device the filesystem resides on
+        is referenced in the <filename>/etc/fstab</filename> file, see
+        below. In either case, the directory the filesystem is mounted
+        in, is returned in @mount_path on success - it is usually a
+        sub-directory of <filename
+        class='directory'>/run/media/$USER</filename> but note that
+        any directory may be returned.
+
+        The filesystem type to use can be overridden with the @fstype
+        option and mount options (a comma-separated string) can be
+        given in @options option. Note that both the mount options and
+        filesystem types are validated against a (small) whitelist to
+        avoid unexpected privilege escalation
+
+        If the device in question is referenced in the
+        <filename>/etc/fstab</filename> file, the
+        <command>mount</command> command is called directly (as root)
+        and the given options or filesystem type given in @options are
+        ignored.
+
+        If <literal>x-udisks-auth</literal> is specified as an option
+        for the device in the <filename>/etc/fstab</filename> file,
+        then the <command>mount</command> command is run as the
+        calling user, without performing any authorization check
+        mentioned above. If this fails because of insufficient
+        permissions, an authorization check is performed (which
+        typically results in the user having to authenticate as an
+        administrator). If authorized, the <command>mount</command>
+        command is then run as root.
 
         The filesystem should be unmounted using the
         org.freedesktop.UDisks2.Filesystem.Unmount() method.
@@ -1109,36 +1141,11 @@
         (e.g. unmounted by the super-user by using the
         <citerefentry><refentrytitle>umount</refentrytitle><manvolnum>8</manvolnum></citerefentry>
         command directly), the device will be unmounted (if needed)
-        and the mount point will be cleaned up.
-
-        The file system type can be overridden with the
-        <parameter>fstype</parameter> option and mount options can be
-        given in <parameter>options</parameter> as a comma-separated
-        string and is of the same format as would be passed to the
-        <citerefentry><refentrytitle>mount</refentrytitle><manvolnum>8</manvolnum></citerefentry>
-        command. Note that the mount options are validated - only a
-        small subset per filesystem type is allowed.
-
-        If the device in question is referenced in a system-wide
-        configuration file (such as the <filename>/etc/fstab</filename> file)
-        then the
-        <citerefentry><refentrytitle>mount</refentrytitle><manvolnum>8</manvolnum></citerefentry>
-        command is called directly as the calling user.
-        If the calling user does not have sufficient permissions to
-        mount the device (it could be the <literal>user</literal> or
-        <literal>users</literal> option isn't specificed), then
-        additional authorization is requested and, if obtained, the
-        <citerefentry><refentrytitle>mount</refentrytitle><manvolnum>8</manvolnum></citerefentry>
-        command is invoked as root.
-        Additionally, the
-        given <parameter>options</parameter> and
-        <parameter>fstype</parameter> options are not used as they are
-        instead read from the system-wide configuration file in
-        question.
+        and/or the mount point will be cleaned up.
     -->
     <method name="Mount">
       <arg name="options" direction="in" type="a{sv}"/>
-      <arg name="mount_path" direction="out" type="ay"/>
+      <arg name="mount_path" direction="out" type="s"/>
     </method>
 
     <!--
@@ -1147,23 +1154,18 @@
 
         Unmount a mounted device.
 
+        If the device in question was not mounted by the calling user
+        via the org.freedesktop.UDisks2.Filesystem.Mount() method the
+        filesystem is unmounted without any authorization checks.
+        Otherwise, an authorization check is performed (which
+        typically results in the user having to authenticate as an
+        administrator). If authorized, the filesystem is unmounted.
+
         If the filesystem is busy, this operation fails with the error
         <link linkend="UDISKS-ERROR-DEVICE-BUSY:CAPS"><constant>org.freedesktop.UDisks2.Error.DeviceBusy</constant></link>
-        unless the option <parameter>force</parameter> is used.
-
-        If the device in question is referenced in a system-wide
-        configuration file (such as the <filename>/etc/fstab</filename> file)
-        then the
-        <citerefentry><refentrytitle>umount</refentrytitle><manvolnum>8</manvolnum></citerefentry>
-        command is called directly as the calling user.
-        If the calling user does not have sufficient permissions to
-        unmount the device (it could be the <literal>user</literal> or
-        <literal>users</literal> option isn't specificed), then
-        additional authorization is requested and, if obtained, the
-        <citerefentry><refentrytitle>umount</refentrytitle><manvolnum>8</manvolnum></citerefentry>
-        command is invoked as root.
+        unless the @force option is used.
     -->
-<method name="Unmount">
+    <method name="Unmount">
       <arg name="options" direction="in" type="a{sv}"/>
     </method>
   </interface>
@@ -1234,7 +1236,7 @@
         device will be cleaned up.
     -->
     <method name="Unlock">
-      <arg name="passphrase" direction="in" type="ay"/>
+      <arg name="passphrase" direction="in" type="s"/>
       <arg name="options" direction="in" type="a{sv}"/>
       <arg name="cleartext_device" direction="out" type="o"/>
     </method>
@@ -1264,8 +1266,8 @@
         automatically updated.
     -->
     <method name="ChangePassphrase">
-      <arg name="passphrase" direction="in" type="ay"/>
-      <arg name="new_passphrase" direction="in" type="ay"/>
+      <arg name="passphrase" direction="in" type="s"/>
+      <arg name="new_passphrase" direction="in" type="s"/>
       <arg name="options" direction="in" type="a{sv}"/>
     </method>
 
@@ -1298,6 +1300,34 @@
          if unknown.
     -->
     <property name="BackingFile" type="ay" access="read"/>
+
+    <!-- Autoclear:
+         If %TRUE, the kernel will automatically clear the loop device
+         when the last closer closes the device. This typically
+         happens when the loop device is unmounted.
+    -->
+    <property name="Autoclear" type="b" access="read"/>
+
+    <!-- SetupByUID:
+         The id of the user who set up the loop device or 0 if set up
+         by root or not through udisks.
+    -->
+    <property name="SetupByUID" type="u" access="read"/>
+
+    <!--
+        SetAutoclear:
+        @value: The new value of autoclear.
+        @options: Options (currently unused except for <link linkend="udisks-std-options">standard options</link>).
+
+        Setter for the #org.freedesktop.UDisks2.Loop:Autoclear
+        property. Since this may require authentication and thus may
+        fail, it is a implemented this way instead of the property
+        being writable.
+    -->
+    <method name="SetAutoclear">
+      <arg name="value" direction="in" type="b"/>
+      <arg name="options" direction="in" type="a{sv}"/>
+    </method>
   </interface>
 
   <!-- ********************************************************************** -->
@@ -1306,7 +1336,33 @@
       org.freedesktop.UDisks2.Job:
       @short_description: Long-running tasks
 
-      This interface is used for long-running tasks.
+      Some operations may take a long time (hours) to complete, that
+      is, to actually send the D-Bus reply message back. One example
+      of such an operation is the
+      org.freedesktop.UDisks2.Block.Format() method that is used to
+      format a block device.
+
+      When such operations are initated, a job object implementing
+      this interface may be created so the progress can be tracked by
+      the caller (and also other observers).
+
+      The object(s) that a job affects (such as block devices or
+      drives) can be determined by looking at the
+      #org.freedesktop.UDisks2.Job:Objects property. Among other
+      things, this can be used to draw a spinner in the user interface
+      next to e.g. an icon for the drive or device in question.
+
+      A job <emphasis>may</emphasis> convey progress (if the
+      underlying tool used supports it), see the
+      #org.freedesktop.UDisks2.Job:ExpectedEndTime property.
+
+      When a job completes, the #org.freedesktop.UDisks2.Job::Completed signal
+      is emitted.
+
+      To cancel a job use the org.freedesktop.UDisks2.Job.Cancel()
+      method. This will cause the job to complete (with @success set
+      to %FALSE) and the D-Bus method used to initiate the operation
+      to return, usually returning the <literal>org.freedesktop.UDisks2.Error.Cancelled</literal> error.
   -->
   <interface name="org.freedesktop.UDisks2.Job">
 
@@ -1323,7 +1379,7 @@
 
          The expected point in time (seconds since the <ulink
          url="http://en.wikipedia.org/wiki/Unix_epoch">Unix
-         Epoch</ulink>) that the job will complete.
+         Epoch</ulink>) that the job will complete or 0 if unknown.
     -->
     <property name="ExpectedEndTime" type="t" access="read"/>
 

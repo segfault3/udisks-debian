@@ -35,7 +35,7 @@ PRE_UNINSTALL = :
 POST_UNINSTALL = :
 build_triplet = @build@
 host_triplet = @host@
-privlib_PROGRAMS = udisksd$(EXEEXT)
+udisksdpriv_PROGRAMS = udisksd$(EXEEXT)
 subdir = src
 DIST_COMMON = $(srcdir)/Makefile.am $(srcdir)/Makefile.in
 ACLOCAL_M4 = $(top_srcdir)/aclocal.m4
@@ -49,6 +49,7 @@ CONFIG_CLEAN_VPATH_FILES =
 LTLIBRARIES = $(noinst_LTLIBRARIES)
 am__DEPENDENCIES_1 =
 libudisks_daemon_la_DEPENDENCIES = $(am__DEPENDENCIES_1) \
+	$(am__DEPENDENCIES_1) $(am__DEPENDENCIES_1) \
 	$(am__DEPENDENCIES_1) $(am__DEPENDENCIES_1) \
 	$(am__DEPENDENCIES_1) $(am__DEPENDENCIES_1) \
 	$(top_builddir)/udisks/libudisks2.la $(am__DEPENDENCIES_1)
@@ -94,8 +95,8 @@ libudisks_daemon_la_LINK = $(LIBTOOL) $(AM_V_lt) --tag=CC \
 	$(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=link $(CCLD) \
 	$(libudisks_daemon_la_CFLAGS) $(CFLAGS) $(AM_LDFLAGS) \
 	$(LDFLAGS) -o $@
-am__installdirs = "$(DESTDIR)$(privlibdir)"
-PROGRAMS = $(privlib_PROGRAMS)
+am__installdirs = "$(DESTDIR)$(udisksdprivdir)"
+PROGRAMS = $(udisksdpriv_PROGRAMS)
 am_udisksd_OBJECTS = udisksd-main.$(OBJEXT) $(am__objects_1)
 udisksd_OBJECTS = $(am_udisksd_OBJECTS)
 udisksd_DEPENDENCIES = $(am__DEPENDENCIES_1) $(am__DEPENDENCIES_1) \
@@ -174,6 +175,8 @@ am__relativize = \
   reldir="$$dir2"
 ACLOCAL = @ACLOCAL@
 ACLOCAL_AMFLAGS = @ACLOCAL_AMFLAGS@
+ACL_CFLAGS = @ACL_CFLAGS@
+ACL_LIBS = @ACL_LIBS@
 ALL_LINGUAS = @ALL_LINGUAS@
 AMTAR = @AMTAR@
 AM_DEFAULT_VERBOSITY = @AM_DEFAULT_VERBOSITY@
@@ -218,6 +221,7 @@ GTKDOC_MKPDF = @GTKDOC_MKPDF@
 GTKDOC_REBASE = @GTKDOC_REBASE@
 GUDEV_CFLAGS = @GUDEV_CFLAGS@
 GUDEV_LIBS = @GUDEV_LIBS@
+HAVE_LIBSYSTEMD_LOGIN = @HAVE_LIBSYSTEMD_LOGIN@
 HTML_DIR = @HTML_DIR@
 INSTALL = @INSTALL@
 INSTALL_DATA = @INSTALL_DATA@
@@ -230,6 +234,10 @@ INTLTOOL_EXTRACT = @INTLTOOL_EXTRACT@
 INTLTOOL_MERGE = @INTLTOOL_MERGE@
 INTLTOOL_PERL = @INTLTOOL_PERL@
 INTLTOOL_UPDATE = @INTLTOOL_UPDATE@
+INTLTOOL_V_MERGE = @INTLTOOL_V_MERGE@
+INTLTOOL_V_MERGE_OPTIONS = @INTLTOOL_V_MERGE_OPTIONS@
+INTLTOOL__v_MERGE_ = @INTLTOOL__v_MERGE_@
+INTLTOOL__v_MERGE_0 = @INTLTOOL__v_MERGE_0@
 INTROSPECTION_CFLAGS = @INTROSPECTION_CFLAGS@
 INTROSPECTION_COMPILER = @INTROSPECTION_COMPILER@
 INTROSPECTION_GENERATE = @INTROSPECTION_GENERATE@
@@ -244,6 +252,8 @@ LIBATASMART_CFLAGS = @LIBATASMART_CFLAGS@
 LIBATASMART_LIBS = @LIBATASMART_LIBS@
 LIBOBJS = @LIBOBJS@
 LIBS = @LIBS@
+LIBSYSTEMD_LOGIN_CFLAGS = @LIBSYSTEMD_LOGIN_CFLAGS@
+LIBSYSTEMD_LOGIN_LIBS = @LIBSYSTEMD_LOGIN_LIBS@
 LIBTOOL = @LIBTOOL@
 LIPO = @LIPO@
 LN_S = @LN_S@
@@ -286,6 +296,10 @@ SED = @SED@
 SET_MAKE = @SET_MAKE@
 SHELL = @SHELL@
 STRIP = @STRIP@
+UDISKS_MAJOR_VERSION = @UDISKS_MAJOR_VERSION@
+UDISKS_MICRO_VERSION = @UDISKS_MICRO_VERSION@
+UDISKS_MINOR_VERSION = @UDISKS_MINOR_VERSION@
+UDISKS_VERSION = @UDISKS_VERSION@
 USE_NLS = @USE_NLS@
 VERSION = @VERSION@
 WARN_CFLAGS = @WARN_CFLAGS@
@@ -324,6 +338,8 @@ htmldir = @htmldir@
 includedir = @includedir@
 infodir = @infodir@
 install_sh = @install_sh@
+intltool__v_merge_options_ = @intltool__v_merge_options_@
+intltool__v_merge_options_0 = @intltool__v_merge_options_0@
 libdir = @libdir@
 libexecdir = @libexecdir@
 localedir = @localedir@
@@ -333,13 +349,10 @@ mkdir_p = @mkdir_p@
 oldincludedir = @oldincludedir@
 pdfdir = @pdfdir@
 prefix = @prefix@
-privlibdir = @privlibdir@
 program_transform_name = @program_transform_name@
 psdir = @psdir@
 sbindir = @sbindir@
 sharedstatedir = @sharedstatedir@
-slashlibdir = @slashlibdir@
-slashsbindir = @slashsbindir@
 srcdir = @srcdir@
 sysconfdir = @sysconfdir@
 systemdsystemunitdir = @systemdsystemunitdir@
@@ -347,6 +360,7 @@ target_alias = @target_alias@
 top_build_prefix = @top_build_prefix@
 top_builddir = @top_builddir@
 top_srcdir = @top_srcdir@
+udevdir = @udevdir@
 SUBDIRS = . tests
 NULL = 
 EXTRA_DIST = udisks-daemon-marshal.list
@@ -421,6 +435,8 @@ libudisks_daemon_la_CFLAGS = \
 	$(GUDEV_CFLAGS)					\
 	$(LIBATASMART_CFLAGS)				\
 	$(POLKIT_GOBJECT_1_CFLAGS) 			\
+	$(ACL_CFLAGS)					\
+	$(LIBSYSTEMD_LOGIN_CFLAGS)			\
 	$(NULL)
 
 libudisks_daemon_la_LIBADD = \
@@ -429,15 +445,20 @@ libudisks_daemon_la_LIBADD = \
 	$(GUDEV_LIBS)					\
 	$(LIBATASMART_LIBS)				\
 	$(POLKIT_GOBJECT_1_LIBS) 			\
+	$(ACL_LIBS)					\
+	$(LIBSYSTEMD_LOGIN_LIBS)			\
 	$(top_builddir)/udisks/libudisks2.la		\
 	$(NULL)
 
+
+# ----------------------------------------------------------------------------------------------------
+udisksdprivdir = $(prefix)/lib/udisks2
 udisksd_SOURCES = \
 				main.c			\
 	$(NULL)
 
 udisksd_CFLAGS = \
-	-DG_LOG_DOMAIN=\"udisks2-daemon\"		\
+	-DG_LOG_DOMAIN=\"udisksd\"			\
 	$(NULL)
 
 udisksd_LDADD = \
@@ -492,10 +513,10 @@ clean-noinstLTLIBRARIES:
 	done
 libudisks-daemon.la: $(libudisks_daemon_la_OBJECTS) $(libudisks_daemon_la_DEPENDENCIES) $(EXTRA_libudisks_daemon_la_DEPENDENCIES) 
 	$(AM_V_CCLD)$(libudisks_daemon_la_LINK)  $(libudisks_daemon_la_OBJECTS) $(libudisks_daemon_la_LIBADD) $(LIBS)
-install-privlibPROGRAMS: $(privlib_PROGRAMS)
+install-udisksdprivPROGRAMS: $(udisksdpriv_PROGRAMS)
 	@$(NORMAL_INSTALL)
-	test -z "$(privlibdir)" || $(MKDIR_P) "$(DESTDIR)$(privlibdir)"
-	@list='$(privlib_PROGRAMS)'; test -n "$(privlibdir)" || list=; \
+	test -z "$(udisksdprivdir)" || $(MKDIR_P) "$(DESTDIR)$(udisksdprivdir)"
+	@list='$(udisksdpriv_PROGRAMS)'; test -n "$(udisksdprivdir)" || list=; \
 	for p in $$list; do echo "$$p $$p"; done | \
 	sed 's/$(EXEEXT)$$//' | \
 	while read p p1; do if test -f $$p || test -f $$p1; \
@@ -512,23 +533,23 @@ install-privlibPROGRAMS: $(privlib_PROGRAMS)
 	while read type dir files; do \
 	    if test "$$dir" = .; then dir=; else dir=/$$dir; fi; \
 	    test -z "$$files" || { \
-	    echo " $(INSTALL_PROGRAM_ENV) $(LIBTOOL) $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=install $(INSTALL_PROGRAM) $$files '$(DESTDIR)$(privlibdir)$$dir'"; \
-	    $(INSTALL_PROGRAM_ENV) $(LIBTOOL) $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=install $(INSTALL_PROGRAM) $$files "$(DESTDIR)$(privlibdir)$$dir" || exit $$?; \
+	    echo " $(INSTALL_PROGRAM_ENV) $(LIBTOOL) $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=install $(INSTALL_PROGRAM) $$files '$(DESTDIR)$(udisksdprivdir)$$dir'"; \
+	    $(INSTALL_PROGRAM_ENV) $(LIBTOOL) $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=install $(INSTALL_PROGRAM) $$files "$(DESTDIR)$(udisksdprivdir)$$dir" || exit $$?; \
 	    } \
 	; done
 
-uninstall-privlibPROGRAMS:
+uninstall-udisksdprivPROGRAMS:
 	@$(NORMAL_UNINSTALL)
-	@list='$(privlib_PROGRAMS)'; test -n "$(privlibdir)" || list=; \
+	@list='$(udisksdpriv_PROGRAMS)'; test -n "$(udisksdprivdir)" || list=; \
 	files=`for p in $$list; do echo "$$p"; done | \
 	  sed -e 'h;s,^.*/,,;s/$(EXEEXT)$$//;$(transform)' \
 	      -e 's/$$/$(EXEEXT)/' `; \
 	test -n "$$list" || exit 0; \
-	echo " ( cd '$(DESTDIR)$(privlibdir)' && rm -f" $$files ")"; \
-	cd "$(DESTDIR)$(privlibdir)" && rm -f $$files
+	echo " ( cd '$(DESTDIR)$(udisksdprivdir)' && rm -f" $$files ")"; \
+	cd "$(DESTDIR)$(udisksdprivdir)" && rm -f $$files
 
-clean-privlibPROGRAMS:
-	@list='$(privlib_PROGRAMS)'; test -n "$$list" || exit 0; \
+clean-udisksdprivPROGRAMS:
+	@list='$(udisksdpriv_PROGRAMS)'; test -n "$$list" || exit 0; \
 	echo " rm -f" $$list; \
 	rm -f $$list || exit $$?; \
 	test -n "$(EXEEXT)" || exit 0; \
@@ -1035,7 +1056,7 @@ check: $(BUILT_SOURCES)
 all-am: Makefile $(LTLIBRARIES) $(PROGRAMS)
 installdirs: installdirs-recursive
 installdirs-am:
-	for dir in "$(DESTDIR)$(privlibdir)"; do \
+	for dir in "$(DESTDIR)$(udisksdprivdir)"; do \
 	  test -z "$$dir" || $(MKDIR_P) "$$dir"; \
 	done
 install: $(BUILT_SOURCES)
@@ -1073,7 +1094,7 @@ maintainer-clean-generic:
 clean: clean-recursive
 
 clean-am: clean-generic clean-libtool clean-noinstLTLIBRARIES \
-	clean-privlibPROGRAMS mostlyclean-am
+	clean-udisksdprivPROGRAMS mostlyclean-am
 
 distclean: distclean-recursive
 	-rm -rf ./$(DEPDIR)
@@ -1093,7 +1114,7 @@ info: info-recursive
 
 info-am:
 
-install-data-am: install-data-local install-privlibPROGRAMS
+install-data-am: install-data-local install-udisksdprivPROGRAMS
 
 install-dvi: install-dvi-recursive
 
@@ -1139,7 +1160,7 @@ ps: ps-recursive
 
 ps-am:
 
-uninstall-am: uninstall-privlibPROGRAMS
+uninstall-am: uninstall-udisksdprivPROGRAMS
 
 .MAKE: $(RECURSIVE_CLEAN_TARGETS) $(RECURSIVE_TARGETS) all check \
 	ctags-recursive install install-am install-strip \
@@ -1147,20 +1168,20 @@ uninstall-am: uninstall-privlibPROGRAMS
 
 .PHONY: $(RECURSIVE_CLEAN_TARGETS) $(RECURSIVE_TARGETS) CTAGS GTAGS \
 	all all-am check check-am clean clean-generic clean-libtool \
-	clean-noinstLTLIBRARIES clean-privlibPROGRAMS ctags \
+	clean-noinstLTLIBRARIES clean-udisksdprivPROGRAMS ctags \
 	ctags-recursive distclean distclean-compile distclean-generic \
 	distclean-libtool distclean-tags distdir dvi dvi-am html \
 	html-am info info-am install install-am install-data \
 	install-data-am install-data-local install-dvi install-dvi-am \
 	install-exec install-exec-am install-html install-html-am \
 	install-info install-info-am install-man install-pdf \
-	install-pdf-am install-privlibPROGRAMS install-ps \
-	install-ps-am install-strip installcheck installcheck-am \
+	install-pdf-am install-ps install-ps-am install-strip \
+	install-udisksdprivPROGRAMS installcheck installcheck-am \
 	installdirs installdirs-am maintainer-clean \
 	maintainer-clean-generic mostlyclean mostlyclean-compile \
 	mostlyclean-generic mostlyclean-libtool pdf pdf-am ps ps-am \
 	tags tags-recursive uninstall uninstall-am \
-	uninstall-privlibPROGRAMS
+	uninstall-udisksdprivPROGRAMS
 
 
 udisks-daemon-marshal.h: udisks-daemon-marshal.list

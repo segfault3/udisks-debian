@@ -39,13 +39,19 @@
 <div class="refnamediv"><table width="100%"><tr>
 <td valign="top">
 <h2><span class="refentrytitle"><a name="UDisksClient.top_of_page"></a>UDisksClient</span></h2>
-<p>UDisksClient — UDisks Client</p>
+<p>UDisksClient — Utility routines for accessing the UDisks service</p>
 </td>
 <td valign="top" align="right"></td>
 </tr></table></div>
 <div class="refsynopsisdiv">
 <a name="UDisksClient.synopsis"></a><h2>Synopsis</h2>
-<a name="UDisksPartitionTypeInfo"></a><a name="UDisksPartitionTypeInfoFlags"></a><pre class="synopsis">                    <a class="link" href="UDisksClient.html#UDisksClient-struct" title="UDisksClient">UDisksClient</a>;
+<a name="UDisksPartitionTypeInfo"></a><a name="UDisksPartitionTypeInfoFlags"></a><pre class="synopsis">#define             <a class="link" href="UDisksClient.html#UDISKS-MAJOR-VERSION:CAPS" title="UDISKS_MAJOR_VERSION">UDISKS_MAJOR_VERSION</a>
+#define             <a class="link" href="UDisksClient.html#UDISKS-MINOR-VERSION:CAPS" title="UDISKS_MINOR_VERSION">UDISKS_MINOR_VERSION</a>
+#define             <a class="link" href="UDisksClient.html#UDISKS-MICRO-VERSION:CAPS" title="UDISKS_MICRO_VERSION">UDISKS_MICRO_VERSION</a>
+#define             <a class="link" href="UDisksClient.html#UDISKS-CHECK-VERSION:CAPS" title="UDISKS_CHECK_VERSION()">UDISKS_CHECK_VERSION</a>                (major,
+                                                         minor,
+                                                         micro)
+                    <a class="link" href="UDisksClient.html#UDisksClient-struct" title="UDisksClient">UDisksClient</a>;
 <span class="returnvalue">void</span>                <a class="link" href="UDisksClient.html#udisks-client-new" title="udisks_client_new ()">udisks_client_new</a>                   (<em class="parameter"><code><a href="http://library.gnome.org/devel/gio/unstable/GCancellable.html"><span class="type">GCancellable</span></a> *cancellable</code></em>,
                                                          <em class="parameter"><code><a href="http://library.gnome.org/devel/gio/unstable/GAsyncResult.html#GAsyncReadyCallback"><span class="type">GAsyncReadyCallback</span></a> callback</code></em>,
                                                          <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gpointer"><span class="type">gpointer</span></a> user_data</code></em>);
@@ -76,6 +82,8 @@
 <a class="link" href="UDisksPartitionTable.html" title="UDisksPartitionTable"><span class="returnvalue">UDisksPartitionTable</span></a> * <a class="link" href="UDisksClient.html#udisks-client-get-partition-table" title="udisks_client_get_partition_table ()">udisks_client_get_partition_table</a>
                                                         (<em class="parameter"><code><a class="link" href="UDisksClient.html" title="UDisksClient"><span class="type">UDisksClient</span></a> *client</code></em>,
                                                          <em class="parameter"><code><a class="link" href="UDisksPartition.html" title="UDisksPartition"><span class="type">UDisksPartition</span></a> *partition</code></em>);
+<a class="link" href="UDisksLoop.html" title="UDisksLoop"><span class="returnvalue">UDisksLoop</span></a> *        <a class="link" href="UDisksClient.html#udisks-client-get-loop-for-block" title="udisks_client_get_loop_for_block ()">udisks_client_get_loop_for_block</a>    (<em class="parameter"><code><a class="link" href="UDisksClient.html" title="UDisksClient"><span class="type">UDisksClient</span></a> *client</code></em>,
+                                                         <em class="parameter"><code><a class="link" href="UDisksBlock.html" title="UDisksBlock"><span class="type">UDisksBlock</span></a> *block</code></em>);
 <a href="http://library.gnome.org/devel/glib/unstable/glib-Doubly-Linked-Lists.html#GList"><span class="returnvalue">GList</span></a> *             <a class="link" href="UDisksClient.html#udisks-client-get-partitions" title="udisks_client_get_partitions ()">udisks_client_get_partitions</a>        (<em class="parameter"><code><a class="link" href="UDisksClient.html" title="UDisksClient"><span class="type">UDisksClient</span></a> *client</code></em>,
                                                          <em class="parameter"><code><a class="link" href="UDisksPartitionTable.html" title="UDisksPartitionTable"><span class="type">UDisksPartitionTable</span></a> *table</code></em>);
 <a href="http://library.gnome.org/devel/glib/unstable/glib-Doubly-Linked-Lists.html#GList"><span class="returnvalue">GList</span></a> *             <a class="link" href="UDisksClient.html#udisks-client-get-jobs-for-object" title="udisks_client_get_jobs_for_object ()">udisks_client_get_jobs_for_object</a>   (<em class="parameter"><code><a class="link" href="UDisksClient.html" title="UDisksClient"><span class="type">UDisksClient</span></a> *client</code></em>,
@@ -171,6 +179,65 @@ client program.
 </div>
 <div class="refsect1">
 <a name="UDisksClient.details"></a><h2>Details</h2>
+<div class="refsect2">
+<a name="UDISKS-MAJOR-VERSION:CAPS"></a><h3>UDISKS_MAJOR_VERSION</h3>
+<pre class="programlisting">#define UDISKS_MAJOR_VERSION 1
+</pre>
+<p>
+The major version of the libudisks2 header files.
+</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="UDISKS-MINOR-VERSION:CAPS"></a><h3>UDISKS_MINOR_VERSION</h3>
+<pre class="programlisting">#define UDISKS_MINOR_VERSION 97
+</pre>
+<p>
+The minor version of the libudisks2 header files.
+</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="UDISKS-MICRO-VERSION:CAPS"></a><h3>UDISKS_MICRO_VERSION</h3>
+<pre class="programlisting">#define UDISKS_MICRO_VERSION 0
+</pre>
+<p>
+The micro version of the libudisks2 header files.
+</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="UDISKS-CHECK-VERSION:CAPS"></a><h3>UDISKS_CHECK_VERSION()</h3>
+<pre class="programlisting">#define             UDISKS_CHECK_VERSION(major,minor,micro)</pre>
+<p>
+Macro to check against the version of the libudisks2 library that
+is being compiled against.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>major</code></em> :</span></p></td>
+<td>The major version to check for.</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>minor</code></em> :</span></p></td>
+<td>the minor version to check for.</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>micro</code></em> :</span></p></td>
+<td>The micro version to check for.</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td>
+<a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#TRUE:CAPS"><code class="literal">TRUE</code></a> if the version of the libudisks2 header files is the
+same as or newer than the passed in version.</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
 <div class="refsect2">
 <a name="UDisksClient-struct"></a><h3>UDisksClient</h3>
 <pre class="programlisting">typedef struct _UDisksClient UDisksClient;</pre>
@@ -609,6 +676,37 @@ Gets the <a class="link" href="UDisksPartitionTable.html" title="UDisksPartition
 <tr>
 <td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
 <td>A <a class="link" href="UDisksPartitionTable.html" title="UDisksPartitionTable"><span class="type">UDisksPartitionTable</span></a>. Free with <a href="http://library.gnome.org/devel/gobject/unstable/gobject-The-Base-Object-Type.html#g-object-unref"><code class="function">g_object_unref()</code></a>. <span class="annotation">[<a href="http://foldoc.org/transfer%20full"><span class="acronym">transfer full</span></a>]</span>
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="udisks-client-get-loop-for-block"></a><h3>udisks_client_get_loop_for_block ()</h3>
+<pre class="programlisting"><a class="link" href="UDisksLoop.html" title="UDisksLoop"><span class="returnvalue">UDisksLoop</span></a> *        udisks_client_get_loop_for_block    (<em class="parameter"><code><a class="link" href="UDisksClient.html" title="UDisksClient"><span class="type">UDisksClient</span></a> *client</code></em>,
+                                                         <em class="parameter"><code><a class="link" href="UDisksBlock.html" title="UDisksBlock"><span class="type">UDisksBlock</span></a> *block</code></em>);</pre>
+<p>
+Gets the corresponding loop interface for <em class="parameter"><code>block</code></em>.
+</p>
+<p>
+This only works if <em class="parameter"><code>block</code></em> itself is a loop device or a partition of
+a loop device.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>client</code></em> :</span></p></td>
+<td>A <a class="link" href="UDisksClient.html" title="UDisksClient"><span class="type">UDisksClient</span></a>.</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>block</code></em> :</span></p></td>
+<td>A <a class="link" href="UDisksBlock.html" title="UDisksBlock"><span class="type">UDisksBlock</span></a>.</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td>A <a class="link" href="UDisksLoop.html" title="UDisksLoop"><span class="type">UDisksLoop</span></a> or <a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a>. Free with <a href="http://library.gnome.org/devel/gobject/unstable/gobject-The-Base-Object-Type.html#g-object-unref"><code class="function">g_object_unref()</code></a>. <span class="annotation">[<a href="http://foldoc.org/transfer%20full"><span class="acronym">transfer full</span></a>]</span>
 </td>
 </tr>
 </tbody>

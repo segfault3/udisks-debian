@@ -214,6 +214,7 @@ handle_set_flags (UDisksPartition        *partition,
                   GVariant               *options)
 {
   const gchar *action_id = NULL;
+  const gchar *message = NULL;
   UDisksBlock *block = NULL;
   UDisksObject *object = NULL;
   UDisksDaemon *daemon = NULL;
@@ -224,6 +225,7 @@ handle_set_flags (UDisksPartition        *partition,
   UDisksBlock *partition_table_block = NULL;
   gchar *command_line = NULL;
   gint fd = -1;
+  pid_t caller_pid;
   GError *error;
 
   error = NULL;
@@ -237,25 +239,51 @@ handle_set_flags (UDisksPartition        *partition,
   daemon = udisks_linux_block_object_get_daemon (UDISKS_LINUX_BLOCK_OBJECT (object));
   block = udisks_object_get_block (object);
 
+  error = NULL;
+  if (!udisks_daemon_util_get_caller_pid_sync (daemon,
+                                               invocation,
+                                               NULL /* GCancellable */,
+                                               &caller_pid,
+                                               &error))
+    {
+      g_dbus_method_invocation_return_gerror (invocation, error);
+      g_error_free (error);
+      goto out;
+    }
+
   partition_table_object = udisks_daemon_find_object (daemon, udisks_partition_get_table (partition));
   partition_table = udisks_object_get_partition_table (partition_table_object);
   partition_table_block = udisks_object_get_block (partition_table_object);
 
   action_id = "org.freedesktop.udisks2.modify-device";
+  /* Translators: Shown in authentication dialog when the user
+   * requests modifying a partition (changing type, flags, name etc.).
+   *
+   * Do not translate $(udisks2.device), it's a placeholder and
+   * will be replaced by the name of the drive/device in question
+   */
+  message = N_("Authentication is required to modify the partition on device $(udisks2.device)");
   if (udisks_block_get_hint_system (block))
-    action_id = "org.freedesktop.udisks2.modify-device-system";
+    {
+      action_id = "org.freedesktop.udisks2.modify-device-system";
+    }
+  else if (!udisks_daemon_util_on_same_seat (daemon, object, caller_pid))
+    {
+      action_id = "org.freedesktop.udisks2.modify-device-system-other-seat";
+    }
+
   if (!udisks_daemon_util_check_authorization_sync (daemon,
                                                     object,
                                                     action_id,
                                                     options,
-                                                    N_("Authentication is required to modify the partition on device $(udisks2.device)"),
+                                                    message,
                                                     invocation))
     goto out;
 
-  escaped_device = g_strescape (udisks_block_get_device (partition_table_block), NULL);
+  escaped_device = udisks_daemon_util_escape_and_quote (udisks_block_get_device (partition_table_block));
   if (g_strcmp0 (udisks_partition_table_get_type_ (partition_table), "gpt") == 0)
     {
-      command_line = g_strdup_printf ("sgdisk --attributes %d:=:0x%08x%08x \"%s\"",
+      command_line = g_strdup_printf ("sgdisk --attributes %d:=:0x%08x%08x %s",
                                       udisks_partition_get_number (partition),
                                       (guint32) (flags >> 32),
                                       (guint32) (flags & 0xffffffff),
@@ -263,7 +291,7 @@ handle_set_flags (UDisksPartition        *partition,
     }
   else if (g_strcmp0 (udisks_partition_table_get_type_ (partition_table), "dos") == 0)
     {
-      command_line = g_strdup_printf ("parted --script \"%s\" \"set %d boot %s\"",
+      command_line = g_strdup_printf ("parted --script %s \"set %d boot %s\"",
                                       escaped_device,
                                       udisks_partition_get_number (partition),
                                       flags & 0x80 ? "on" : "off");
@@ -330,6 +358,7 @@ handle_set_name (UDisksPartition        *partition,
                  GVariant               *options)
 {
   const gchar *action_id = NULL;
+  const gchar *message = NULL;
   UDisksBlock *block = NULL;
   UDisksObject *object = NULL;
   UDisksDaemon *daemon = NULL;
@@ -341,6 +370,7 @@ handle_set_name (UDisksPartition        *partition,
   UDisksBlock *partition_table_block = NULL;
   gchar *command_line = NULL;
   gint fd = -1;
+  pid_t caller_pid;
   GError *error;
 
   error = NULL;
@@ -354,23 +384,49 @@ handle_set_name (UDisksPartition        *partition,
   daemon = udisks_linux_block_object_get_daemon (UDISKS_LINUX_BLOCK_OBJECT (object));
   block = udisks_object_get_block (object);
 
+  error = NULL;
+  if (!udisks_daemon_util_get_caller_pid_sync (daemon,
+                                               invocation,
+                                               NULL /* GCancellable */,
+                                               &caller_pid,
+                                               &error))
+    {
+      g_dbus_method_invocation_return_gerror (invocation, error);
+      g_error_free (error);
+      goto out;
+    }
+
   partition_table_object = udisks_daemon_find_object (daemon, udisks_partition_get_table (partition));
   partition_table = udisks_object_get_partition_table (partition_table_object);
   partition_table_block = udisks_object_get_block (partition_table_object);
 
   action_id = "org.freedesktop.udisks2.modify-device";
+  /* Translators: Shown in authentication dialog when the user
+   * requests modifying a partition (changing type, flags, name etc.).
+   *
+   * Do not translate $(udisks2.device), it's a placeholder and
+   * will be replaced by the name of the drive/device in question
+   */
+  message = N_("Authentication is required to modify the partition on device $(udisks2.device)");
   if (udisks_block_get_hint_system (block))
-    action_id = "org.freedesktop.udisks2.modify-device-system";
+    {
+      action_id = "org.freedesktop.udisks2.modify-device-system";
+    }
+  else if (!udisks_daemon_util_on_same_seat (daemon, object, caller_pid))
+    {
+      action_id = "org.freedesktop.udisks2.modify-device-system-other-seat";
+    }
+
   if (!udisks_daemon_util_check_authorization_sync (daemon,
                                                     object,
                                                     action_id,
                                                     options,
-                                                    N_("Authentication is required to modify the partition on device $(udisks2.device)"),
+                                                    message,
                                                     invocation))
     goto out;
 
-  escaped_device = g_strescape (udisks_block_get_device (partition_table_block), NULL);
-  escaped_name = g_strescape (name, NULL);
+  escaped_device = udisks_daemon_util_escape_and_quote (udisks_block_get_device (partition_table_block));
+  escaped_name = udisks_daemon_util_escape_and_quote (name);
   if (g_strcmp0 (udisks_partition_table_get_type_ (partition_table), "gpt") == 0)
     {
       if (strlen (name) > 36)
@@ -385,7 +441,7 @@ handle_set_name (UDisksPartition        *partition,
        *
        * TODO is this assumption true or do we need to pass UTF-16? How is that going to work?
        */
-      command_line = g_strdup_printf ("sgdisk --change-name %d:\"%s\" \"%s\"",
+      command_line = g_strdup_printf ("sgdisk --change-name %d:%s %s",
                                       udisks_partition_get_number (partition),
                                       escaped_name,
                                       escaped_device);
@@ -484,6 +540,7 @@ handle_set_type (UDisksPartition        *partition,
                  GVariant               *options)
 {
   const gchar *action_id = NULL;
+  const gchar *message = NULL;
   UDisksBlock *block = NULL;
   UDisksObject *object = NULL;
   UDisksDaemon *daemon = NULL;
@@ -495,6 +552,7 @@ handle_set_type (UDisksPartition        *partition,
   UDisksBlock *partition_table_block = NULL;
   gchar *command_line = NULL;
   gint fd = -1;
+  pid_t caller_pid;
   GError *error;
 
   error = NULL;
@@ -508,23 +566,49 @@ handle_set_type (UDisksPartition        *partition,
   daemon = udisks_linux_block_object_get_daemon (UDISKS_LINUX_BLOCK_OBJECT (object));
   block = udisks_object_get_block (object);
 
+  error = NULL;
+  if (!udisks_daemon_util_get_caller_pid_sync (daemon,
+                                               invocation,
+                                               NULL /* GCancellable */,
+                                               &caller_pid,
+                                               &error))
+    {
+      g_dbus_method_invocation_return_gerror (invocation, error);
+      g_error_free (error);
+      goto out;
+    }
+
   partition_table_object = udisks_daemon_find_object (daemon, udisks_partition_get_table (partition));
   partition_table = udisks_object_get_partition_table (partition_table_object);
   partition_table_block = udisks_object_get_block (partition_table_object);
 
   action_id = "org.freedesktop.udisks2.modify-device";
+  /* Translators: Shown in authentication dialog when the user
+   * requests modifying a partition (changing type, flags, name etc.).
+   *
+   * Do not translate $(udisks2.device), it's a placeholder and
+   * will be replaced by the name of the drive/device in question
+   */
+  message = N_("Authentication is required to modify the partition on device $(udisks2.device)");
   if (udisks_block_get_hint_system (block))
-    action_id = "org.freedesktop.udisks2.modify-device-system";
+    {
+      action_id = "org.freedesktop.udisks2.modify-device-system";
+    }
+  else if (!udisks_daemon_util_on_same_seat (daemon, object, caller_pid))
+    {
+      action_id = "org.freedesktop.udisks2.modify-device-system-other-seat";
+    }
+
   if (!udisks_daemon_util_check_authorization_sync (daemon,
                                                     object,
                                                     action_id,
                                                     options,
-                                                    N_("Authentication is required to modify the partition on device $(udisks2.device)"),
+                                                    message,
                                                     invocation))
     goto out;
 
-  escaped_device = g_strescape (udisks_block_get_device (partition_table_block), NULL);
-  escaped_type = g_strescape (type, NULL);
+  escaped_device = udisks_daemon_util_escape_and_quote (udisks_block_get_device (partition_table_block));
+  escaped_type = udisks_daemon_util_escape_and_quote (type);
   if (g_strcmp0 (udisks_partition_table_get_type_ (partition_table), "gpt") == 0)
     {
       /* check that it's a valid GUID */
@@ -537,7 +621,7 @@ handle_set_type (UDisksPartition        *partition,
                                                  type);
           goto out;
         }
-      command_line = g_strdup_printf ("sgdisk --typecode %d:\"%s\" \"%s\"",
+      command_line = g_strdup_printf ("sgdisk --typecode %d:%s %s",
                                       udisks_partition_get_number (partition),
                                       escaped_type,
                                       escaped_device);
@@ -564,7 +648,7 @@ handle_set_type (UDisksPartition        *partition,
                                                  "Delete the partition and create a new extended partition instead.");
           goto out;
         }
-      command_line = g_strdup_printf ("sfdisk --change-id \"%s\" %d 0x%02x",
+      command_line = g_strdup_printf ("sfdisk --change-id %s %d 0x%02x",
                                       escaped_device,
                                       udisks_partition_get_number (partition),
                                       type_as_int);
@@ -631,6 +715,7 @@ handle_delete (UDisksPartition        *partition,
                GVariant               *options)
 {
   const gchar *action_id = NULL;
+  const gchar *message = NULL;
   UDisksBlock *block = NULL;
   UDisksObject *object = NULL;
   UDisksDaemon *daemon = NULL;
@@ -640,6 +725,7 @@ handle_delete (UDisksPartition        *partition,
   UDisksPartitionTable *partition_table = NULL;
   UDisksBlock *partition_table_block = NULL;
   gchar *command_line = NULL;
+  pid_t caller_pid;
   GError *error;
 
   error = NULL;
@@ -653,22 +739,48 @@ handle_delete (UDisksPartition        *partition,
   daemon = udisks_linux_block_object_get_daemon (UDISKS_LINUX_BLOCK_OBJECT (object));
   block = udisks_object_get_block (object);
 
+  error = NULL;
+  if (!udisks_daemon_util_get_caller_pid_sync (daemon,
+                                               invocation,
+                                               NULL /* GCancellable */,
+                                               &caller_pid,
+                                               &error))
+    {
+      g_dbus_method_invocation_return_gerror (invocation, error);
+      g_error_free (error);
+      goto out;
+    }
+
   partition_table_object = udisks_daemon_find_object (daemon, udisks_partition_get_table (partition));
   partition_table = udisks_object_get_partition_table (partition_table_object);
   partition_table_block = udisks_object_get_block (partition_table_object);
 
   action_id = "org.freedesktop.udisks2.modify-device";
+  /* Translators: Shown in authentication dialog when the user
+   * requests deleting a partition.
+   *
+   * Do not translate $(udisks2.device), it's a placeholder and
+   * will be replaced by the name of the drive/device in question
+   */
+  message = N_("Authentication is required to delete the partition $(udisks2.device)");
   if (udisks_block_get_hint_system (block))
-    action_id = "org.freedesktop.udisks2.modify-device-system";
+    {
+      action_id = "org.freedesktop.udisks2.modify-device-system";
+    }
+  else if (!udisks_daemon_util_on_same_seat (daemon, object, caller_pid))
+    {
+      action_id = "org.freedesktop.udisks2.modify-device-system-other-seat";
+    }
+
   if (!udisks_daemon_util_check_authorization_sync (daemon,
                                                     object,
                                                     action_id,
                                                     options,
-                                                    N_("Authentication is required to delete the partition $(udisks2.device)"),
+                                                    message,
                                                     invocation))
     goto out;
 
-  escaped_device = g_strescape (udisks_block_get_device (partition_table_block), NULL);
+  escaped_device = udisks_daemon_util_escape_and_quote (udisks_block_get_device (partition_table_block));
 
   if (!udisks_daemon_launch_spawned_job_sync (daemon,
                                               partition_table_object,
@@ -678,7 +790,7 @@ handle_delete (UDisksPartition        *partition,
                                               NULL, /* gint *out_status */
                                               &error_message,
                                               NULL,  /* input_string */
-                                              "parted --script \"%s\" \"rm %d\"",
+                                              "parted --script %s \"rm %d\"",
                                               escaped_device,
                                               udisks_partition_get_number (partition)))
     {

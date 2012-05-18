@@ -86,6 +86,8 @@ libudisks_daemon_la_CFLAGS =				\
 	$(GUDEV_CFLAGS)					\
 	$(LIBATASMART_CFLAGS)				\
 	$(POLKIT_GOBJECT_1_CFLAGS) 			\
+	$(ACL_CFLAGS)					\
+	$(LIBSYSTEMD_LOGIN_CFLAGS)			\
 	$(NULL)
 
 libudisks_daemon_la_LIBADD =				\
@@ -94,19 +96,22 @@ libudisks_daemon_la_LIBADD =				\
 	$(GUDEV_LIBS)					\
 	$(LIBATASMART_LIBS)				\
 	$(POLKIT_GOBJECT_1_LIBS) 			\
+	$(ACL_LIBS)					\
+	$(LIBSYSTEMD_LOGIN_LIBS)			\
 	$(top_builddir)/udisks/libudisks2.la		\
 	$(NULL)
 
 # ----------------------------------------------------------------------------------------------------
 
-privlib_PROGRAMS = udisksd
+udisksdprivdir = $(prefix)/lib/udisks2
+udisksdpriv_PROGRAMS = udisksd
 
 udisksd_SOURCES = 					\
 				main.c			\
 	$(NULL)
 
 udisksd_CFLAGS = 					\
-	-DG_LOG_DOMAIN=\"udisks2-daemon\"		\
+	-DG_LOG_DOMAIN=\"udisksd\"			\
 	$(NULL)
 
 udisksd_LDADD = 					\

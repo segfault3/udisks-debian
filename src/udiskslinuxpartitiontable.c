@@ -225,38 +225,43 @@ typedef struct
   gboolean      ignore_container;
 } WaitForPartitionData;
 
-static gboolean
+static UDisksObject *
 wait_for_partition (UDisksDaemon *daemon,
-                    UDisksObject *object,
                     gpointer      user_data)
 {
   WaitForPartitionData *data = user_data;
-  gboolean ret = FALSE;
-  UDisksPartition *partition = NULL;
-  guint64 offset;
-  guint64 size;
+  UDisksObject *ret = NULL;
+  GList *objects, *l;
 
-  partition = udisks_object_get_partition (object);
-  if (partition == NULL)
-    goto out;
-
-  if (g_strcmp0 (udisks_partition_get_table (partition),
-                 g_dbus_object_get_object_path (G_DBUS_OBJECT (data->partition_table_object))) != 0)
-    goto out;
-
-  offset = udisks_partition_get_offset (partition);
-  size = udisks_partition_get_size (partition);
-
-  if (data->pos_to_wait_for >= offset &&
-      data->pos_to_wait_for < offset + size)
+  objects = udisks_daemon_get_objects (daemon);
+  for (l = objects; l != NULL; l = l->next)
     {
-      if (udisks_partition_get_is_container (partition) && data->ignore_container)
-        goto out;
-      ret = TRUE;
+      UDisksObject *object = UDISKS_OBJECT (l->data);
+      UDisksPartition *partition = udisks_object_get_partition (object);
+      if (partition != NULL)
+        {
+          if (g_strcmp0 (udisks_partition_get_table (partition),
+                         g_dbus_object_get_object_path (G_DBUS_OBJECT (data->partition_table_object))) == 0)
+            {
+              guint64 offset = udisks_partition_get_offset (partition);
+              guint64 size = udisks_partition_get_size (partition);
+
+              if (data->pos_to_wait_for >= offset && data->pos_to_wait_for < offset + size)
+                {
+                  if (!(udisks_partition_get_is_container (partition) && data->ignore_container))
+                    {
+                      g_object_unref (partition);
+                      ret = g_object_ref (object);
+                      goto out;
+                    }
+                }
+            }
+          g_object_unref (partition);
+        }
     }
 
  out:
-  g_clear_object (&partition);
+  g_list_free_full (objects, g_object_unref);
   return ret;
 }
 
@@ -273,6 +278,7 @@ handle_create_partition (UDisksPartitionTable   *table,
                          GVariant               *options)
 {
   const gchar *action_id = NULL;
+  const gchar *message = NULL;
   UDisksBlock *block = NULL;
   UDisksObject *object = NULL;
   UDisksDaemon *daemon = NULL;
@@ -284,6 +290,7 @@ handle_create_partition (UDisksPartitionTable   *table,
   UDisksBlock *partition_block = NULL;
   gchar *escaped_partition_device = NULL;
   const gchar *table_type;
+  pid_t caller_pid;
   GError *error;
 
   error = NULL;
@@ -303,18 +310,44 @@ handle_create_partition (UDisksPartitionTable   *table,
       goto out;
     }
 
+  error = NULL;
+  if (!udisks_daemon_util_get_caller_pid_sync (daemon,
+                                               invocation,
+                                               NULL /* GCancellable */,
+                                               &caller_pid,
+                                               &error))
+    {
+      g_dbus_method_invocation_return_gerror (invocation, error);
+      g_error_free (error);
+      goto out;
+    }
+
   action_id = "org.freedesktop.udisks2.modify-device";
+  /* Translators: Shown in authentication dialog when the user
+   * requests creating a new partition.
+   *
+   * Do not translate $(udisks2.device), it's a placeholder and
+   * will be replaced by the name of the drive/device in question
+   */
+  message = N_("Authentication is required to create a partition on $(udisks2.device)");
   if (udisks_block_get_hint_system (block))
-    action_id = "org.freedesktop.udisks2.modify-device-system";
+    {
+      action_id = "org.freedesktop.udisks2.modify-device-system";
+    }
+  else if (!udisks_daemon_util_on_same_seat (daemon, object, caller_pid))
+    {
+      action_id = "org.freedesktop.udisks2.modify-device-system-other-seat";
+    }
+
   if (!udisks_daemon_util_check_authorization_sync (daemon,
                                                     object,
                                                     action_id,
                                                     options,
-                                                    N_("Authentication is required to create a partition on $(udisks2.device)"),
+                                                    message,
                                                     invocation))
     goto out;
 
-  escaped_device = g_strescape (udisks_block_get_device (block), NULL);
+  escaped_device = udisks_daemon_util_escape_and_quote (udisks_block_get_device (block));
 
   table_type = udisks_partition_table_get_type_ (table);
   wait_data = g_new0 (WaitForPartitionData, 1);
@@ -394,7 +427,7 @@ handle_create_partition (UDisksPartitionTable   *table,
       wait_data->pos_to_wait_for = (start_mib*MIB_SIZE + end_bytes) / 2L;
       wait_data->ignore_container = is_logical;
 
-      command_line = g_strdup_printf ("parted --align optimal --script \"%s\" "
+      command_line = g_strdup_printf ("parted --align optimal --script %s "
                                       "\"mkpart %s %" G_GUINT64_FORMAT "MiB %" G_GUINT64_FORMAT "b\"",
                                       escaped_device,
                                       part_type,
@@ -424,8 +457,8 @@ handle_create_partition (UDisksPartitionTable   *table,
           name = " ";
         }
 
-      escaped_name = g_strescape (name, NULL);
-      escaped_escaped_name = g_strescape (escaped_name, NULL);
+      escaped_name = udisks_daemon_util_escape (name);
+      escaped_escaped_name = udisks_daemon_util_escape (escaped_name);
 
       /* Ensure we _start_ at MiB granularity since that ensures optimal IO...
        * Also round up size to nearest multiple of 512
@@ -450,7 +483,7 @@ handle_create_partition (UDisksPartitionTable   *table,
           end_bytes -= 512L;
         }
       wait_data->pos_to_wait_for = (start_mib*MIB_SIZE + end_bytes) / 2L;
-      command_line = g_strdup_printf ("parted --align optimal --script \"%s\" "
+      command_line = g_strdup_printf ("parted --align optimal --script %s "
                                       "\"mkpart \\\"%s\\\" ext2 %" G_GUINT64_FORMAT "MiB %" G_GUINT64_FORMAT "b\"",
                                       escaped_device,
                                       escaped_escaped_name,
@@ -512,7 +545,7 @@ handle_create_partition (UDisksPartitionTable   *table,
                                              "Partition object is not a block device");
       goto out;
     }
-  escaped_partition_device = g_strescape (udisks_block_get_device (partition_block), NULL);
+  escaped_partition_device = udisks_daemon_util_escape_and_quote (udisks_block_get_device (partition_block));
 
   /* TODO: set partition type */
 
@@ -525,7 +558,7 @@ handle_create_partition (UDisksPartitionTable   *table,
                                               NULL, /* gint *out_status */
                                               &error_message,
                                               NULL,  /* input_string */
-                                              "wipefs -a \"%s\"",
+                                              "wipefs -a %s",
                                               escaped_partition_device))
     {
       g_dbus_method_invocation_return_error (invocation,

@@ -38,12 +38,12 @@
 <div class="refsynopsisdiv">
 <h2>Methods</h2>
 <pre class="synopsis">
-<a class="link" href="gdbus-org.freedesktop.UDisks2.Encrypted.html#gdbus-method-org-freedesktop-UDisks2-Encrypted.Unlock" title="The Unlock() method">Unlock</a>           (IN  ay    passphrase,
+<a class="link" href="gdbus-org.freedesktop.UDisks2.Encrypted.html#gdbus-method-org-freedesktop-UDisks2-Encrypted.Unlock" title="The Unlock() method">Unlock</a>           (IN  s     passphrase,
                   IN  a{sv} options,
                   OUT o     cleartext_device);
 <a class="link" href="gdbus-org.freedesktop.UDisks2.Encrypted.html#gdbus-method-org-freedesktop-UDisks2-Encrypted.Lock" title="The Lock() method">Lock</a>             (IN  a{sv} options);
-<a class="link" href="gdbus-org.freedesktop.UDisks2.Encrypted.html#gdbus-method-org-freedesktop-UDisks2-Encrypted.ChangePassphrase" title="The ChangePassphrase() method">ChangePassphrase</a> (IN  ay    passphrase,
-                  IN  ay    new_passphrase,
+<a class="link" href="gdbus-org.freedesktop.UDisks2.Encrypted.html#gdbus-method-org-freedesktop-UDisks2-Encrypted.ChangePassphrase" title="The ChangePassphrase() method">ChangePassphrase</a> (IN  s     passphrase,
+                  IN  s     new_passphrase,
                   IN  a{sv} options);
 </pre>
 </div>
@@ -58,7 +58,7 @@
 <div class="refsect2">
 <a name="gdbus-method-org-freedesktop-UDisks2-Encrypted.Unlock"></a><h3>The Unlock() method</h3>
 <pre class="programlisting">
-Unlock (IN  ay    passphrase,
+Unlock (IN  s     passphrase,
         IN  a{sv} options,
         OUT o     cleartext_device);
 </pre>
@@ -77,7 +77,7 @@ Unlock (IN  ay    passphrase,
 <col align="left" valign="top">
 <tbody>
 <tr>
-<td><p><span class="term"><code class="literal">IN ay <em class="parameter"><code>passphrase</code></em></code>:</span></p></td>
+<td><p><span class="term"><code class="literal">IN s <em class="parameter"><code>passphrase</code></em></code>:</span></p></td>
 <td><p>The passphrase to use.</p></td>
 </tr>
 <tr>
@@ -111,8 +111,8 @@ Lock (IN  a{sv} options);
 <div class="refsect2">
 <a name="gdbus-method-org-freedesktop-UDisks2-Encrypted.ChangePassphrase"></a><h3>The ChangePassphrase() method</h3>
 <pre class="programlisting">
-ChangePassphrase (IN  ay    passphrase,
-                  IN  ay    new_passphrase,
+ChangePassphrase (IN  s     passphrase,
+                  IN  s     new_passphrase,
                   IN  a{sv} options);
 </pre>
 <p>        Changes the passphrase to <em class="parameter"><code>new_passphrase</code></em>. An existing passphrase is required.
@@ -127,11 +127,11 @@ ChangePassphrase (IN  ay    passphrase,
 <col align="left" valign="top">
 <tbody>
 <tr>
-<td><p><span class="term"><code class="literal">IN ay <em class="parameter"><code>passphrase</code></em></code>:</span></p></td>
+<td><p><span class="term"><code class="literal">IN s <em class="parameter"><code>passphrase</code></em></code>:</span></p></td>
 <td><p>The existing passphrase.</p></td>
 </tr>
 <tr>
-<td><p><span class="term"><code class="literal">IN ay <em class="parameter"><code>new_passphrase</code></em></code>:</span></p></td>
+<td><p><span class="term"><code class="literal">IN s <em class="parameter"><code>new_passphrase</code></em></code>:</span></p></td>
 <td><p>The new passphrase to use.</p></td>
 </tr>
 <tr>

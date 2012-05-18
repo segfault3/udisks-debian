@@ -1,4 +1,199 @@
 ------------
+udisks 1.97.0
+------------
+
+The udisks project provides a daemon, tools and libraries to access
+and manipulate disks and storage devices.
+
+Changes since udisks 1.96.0:
+
+ David Zeuthen (22):
+       Post-release version bump to 1.97.0
+       Add loop.autoclear option to Filesystem.Mount() method
+       Also check for "target is busy" when checking umount(8) output
+       Loop: add :Autoclear property and SetAutoclear() method
+       Don't assign the Loop D-Bus interface to partitions of a loop device
+       Fix up how we check if use is authorized for Loop.SetAutoclear()
+       Manager: Add new 'no-part-scan' option in LoopSetup() method
+       Manager: Add locking around LoopSetup()
+       Warn if /run/udisks2/loop has an existing entry when setting up a new loop device
+       UDisksClient: add get_loop_for_block() convenience method
+       Loop: add SetupByUID property
+       Add work-around to show FS on CDs/USB sticks created using isohybrid
+       Daemon: Add new find_block_*() convenience methods
+       Manager: wait for partitions to appear before returning in LoopSetup()
+       UDisksDaemon: add get_objects() method
+       UDisksDaemon: rework wait_for_object_sync() method
+       Revert "Add loop.autoclear option to Filesystem.Mount() method"
+       Update path to mounted-fs file in documentation
+       UDisksCleanup: Remove stale entries when adding new ones
+       Simplify loop device checking
+       Loop: try writing to loop/autoclear sysfs file before LO_{GET,SET}_STATUS
+       Update NEWS for release
+
+Thanks to all our contributors.
+
+David Zeuthen,
+May 9, 2012
+
+------------
+udisks 1.96.0
+------------
+
+The udisks project provides a daemon, tools and libraries to access
+and manipulate disks and storage devices.
+
+Changes since udisks 1.95.0:
+
+ David Zeuthen (3):
+       Post-release version bump to 1.96.0
+       Actually link with libsystemd-login
+       Update NEWS for release
+
+Thanks to all our contributors.
+
+David Zeuthen,
+April 30, 2012
+
+------------
+udisks 1.95.0
+------------
+
+The udisks project provides a daemon, tools and libraries to access
+and manipulate disks and storage devices.
+
+Changes since udisks 1.94.0:
+
+ David Zeuthen (32):
+       Post-release version bump to 1.95.0
+       Mention udisks audience (and non-audience) in README
+       Update link to GVolumeMonitor docs
+       Use libacl library instead of setfacl(1)
+       Work around missing serial/wwn on VMware hard disks
+       Add multi-seat support
+       Add versioning macros
+       Make on_same_seat() also work for drive objects
+       Fix reference count mistake in previous commit
+       Interpret ID_SEAT=all to mean that a device is available on all seats
+       Add section about polkit actions to the docs
+       Fix 'make distcheck'
+       Rearrange docs so man pages come first
+       Move audience blurb from README to the udisks(8) man page
+       Move API STABILITY remarks to udisks(8) man page
+       udisksctl: Make man page point to API STABILITY section of udisks(8) man page
+       Use upper-case for all man page sections
+       Remove section about ID_DRIVE* properties
+       Add missing "on" in udisks(8) man page
+       Fix typos in policy file
+       Add separate polkit actions for ejecting media
+       Fix typo
+       Reword parts of the udisks(8) man page
+       Add a bunch of translation comments
+       Add some more translation context and strings
+       Make $(udisks2.device) in authentication messages include the vendor/model
+       Remove danish translation
+       Add Transifex config and pull latest translations
+       Remove support for ID_SEAT=all
+       Remove unused .filesystem-unmount-others-shared polkit action
+       Minor doc fixes
+       Update NEWS for release
+
+Thanks to all our contributors.
+
+David Zeuthen,
+April 30, 2012
+
+------------
+udisks 1.94.0
+------------
+
+The udisks project provides a daemon, tools and libraries to access
+and manipulate disks and storage devices. This is the first release of
+the new 2.x series. This release is parallel-installable with udisks
+1.x.
+
+Changes since udisks 1.93.0:
+
+ David Zeuthen (10):
+       Post-release version bump to 1.94.0
+       Pass --readonly to cryptsetup(8) if device to unlock is read-only
+       Fix how we sign the tarballs
+       Update docs
+       Clarify docs for Filesystem.Mount() and Filesystem.Unmount()
+       Change some D-Bus types from bytestring ('ay') to UTF8 ('s')
+       Convert some g_warning() uses to udisks_warning()
+       Add udev rules for identifying devices which should not be shown
+       Make escaping work properly with non-ASCII UTF-8 strings
+       Update NEWS for release
+
+ Edward Sheldrake (1):
+       Fix unmounting large disks when not asked to
+
+Thanks to all our contributors.
+
+David Zeuthen,
+April 10, 2012
+
+------------
+udisks 1.93.0
+------------
+
+The udisks project provides a daemon, tools and libraries to access
+and manipulate disks and storage devices. This is the first release of
+the new 2.x series. This release is parallel-installable with udisks
+1.x.
+
+Changes since udisks 1.92.0:
+
+ David Zeuthen (13):
+       Post-release version bump to 1.93.0
+       Don't include sys/acl.h - it's not needed
+       Add a section about /org/freedesktop/UDisks2/block_devices/* objects
+       Reword the section about block device objects a little bit
+       Add a section about /org/freedesktop/UDisks2/drives/* objects
+       Add a section about /org/freedesktop/UDisks2/jobs/* objects
+       Run gtkdoc-rebase to fix up links for GLib types
+       Force MediaRemovable to TRUE for e.g. SD cards using the mmc layer
+       Ensure that whatever we pass as -t to mount(8) is in a whitelist
+       Ensure that the loop file name we pass to the kernel is always NUL-termina
+       Properly escape all device files
+       Tweak the docs some
+       Update NEWS for release
+
+Thanks to all our contributors.
+
+David Zeuthen,
+Mar 5, 2012
+
+------------
+udisks 1.92.0
+------------
+
+The udisks project provides a daemon, tools and libraries to access
+and manipulate disks and storage devices. This is the first release of
+the new 2.x series. This release is parallel-installable with udisks
+1.x.
+
+Changes since udisks 1.91.0:
+
+ Colin Walters (1):
+       client: Fix bit shifts of flags on 32 bit
+
+ David Zeuthen (6):
+       Post-release version bump to version 1.92.0
+       Avoid using $XDG_RUNTIME_DIR/media for now
+       Don't free object twice when deleting a loop device
+       Use /run/media/$USER for mounting
+       Move to /usr-only setup and get rid of hardcoded paths to /lib and sbin
+       Update NEWS for release
+
+
+Thanks to all our contributors.
+
+David Zeuthen,
+Feb 23, 2012
+
+------------
 udisks 1.91.0
 ------------
 

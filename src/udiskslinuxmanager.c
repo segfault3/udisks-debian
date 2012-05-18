@@ -41,6 +41,7 @@
 #include "udisksdaemon.h"
 #include "udisksdaemonutil.h"
 #include "udiskscleanup.h"
+#include "udiskslinuxblockobject.h"
 
 /**
  * SECTION:udiskslinuxmanager
@@ -62,6 +63,8 @@ typedef struct _UDisksLinuxManagerClass   UDisksLinuxManagerClass;
 struct _UDisksLinuxManager
 {
   UDisksManagerSkeleton parent_instance;
+
+  GMutex lock;
 
   UDisksDaemon *daemon;
 };
@@ -87,7 +90,9 @@ G_DEFINE_TYPE_WITH_CODE (UDisksLinuxManager, udisks_linux_manager, UDISKS_TYPE_M
 static void
 udisks_linux_manager_finalize (GObject *object)
 {
-  /* UDisksLinuxManager *manager = UDISKS_LINUX_MANAGER (object); */
+  UDisksLinuxManager *manager = UDISKS_LINUX_MANAGER (object);
+
+  g_mutex_clear (&(manager->lock));
 
   G_OBJECT_CLASS (udisks_linux_manager_parent_class)->finalize (object);
 }
@@ -137,6 +142,7 @@ udisks_linux_manager_set_property (GObject      *object,
 static void
 udisks_linux_manager_init (UDisksLinuxManager *manager)
 {
+  g_mutex_init (&(manager->lock));
   g_dbus_interface_skeleton_set_flags (G_DBUS_INTERFACE_SKELETON (manager),
                                        G_DBUS_INTERFACE_SKELETON_FLAGS_HANDLE_METHOD_INVOCATIONS_IN_THREAD);
 }
@@ -209,31 +215,70 @@ typedef struct
   const gchar *path;
 } WaitForLoopData;
 
-static gboolean
+static UDisksObject *
 wait_for_loop_object (UDisksDaemon *daemon,
-                      UDisksObject *object,
                       gpointer      user_data)
 {
   WaitForLoopData *data = user_data;
+  UDisksObject *ret = NULL;
+  UDisksObject *object = NULL;
   UDisksBlock *block;
   UDisksLoop *loop;
-  gboolean ret;
+  GUdevDevice *device = NULL;
+  GDir *dir;
 
-  ret = FALSE;
+  /* First see if we have the right loop object */
+  object = udisks_daemon_find_block_by_device_file (daemon, data->loop_device);
   block = udisks_object_peek_block (object);
   loop = udisks_object_peek_loop (object);
   if (block == NULL || loop == NULL)
     goto out;
-
-  if (g_strcmp0 (udisks_block_get_device (block), data->loop_device) != 0)
-    goto out;
-
   if (g_strcmp0 (udisks_loop_get_backing_file (loop), data->path) != 0)
     goto out;
 
-  ret = TRUE;
+  /* We also need to wait for all partitions to be in place in case
+   * the loop device is partitioned... we can do it like this because
+   * we are guaranteed that partitions are in sysfs when receiving the
+   * uevent for the main block device...
+   */
+  device = udisks_linux_block_object_get_device (UDISKS_LINUX_BLOCK_OBJECT (object));
+  if (device == NULL)
+    goto out;
+
+  dir = g_dir_open (g_udev_device_get_sysfs_path (device), 0 /* flags */, NULL /* GError */);
+  if (dir != NULL)
+    {
+      const gchar *name;
+      const gchar *device_name;
+      device_name = g_udev_device_get_name (device);
+      while ((name = g_dir_read_name (dir)) != NULL)
+        {
+          if (g_str_has_prefix (name, device_name))
+            {
+              gchar *sysfs_path;
+              UDisksObject *partition_object;
+              sysfs_path = g_strconcat (g_udev_device_get_sysfs_path (device), "/", name, NULL);
+              partition_object = udisks_daemon_find_block_by_sysfs_path (daemon, sysfs_path);
+              if (partition_object == NULL)
+                {
+                  /* nope, not there, bail */
+                  g_free (sysfs_path);
+                  g_dir_close (dir);
+                  goto out;
+                }
+              g_object_unref (partition_object);
+              g_free (sysfs_path);
+            }
+        }
+      g_dir_close (dir);
+    }
+
+  /* all, good return the loop object */
+  ret = g_object_ref (object);
 
  out:
+  g_clear_object (&object);
+  g_clear_object (&device);
   return ret;
 }
 
@@ -261,6 +306,7 @@ handle_loop_setup (UDisksManager          *object,
   struct loop_info64 li64;
   UDisksObject *loop_object = NULL;
   gboolean option_read_only = FALSE;
+  gboolean option_no_part_scan = FALSE;
   guint64 option_offset = 0;
   guint64 option_size = 0;
   uid_t caller_uid;
@@ -282,6 +328,9 @@ handle_loop_setup (UDisksManager          *object,
                                                     NULL,
                                                     "org.freedesktop.udisks2.loop-setup",
                                                     options,
+                                                    /* Translators: Shown in authentication dialog when the user
+                                                     * requests setting up a loop device.
+                                                     */
                                                     N_("Authentication is required to set up a loop device"),
                                                     invocation))
     goto out;
@@ -321,12 +370,16 @@ handle_loop_setup (UDisksManager          *object,
   g_variant_lookup (options, "read-only", "b", &option_read_only);
   g_variant_lookup (options, "offset", "t", &option_offset);
   g_variant_lookup (options, "size", "t", &option_size);
+  g_variant_lookup (options, "no-part-scan", "b", &option_no_part_scan);
 
   /* it's not a problem if fstat fails... for example, this can happen if the user
    * passes a fd to a file on the GVfs fuse mount
    */
   if (fstat (fd, &fd_statbuf) == 0)
     fd_statbuf_valid = TRUE;
+
+  /* serialize access to /dev/loop-control */
+  g_mutex_lock (&(manager->lock));
 
   loop_control_fd = open ("/dev/loop-control", O_RDWR);
   if (loop_control_fd == -1)
@@ -335,6 +388,7 @@ handle_loop_setup (UDisksManager          *object,
                                              UDISKS_ERROR,
                                              UDISKS_ERROR_FAILED,
                                              "Error opening /dev/loop-control: %m");
+      g_mutex_unlock (&(manager->lock));
       goto out;
     }
 
@@ -345,6 +399,7 @@ handle_loop_setup (UDisksManager          *object,
                                              UDISKS_ERROR,
                                              UDISKS_ERROR_FAILED,
                                              "Error allocating free loop device: %m");
+      g_mutex_unlock (&(manager->lock));
       goto out;
     }
 
@@ -356,15 +411,16 @@ handle_loop_setup (UDisksManager          *object,
                                              UDISKS_ERROR,
                                              UDISKS_ERROR_FAILED,
                                              "Cannot open %s: %m", loop_device);
+      g_mutex_unlock (&(manager->lock));
       goto out;
     }
 
   memset (&li64, '\0', sizeof (li64));
-  strncpy ((char *) li64.lo_file_name, path, LO_NAME_SIZE);
+  strncpy ((char *) li64.lo_file_name, path, LO_NAME_SIZE - 1);
   if (option_read_only)
     li64.lo_flags |= LO_FLAGS_READ_ONLY;
-  /* TODO: we could have an option 'no-part-scan' but I don't think that's right */
-  li64.lo_flags |= 8; /* Use LO_FLAGS_PARTSCAN when 3.2 has been out for a while */
+  if (!option_no_part_scan)
+    li64.lo_flags |= 8; /* Use LO_FLAGS_PARTSCAN when 3.2 has been out for a while */
   li64.lo_offset = option_offset;
   li64.lo_sizelimit = option_size;
   if (ioctl (loop_fd, LOOP_SET_FD, fd) < 0 || ioctl (loop_fd, LOOP_SET_STATUS64, &li64) < 0)
@@ -374,8 +430,10 @@ handle_loop_setup (UDisksManager          *object,
                                              UDISKS_ERROR_FAILED,
                                              "Error setting up loop device %s: %m",
                                              loop_device);
+      g_mutex_unlock (&(manager->lock));
       goto out;
     }
+  g_mutex_unlock (&(manager->lock));
 
   /* Determine the resulting object */
   error = NULL;

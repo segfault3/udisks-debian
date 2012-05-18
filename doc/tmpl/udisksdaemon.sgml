@@ -139,7 +139,6 @@ UDisksDaemon
 </para>
 
 @daemon: 
-@object: 
 @user_data: 
 @Returns: 
 
@@ -155,6 +154,15 @@ UDisksDaemon
 @user_data_free_func: 
 @timeout_seconds: 
 @error: 
+@Returns: 
+
+
+<!-- ##### FUNCTION udisks_daemon_get_objects ##### -->
+<para>
+
+</para>
+
+@daemon: 
 @Returns: 
 
 
@@ -175,6 +183,26 @@ UDisksDaemon
 
 @daemon: 
 @block_device_number: 
+@Returns: 
+
+
+<!-- ##### FUNCTION udisks_daemon_find_block_by_device_file ##### -->
+<para>
+
+</para>
+
+@daemon: 
+@device_file: 
+@Returns: 
+
+
+<!-- ##### FUNCTION udisks_daemon_find_block_by_sysfs_path ##### -->
+<para>
+
+</para>
+
+@daemon: 
+@sysfs_path: 
 @Returns: 
 
 

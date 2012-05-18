@@ -1,4 +1,7 @@
 <ONLINE href="http://udisks.freedesktop.org/docs/latest/">
+<ANCHOR id="udisks.8" href="udisks2/udisks.8.html">
+<ANCHOR id="udisksd.8" href="udisks2/udisksd.8.html">
+<ANCHOR id="udisksctl.1" href="udisks2/udisksctl.1.html">
 <ANCHOR id="gdbus-org.freedesktop.UDisks2.Manager" href="udisks2/gdbus-org.freedesktop.UDisks2.Manager.html">
 <ANCHOR id="gdbus-interface-org-freedesktop-UDisks2-Manager" href="udisks2/gdbus-org.freedesktop.UDisks2.Manager.html#gdbus-interface-org-freedesktop-UDisks2-Manager">
 <ANCHOR id="gdbus-methods-org.freedesktop.UDisks2.Manager" href="udisks2/gdbus-org.freedesktop.UDisks2.Manager.html#gdbus-methods-org.freedesktop.UDisks2.Manager">
@@ -31,6 +34,7 @@
 <ANCHOR id="gdbus-property-org-freedesktop-UDisks2-Drive.OpticalNumSessions" href="udisks2/gdbus-org.freedesktop.UDisks2.Drive.html#gdbus-property-org-freedesktop-UDisks2-Drive.OpticalNumSessions">
 <ANCHOR id="gdbus-property-org-freedesktop-UDisks2-Drive.RotationRate" href="udisks2/gdbus-org.freedesktop.UDisks2.Drive.html#gdbus-property-org-freedesktop-UDisks2-Drive.RotationRate">
 <ANCHOR id="gdbus-property-org-freedesktop-UDisks2-Drive.ConnectionBus" href="udisks2/gdbus-org.freedesktop.UDisks2.Drive.html#gdbus-property-org-freedesktop-UDisks2-Drive.ConnectionBus">
+<ANCHOR id="gdbus-property-org-freedesktop-UDisks2-Drive.Seat" href="udisks2/gdbus-org.freedesktop.UDisks2.Drive.html#gdbus-property-org-freedesktop-UDisks2-Drive.Seat">
 <ANCHOR id="gdbus-property-org-freedesktop-UDisks2-Drive.Removable" href="udisks2/gdbus-org.freedesktop.UDisks2.Drive.html#gdbus-property-org-freedesktop-UDisks2-Drive.Removable">
 <ANCHOR id="gdbus-property-org-freedesktop-UDisks2-Drive.Ejectable" href="udisks2/gdbus-org.freedesktop.UDisks2.Drive.html#gdbus-property-org-freedesktop-UDisks2-Drive.Ejectable">
 <ANCHOR id="gdbus-property-org-freedesktop-UDisks2-Drive.SortKey" href="udisks2/gdbus-org.freedesktop.UDisks2.Drive.html#gdbus-property-org-freedesktop-UDisks2-Drive.SortKey">
@@ -133,8 +137,11 @@
 <ANCHOR id="gdbus-interface-org-freedesktop-UDisks2-Loop" href="udisks2/gdbus-org.freedesktop.UDisks2.Loop.html#gdbus-interface-org-freedesktop-UDisks2-Loop">
 <ANCHOR id="gdbus-methods-org.freedesktop.UDisks2.Loop" href="udisks2/gdbus-org.freedesktop.UDisks2.Loop.html#gdbus-methods-org.freedesktop.UDisks2.Loop">
 <ANCHOR id="gdbus-method-org-freedesktop-UDisks2-Loop.Delete" href="udisks2/gdbus-org.freedesktop.UDisks2.Loop.html#gdbus-method-org-freedesktop-UDisks2-Loop.Delete">
+<ANCHOR id="gdbus-method-org-freedesktop-UDisks2-Loop.SetAutoclear" href="udisks2/gdbus-org.freedesktop.UDisks2.Loop.html#gdbus-method-org-freedesktop-UDisks2-Loop.SetAutoclear">
 <ANCHOR id="gdbus-properties-org.freedesktop.UDisks2.Loop" href="udisks2/gdbus-org.freedesktop.UDisks2.Loop.html#gdbus-properties-org.freedesktop.UDisks2.Loop">
 <ANCHOR id="gdbus-property-org-freedesktop-UDisks2-Loop.BackingFile" href="udisks2/gdbus-org.freedesktop.UDisks2.Loop.html#gdbus-property-org-freedesktop-UDisks2-Loop.BackingFile">
+<ANCHOR id="gdbus-property-org-freedesktop-UDisks2-Loop.Autoclear" href="udisks2/gdbus-org.freedesktop.UDisks2.Loop.html#gdbus-property-org-freedesktop-UDisks2-Loop.Autoclear">
+<ANCHOR id="gdbus-property-org-freedesktop-UDisks2-Loop.SetupByUID" href="udisks2/gdbus-org.freedesktop.UDisks2.Loop.html#gdbus-property-org-freedesktop-UDisks2-Loop.SetupByUID">
 <ANCHOR id="gdbus-org.freedesktop.UDisks2.Job" href="udisks2/gdbus-org.freedesktop.UDisks2.Job.html">
 <ANCHOR id="gdbus-interface-org-freedesktop-UDisks2-Job" href="udisks2/gdbus-org.freedesktop.UDisks2.Job.html#gdbus-interface-org-freedesktop-UDisks2-Job">
 <ANCHOR id="gdbus-methods-org.freedesktop.UDisks2.Job" href="udisks2/gdbus-org.freedesktop.UDisks2.Job.html#gdbus-methods-org.freedesktop.UDisks2.Job">
@@ -156,6 +163,10 @@
 <ANCHOR id="UDisksClient.signals" href="udisks2/UDisksClient.html#UDisksClient.signals">
 <ANCHOR id="UDisksClient.description" href="udisks2/UDisksClient.html#UDisksClient.description">
 <ANCHOR id="UDisksClient.details" href="udisks2/UDisksClient.html#UDisksClient.details">
+<ANCHOR id="UDISKS-MAJOR-VERSION:CAPS" href="udisks2/UDisksClient.html#UDISKS-MAJOR-VERSION:CAPS">
+<ANCHOR id="UDISKS-MINOR-VERSION:CAPS" href="udisks2/UDisksClient.html#UDISKS-MINOR-VERSION:CAPS">
+<ANCHOR id="UDISKS-MICRO-VERSION:CAPS" href="udisks2/UDisksClient.html#UDISKS-MICRO-VERSION:CAPS">
+<ANCHOR id="UDISKS-CHECK-VERSION:CAPS" href="udisks2/UDisksClient.html#UDISKS-CHECK-VERSION:CAPS">
 <ANCHOR id="UDisksClient-struct" href="udisks2/UDisksClient.html#UDisksClient-struct">
 <ANCHOR id="udisks-client-new" href="udisks2/UDisksClient.html#udisks-client-new">
 <ANCHOR id="udisks-client-new-finish" href="udisks2/UDisksClient.html#udisks-client-new-finish">
@@ -172,6 +183,7 @@
 <ANCHOR id="udisks-client-get-drive-for-block" href="udisks2/UDisksClient.html#udisks-client-get-drive-for-block">
 <ANCHOR id="udisks-client-get-cleartext-block" href="udisks2/UDisksClient.html#udisks-client-get-cleartext-block">
 <ANCHOR id="udisks-client-get-partition-table" href="udisks2/UDisksClient.html#udisks-client-get-partition-table">
+<ANCHOR id="udisks-client-get-loop-for-block" href="udisks2/UDisksClient.html#udisks-client-get-loop-for-block">
 <ANCHOR id="udisks-client-get-partitions" href="udisks2/UDisksClient.html#udisks-client-get-partitions">
 <ANCHOR id="udisks-client-get-jobs-for-object" href="udisks2/UDisksClient.html#udisks-client-get-jobs-for-object">
 <ANCHOR id="udisks-client-get-drive-info" href="udisks2/UDisksClient.html#udisks-client-get-drive-info">
@@ -358,6 +370,8 @@
 <ANCHOR id="udisks-drive-complete-eject" href="udisks2/UDisksDrive.html#udisks-drive-complete-eject">
 <ANCHOR id="udisks-drive-get-connection-bus" href="udisks2/UDisksDrive.html#udisks-drive-get-connection-bus">
 <ANCHOR id="udisks-drive-get-removable" href="udisks2/UDisksDrive.html#udisks-drive-get-removable">
+<ANCHOR id="udisks-drive-get-ejectable" href="udisks2/UDisksDrive.html#udisks-drive-get-ejectable">
+<ANCHOR id="udisks-drive-get-seat" href="udisks2/UDisksDrive.html#udisks-drive-get-seat">
 <ANCHOR id="udisks-drive-get-media" href="udisks2/UDisksDrive.html#udisks-drive-get-media">
 <ANCHOR id="udisks-drive-get-media-compatibility" href="udisks2/UDisksDrive.html#udisks-drive-get-media-compatibility">
 <ANCHOR id="udisks-drive-get-media-removable" href="udisks2/UDisksDrive.html#udisks-drive-get-media-removable">
@@ -390,6 +404,8 @@
 <ANCHOR id="udisks-drive-dup-sort-key" href="udisks2/UDisksDrive.html#udisks-drive-dup-sort-key">
 <ANCHOR id="udisks-drive-set-connection-bus" href="udisks2/UDisksDrive.html#udisks-drive-set-connection-bus">
 <ANCHOR id="udisks-drive-set-removable" href="udisks2/UDisksDrive.html#udisks-drive-set-removable">
+<ANCHOR id="udisks-drive-set-ejectable" href="udisks2/UDisksDrive.html#udisks-drive-set-ejectable">
+<ANCHOR id="udisks-drive-set-seat" href="udisks2/UDisksDrive.html#udisks-drive-set-seat">
 <ANCHOR id="udisks-drive-set-media" href="udisks2/UDisksDrive.html#udisks-drive-set-media">
 <ANCHOR id="udisks-drive-set-media-compatibility" href="udisks2/UDisksDrive.html#udisks-drive-set-media-compatibility">
 <ANCHOR id="udisks-drive-set-media-removable" href="udisks2/UDisksDrive.html#udisks-drive-set-media-removable">
@@ -440,6 +456,7 @@
 <ANCHOR id="UDisksDrive--removable" href="udisks2/UDisksDrive.html#UDisksDrive--removable">
 <ANCHOR id="UDisksDrive--revision" href="udisks2/UDisksDrive.html#UDisksDrive--revision">
 <ANCHOR id="UDisksDrive--rotation-rate" href="udisks2/UDisksDrive.html#UDisksDrive--rotation-rate">
+<ANCHOR id="UDisksDrive--seat" href="udisks2/UDisksDrive.html#UDisksDrive--seat">
 <ANCHOR id="UDisksDrive--serial" href="udisks2/UDisksDrive.html#UDisksDrive--serial">
 <ANCHOR id="UDisksDrive--size" href="udisks2/UDisksDrive.html#UDisksDrive--size">
 <ANCHOR id="UDisksDrive--sort-key" href="udisks2/UDisksDrive.html#UDisksDrive--sort-key">
@@ -962,12 +979,20 @@
 <ANCHOR id="udisks-loop-interface-info" href="udisks2/UDisksLoop.html#udisks-loop-interface-info">
 <ANCHOR id="udisks-loop-override-properties" href="udisks2/UDisksLoop.html#udisks-loop-override-properties">
 <ANCHOR id="udisks-loop-get-backing-file" href="udisks2/UDisksLoop.html#udisks-loop-get-backing-file">
+<ANCHOR id="udisks-loop-get-autoclear" href="udisks2/UDisksLoop.html#udisks-loop-get-autoclear">
+<ANCHOR id="udisks-loop-get-setup-by-uid" href="udisks2/UDisksLoop.html#udisks-loop-get-setup-by-uid">
 <ANCHOR id="udisks-loop-dup-backing-file" href="udisks2/UDisksLoop.html#udisks-loop-dup-backing-file">
 <ANCHOR id="udisks-loop-set-backing-file" href="udisks2/UDisksLoop.html#udisks-loop-set-backing-file">
+<ANCHOR id="udisks-loop-set-autoclear" href="udisks2/UDisksLoop.html#udisks-loop-set-autoclear">
+<ANCHOR id="udisks-loop-set-setup-by-uid" href="udisks2/UDisksLoop.html#udisks-loop-set-setup-by-uid">
 <ANCHOR id="udisks-loop-call-delete" href="udisks2/UDisksLoop.html#udisks-loop-call-delete">
 <ANCHOR id="udisks-loop-call-delete-finish" href="udisks2/UDisksLoop.html#udisks-loop-call-delete-finish">
 <ANCHOR id="udisks-loop-call-delete-sync" href="udisks2/UDisksLoop.html#udisks-loop-call-delete-sync">
 <ANCHOR id="udisks-loop-complete-delete" href="udisks2/UDisksLoop.html#udisks-loop-complete-delete">
+<ANCHOR id="udisks-loop-call-set-autoclear" href="udisks2/UDisksLoop.html#udisks-loop-call-set-autoclear">
+<ANCHOR id="udisks-loop-call-set-autoclear-finish" href="udisks2/UDisksLoop.html#udisks-loop-call-set-autoclear-finish">
+<ANCHOR id="udisks-loop-call-set-autoclear-sync" href="udisks2/UDisksLoop.html#udisks-loop-call-set-autoclear-sync">
+<ANCHOR id="udisks-loop-complete-set-autoclear" href="udisks2/UDisksLoop.html#udisks-loop-complete-set-autoclear">
 <ANCHOR id="UDisksLoopProxy-struct" href="udisks2/UDisksLoop.html#UDisksLoopProxy-struct">
 <ANCHOR id="UDisksLoopProxyClass" href="udisks2/UDisksLoop.html#UDisksLoopProxyClass">
 <ANCHOR id="udisks-loop-proxy-new" href="udisks2/UDisksLoop.html#udisks-loop-proxy-new">
@@ -980,9 +1005,12 @@
 <ANCHOR id="UDisksLoopSkeletonClass" href="udisks2/UDisksLoop.html#UDisksLoopSkeletonClass">
 <ANCHOR id="udisks-loop-skeleton-new" href="udisks2/UDisksLoop.html#udisks-loop-skeleton-new">
 <ANCHOR id="UDisksLoop.property-details" href="udisks2/UDisksLoop.html#UDisksLoop.property-details">
+<ANCHOR id="UDisksLoop--autoclear" href="udisks2/UDisksLoop.html#UDisksLoop--autoclear">
 <ANCHOR id="UDisksLoop--backing-file" href="udisks2/UDisksLoop.html#UDisksLoop--backing-file">
+<ANCHOR id="UDisksLoop--setup-by-uid" href="udisks2/UDisksLoop.html#UDisksLoop--setup-by-uid">
 <ANCHOR id="UDisksLoop.signal-details" href="udisks2/UDisksLoop.html#UDisksLoop.signal-details">
 <ANCHOR id="UDisksLoop-handle-delete" href="udisks2/UDisksLoop.html#UDisksLoop-handle-delete">
+<ANCHOR id="UDisksLoop-handle-set-autoclear" href="udisks2/UDisksLoop.html#UDisksLoop-handle-set-autoclear">
 <ANCHOR id="udisks2-Utilities" href="udisks2/udisks2-Utilities.html">
 <ANCHOR id="udisks2-Utilities.synopsis" href="udisks2/udisks2-Utilities.html#udisks2-Utilities.synopsis">
 <ANCHOR id="udisks2-Utilities.description" href="udisks2/udisks2-Utilities.html#udisks2-Utilities.description">
@@ -994,8 +1022,11 @@
 <ANCHOR id="udisks-daemon-util-resolve-links" href="udisks2/udisks2-Utilities.html#udisks-daemon-util-resolve-links">
 <ANCHOR id="udisks-daemon-util-check-authorization-sync" href="udisks2/udisks2-Utilities.html#udisks-daemon-util-check-authorization-sync">
 <ANCHOR id="udisks-daemon-util-get-caller-uid-sync" href="udisks2/udisks2-Utilities.html#udisks-daemon-util-get-caller-uid-sync">
+<ANCHOR id="udisks-daemon-util-get-caller-pid-sync" href="udisks2/udisks2-Utilities.html#udisks-daemon-util-get-caller-pid-sync">
 <ANCHOR id="udisks-daemon-util-setup-by-user" href="udisks2/udisks2-Utilities.html#udisks-daemon-util-setup-by-user">
 <ANCHOR id="udisks-daemon-util-dup-object" href="udisks2/udisks2-Utilities.html#udisks-daemon-util-dup-object">
+<ANCHOR id="udisks-daemon-util-escape" href="udisks2/udisks2-Utilities.html#udisks-daemon-util-escape">
+<ANCHOR id="udisks-daemon-util-escape-and-quote" href="udisks2/udisks2-Utilities.html#udisks-daemon-util-escape-and-quote">
 <ANCHOR id="udisks2-Logging" href="udisks2/udisks2-Logging.html">
 <ANCHOR id="udisks2-Logging.synopsis" href="udisks2/udisks2-Logging.html#udisks2-Logging.synopsis">
 <ANCHOR id="udisks2-Logging.description" href="udisks2/udisks2-Logging.html#udisks2-Logging.description">
@@ -1031,8 +1062,11 @@
 <ANCHOR id="udisks-daemon-get-cleanup" href="udisks2/UDisksDaemon.html#udisks-daemon-get-cleanup">
 <ANCHOR id="UDisksDaemonWaitFunc" href="udisks2/UDisksDaemon.html#UDisksDaemonWaitFunc">
 <ANCHOR id="udisks-daemon-wait-for-object-sync" href="udisks2/UDisksDaemon.html#udisks-daemon-wait-for-object-sync">
+<ANCHOR id="udisks-daemon-get-objects" href="udisks2/UDisksDaemon.html#udisks-daemon-get-objects">
 <ANCHOR id="udisks-daemon-find-object" href="udisks2/UDisksDaemon.html#udisks-daemon-find-object">
 <ANCHOR id="udisks-daemon-find-block" href="udisks2/UDisksDaemon.html#udisks-daemon-find-block">
+<ANCHOR id="udisks-daemon-find-block-by-device-file" href="udisks2/UDisksDaemon.html#udisks-daemon-find-block-by-device-file">
+<ANCHOR id="udisks-daemon-find-block-by-sysfs-path" href="udisks2/UDisksDaemon.html#udisks-daemon-find-block-by-sysfs-path">
 <ANCHOR id="udisks-daemon-launch-simple-job" href="udisks2/UDisksDaemon.html#udisks-daemon-launch-simple-job">
 <ANCHOR id="udisks-daemon-launch-spawned-job" href="udisks2/UDisksDaemon.html#udisks-daemon-launch-spawned-job">
 <ANCHOR id="udisks-daemon-launch-spawned-job-sync" href="udisks2/UDisksDaemon.html#udisks-daemon-launch-spawned-job-sync">
@@ -1351,6 +1385,3 @@
 <ANCHOR id="UDisksLinuxBlockObject.property-details" href="udisks2/UDisksLinuxBlockObject.html#UDisksLinuxBlockObject.property-details">
 <ANCHOR id="UDisksLinuxBlockObject--daemon" href="udisks2/UDisksLinuxBlockObject.html#UDisksLinuxBlockObject--daemon">
 <ANCHOR id="UDisksLinuxBlockObject--device" href="udisks2/UDisksLinuxBlockObject.html#UDisksLinuxBlockObject--device">
-<ANCHOR id="udisks.8" href="udisks2/udisks.8.html">
-<ANCHOR id="udisksd.8" href="udisks2/udisksd.8.html">
-<ANCHOR id="udisksctl.1" href="udisks2/udisksctl.1.html">

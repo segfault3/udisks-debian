@@ -28,6 +28,9 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <mntent.h>
+#include <sys/types.h>
+#include <sys/acl.h>
+#include <errno.h>
 
 #include <glib/gstdio.h>
 
@@ -61,6 +64,7 @@ typedef struct _UDisksLinuxFilesystemClass   UDisksLinuxFilesystemClass;
 struct _UDisksLinuxFilesystem
 {
   UDisksFilesystemSkeleton parent_instance;
+  GMutex lock;
 };
 
 struct _UDisksLinuxFilesystemClass
@@ -76,8 +80,20 @@ G_DEFINE_TYPE_WITH_CODE (UDisksLinuxFilesystem, udisks_linux_filesystem, UDISKS_
 /* ---------------------------------------------------------------------------------------------------- */
 
 static void
+udisks_linux_filesystem_finalize (GObject *object)
+{
+  UDisksLinuxFilesystem *filesystem = UDISKS_LINUX_FILESYSTEM (object);
+
+  g_mutex_clear (&(filesystem->lock));
+
+  if (G_OBJECT_CLASS (udisks_linux_filesystem_parent_class)->finalize != NULL)
+    G_OBJECT_CLASS (udisks_linux_filesystem_parent_class)->finalize (object);
+}
+
+static void
 udisks_linux_filesystem_init (UDisksLinuxFilesystem *filesystem)
 {
+  g_mutex_init (&filesystem->lock);
   g_dbus_interface_skeleton_set_flags (G_DBUS_INTERFACE_SKELETON (filesystem),
                                        G_DBUS_INTERFACE_SKELETON_FLAGS_HANDLE_METHOD_INVOCATIONS_IN_THREAD);
 }
@@ -85,6 +101,10 @@ udisks_linux_filesystem_init (UDisksLinuxFilesystem *filesystem)
 static void
 udisks_linux_filesystem_class_init (UDisksLinuxFilesystemClass *klass)
 {
+  GObjectClass *gobject_class;
+
+  gobject_class = G_OBJECT_CLASS (klass);
+  gobject_class->finalize     = udisks_linux_filesystem_finalize;
 }
 
 /**
@@ -141,6 +161,104 @@ udisks_linux_filesystem_update (UDisksLinuxFilesystem  *filesystem,
   g_list_foreach (mounts, (GFunc) g_object_unref, NULL);
   g_list_free (mounts);
   g_object_unref (device);
+}
+
+/* ---------------------------------------------------------------------------------------------------- */
+
+static const gchar *well_known_filesystems[] =
+{
+  "btrfs",
+  "ext2",
+  "ext3",
+  "ext4",
+  "udf",
+  "iso9660",
+  "xfs",
+  "jfs",
+  "nilfs",
+  "reiserfs",
+  "reiser4",
+  "msdos",
+  "umsdos",
+  "vfat",
+  "exfat",
+  "ntfs",
+  NULL,
+};
+
+static gboolean
+is_in_filesystem_file (const gchar *filesystems_file,
+                       const gchar *fstype)
+{
+  gchar *filesystems = NULL;
+  GError *error = NULL;
+  gboolean ret = FALSE;
+  gchar **lines = NULL;
+  guint n;
+
+  if (!g_file_get_contents (filesystems_file,
+                            &filesystems,
+                            NULL, /* gsize *out_length */
+                            &error))
+    {
+      udisks_warning ("Error reading %s: %s (%s %d)",
+                      filesystems_file,
+                      error->message,
+                      g_quark_to_string (error->domain),
+                      error->code);
+      g_error_free (error);
+      goto out;
+    }
+
+  lines = g_strsplit (filesystems, "\n", -1);
+  for (n = 0; lines != NULL && lines[n] != NULL && !ret; n++)
+    {
+      gchar **tokens;
+      gint num_tokens;
+      g_strdelimit (lines[n], " \t", ' ');
+      g_strstrip (lines[n]);
+      tokens = g_strsplit (lines[n], " ", -1);
+      num_tokens = g_strv_length (tokens);
+      if (num_tokens == 1 && g_strcmp0 (tokens[0], fstype) == 0)
+        {
+          ret = TRUE;
+        }
+      g_strfreev (tokens);
+    }
+
+ out:
+  g_strfreev (lines);
+  g_free (filesystems);
+  return ret;
+}
+
+static gboolean
+is_well_known_filesystem (const gchar *fstype)
+{
+  gboolean ret = FALSE;
+  guint n;
+
+  for (n = 0; well_known_filesystems[n] != NULL; n++)
+    {
+      if (g_strcmp0 (well_known_filesystems[n], fstype) == 0)
+        {
+          ret = TRUE;
+          goto out;
+        }
+    }
+ out:
+  return ret;
+}
+
+/* this is not a very efficient implementation but it's very rarely
+ * called so no real point in optimizing it...
+ */
+static gboolean
+is_allowed_filesystem (const gchar *fstype)
+{
+  return is_well_known_filesystem (fstype) ||
+    is_in_filesystem_file ("/proc/filesystems", fstype) ||
+    is_in_filesystem_file ("/etc/filesystems", fstype);
 }
 
 /* ---------------------------------------------------------------------------------------------------- */
@@ -229,7 +347,7 @@ find_primary_gid (uid_t uid)
   pw = getpwuid (uid);
   if (pw == NULL)
     {
-      g_warning ("Couldn't look up uid %d: %m", uid);
+      udisks_warning ("Error looking up uid %d: %m", uid);
       goto out;
     }
   gid = pw->pw_gid;
@@ -255,7 +373,7 @@ is_uid_in_gid (uid_t uid,
   pw = getpwuid (uid);
   if (pw == NULL)
     {
-      g_warning ("Couldn't look up uid %d: %m", uid);
+      udisks_warning ("Error looking up uid %d: %m", uid);
       goto out;
     }
   if (pw->pw_gid == gid)
@@ -266,7 +384,7 @@ is_uid_in_gid (uid_t uid,
 
   if (getgrouplist (pw->pw_name, pw->pw_gid, supplementary_groups, &num_supplementary_groups) < 0)
     {
-      g_warning ("Couldn't find supplementary groups for uid %d: %m", uid);
+      udisks_warning ("Error getting supplementary groups for uid %d: %m", uid);
       goto out;
     }
 
@@ -394,8 +512,8 @@ is_mount_option_allowed (const FSMountOptions *fsmo,
 
 static gchar **
 prepend_default_mount_options (const FSMountOptions *fsmo,
-                               uid_t caller_uid,
-                               GVariant *given_options)
+                               uid_t                 caller_uid,
+                               GVariant             *given_options)
 {
   GPtrArray *options;
   gint n;
@@ -406,9 +524,11 @@ prepend_default_mount_options (const FSMountOptions *fsmo,
   options = g_ptr_array_new ();
   if (fsmo != NULL)
     {
-      for (n = 0; fsmo->defaults != NULL && fsmo->defaults[n] != NULL; n++)
+      const gchar *const *defaults = fsmo->defaults;
+
+      for (n = 0; defaults != NULL && defaults[n] != NULL; n++)
         {
-          const gchar *option = fsmo->defaults[n];
+          const gchar *option = defaults[n];
 
           if (strcmp (option, "uid=") == 0)
             {
@@ -460,6 +580,19 @@ subst_str (const gchar *str,
     return result;
 }
 
+static gchar *
+subst_str_and_escape (const gchar *str,
+                      const gchar *from,
+                      const gchar *to)
+{
+  gchar *quoted_and_escaped;
+  gchar *ret;
+  quoted_and_escaped = udisks_daemon_util_escape_and_quote (to);
+  ret = subst_str (str, from, quoted_and_escaped);
+  g_free (quoted_and_escaped);
+  return ret;
+}
+
 /* ---------------------------------------------------------------------------------------------------- */
 
 /*
@@ -477,20 +610,51 @@ calculate_fs_type (UDisksBlock               *block,
                    GVariant                  *given_options,
                    GError                   **error)
 {
-  gchar *fs_type_to_use;
-  const gchar *probed_fs_type;
+  gchar *fs_type_to_use = NULL;
+  const gchar *probed_fs_type = NULL;
   const gchar *requested_fs_type;
 
   probed_fs_type = NULL;
   if (block != NULL)
     probed_fs_type = udisks_block_get_id_type (block);
 
-  fs_type_to_use = NULL;
   if (g_variant_lookup (given_options,
                         "fstype",
                         "&s", &requested_fs_type) &&
       strlen (requested_fs_type) > 0)
     {
+      /* If the user requests the filesystem type, error out unless the
+       * filesystem type is
+       *
+       * - well-known [1]; or
+       * - in the /proc/filesystems file; or
+       * - in the /etc/filesystems file
+       *
+       * in that order. We do this because mount(8) on Linux allows
+       * loading any arbitrary kernel module (when invoked as root) by
+       * passing something appropriate to the -t option. So we have to
+       * validate whatever we pass...
+       *
+       * See https://bugs.freedesktop.org/show_bug.cgi?id=32232 for more
+       * details.
+       *
+       * [1] : since /etc/filesystems may be horribly out of date and
+       *       not contain e.g. ext4
+       */
+      if (g_strcmp0 (requested_fs_type, "auto") != 0)
+        {
+          if (!is_allowed_filesystem (requested_fs_type))
+            {
+              g_set_error (error,
+                           UDISKS_ERROR,
+                           UDISKS_ERROR_OPTION_NOT_PERMITTED,
+                           "Requested filesystem type `%s' is neither well-known nor "
+                           "in /proc/filesystems nor in /etc/filesystems",
+                           requested_fs_type);
+              goto out;
+            }
+        }
+
       /* TODO: maybe check that it's compatible with probed_fs_type */
       fs_type_to_use = g_strdup (requested_fs_type);
     }
@@ -502,6 +666,7 @@ calculate_fs_type (UDisksBlock               *block,
         fs_type_to_use = g_strdup ("auto");
     }
 
+ out:
   g_assert (fs_type_to_use == NULL || g_utf8_validate (fs_type_to_use, -1, NULL));
 
   return fs_type_to_use;
@@ -509,6 +674,7 @@ calculate_fs_type (UDisksBlock               *block,
 
 /*
  * calculate_mount_options: <internal>
+ * @daemon: A #UDisksDaemon.
  * @block: A #UDisksBlock.
  * @caller_uid: The uid of the caller making the request.
  * @fs_type: The filesystem type to use or %NULL.
@@ -521,7 +687,8 @@ calculate_fs_type (UDisksBlock               *block,
  * Returns: A string with mount options or %NULL if @error is set. Free with g_free().
  */
 static gchar *
-calculate_mount_options (UDisksBlock               *block,
+calculate_mount_options (UDisksDaemon              *daemon,
+                         UDisksBlock               *block,
                          uid_t                      caller_uid,
                          const gchar               *fs_type,
                          GVariant                  *options,
@@ -614,8 +781,45 @@ ensure_utf8 (const gchar *s)
 
 /* ---------------------------------------------------------------------------------------------------- */
 
+static gboolean
+add_acl (const gchar  *path,
+         uid_t         uid,
+         GError      **error)
+{
+  gboolean ret = FALSE;
+  acl_t acl = NULL;
+  acl_entry_t entry;
+  acl_permset_t permset;
+
+  acl = acl_get_file(path, ACL_TYPE_ACCESS);
+  if (acl == NULL ||
+      acl_create_entry (&acl, &entry) == -1 ||
+      acl_set_tag_type (entry, ACL_USER) == -1 ||
+      acl_set_qualifier (entry, &uid) == -1 ||
+      acl_get_permset (entry, &permset) == -1 ||
+      acl_add_perm (permset, ACL_READ|ACL_EXECUTE) == -1 ||
+      acl_calc_mask (&acl) == -1 ||
+      acl_set_file (path, ACL_TYPE_ACCESS, acl) == -1)
+    {
+      g_set_error (error,
+                   G_IO_ERROR,
+                   g_io_error_from_errno (errno),
+                   "Adding read ACL for uid %d to `%s' failed: %m",
+                   (gint) uid, path);
+      goto out;
+    }
+
+  ret = TRUE;
+
+ out:
+  if (acl != NULL)
+    acl_free (acl);
+  return ret;
+}
+
 /*
  * calculate_mount_point: <internal>
+ * @dameon: A #UDisksDaemon.
  * @block: A #UDisksBlock.
  * @uid: user id of the calling user
  * @gid: group id of the calling user
@@ -628,17 +832,19 @@ ensure_utf8 (const gchar *s)
  * Returns: A UTF-8 string with the mount point to use or %NULL if @error is set. Free with g_free().
  */
 static gchar *
-calculate_mount_point (UDisksBlock               *block,
+calculate_mount_point (UDisksDaemon              *daemon,
+                       UDisksBlock               *block,
                        uid_t                      uid,
                        gid_t                      gid,
                        const gchar               *user_name,
                        const gchar               *fs_type,
                        GError                   **error)
 {
-  const gchar *label;
-  const gchar *uuid;
+  const gchar *label = NULL;
+  const gchar *uuid = NULL;
+  gchar *escaped_user_name = NULL;
   gchar *mount_dir = NULL;
-  gchar *mount_point;
+  gchar *mount_point = NULL;
   gchar *orig_mount_point;
   GString *str;
   gchar *s;
@@ -652,38 +858,46 @@ calculate_mount_point (UDisksBlock               *block,
       uuid = udisks_block_get_id_uuid (block);
     }
 
-  /* try mounting in user's $XDG_RUNTIME_DIR/media first - have to create it on demand... */
-  if (user_name != NULL)
+  /* If we know the user-name and it doesn't have any '/' character in
+   * it, mount in /run/media/$USER
+   */
+  if (user_name != NULL && strstr (user_name, "/") == NULL)
     {
-      s = g_strdup_printf ("/run/user/%s", user_name);
-      if (g_file_test (s, G_FILE_TEST_EXISTS))
+      mount_dir = g_strdup_printf ("/run/media/%s", user_name);
+      if (!g_file_test (mount_dir, G_FILE_TEST_EXISTS))
         {
-          mount_dir = g_strdup_printf ("%s/media", s);
-          if (!g_file_test (mount_dir, G_FILE_TEST_EXISTS))
+          /* First ensure that /run/media exists */
+          if (!g_file_test ("/run/media", G_FILE_TEST_EXISTS))
             {
-              if (g_mkdir (mount_dir, 0777) != 0)
+              if (g_mkdir ("/run/media", 0755) != 0)
                 {
                   g_set_error (error,
                                UDISKS_ERROR,
                                UDISKS_ERROR_FAILED,
-                               "Error creating directory `%s': %m",
-                               mount_dir);
-                  goto out;
-                }
-              if (chown (mount_dir, uid, gid) != 0)
-                {
-                  g_set_error (error,
-                               UDISKS_ERROR,
-                               UDISKS_ERROR_FAILED,
-                               "Error chowning`%s' to uid=%d, gid=%d: %m",
-                               mount_dir, (gint) uid, (gint) gid);
+                               "Error creating directory /run/media: %m");
                   goto out;
                 }
             }
+          /* Then create the per-user /run/media/$USER */
+          if (g_mkdir (mount_dir, 0700) != 0)
+            {
+              g_set_error (error,
+                           UDISKS_ERROR,
+                           UDISKS_ERROR_FAILED,
+                           "Error creating directory `%s': %m",
+                           mount_dir);
+              goto out;
+            }
+          /* Finally, add the read+execute ACL for $USER */
+          if (!add_acl (mount_dir, uid, error))
+            {
+              if (rmdir (mount_dir) != 0)
+                udisks_warning ("Error calling rmdir() on %s: %m", mount_dir);
+              goto out;
+            }
         }
-      g_free (s);
     }
-  /* fall back to mounting in /media */
+  /* otherwise fall back to mounting in /media */
   if (mount_dir == NULL)
     mount_dir = g_strdup ("/media");
 
@@ -748,6 +962,7 @@ calculate_mount_point (UDisksBlock               *block,
   g_free (mount_dir);
 
  out:
+  g_free (escaped_user_name);
   return mount_point;
 }
 
@@ -888,6 +1103,7 @@ handle_mount (UDisksFilesystem       *filesystem,
   UDisksBlock *block;
   UDisksDaemon *daemon;
   UDisksCleanup *cleanup;
+  pid_t caller_pid;
   uid_t caller_uid;
   gid_t caller_gid;
   const gchar * const *existing_mount_points;
@@ -903,7 +1119,9 @@ handle_mount (UDisksFilesystem       *filesystem,
   gchar *caller_user_name;
   GError *error;
   const gchar *action_id;
+  const gchar *message;
   gboolean system_managed;
+  gchar *escaped_device = NULL;
 
   object = NULL;
   error_message = NULL;
@@ -916,6 +1134,9 @@ handle_mount (UDisksFilesystem       *filesystem,
   escaped_mount_point_to_use = NULL;
   caller_user_name = NULL;
   system_managed = FALSE;
+
+  /* only allow a single call at a time */
+  g_mutex_lock (&UDISKS_LINUX_FILESYSTEM (filesystem)->lock);
 
   error = NULL;
   object = udisks_daemon_util_dup_object (filesystem, &error);
@@ -972,15 +1193,18 @@ handle_mount (UDisksFilesystem       *filesystem,
       goto out;
     }
 
-  /* if system-managed (e.g. referenced in /etc/fstab or similar), then
-   *
-   * - if the option x-udisks-auth is given, then just run mount(8) as
-   *   the calling user; if that fails because of permission denied
-   *   try running it as root after the user authenticates for the
-   *   action org.freedesktop.udisks2.filesystem-fstab
-   *
-   * - otherwise (default case), use the normal authorization checks
-   */
+  error = NULL;
+  if (!udisks_daemon_util_get_caller_pid_sync (daemon,
+                                               invocation,
+                                               NULL /* GCancellable */,
+                                               &caller_pid,
+                                               &error))
+    {
+      g_dbus_method_invocation_return_gerror (invocation, error);
+      g_error_free (error);
+      goto out;
+    }
+
   if (system_managed)
     {
       gint status;
@@ -989,14 +1213,30 @@ handle_mount (UDisksFilesystem       *filesystem,
       if (!has_option (fstab_mount_options, "x-udisks-auth"))
         {
           action_id = "org.freedesktop.udisks2.filesystem-mount";
-          if (udisks_block_get_hint_system (block) &&
-              !(udisks_daemon_util_setup_by_user (daemon, object, caller_uid)))
-            action_id = "org.freedesktop.udisks2.filesystem-mount-system";
+          /* Translators: Shown in authentication dialog when the user
+           * requests mounting a filesystem.
+           *
+           * Do not translate $(udisks2.device), it's a placeholder and
+           * will be replaced by the name of the drive/device in question
+           */
+          message = N_("Authentication is required to mount $(udisks2.device)");
+          if (!udisks_daemon_util_setup_by_user (daemon, object, caller_uid))
+            {
+              if (udisks_block_get_hint_system (block))
+                {
+                  action_id = "org.freedesktop.udisks2.filesystem-mount-system";
+                }
+              else if (!udisks_daemon_util_on_same_seat (daemon, object, caller_pid))
+                {
+                  action_id = "org.freedesktop.udisks2.filesystem-mount-other-seat";
+                }
+            }
+
           if (!udisks_daemon_util_check_authorization_sync (daemon,
                                                             object,
                                                             action_id,
                                                             options,
-                                                            N_("Authentication is required to mount $(udisks2.device)"),
+                                                            message,
                                                             invocation))
             goto out;
           mount_fstab_as_root = TRUE;
@@ -1016,7 +1256,7 @@ handle_mount (UDisksFilesystem       *filesystem,
             }
         }
 
-      escaped_mount_point_to_use   = g_strescape (mount_point_to_use, NULL);
+      escaped_mount_point_to_use   = udisks_daemon_util_escape_and_quote (mount_point_to_use);
     mount_fstab_again:
       if (!udisks_daemon_launch_spawned_job_sync (daemon,
                                                   object,
@@ -1026,7 +1266,7 @@ handle_mount (UDisksFilesystem       *filesystem,
                                                   &status,
                                                   &error_message,
                                                   NULL,  /* input_string */
-                                                  "mount \"%s\"",
+                                                  "mount %s",
                                                   escaped_mount_point_to_use))
         {
           /* mount(8) exits with status 1 on "incorrect invocation or permissions" - if this is
@@ -1037,7 +1277,17 @@ handle_mount (UDisksFilesystem       *filesystem,
                                                                 object,
                                                                 "org.freedesktop.udisks2.filesystem-fstab",
                                                                 options,
-                                                                N_("Authentication is required to mount the fstab device $(udisks2.device)"),
+                                                                /* Translators: Shown in authentication dialog when the
+                                                                 * user requests mounting a filesystem that is in
+                                                                 * /etc/fstab file with the x-udisks-auth option.
+                                                                 *
+                                                                 * Do not translate $(udisks2.device), it's a
+                                                                 * placeholder and will be replaced by the name of
+                                                                 * the drive/device in question
+                                                                 *
+                                                                 * Do not translate /etc/fstab
+                                                                 */
+                                                                N_("Authentication is required to mount $(udisks2.device) referenced in the /etc/fstab file"),
                                                                 invocation))
                 goto out;
               mount_fstab_as_root = TRUE;
@@ -1106,7 +1356,8 @@ handle_mount (UDisksFilesystem       *filesystem,
 
   /* calculate mount options (guaranteed to be valid UTF-8) */
   error = NULL;
-  mount_options_to_use = calculate_mount_options (block,
+  mount_options_to_use = calculate_mount_options (daemon,
+                                                  block,
                                                   caller_uid,
                                                   fs_type_to_use,
                                                   options,
@@ -1123,20 +1374,37 @@ handle_mount (UDisksFilesystem       *filesystem,
    * may be racing with other threads...
    */
   action_id = "org.freedesktop.udisks2.filesystem-mount";
-  if (udisks_block_get_hint_system (block) &&
-      !(udisks_daemon_util_setup_by_user (daemon, object, caller_uid)))
-    action_id = "org.freedesktop.udisks2.filesystem-mount-system";
+  /* Translators: Shown in authentication dialog when the user
+   * requests mounting a filesystem.
+   *
+   * Do not translate $(udisks2.device), it's a placeholder and
+   * will be replaced by the name of the drive/device in question
+   */
+  message = N_("Authentication is required to mount $(udisks2.device)");
+  if (!udisks_daemon_util_setup_by_user (daemon, object, caller_uid))
+    {
+      if (udisks_block_get_hint_system (block))
+        {
+          action_id = "org.freedesktop.udisks2.filesystem-mount-system";
+        }
+      else if (!udisks_daemon_util_on_same_seat (daemon, object, caller_pid))
+        {
+          action_id = "org.freedesktop.udisks2.filesystem-mount-other-seat";
+        }
+    }
+
   if (!udisks_daemon_util_check_authorization_sync (daemon,
                                                     object,
                                                     action_id,
                                                     options,
-                                                    N_("Authentication is required to mount $(udisks2.device)"),
+                                                    message,
                                                     invocation))
     goto out;
 
   /* calculate mount point (guaranteed to be valid UTF-8) */
   error = NULL;
-  mount_point_to_use = calculate_mount_point (block,
+  mount_point_to_use = calculate_mount_point (daemon,
+                                              block,
                                               caller_uid,
                                               caller_gid,
                                               caller_user_name,
@@ -1160,9 +1428,10 @@ handle_mount (UDisksFilesystem       *filesystem,
       goto out;
     }
 
-  escaped_fs_type_to_use       = g_strescape (fs_type_to_use, NULL);
-  escaped_mount_options_to_use = g_strescape (mount_options_to_use, NULL);
-  escaped_mount_point_to_use   = g_strescape (mount_point_to_use, NULL);
+  escaped_fs_type_to_use       = udisks_daemon_util_escape_and_quote (fs_type_to_use);
+  escaped_mount_options_to_use = udisks_daemon_util_escape_and_quote (mount_options_to_use);
+  escaped_mount_point_to_use   = udisks_daemon_util_escape_and_quote (mount_point_to_use);
+  escaped_device               = udisks_daemon_util_escape_and_quote (udisks_block_get_device (block));
 
   /* run mount(8) */
   if (!udisks_daemon_launch_spawned_job_sync (daemon,
@@ -1173,10 +1442,10 @@ handle_mount (UDisksFilesystem       *filesystem,
                                               NULL, /* gint *out_status */
                                               &error_message,
                                               NULL,  /* input_string */
-                                              "mount -t \"%s\" -o \"%s\" \"%s\" \"%s\"",
+                                              "mount -t %s -o %s %s %s",
                                               escaped_fs_type_to_use,
                                               escaped_mount_options_to_use,
-                                              udisks_block_get_device (block),
+                                              escaped_device,
                                               escaped_mount_point_to_use))
     {
       /* ugh, something went wrong.. we need to clean up the created mount point */
@@ -1207,6 +1476,7 @@ handle_mount (UDisksFilesystem       *filesystem,
   udisks_filesystem_complete_mount (filesystem, invocation, mount_point_to_use);
 
  out:
+  g_free (escaped_device);
   g_free (error_message);
   g_free (escaped_fs_type_to_use);
   g_free (escaped_mount_options_to_use);
@@ -1218,6 +1488,9 @@ handle_mount (UDisksFilesystem       *filesystem,
   g_free (caller_user_name);
   g_clear_object (&object);
 
+  /* only allow a single call at a time */
+  g_mutex_unlock (&UDISKS_LINUX_FILESYSTEM (filesystem)->lock);
+
   return TRUE; /* returning TRUE means that we handled the method invocation */
 }
 
@@ -1227,7 +1500,8 @@ static guint
 get_error_code_for_umount (gint         exit_status,
                            const gchar *error_message)
 {
-  if (strstr (error_message, "device is busy") != NULL)
+  if (strstr (error_message, "device is busy") != NULL ||
+      strstr (error_message, "target is busy") != NULL)
     return UDISKS_ERROR_DEVICE_BUSY;
   else
     return UDISKS_ERROR_FAILED;
@@ -1256,12 +1530,16 @@ handle_unmount (UDisksFilesystem       *filesystem,
   gboolean rc;
   gboolean system_managed;
   gboolean fstab_mounted;
+  gchar *escaped_device = NULL;
 
   mount_point = NULL;
   fstab_mount_options = NULL;
   escaped_mount_point = NULL;
   error_message = NULL;
   opt_force = FALSE;
+
+  /* only allow a single call at a time */
+  g_mutex_lock (&UDISKS_LINUX_FILESYSTEM (filesystem)->lock);
 
   error = NULL;
   object = udisks_daemon_util_dup_object (filesystem, &error);
@@ -1319,7 +1597,7 @@ handle_unmount (UDisksFilesystem       *filesystem,
 
       unmount_fstab_as_root = FALSE;
     unmount_fstab_again:
-      escaped_mount_point = g_strescape (mount_point, NULL);
+      escaped_mount_point = udisks_daemon_util_escape_and_quote (mount_point);
       /* right now -l is the only way to "force unmount" file systems... */
       if (!udisks_daemon_launch_spawned_job_sync (daemon,
                                                   object,
@@ -1329,7 +1607,7 @@ handle_unmount (UDisksFilesystem       *filesystem,
                                                   &status,
                                                   &error_message,
                                                   NULL,  /* input_string */
-                                                  "umount %s \"%s\"",
+                                                  "umount %s %s",
                                                   opt_force ? "-l" : "",
                                                   escaped_mount_point))
         {
@@ -1344,7 +1622,17 @@ handle_unmount (UDisksFilesystem       *filesystem,
                                                                 object,
                                                                 "org.freedesktop.udisks2.filesystem-fstab",
                                                                 options,
-                                                                N_("Authentication is required to unmount the fstab device $(udisks2.device)"),
+                                                                /* Translators: Shown in authentication dialog when the
+                                                                 * user requests unmounting a filesystem that is in
+                                                                 * /etc/fstab file with the x-udisks-auth option.
+                                                                 *
+                                                                 * Do not translate $(udisks2.device), it's a
+                                                                 * placeholder and will be replaced by the name of
+                                                                 * the drive/device in question
+                                                                 *
+                                                                 * Do not translate /etc/fstab
+                                                                 */
+                                                                N_("Authentication is required to unmount $(udisks2.device) referenced in the /etc/fstab file"),
                                                                 invocation))
                 goto out;
               unmount_fstab_as_root = TRUE;
@@ -1380,19 +1668,34 @@ handle_unmount (UDisksFilesystem       *filesystem,
 
   if (caller_uid != 0 && (caller_uid != mounted_by_uid))
     {
+      const gchar *action_id;
+      const gchar *message;
+
+      action_id = "org.freedesktop.udisks2.filesystem-unmount-others";
+      /* Translators: Shown in authentication dialog when the user
+       * requests unmounting a filesystem previously mounted by
+       * another user.
+       *
+       * Do not translate $(udisks2.device), it's a placeholder and
+       * will be replaced by the name of the drive/device in question
+       */
+      message = N_("Authentication is required to unmount $(udisks2.device) mounted by another user");
+
       if (!udisks_daemon_util_check_authorization_sync (daemon,
                                                         object,
-                                                        "org.freedesktop.udisks2.filesystem-unmount-others",
+                                                        action_id,
                                                         options,
-                                                        N_("Authentication is required to unmount $(udisks2.device) mounted by another user"),
+                                                        message,
                                                         invocation))
         goto out;
     }
 
+  escaped_device = udisks_daemon_util_escape_and_quote (udisks_block_get_device (block));
+
   /* otherwise go ahead and unmount the filesystem */
   if (mount_point != NULL)
     {
-      escaped_mount_point = g_strescape (mount_point, NULL);
+      escaped_mount_point = udisks_daemon_util_escape_and_quote (mount_point);
       rc = udisks_daemon_launch_spawned_job_sync (daemon,
                                                   object,
                                                   NULL, /* GCancellable */
@@ -1401,7 +1704,7 @@ handle_unmount (UDisksFilesystem       *filesystem,
                                                   NULL, /* gint *out_status */
                                                   &error_message,
                                                   NULL,  /* input_string */
-                                                  "umount %s \"%s\"",
+                                                  "umount %s %s",
                                                   opt_force ? "-l" : "",
                                                   escaped_mount_point);
     }
@@ -1416,9 +1719,9 @@ handle_unmount (UDisksFilesystem       *filesystem,
                                                   &status,
                                                   &error_message,
                                                   NULL,  /* input_string */
-                                                  "umount %s \"%s\"",
+                                                  "umount %s %s",
                                                   opt_force ? "-l" : "",
-                                                  udisks_block_get_device (block));
+                                                  escaped_device);
     }
 
   if (!rc)
@@ -1441,11 +1744,15 @@ handle_unmount (UDisksFilesystem       *filesystem,
   udisks_filesystem_complete_unmount (filesystem, invocation);
 
  out:
+  g_free (escaped_device);
   g_free (error_message);
   g_free (escaped_mount_point);
   g_free (mount_point);
   g_free (fstab_mount_options);
   g_clear_object (&object);
+
+  g_mutex_unlock (&UDISKS_LINUX_FILESYSTEM (filesystem)->lock);
+
   return TRUE;
 }
 
@@ -1486,15 +1793,15 @@ handle_set_label (UDisksFilesystem       *filesystem,
   const gchar *probed_fs_type;
   const FSInfo *fs_info;
   UDisksBaseJob *job;
-  gchar *escaped_label;
   const gchar *action_id;
+  const gchar *message;
+  pid_t caller_pid;
   gchar *command;
   gchar *tmp;
   GError *error;
 
   object = NULL;
   daemon = NULL;
-  escaped_label = NULL;
   command = NULL;
 
   error = NULL;
@@ -1507,6 +1814,18 @@ handle_set_label (UDisksFilesystem       *filesystem,
 
   daemon = udisks_linux_block_object_get_daemon (UDISKS_LINUX_BLOCK_OBJECT (object));
   block = udisks_object_peek_block (object);
+
+  error = NULL;
+  if (!udisks_daemon_util_get_caller_pid_sync (daemon,
+                                               invocation,
+                                               NULL /* GCancellable */,
+                                               &caller_pid,
+                                               &error))
+    {
+      g_dbus_method_invocation_return_gerror (invocation, error);
+      g_error_free (error);
+      goto out;
+    }
 
   probed_fs_usage = udisks_block_get_id_usage (block);
   probed_fs_type = udisks_block_get_id_type (block);
@@ -1572,8 +1891,21 @@ handle_set_label (UDisksFilesystem       *filesystem,
     }
 
   action_id = "org.freedesktop.udisks2.modify-device";
+  /* Translators: Shown in authentication dialog when the user
+   * requests changing the filesystem label.
+   *
+   * Do not translate $(udisks2.device), it's a placeholder and
+   * will be replaced by the name of the drive/device in question
+   */
+  message = N_("Authentication is required to change the filesystem label on $(udisks2.device)");
   if (udisks_block_get_hint_system (block))
-    action_id = "org.freedesktop.udisks2.modify-device-system";
+    {
+      action_id = "org.freedesktop.udisks2.modify-device-system";
+    }
+  else if (!udisks_daemon_util_on_same_seat (daemon, UDISKS_OBJECT (object), caller_pid))
+    {
+      action_id = "org.freedesktop.udisks2.modify-device-other-seat";
+    }
 
   /* Check that the user is actually authorized to change the
    * filesystem label.
@@ -1582,20 +1914,18 @@ handle_set_label (UDisksFilesystem       *filesystem,
                                                     object,
                                                     action_id,
                                                     options,
-                                                    N_("Authentication is required to change the filesystem label on $(udisks2.device)"),
+                                                    message,
                                                     invocation))
     goto out;
 
-  escaped_label = g_shell_quote (label);
-
   if (fs_info->command_clear_label != NULL && strlen (label) == 0)
     {
-      command = subst_str (fs_info->command_clear_label, "$DEVICE", udisks_block_get_device (block));
+      command = subst_str_and_escape (fs_info->command_clear_label, "$DEVICE", udisks_block_get_device (block));
     }
   else
     {
-      tmp = subst_str (fs_info->command_change_label, "$DEVICE", udisks_block_get_device (block));
-      command = subst_str (tmp, "$LABEL", escaped_label);
+      tmp = subst_str_and_escape (fs_info->command_change_label, "$DEVICE", udisks_block_get_device (block));
+      command = subst_str_and_escape (tmp, "$LABEL", label);
       g_free (tmp);
     }
 
@@ -1612,7 +1942,6 @@ handle_set_label (UDisksFilesystem       *filesystem,
                     invocation);
 
  out:
-  g_free (escaped_label);
   g_free (command);
   g_clear_object (&object);
   return TRUE; /* returning TRUE means that we handled the method invocation */

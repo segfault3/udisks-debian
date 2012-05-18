@@ -811,6 +811,10 @@ handle_get_secret_configuration (UDisksBlock           *_block,
                                                     NULL,
                                                     "org.freedesktop.udisks2.read-system-configuration-secrets",
                                                     options,
+                                                    /* Translators: This is shown in an authentcation dialog when
+                                                     * the user is editing settings that involve system-level
+                                                     * passwords and secrets
+                                                     */
                                                     N_("Authentication is required to read system-level secrets"),
                                                     invocation))
     {
@@ -870,7 +874,7 @@ unescape_fstab (const gchar *source)
           switch (*p)
             {
             case '\0':
-              g_warning ("unescape_fstab: trailing \\");
+              udisks_warning ("unescape_fstab: trailing \\");
               goto out;
             case '0':  case '1':  case '2':  case '3':  case '4':
             case '5':  case '6':  case '7':
@@ -1449,6 +1453,7 @@ handle_add_configuration_item (UDisksBlock           *_block,
                                                         NULL,
                                                         "org.freedesktop.udisks2.modify-system-configuration",
                                                         options,
+                                                        /* Translators: shown in authentication dialog - do not translate /etc/fstab */
                                                         N_("Authentication is required to add an entry to the /etc/fstab file"),
                                                         invocation))
         goto out;
@@ -1466,6 +1471,7 @@ handle_add_configuration_item (UDisksBlock           *_block,
                                                         NULL,
                                                         "org.freedesktop.udisks2.modify-system-configuration",
                                                         options,
+                                                        /* Translators: shown in authentication dialog - do not tranlsate /etc/crypttab */
                                                         N_("Authentication is required to add an entry to the /etc/crypttab file"),
                                                         invocation))
         goto out;
@@ -1524,6 +1530,7 @@ handle_remove_configuration_item (UDisksBlock           *_block,
                                                         NULL,
                                                         "org.freedesktop.udisks2.modify-system-configuration",
                                                         options,
+                                                        /* Translators: shown in authentication dialog - do not translate /etc/fstab */
                                                         N_("Authentication is required to remove an entry from /etc/fstab file"),
                                                         invocation))
         goto out;
@@ -1541,6 +1548,7 @@ handle_remove_configuration_item (UDisksBlock           *_block,
                                                         NULL,
                                                         "org.freedesktop.udisks2.modify-system-configuration",
                                                         options,
+                                                        /* Translators: shown in authentication dialog - do not translate /etc/crypttab */
                                                         N_("Authentication is required to remove an entry from the /etc/crypttab file"),
                                                         invocation))
         goto out;
@@ -1612,6 +1620,7 @@ handle_update_configuration_item (UDisksBlock           *_block,
                                                         NULL,
                                                         "org.freedesktop.udisks2.modify-system-configuration",
                                                         options,
+                                                        /* Translators: shown in authentication dialog - do not translate /etc/fstab */
                                                         N_("Authentication is required to modify the /etc/fstab file"),
                                                         invocation))
         goto out;
@@ -1629,6 +1638,7 @@ handle_update_configuration_item (UDisksBlock           *_block,
                                                         NULL,
                                                         "org.freedesktop.udisks2.modify-system-configuration",
                                                         options,
+                                                        /* Translators: shown in authentication dialog - do not translate /etc/crypttab */
                                                         N_("Authentication is required to modify the /etc/crypttab file"),
                                                         invocation))
         goto out;
@@ -1673,6 +1683,19 @@ subst_str (const gchar *str,
 }
 
 
+static gchar *
+subst_str_and_escape (const gchar *str,
+                      const gchar *from,
+                      const gchar *to)
+{
+  gchar *quoted_and_escaped;
+  gchar *ret;
+  quoted_and_escaped = udisks_daemon_util_escape_and_quote (to);
+  ret = subst_str (str, from, quoted_and_escaped);
+  g_free (quoted_and_escaped);
+  return ret;
+}
+
 /* ---------------------------------------------------------------------------------------------------- */
 
 typedef struct
@@ -1683,47 +1706,46 @@ typedef struct
 
 /* ---------------------------------------------------------------------------------------------------- */
 
-static gboolean
+static UDisksObject *
 wait_for_filesystem (UDisksDaemon *daemon,
-                     UDisksObject *object,
                      gpointer      user_data)
 {
   FormatWaitData *data = user_data;
+  UDisksObject *ret = NULL;
   UDisksBlock *block = NULL;
   UDisksPartitionTable *partition_table = NULL;
   gchar *id_type = NULL;
   gchar *partition_table_type = NULL;
-  gboolean ret = FALSE;
 
-  block = udisks_object_get_block (object);
+  block = udisks_object_get_block (data->object);
   if (block == NULL)
     goto out;
+
+  partition_table = udisks_object_get_partition_table (data->object);
 
   id_type = udisks_block_dup_id_type (block);
 
   if (g_strcmp0 (data->type, "empty") == 0)
     {
-      g_debug ("id_type=`%s'", id_type);
-      if (g_strcmp0 (id_type, "") == 0)
+      if ((id_type == NULL || g_strcmp0 (id_type, "") == 0) && partition_table == NULL)
         {
-          ret = TRUE;
+          ret = g_object_ref (data->object);
           goto out;
         }
     }
 
   if (g_strcmp0 (id_type, data->type) == 0)
     {
-      ret = TRUE;
+      ret = g_object_ref (data->object);
       goto out;
     }
 
-  partition_table = udisks_object_get_partition_table (object);
   if (partition_table != NULL)
     {
       partition_table_type = udisks_partition_table_dup_type_ (partition_table);
       if (g_strcmp0 (partition_table_type, data->type) == 0)
         {
-          ret = TRUE;
+          ret = g_object_ref (data->object);
           goto out;
         }
     }
@@ -1738,26 +1760,22 @@ wait_for_filesystem (UDisksDaemon *daemon,
 
 /* ---------------------------------------------------------------------------------------------------- */
 
-static gboolean
+static UDisksObject *
 wait_for_luks_uuid (UDisksDaemon *daemon,
-                    UDisksObject *object,
                     gpointer      user_data)
 {
   FormatWaitData *data = user_data;
+  UDisksObject *ret = NULL;
   UDisksBlock *block = NULL;
-  gboolean ret = FALSE;
 
-  if (object != data->object)
-    goto out;
-
-  block = udisks_object_get_block (object);
+  block = udisks_object_get_block (data->object);
   if (block == NULL)
     goto out;
 
   if (g_strcmp0 (udisks_block_get_id_type (block), "crypto_LUKS") != 0)
     goto out;
 
-  ret = TRUE;
+  ret = g_object_ref (data->object);
 
  out:
   g_clear_object (&block);
@@ -1766,28 +1784,36 @@ wait_for_luks_uuid (UDisksDaemon *daemon,
 
 /* ---------------------------------------------------------------------------------------------------- */
 
-static gboolean
+static UDisksObject *
 wait_for_luks_cleartext (UDisksDaemon *daemon,
-                         UDisksObject *object,
                          gpointer      user_data)
 {
   FormatWaitData *data = user_data;
-  UDisksBlock *block = NULL;
-  gboolean ret = FALSE;
+  UDisksObject *ret = NULL;
+  GList *objects, *l;
 
-  ret = FALSE;
-  block = udisks_object_get_block (object);
-  if (block == NULL)
-    goto out;
+  objects = udisks_daemon_get_objects (daemon);
+  for (l = objects; l != NULL; l = l->next)
+    {
+      UDisksObject *object = UDISKS_OBJECT (l->data);
+      UDisksBlock *block = NULL;
 
-  if (g_strcmp0 (udisks_block_get_crypto_backing_device (block),
-                 g_dbus_object_get_object_path (G_DBUS_OBJECT (data->object))) != 0)
-    goto out;
-
-  ret = TRUE;
+      block = udisks_object_get_block (object);
+      if (block != NULL)
+        {
+          if (g_strcmp0 (udisks_block_get_crypto_backing_device (block),
+                         g_dbus_object_get_object_path (G_DBUS_OBJECT (data->object))) == 0)
+            {
+              g_object_unref (block);
+              ret = g_object_ref (object);
+              goto out;
+            }
+          g_object_unref (block);
+        }
+    }
 
  out:
-  g_clear_object (&block);
+  g_list_free_full (objects, g_object_unref);
   return ret;
 }
 
@@ -1809,9 +1835,8 @@ handle_format (UDisksBlock           *block,
   UDisksDaemon *daemon;
   UDisksCleanup *cleanup;
   const gchar *action_id;
+  const gchar *message;
   const FSInfo *fs_info;
-  const gchar *label;
-  gchar *escaped_label = NULL;
   gchar *command = NULL;
   gchar *tmp;
   gchar *error_message;
@@ -1819,9 +1844,12 @@ handle_format (UDisksBlock           *block,
   int status;
   uid_t caller_uid;
   gid_t caller_gid;
+  pid_t caller_pid;
   gboolean take_ownership = FALSE;
   gchar *encrypt_passphrase = NULL;
   gchar *mapped_name = NULL;
+  const gchar *label = NULL;
+  gchar *escaped_device = NULL;
 
   error = NULL;
   object = udisks_daemon_util_dup_object (block, &error);
@@ -1833,14 +1861,38 @@ handle_format (UDisksBlock           *block,
 
   daemon = udisks_linux_block_object_get_daemon (UDISKS_LINUX_BLOCK_OBJECT (object));
   cleanup = udisks_daemon_get_cleanup (daemon);
-  escaped_label = g_shell_quote("");
   command = NULL;
   error_message = NULL;
-  error = NULL;
 
+  error = NULL;
+  if (!udisks_daemon_util_get_caller_pid_sync (daemon,
+                                               invocation,
+                                               NULL /* GCancellable */,
+                                               &caller_pid,
+                                               &error))
+    {
+      g_dbus_method_invocation_return_gerror (invocation, error);
+      g_error_free (error);
+      goto out;
+    }
+
+  /* Translators: Shown in authentication dialog when formatting a
+   * device. This includes both creating a filesystem or partition
+   * table.
+   *
+   * Do not translate $(udisks2.device), it's a placeholder and will
+   * be replaced by the name of the drive/device in question
+   */
+  message = N_("Authentication is required to format $(udisks2.device)");
   action_id = "org.freedesktop.udisks2.modify-device";
   if (udisks_block_get_hint_system (block))
-    action_id = "org.freedesktop.udisks2.modify-device-system";
+    {
+      action_id = "org.freedesktop.udisks2.modify-device-system";
+    }
+  else if (!udisks_daemon_util_on_same_seat (daemon, object, caller_pid))
+    {
+      action_id = "org.freedesktop.udisks2.modify-device-other-seat";
+    }
 
   error = NULL;
   if (!udisks_daemon_util_get_caller_uid_sync (daemon, invocation, NULL /* GCancellable */, &caller_uid, &caller_gid, NULL, &error))
@@ -1868,12 +1920,14 @@ handle_format (UDisksBlock           *block,
                                                     object,
                                                     action_id,
                                                     options,
-                                                    N_("Authentication is required to format $(udisks2.device)"),
+                                                    message,
                                                     invocation))
     goto out;
 
   g_variant_lookup (options, "take-ownership", "b", &take_ownership);
   g_variant_lookup (options, "encrypt.passphrase", "s", &encrypt_passphrase);
+
+  escaped_device = udisks_daemon_util_escape_and_quote (udisks_block_get_device (block));
 
   /* First wipe the device */
   wait_data = g_new0 (FormatWaitData, 1);
@@ -1887,7 +1941,7 @@ handle_format (UDisksBlock           *block,
                                               &error_message,
                                               NULL, /* input_string */
                                               "wipefs -a %s",
-                                              udisks_block_get_device (block)))
+                                              escaped_device))
     {
       g_dbus_method_invocation_return_error (invocation,
                                              UDISKS_ERROR,
@@ -1923,8 +1977,8 @@ handle_format (UDisksBlock           *block,
                                                   &status,
                                                   &error_message,
                                                   encrypt_passphrase, /* input_string */
-                                                  "cryptsetup luksFormat %s",
-                                                  udisks_block_get_device (block)))
+                                                  "cryptsetup luksFormat \"%s\"",
+                                                  escaped_device))
         {
           g_dbus_method_invocation_return_error (invocation,
                                                  UDISKS_ERROR,
@@ -1958,8 +2012,8 @@ handle_format (UDisksBlock           *block,
                                                   &status,
                                                   &error_message,
                                                   encrypt_passphrase, /* input_string */
-                                                  "cryptsetup luksOpen %s %s",
-                                                  udisks_block_get_device (block),
+                                                  "cryptsetup luksOpen \"%s\" %s",
+                                                  escaped_device,
                                                   mapped_name))
         {
           g_dbus_method_invocation_return_error (invocation,
@@ -2022,14 +2076,11 @@ handle_format (UDisksBlock           *block,
                        type);
           goto out;
         }
-
-        g_free (escaped_label);
-        escaped_label = g_shell_quote (label);
     }
 
   /* Build and run mkfs shell command */
-  tmp = subst_str (fs_info->command_create_fs, "$DEVICE", udisks_block_get_device (block_to_mkfs));
-  command = subst_str (tmp, "$LABEL", escaped_label);
+  tmp = subst_str_and_escape (fs_info->command_create_fs, "$DEVICE", udisks_block_get_device (block_to_mkfs));
+  command = subst_str_and_escape (tmp, "$LABEL", label != NULL ? label : "");
   g_free (tmp);
   if (!udisks_daemon_launch_spawned_job_sync (daemon,
                                               object_to_mkfs,
@@ -2143,8 +2194,8 @@ handle_format (UDisksBlock           *block,
   udisks_block_complete_format (block, invocation);
 
  out:
+  g_free (escaped_device);
   g_free (mapped_name);
-  g_free (escaped_label);
   g_free (command);
   g_free (encrypt_passphrase);
   g_clear_object (&cleartext_object);
@@ -2189,6 +2240,12 @@ handle_open_for_backup (UDisksBlock           *block,
                                                     object,
                                                     action_id,
                                                     options,
+                                                    /* Translators: Shown in authentication dialog when creating a
+                                                     * disk image file.
+                                                     *
+                                                     * Do not translate $(udisks2.device), it's a placeholder and will
+                                                     * be replaced by the name of the drive/device in question
+                                                     */
                                                     N_("Authentication is required to open $(udisks2.device) for reading"),
                                                     invocation))
     goto out;
@@ -2247,6 +2304,12 @@ handle_open_for_restore (UDisksBlock           *block,
                                                     object,
                                                     action_id,
                                                     options,
+                                                    /* Translators: Shown in authentication dialog when restoring
+                                                     * from a disk image file.
+                                                     *
+                                                     * Do not translate $(udisks2.device), it's a placeholder and will
+                                                     * be replaced by the name of the drive/device in question
+                                                     */
                                                     N_("Authentication is required to open $(udisks2.device) for writing"),
                                                     invocation))
     goto out;
