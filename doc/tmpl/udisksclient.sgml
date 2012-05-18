@@ -22,6 +22,37 @@ UDisksClient
 <!-- ##### SECTION Image ##### -->
 
 
+<!-- ##### MACRO UDISKS_MAJOR_VERSION ##### -->
+<para>
+
+</para>
+
+
+
+<!-- ##### MACRO UDISKS_MINOR_VERSION ##### -->
+<para>
+
+</para>
+
+
+
+<!-- ##### MACRO UDISKS_MICRO_VERSION ##### -->
+<para>
+
+</para>
+
+
+
+<!-- ##### MACRO UDISKS_CHECK_VERSION ##### -->
+<para>
+
+</para>
+
+@major: 
+@minor: 
+@micro: 
+
+
 <!-- ##### STRUCT UDisksClient ##### -->
 <para>
 
@@ -189,6 +220,16 @@ UDisksClient
 
 @client: 
 @partition: 
+@Returns: 
+
+
+<!-- ##### FUNCTION udisks_client_get_loop_for_block ##### -->
+<para>
+
+</para>
+
+@client: 
+@block: 
 @Returns: 
 
 

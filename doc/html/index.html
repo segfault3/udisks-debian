@@ -5,7 +5,7 @@
 <title>UDisks Reference Manual</title>
 <meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
 <link rel="home" href="index.html" title="UDisks Reference Manual">
-<link rel="next" href="overview.html" title="Part I. UDisks Overview">
+<link rel="next" href="overview.html" title="Part I. Manual pages and Overview">
 <meta name="generator" content="GTK-Doc V1.18 (XML mode)">
 <link rel="stylesheet" href="style.css" type="text/css">
 </head>
@@ -15,7 +15,7 @@
 <div>
 <div><table class="navigation" id="top" width="100%" cellpadding="2" cellspacing="0"><tr><th valign="middle"><p class="title">UDisks Reference Manual</p></th></tr></table></div>
 <div><p class="releaseinfo">
-      For version 1.91.0
+      For version 1.97.0
  — the latest version of this
       documentation can be found at <a class="ulink" href="http://udisks.freedesktop.org/docs/latest/" target="_top">http://udisks.freedesktop.org/docs/latest/</a>.
     </p></div>
@@ -23,7 +23,18 @@
 <hr>
 </div>
 <div class="toc"><dl>
-<dt><span class="part"><a href="overview.html">I. UDisks Overview</a></span></dt>
+<dt><span class="part"><a href="overview.html">I. Manual pages and Overview</a></span></dt>
+<dd><dl>
+<dt>
+<span class="refentrytitle"><a href="udisks.8.html">udisks</a></span><span class="refpurpose"> — Introduction to udisks</span>
+</dt>
+<dt>
+<span class="refentrytitle"><a href="udisksd.8.html">udisksd</a></span><span class="refpurpose"> — The udisks system daemon</span>
+</dt>
+<dt>
+<span class="refentrytitle"><a href="udisksctl.1.html">udisksctl</a></span><span class="refpurpose"> — The udisks command line tool</span>
+</dt>
+</dl></dd>
 <dt><span class="part"><a href="ref-dbus.html">II. D-Bus API Reference</a></span></dt>
 <dd><dl>
 <dt><span class="chapter"><a href="ref-dbus-overview.html">Overview</a></span></dt>
@@ -31,6 +42,10 @@
 <dt><span class="sect1"><a href="ref-dbus-overview.html#ref-dbus-well-known-name">The org.freedesktop.UDisks2 bus name</a></span></dt>
 <dt><span class="sect1"><a href="ref-dbus-udisks2-well-known-object.html">The /org/freedesktop/UDisks2 object</a></span></dt>
 <dt><span class="sect1"><a href="ref-dbus-manager-well-known-object.html">The /org/freedesktop/UDisks2/Manager object</a></span></dt>
+<dt><span class="sect1"><a href="ref-dbus-block-devices.html">The /org/freedesktop/UDisks2/block_devices/* objects</a></span></dt>
+<dt><span class="sect1"><a href="ref-dbus-drives.html">The /org/freedesktop/UDisks2/drives/* objects</a></span></dt>
+<dt><span class="sect1"><a href="ref-dbus-jobs.html">The /org/freedesktop/UDisks2/jobs/* objects</a></span></dt>
+<dt><span class="sect1"><a href="udisks-polkit-actions.html">Authorization Checks</a></span></dt>
 <dt><span class="sect1"><a href="udisks-std-options.html">The <em class="parameter"><code>options</code></em> parameter</a></span></dt>
 </dl></dd>
 <dt><span class="chapter"><a href="ch02.html">D-Bus Interfaces</a></span></dt>
@@ -39,13 +54,13 @@
 <span class="refentrytitle"><a href="gdbus-org.freedesktop.UDisks2.Manager.html">org.freedesktop.UDisks2.Manager</a></span><span class="refpurpose"> — Manager singleton</span>
 </dt>
 <dt>
-<span class="refentrytitle"><a href="gdbus-org.freedesktop.UDisks2.Drive.html">org.freedesktop.UDisks2.Drive</a></span><span class="refpurpose"> — Disk Drive</span>
+<span class="refentrytitle"><a href="gdbus-org.freedesktop.UDisks2.Drive.html">org.freedesktop.UDisks2.Drive</a></span><span class="refpurpose"> — Disk drives</span>
 </dt>
 <dt>
-<span class="refentrytitle"><a href="gdbus-org.freedesktop.UDisks2.Drive.Ata.html">org.freedesktop.UDisks2.Drive.Ata</a></span><span class="refpurpose"> — Disk drive using the ATA command-set</span>
+<span class="refentrytitle"><a href="gdbus-org.freedesktop.UDisks2.Drive.Ata.html">org.freedesktop.UDisks2.Drive.Ata</a></span><span class="refpurpose"> — Disk drives using the ATA command-set</span>
 </dt>
 <dt>
-<span class="refentrytitle"><a href="gdbus-org.freedesktop.UDisks2.Block.html">org.freedesktop.UDisks2.Block</a></span><span class="refpurpose"> — Low-level Block Device</span>
+<span class="refentrytitle"><a href="gdbus-org.freedesktop.UDisks2.Block.html">org.freedesktop.UDisks2.Block</a></span><span class="refpurpose"> — Block device</span>
 </dt>
 <dt>
 <span class="refentrytitle"><a href="gdbus-org.freedesktop.UDisks2.Partition.html">org.freedesktop.UDisks2.Partition</a></span><span class="refpurpose"> — Block device representing a partition</span>
@@ -73,7 +88,7 @@
 <dt><span class="part"><a href="ref-library.html">III. Library API Reference</a></span></dt>
 <dd><dl>
 <dt>
-<span class="refentrytitle"><a href="UDisksClient.html">UDisksClient</a></span><span class="refpurpose"> — UDisks Client</span>
+<span class="refentrytitle"><a href="UDisksClient.html">UDisksClient</a></span><span class="refpurpose"> — Utility routines for accessing the UDisks service</span>
 </dt>
 <dt>
 <span class="refentrytitle"><a href="udisks2-UDisksError.html">UDisksError</a></span><span class="refpurpose"> — Possible errors that can be returned</span>
@@ -219,18 +234,6 @@
 <span class="refentrytitle"><a href="UDisksLinuxBlockObject.html">UDisksLinuxBlockObject</a></span><span class="refpurpose"> — Object representing a block device on Linux.</span>
 </dt>
 </dl></dd>
-</dl></dd>
-<dt><span class="part"><a href="tools-fileformats.html">V. Tools, File Formats and Manual Pages</a></span></dt>
-<dd><dl>
-<dt>
-<span class="refentrytitle"><a href="udisks.8.html">udisks</a></span><span class="refpurpose"> — storage management</span>
-</dt>
-<dt>
-<span class="refentrytitle"><a href="udisksd.8.html">udisksd</a></span><span class="refpurpose"> — udisks daemon</span>
-</dt>
-<dt>
-<span class="refentrytitle"><a href="udisksctl.1.html">udisksctl</a></span><span class="refpurpose"> — udisks command line tool</span>
-</dt>
 </dl></dd>
 <dt><span class="index"><a href="ix01.html">Index</a></span></dt>
 <dt><span class="chapter"><a href="gio-hierarchy.html">Object Hierarchy</a></span></dt>

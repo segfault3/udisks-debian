@@ -6,14 +6,14 @@
 <meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
 <link rel="home" href="index.html" title="UDisks Reference Manual">
 <link rel="up" href="index.html" title="UDisks Reference Manual">
-<link rel="prev" href="udisksctl.1.html" title="udisksctl">
+<link rel="prev" href="UDisksLinuxBlockObject.html" title="UDisksLinuxBlockObject">
 <link rel="next" href="gio-hierarchy.html" title="Object Hierarchy">
 <meta name="generator" content="GTK-Doc V1.18 (XML mode)">
 <link rel="stylesheet" href="style.css" type="text/css">
 </head>
 <body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
 <table class="navigation" id="top" width="100%" summary="Navigation header" cellpadding="2" cellspacing="2"><tr valign="middle">
-<td><a accesskey="p" href="udisksctl.1.html"><img src="left.png" width="24" height="24" border="0" alt="Prev"></a></td>
+<td><a accesskey="p" href="UDisksLinuxBlockObject.html"><img src="left.png" width="24" height="24" border="0" alt="Prev"></a></td>
 <td> </td>
 <td><a accesskey="h" href="index.html"><img src="home.png" width="24" height="24" border="0" alt="Home"></a></td>
 <th width="100%" align="center">UDisks Reference Manual</th>
@@ -21,7 +21,7 @@
 </tr></table>
 <div class="index">
 <div class="titlepage"><div><div><h2 class="title">
-<a name="id421253"></a>Index</h2></div></div></div>
+<a name="id584558"></a>Index</h2></div></div></div>
 <div class="index">
 <div class="indexdiv">
 <h3>B</h3>
@@ -345,6 +345,8 @@
 <div class="indexdiv">
 <h3>C</h3>
 <dl>
+<dt>UDISKS_CHECK_VERSION, <a class="indexterm" href="UDisksClient.html#UDISKS-CHECK-VERSION:CAPS">UDISKS_CHECK_VERSION()</a>
+</dt>
 <dt>UDisksCleanup, <a class="indexterm" href="UDisksCleanup.html#UDisksCleanup-struct">UDisksCleanup</a>
 </dt>
 <dt>UDisksCleanup:daemon, <a class="indexterm" href="UDisksCleanup.html#UDisksCleanup--daemon">The "daemon" property</a>
@@ -396,6 +398,8 @@
 <dt>udisks_client_get_id_for_display, <a class="indexterm" href="UDisksClient.html#udisks-client-get-id-for-display">udisks_client_get_id_for_display ()</a>
 </dt>
 <dt>udisks_client_get_jobs_for_object, <a class="indexterm" href="UDisksClient.html#udisks-client-get-jobs-for-object">udisks_client_get_jobs_for_object ()</a>
+</dt>
+<dt>udisks_client_get_loop_for_block, <a class="indexterm" href="UDisksClient.html#udisks-client-get-loop-for-block">udisks_client_get_loop_for_block ()</a>
 </dt>
 <dt>udisks_client_get_manager, <a class="indexterm" href="UDisksClient.html#udisks-client-get-manager">udisks_client_get_manager ()</a>
 </dt>
@@ -472,6 +476,10 @@
 </dt>
 <dt>udisks_daemon_find_block, <a class="indexterm" href="UDisksDaemon.html#udisks-daemon-find-block">udisks_daemon_find_block ()</a>
 </dt>
+<dt>udisks_daemon_find_block_by_device_file, <a class="indexterm" href="UDisksDaemon.html#udisks-daemon-find-block-by-device-file">udisks_daemon_find_block_by_device_file ()</a>
+</dt>
+<dt>udisks_daemon_find_block_by_sysfs_path, <a class="indexterm" href="UDisksDaemon.html#udisks-daemon-find-block-by-sysfs-path">udisks_daemon_find_block_by_sysfs_path ()</a>
+</dt>
 <dt>udisks_daemon_find_object, <a class="indexterm" href="UDisksDaemon.html#udisks-daemon-find-object">udisks_daemon_find_object ()</a>
 </dt>
 <dt>udisks_daemon_get_authority, <a class="indexterm" href="UDisksDaemon.html#udisks-daemon-get-authority">udisks_daemon_get_authority ()</a>
@@ -487,6 +495,8 @@
 <dt>udisks_daemon_get_linux_provider, <a class="indexterm" href="UDisksDaemon.html#udisks-daemon-get-linux-provider">udisks_daemon_get_linux_provider ()</a>
 </dt>
 <dt>udisks_daemon_get_mount_monitor, <a class="indexterm" href="UDisksDaemon.html#udisks-daemon-get-mount-monitor">udisks_daemon_get_mount_monitor ()</a>
+</dt>
+<dt>udisks_daemon_get_objects, <a class="indexterm" href="UDisksDaemon.html#udisks-daemon-get-objects">udisks_daemon_get_objects ()</a>
 </dt>
 <dt>udisks_daemon_get_object_manager, <a class="indexterm" href="UDisksDaemon.html#udisks-daemon-get-object-manager">udisks_daemon_get_object_manager ()</a>
 </dt>
@@ -507,6 +517,12 @@
 <dt>udisks_daemon_util_check_authorization_sync, <a class="indexterm" href="udisks2-Utilities.html#udisks-daemon-util-check-authorization-sync">udisks_daemon_util_check_authorization_sync ()</a>
 </dt>
 <dt>udisks_daemon_util_dup_object, <a class="indexterm" href="udisks2-Utilities.html#udisks-daemon-util-dup-object">udisks_daemon_util_dup_object ()</a>
+</dt>
+<dt>udisks_daemon_util_escape, <a class="indexterm" href="udisks2-Utilities.html#udisks-daemon-util-escape">udisks_daemon_util_escape ()</a>
+</dt>
+<dt>udisks_daemon_util_escape_and_quote, <a class="indexterm" href="udisks2-Utilities.html#udisks-daemon-util-escape-and-quote">udisks_daemon_util_escape_and_quote ()</a>
+</dt>
+<dt>udisks_daemon_util_get_caller_pid_sync, <a class="indexterm" href="udisks2-Utilities.html#udisks-daemon-util-get-caller-pid-sync">udisks_daemon_util_get_caller_pid_sync ()</a>
 </dt>
 <dt>udisks_daemon_util_get_caller_uid_sync, <a class="indexterm" href="udisks2-Utilities.html#udisks-daemon-util-get-caller-uid-sync">udisks_daemon_util_get_caller_uid_sync ()</a>
 </dt>
@@ -629,6 +645,10 @@
 <dt>UDisksDrive:rotation-rate, <a class="indexterm" href="UDisksDrive.html#UDisksDrive--rotation-rate">The "rotation-rate" property</a>
 </dt>
 <dt>org.freedesktop.UDisks2.Drive:RotationRate, <a class="indexterm" href="gdbus-org.freedesktop.UDisks2.Drive.html#gdbus-property-org-freedesktop-UDisks2-Drive.RotationRate">The "RotationRate" property</a>
+</dt>
+<dt>org.freedesktop.UDisks2.Drive:Seat, <a class="indexterm" href="gdbus-org.freedesktop.UDisks2.Drive.html#gdbus-property-org-freedesktop-UDisks2-Drive.Seat">The "Seat" property</a>
+</dt>
+<dt>UDisksDrive:seat, <a class="indexterm" href="UDisksDrive.html#UDisksDrive--seat">The "seat" property</a>
 </dt>
 <dt>org.freedesktop.UDisks2.Drive:Serial, <a class="indexterm" href="gdbus-org.freedesktop.UDisks2.Drive.html#gdbus-property-org-freedesktop-UDisks2-Drive.Serial">The "Serial" property</a>
 </dt>
@@ -834,6 +854,8 @@
 </dt>
 <dt>udisks_drive_get_connection_bus, <a class="indexterm" href="UDisksDrive.html#udisks-drive-get-connection-bus">udisks_drive_get_connection_bus ()</a>
 </dt>
+<dt>udisks_drive_get_ejectable, <a class="indexterm" href="UDisksDrive.html#udisks-drive-get-ejectable">udisks_drive_get_ejectable ()</a>
+</dt>
 <dt>udisks_drive_get_media, <a class="indexterm" href="UDisksDrive.html#udisks-drive-get-media">udisks_drive_get_media ()</a>
 </dt>
 <dt>udisks_drive_get_media_available, <a class="indexterm" href="UDisksDrive.html#udisks-drive-get-media-available">udisks_drive_get_media_available ()</a>
@@ -863,6 +885,8 @@
 <dt>udisks_drive_get_revision, <a class="indexterm" href="UDisksDrive.html#udisks-drive-get-revision">udisks_drive_get_revision ()</a>
 </dt>
 <dt>udisks_drive_get_rotation_rate, <a class="indexterm" href="UDisksDrive.html#udisks-drive-get-rotation-rate">udisks_drive_get_rotation_rate ()</a>
+</dt>
+<dt>udisks_drive_get_seat, <a class="indexterm" href="UDisksDrive.html#udisks-drive-get-seat">udisks_drive_get_seat ()</a>
 </dt>
 <dt>udisks_drive_get_serial, <a class="indexterm" href="UDisksDrive.html#udisks-drive-get-serial">udisks_drive_get_serial ()</a>
 </dt>
@@ -896,6 +920,8 @@
 </dt>
 <dt>udisks_drive_set_connection_bus, <a class="indexterm" href="UDisksDrive.html#udisks-drive-set-connection-bus">udisks_drive_set_connection_bus ()</a>
 </dt>
+<dt>udisks_drive_set_ejectable, <a class="indexterm" href="UDisksDrive.html#udisks-drive-set-ejectable">udisks_drive_set_ejectable ()</a>
+</dt>
 <dt>udisks_drive_set_media, <a class="indexterm" href="UDisksDrive.html#udisks-drive-set-media">udisks_drive_set_media ()</a>
 </dt>
 <dt>udisks_drive_set_media_available, <a class="indexterm" href="UDisksDrive.html#udisks-drive-set-media-available">udisks_drive_set_media_available ()</a>
@@ -925,6 +951,8 @@
 <dt>udisks_drive_set_revision, <a class="indexterm" href="UDisksDrive.html#udisks-drive-set-revision">udisks_drive_set_revision ()</a>
 </dt>
 <dt>udisks_drive_set_rotation_rate, <a class="indexterm" href="UDisksDrive.html#udisks-drive-set-rotation-rate">udisks_drive_set_rotation_rate ()</a>
+</dt>
+<dt>udisks_drive_set_seat, <a class="indexterm" href="UDisksDrive.html#udisks-drive-set-seat">udisks_drive_set_seat ()</a>
 </dt>
 <dt>udisks_drive_set_serial, <a class="indexterm" href="UDisksDrive.html#udisks-drive-set-serial">udisks_drive_set_serial ()</a>
 </dt>
@@ -1349,11 +1377,23 @@
 </dt>
 <dt>org.freedesktop.UDisks2.Loop.Delete(), <a class="indexterm" href="gdbus-org.freedesktop.UDisks2.Loop.html#gdbus-method-org-freedesktop-UDisks2-Loop.Delete">The Delete() method</a>
 </dt>
+<dt>org.freedesktop.UDisks2.Loop.SetAutoclear(), <a class="indexterm" href="gdbus-org.freedesktop.UDisks2.Loop.html#gdbus-method-org-freedesktop-UDisks2-Loop.SetAutoclear">The SetAutoclear() method</a>
+</dt>
 <dt>UDisksLoop::handle-delete, <a class="indexterm" href="UDisksLoop.html#UDisksLoop-handle-delete">The "handle-delete" signal</a>
+</dt>
+<dt>UDisksLoop::handle-set-autoclear, <a class="indexterm" href="UDisksLoop.html#UDisksLoop-handle-set-autoclear">The "handle-set-autoclear" signal</a>
+</dt>
+<dt>org.freedesktop.UDisks2.Loop:Autoclear, <a class="indexterm" href="gdbus-org.freedesktop.UDisks2.Loop.html#gdbus-property-org-freedesktop-UDisks2-Loop.Autoclear">The "Autoclear" property</a>
+</dt>
+<dt>UDisksLoop:autoclear, <a class="indexterm" href="UDisksLoop.html#UDisksLoop--autoclear">The "autoclear" property</a>
 </dt>
 <dt>UDisksLoop:backing-file, <a class="indexterm" href="UDisksLoop.html#UDisksLoop--backing-file">The "backing-file" property</a>
 </dt>
 <dt>org.freedesktop.UDisks2.Loop:BackingFile, <a class="indexterm" href="gdbus-org.freedesktop.UDisks2.Loop.html#gdbus-property-org-freedesktop-UDisks2-Loop.BackingFile">The "BackingFile" property</a>
+</dt>
+<dt>UDisksLoop:setup-by-uid, <a class="indexterm" href="UDisksLoop.html#UDisksLoop--setup-by-uid">The "setup-by-uid" property</a>
+</dt>
+<dt>org.freedesktop.UDisks2.Loop:SetupByUID, <a class="indexterm" href="gdbus-org.freedesktop.UDisks2.Loop.html#gdbus-property-org-freedesktop-UDisks2-Loop.SetupByUID">The "SetupByUID" property</a>
 </dt>
 <dt>UDisksLoopIface, <a class="indexterm" href="UDisksLoop.html#UDisksLoopIface">struct UDisksLoopIface</a>
 </dt>
@@ -1371,11 +1411,23 @@
 </dt>
 <dt>udisks_loop_call_delete_sync, <a class="indexterm" href="UDisksLoop.html#udisks-loop-call-delete-sync">udisks_loop_call_delete_sync ()</a>
 </dt>
+<dt>udisks_loop_call_set_autoclear, <a class="indexterm" href="UDisksLoop.html#udisks-loop-call-set-autoclear">udisks_loop_call_set_autoclear ()</a>
+</dt>
+<dt>udisks_loop_call_set_autoclear_finish, <a class="indexterm" href="UDisksLoop.html#udisks-loop-call-set-autoclear-finish">udisks_loop_call_set_autoclear_finish ()</a>
+</dt>
+<dt>udisks_loop_call_set_autoclear_sync, <a class="indexterm" href="UDisksLoop.html#udisks-loop-call-set-autoclear-sync">udisks_loop_call_set_autoclear_sync ()</a>
+</dt>
 <dt>udisks_loop_complete_delete, <a class="indexterm" href="UDisksLoop.html#udisks-loop-complete-delete">udisks_loop_complete_delete ()</a>
+</dt>
+<dt>udisks_loop_complete_set_autoclear, <a class="indexterm" href="UDisksLoop.html#udisks-loop-complete-set-autoclear">udisks_loop_complete_set_autoclear ()</a>
 </dt>
 <dt>udisks_loop_dup_backing_file, <a class="indexterm" href="UDisksLoop.html#udisks-loop-dup-backing-file">udisks_loop_dup_backing_file ()</a>
 </dt>
+<dt>udisks_loop_get_autoclear, <a class="indexterm" href="UDisksLoop.html#udisks-loop-get-autoclear">udisks_loop_get_autoclear ()</a>
+</dt>
 <dt>udisks_loop_get_backing_file, <a class="indexterm" href="UDisksLoop.html#udisks-loop-get-backing-file">udisks_loop_get_backing_file ()</a>
+</dt>
+<dt>udisks_loop_get_setup_by_uid, <a class="indexterm" href="UDisksLoop.html#udisks-loop-get-setup-by-uid">udisks_loop_get_setup_by_uid ()</a>
 </dt>
 <dt>udisks_loop_interface_info, <a class="indexterm" href="UDisksLoop.html#udisks-loop-interface-info">udisks_loop_interface_info ()</a>
 </dt>
@@ -1393,7 +1445,11 @@
 </dt>
 <dt>udisks_loop_proxy_new_sync, <a class="indexterm" href="UDisksLoop.html#udisks-loop-proxy-new-sync">udisks_loop_proxy_new_sync ()</a>
 </dt>
+<dt>udisks_loop_set_autoclear, <a class="indexterm" href="UDisksLoop.html#udisks-loop-set-autoclear">udisks_loop_set_autoclear ()</a>
+</dt>
 <dt>udisks_loop_set_backing_file, <a class="indexterm" href="UDisksLoop.html#udisks-loop-set-backing-file">udisks_loop_set_backing_file ()</a>
+</dt>
+<dt>udisks_loop_set_setup_by_uid, <a class="indexterm" href="UDisksLoop.html#udisks-loop-set-setup-by-uid">udisks_loop_set_setup_by_uid ()</a>
 </dt>
 <dt>udisks_loop_skeleton_new, <a class="indexterm" href="UDisksLoop.html#udisks-loop-skeleton-new">udisks_loop_skeleton_new ()</a>
 </dt>
@@ -1402,6 +1458,8 @@
 <div class="indexdiv">
 <h3>M</h3>
 <dl>
+<dt>UDISKS_MAJOR_VERSION, <a class="indexterm" href="UDisksClient.html#UDISKS-MAJOR-VERSION:CAPS">UDISKS_MAJOR_VERSION</a>
+</dt>
 <dt>org.freedesktop.UDisks2.Manager, <a class="indexterm" href="gdbus-org.freedesktop.UDisks2.Manager.html#gdbus-interface-org-freedesktop-UDisks2-Manager.top_of_page">org.freedesktop.UDisks2.Manager</a>
 </dt>
 <dt>UDisksManager, <a class="indexterm" href="UDisksManager.html#UDisksManager-struct">UDisksManager</a>
@@ -1455,6 +1513,10 @@
 <dt>udisks_manager_set_version, <a class="indexterm" href="UDisksManager.html#udisks-manager-set-version">udisks_manager_set_version ()</a>
 </dt>
 <dt>udisks_manager_skeleton_new, <a class="indexterm" href="UDisksManager.html#udisks-manager-skeleton-new">udisks_manager_skeleton_new ()</a>
+</dt>
+<dt>UDISKS_MICRO_VERSION, <a class="indexterm" href="UDisksClient.html#UDISKS-MICRO-VERSION:CAPS">UDISKS_MICRO_VERSION</a>
+</dt>
+<dt>UDISKS_MINOR_VERSION, <a class="indexterm" href="UDisksClient.html#UDISKS-MINOR-VERSION:CAPS">UDISKS_MINOR_VERSION</a>
 </dt>
 <dt>UDisksMount, <a class="indexterm" href="UDisksMountMonitor.html#UDisksMount-struct">UDisksMount</a>
 </dt>

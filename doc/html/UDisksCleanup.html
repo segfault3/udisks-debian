@@ -103,7 +103,7 @@ restarts and OS reboots.
 The following files are used:
 </p>
 <div class="table">
-<a name="id613043"></a><p class="title"><b>Table 2. Persistent information used for cleanup</b></p>
+<a name="id778739"></a><p class="title"><b>Table 2. Persistent information used for cleanup</b></p>
 <div class="table-contents"><table summary="Persistent information used for cleanup" border="1">
 <colgroup>
 <col>
@@ -115,7 +115,7 @@ The following files are used:
 </tr></thead>
 <tbody>
 <tr>
-<td align="left"><code class="filename">/var/lib/udisks2/mounted-fs</code></td>
+<td align="left"><code class="filename">/run/udisks2/mounted-fs</code></td>
 <td align="left">
           A serialized 'a{sa{sv}}' <a href="http://library.gnome.org/devel/glib/unstable/glib-GVariant.html#GVariant"><span class="type">GVariant</span></a> mapping from the
           mount point (e.g. <code class="filename">/media/EOS_DIGITAL</code>) into a set of details.
@@ -297,7 +297,7 @@ Gets the daemon used by <em class="parameter"><code>cleanup</code></em>.
                                                          <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"><span class="type">gboolean</span></a> fstab_mount</code></em>);</pre>
 <p>
 Adds a new entry to the
-<code class="filename">/var/lib/udisks2/mounted-fs</code> file.
+<code class="filename">/run/udisks2/mounted-fs</code> file.
 </p>
 <div class="variablelist"><table border="0">
 <col align="left" valign="top">
@@ -335,7 +335,7 @@ Adds a new entry to the
                                                          <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"><span class="type">gboolean</span></a> *out_fstab_mount</code></em>);</pre>
 <p>
 Gets the mount point for <em class="parameter"><code>block_device</code></em>, if it exists in the
-<code class="filename">/var/lib/udisks2/mounted-fs</code> file.
+<code class="filename">/run/udisks2/mounted-fs</code> file.
 </p>
 <div class="variablelist"><table border="0">
 <col align="left" valign="top">

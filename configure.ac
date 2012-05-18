@@ -1,4 +1,20 @@
-AC_INIT([udisks],[1.91.0],[http://bugs.freedesktop.org/enter_bug.cgi?product=udisks],[udisks])
+
+m4_define([udisks_major_version], [1])
+m4_define([udisks_minor_version], [97])
+m4_define([udisks_micro_version], [0])
+
+m4_define([udisks_version], [udisks_major_version.udisks_minor_version.udisks_micro_version])
+
+AC_INIT([udisks],[udisks_version],[http://bugs.freedesktop.org/enter_bug.cgi?product=udisks],[udisks])
+
+UDISKS_MAJOR_VERSION=udisks_major_version
+UDISKS_MINOR_VERSION=udisks_minor_version
+UDISKS_MICRO_VERSION=udisks_micro_version
+UDISKS_VERSION=udisks_version
+AC_SUBST(UDISKS_MAJOR_VERSION)
+AC_SUBST(UDISKS_MINOR_VERSION)
+AC_SUBST(UDISKS_MICRO_VERSION)
+AC_SUBST(UDISKS_VERSION)
 
 AM_INIT_AUTOMAKE([1.9 foreign dist-bzip2 no-dist-gzip])
 AC_CONFIG_SRCDIR([src])
@@ -57,6 +73,25 @@ PKG_CHECK_MODULES(LIBATASMART, [libatasmart >= 0.17])
 AC_SUBST(LIBATASMART_CFLAGS)
 AC_SUBST(LIBATASMART_LIBS)
 
+PKG_CHECK_MODULES(LIBSYSTEMD_LOGIN,
+                  [libsystemd-login >= 44],
+                  have_libsystemd_login=yes,
+                  have_libsystemd_login=no)
+AM_CONDITIONAL(HAVE_LIBSYSTEMD_LOGIN, test x$have_libsystemd_login = xyes)
+if test "x$have_libsystemd_login" = "xyes"; then
+  AC_DEFINE([HAVE_LIBSYSTEMD_LOGIN], 1, [Define to 1 if libsystemd-login is available])
+fi
+AC_SUBST(HAVE_LIBSYSTEMD_LOGIN)
+AC_SUBST(LIBSYSTEMD_LOGIN_CFLAGS)
+AC_SUBST(LIBSYSTEMD_LOGIN_LIBS)
+
+# udevdir
+AC_ARG_WITH([udevdir],
+            AS_HELP_STRING([--with-udevdir=DIR], [Directory for udev]),
+            [],
+            [with_udevdir=$($PKG_CONFIG --variable=udevdir udev)])
+AC_SUBST([udevdir], [$with_udevdir])
+
 # systemd
 AC_ARG_WITH([systemdsystemunitdir],
             AS_HELP_STRING([--with-systemdsystemunitdir=DIR], [Directory for systemd service files]),
@@ -67,6 +102,19 @@ if test "x$with_systemdsystemunitdir" != "xno"; then
 fi
 AM_CONDITIONAL(HAVE_SYSTEMD, [test -n "$systemdsystemunitdir"])
 
+# libacl
+AC_CHECK_HEADERS(
+        [sys/acl.h acl/libacl.h],
+        [ACL_CFLAGS=""],
+        AC_MSG_ERROR([*** ACL headers not found.]))
+AC_CHECK_LIB(
+        [acl],
+        [acl_get_file],
+        [ACL_LIBS="-lacl"],
+        AC_MSG_ERROR([*** libacl not found.]))
+AC_SUBST(ACL_CFLAGS)
+AC_SUBST(ACL_LIBS)
+
 # Internationalization
 #
 
@@ -75,22 +123,6 @@ GETTEXT_PACKAGE=udisks2
 AC_SUBST([GETTEXT_PACKAGE])
 AM_GLIB_GNU_GETTEXT
 AC_DEFINE_UNQUOTED([GETTEXT_PACKAGE],["$GETTEXT_PACKAGE"],[gettext domain])
-
-# slash dir stuff
-#
-
-if test "$prefix" = "/usr" -o "$prefix" = "/usr/local" -o "$prefix" = "NONE" ; then
-  privlibdir=/lib/udisks2
-  slashlibdir=/lib
-  slashsbindir=/sbin
-else
-  privlibdir=$prefix/udisks2
-  slashlibdir=$prefix/lib
-  slashsbindir=$prefix/sbin
-fi
-AC_SUBST(privlibdir)
-AC_SUBST(slashlibdir)
-AC_SUBST(slashsbindir)
 
 # Generate
 #
@@ -123,11 +155,11 @@ echo "
         sysconfdir:                 ${sysconfdir}
         localstatedir:              ${localstatedir}
         docdir:                     ${docdir}
-        privlibdir:                 ${privlibdir}
-        slashlibdir:                ${slashlibdir}
-        slashsbindir:               ${slashsbindir}
         introspection:              ${found_introspection}
+
+        udevdir:                    ${udevdir}
         systemdsystemunitdir:       ${systemdsystemunitdir}
+        using libsystemd-login:     ${have_libsystemd_login}
 
         compiler:                   ${CC}
         cflags:                     ${CFLAGS}

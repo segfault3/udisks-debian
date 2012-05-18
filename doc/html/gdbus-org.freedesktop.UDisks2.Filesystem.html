@@ -40,15 +40,15 @@
 <div class="refsynopsisdiv">
 <h2>Methods</h2>
 <pre class="synopsis">
-<a class="link" href="gdbus-org.freedesktop.UDisks2.Filesystem.html#gdbus-method-org-freedesktop-UDisks2-Filesystem.SetLabel" title="The SetLabel() method">SetLabel</a> (IN  ay    label,
+<a class="link" href="gdbus-org.freedesktop.UDisks2.Filesystem.html#gdbus-method-org-freedesktop-UDisks2-Filesystem.SetLabel" title="The SetLabel() method">SetLabel</a> (IN  s     label,
           IN  a{sv} options);
 <a class="link" href="gdbus-org.freedesktop.UDisks2.Filesystem.html#gdbus-method-org-freedesktop-UDisks2-Filesystem.Mount" title="The Mount() method">Mount</a>    (IN  a{sv} options,
-          OUT ay    mount_path);
+          OUT s     mount_path);
 <a class="link" href="gdbus-org.freedesktop.UDisks2.Filesystem.html#gdbus-method-org-freedesktop-UDisks2-Filesystem.Unmount" title="The Unmount() method">Unmount</a>  (IN  a{sv} options);
 </pre>
 </div>
 <div class="refsect1">
-<a name="id456197"></a><h2>Properties</h2>
+<a name="id586880"></a><h2>Properties</h2>
 <pre class="synopsis">
 <a class="link" href="gdbus-org.freedesktop.UDisks2.Filesystem.html#gdbus-property-org-freedesktop-UDisks2-Filesystem.MountPoints" title='The "MountPoints" property'>MountPoints</a>  readable   aay
 </pre>
@@ -64,7 +64,7 @@
 <div class="refsect2">
 <a name="gdbus-method-org-freedesktop-UDisks2-Filesystem.SetLabel"></a><h3>The SetLabel() method</h3>
 <pre class="programlisting">
-SetLabel (IN  ay    label,
+SetLabel (IN  s     label,
           IN  a{sv} options);
 </pre>
 <p>        Sets the filesystem label.
@@ -73,7 +73,7 @@ SetLabel (IN  ay    label,
 <col align="left" valign="top">
 <tbody>
 <tr>
-<td><p><span class="term"><code class="literal">IN ay <em class="parameter"><code>label</code></em></code>:</span></p></td>
+<td><p><span class="term"><code class="literal">IN s <em class="parameter"><code>label</code></em></code>:</span></p></td>
 <td><p>The label to set.</p></td>
 </tr>
 <tr>
@@ -88,15 +88,41 @@ SetLabel (IN  ay    label,
 <a name="gdbus-method-org-freedesktop-UDisks2-Filesystem.Mount"></a><h3>The Mount() method</h3>
 <pre class="programlisting">
 Mount (IN  a{sv} options,
-       OUT ay    mount_path);
+       OUT s     mount_path);
 </pre>
-<p>        Mount a filesystem on the device.
+<p>        Mounts the filesystem.
 </p>
-<p>        The directory the device will be mounted in is determined by
-        looking at data related to the device (such the filesystem
-        UUID and label) and will be created automatically. It is
-        returned in <em class="parameter"><code>mount_path</code></em> and is normally a sub-directory of
-        <code class="filename">/media</code>.
+<p>        The directory the filesystem will be mounted in is determined
+        by looking at data related to the device or filesystem (such
+        the filesystem UUID and label) and will be created
+        automatically except if the device the filesystem resides on
+        is referenced in the <code class="filename">/etc/fstab</code> file, see
+        below. In either case, the directory the filesystem is mounted
+        in, is returned in <em class="parameter"><code>mount_path</code></em> on success - it is usually a
+        sub-directory of <code class="filename">/run/media/$USER</code> but note that
+        any directory may be returned.
+</p>
+<p>        The filesystem type to use can be overridden with the <em class="parameter"><code>fstype</code></em>
+        option and mount options (a comma-separated string) can be
+        given in <em class="parameter"><code>options</code></em> option. Note that both the mount options and
+        filesystem types are validated against a (small) whitelist to
+        avoid unexpected privilege escalation
+</p>
+<p>        If the device in question is referenced in the
+        <code class="filename">/etc/fstab</code> file, the
+        <span class="command"><strong>mount</strong></span> command is called directly (as root)
+        and the given options or filesystem type given in <em class="parameter"><code>options</code></em> are
+        ignored.
+</p>
+<p>        If <code class="literal">x-udisks-auth</code> is specified as an option
+        for the device in the <code class="filename">/etc/fstab</code> file,
+        then the <span class="command"><strong>mount</strong></span> command is run as the
+        calling user, without performing any authorization check
+        mentioned above. If this fails because of insufficient
+        permissions, an authorization check is performed (which
+        typically results in the user having to authenticate as an
+        administrator). If authorized, the <span class="command"><strong>mount</strong></span>
+        command is then run as root.
 </p>
 <p>        The filesystem should be unmounted using the
         <a class="link" href="gdbus-org.freedesktop.UDisks2.Filesystem.html#gdbus-method-org-freedesktop-UDisks2-Filesystem.Unmount" title="The Unmount() method">Unmount()</a> method.
@@ -108,32 +134,7 @@ Mount (IN  a{sv} options,
         (e.g. unmounted by the super-user by using the
         <span class="citerefentry"><span class="refentrytitle">umount</span>(8)</span>
         command directly), the device will be unmounted (if needed)
-        and the mount point will be cleaned up.
-</p>
-<p>        The file system type can be overridden with the
-        <em class="parameter"><code>fstype</code></em> option and mount options can be
-        given in <em class="parameter"><code>options</code></em> as a comma-separated
-        string and is of the same format as would be passed to the
-        <span class="citerefentry"><span class="refentrytitle">mount</span>(8)</span>
-        command. Note that the mount options are validated - only a
-        small subset per filesystem type is allowed.
-</p>
-<p>        If the device in question is referenced in a system-wide
-        configuration file (such as the <code class="filename">/etc/fstab</code> file)
-        then the
-        <span class="citerefentry"><span class="refentrytitle">mount</span>(8)</span>
-        command is called directly as the calling user.
-        If the calling user does not have sufficient permissions to
-        mount the device (it could be the <code class="literal">user</code> or
-        <code class="literal">users</code> option isn't specificed), then
-        additional authorization is requested and, if obtained, the
-        <span class="citerefentry"><span class="refentrytitle">mount</span>(8)</span>
-        command is invoked as root.
-        Additionally, the
-        given <em class="parameter"><code>options</code></em> and
-        <em class="parameter"><code>fstype</code></em> options are not used as they are
-        instead read from the system-wide configuration file in
-        question.
+        and/or the mount point will be cleaned up.
 </p>
 <div class="variablelist"><table border="0">
 <col align="left" valign="top">
@@ -143,7 +144,7 @@ Mount (IN  a{sv} options,
 <td><p>Options - known options (in addition to <a class="link" href="udisks-std-options.html" title="The options parameter">standard options</a>) includes <em class="parameter"><code>fstype</code></em> (of type 's') and <em class="parameter"><code>options</code></em> (of type 's').</p></td>
 </tr>
 <tr>
-<td><p><span class="term"><code class="literal">OUT ay <em class="parameter"><code>mount_path</code></em></code>:</span></p></td>
+<td><p><span class="term"><code class="literal">OUT s <em class="parameter"><code>mount_path</code></em></code>:</span></p></td>
 <td><p>The filesystem path where the device was mounted.</p></td>
 </tr>
 </tbody>
@@ -157,21 +158,16 @@ Unmount (IN  a{sv} options);
 </pre>
 <p>        Unmount a mounted device.
 </p>
+<p>        If the device in question was not mounted by the calling user
+        via the <a class="link" href="gdbus-org.freedesktop.UDisks2.Filesystem.html#gdbus-method-org-freedesktop-UDisks2-Filesystem.Mount" title="The Mount() method">Mount()</a> method the
+        filesystem is unmounted without any authorization checks.
+        Otherwise, an authorization check is performed (which
+        typically results in the user having to authenticate as an
+        administrator). If authorized, the filesystem is unmounted.
+</p>
 <p>        If the filesystem is busy, this operation fails with the error
         <a class="link" href="udisks2-UDisksError.html#UDISKS-ERROR-DEVICE-BUSY:CAPS"><code class="constant">org.freedesktop.UDisks2.Error.DeviceBusy</code></a>
-        unless the option <em class="parameter"><code>force</code></em> is used.
-</p>
-<p>        If the device in question is referenced in a system-wide
-        configuration file (such as the <code class="filename">/etc/fstab</code> file)
-        then the
-        <span class="citerefentry"><span class="refentrytitle">umount</span>(8)</span>
-        command is called directly as the calling user.
-        If the calling user does not have sufficient permissions to
-        unmount the device (it could be the <code class="literal">user</code> or
-        <code class="literal">users</code> option isn't specificed), then
-        additional authorization is requested and, if obtained, the
-        <span class="citerefentry"><span class="refentrytitle">umount</span>(8)</span>
-        command is invoked as root.
+        unless the <em class="parameter"><code>force</code></em> option is used.
 </p>
 <div class="variablelist"><table border="0">
 <col align="left" valign="top">

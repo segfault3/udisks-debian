@@ -126,41 +126,42 @@ static const struct
   const gchar *udev_property;
   const gchar *media_name;
   gboolean force_non_removable;
+  gboolean force_removable;
 } drive_media_mapping[] =
 {
-  { "ID_DRIVE_THUMB", "thumb", TRUE },
-  { "ID_DRIVE_FLASH", "flash", FALSE },
-  { "ID_DRIVE_FLASH_CF", "flash_cf", FALSE },
-  { "ID_DRIVE_FLASH_MS", "flash_ms", FALSE },
-  { "ID_DRIVE_FLASH_SM", "flash_sm", FALSE },
-  { "ID_DRIVE_FLASH_SD", "flash_sd", FALSE },
-  { "ID_DRIVE_FLASH_SDHC", "flash_sdhc", FALSE },
-  { "ID_DRIVE_FLASH_SDXC", "flash_sdxc", FALSE },
-  { "ID_DRIVE_FLASH_MMC", "flash_mmc", FALSE },
-  { "ID_DRIVE_FLOPPY", "floppy", FALSE },
-  { "ID_DRIVE_FLOPPY_ZIP", "floppy_zip", FALSE },
-  { "ID_DRIVE_FLOPPY_JAZ", "floppy_jaz", FALSE },
-  { "ID_CDROM", "optical_cd", FALSE },
-  { "ID_CDROM_CD_R", "optical_cd_r", FALSE },
-  { "ID_CDROM_CD_RW", "optical_cd_rw", FALSE },
-  { "ID_CDROM_DVD", "optical_dvd", FALSE },
-  { "ID_CDROM_DVD_R", "optical_dvd_r", FALSE },
-  { "ID_CDROM_DVD_RW", "optical_dvd_rw", FALSE },
-  { "ID_CDROM_DVD_RAM", "optical_dvd_ram", FALSE },
-  { "ID_CDROM_DVD_PLUS_R", "optical_dvd_plus_r", FALSE },
-  { "ID_CDROM_DVD_PLUS_RW", "optical_dvd_plus_rw", FALSE },
-  { "ID_CDROM_DVD_PLUS_R_DL", "optical_dvd_plus_r_dl", FALSE },
-  { "ID_CDROM_DVD_PLUS_RW_DL", "optical_dvd_plus_rw_dl", FALSE },
-  { "ID_CDROM_BD", "optical_bd", FALSE },
-  { "ID_CDROM_BD_R", "optical_bd_r", FALSE },
-  { "ID_CDROM_BD_RE", "optical_bd_re", FALSE },
-  { "ID_CDROM_HDDVD", "optical_hddvd", FALSE },
-  { "ID_CDROM_HDDVD_R", "optical_hddvd_r", FALSE },
-  { "ID_CDROM_HDDVD_RW", "optical_hddvd_rw", FALSE },
-  { "ID_CDROM_MO", "optical_mo", FALSE },
-  { "ID_CDROM_MRW", "optical_mrw", FALSE },
-  { "ID_CDROM_MRW_W", "optical_mrw_w", FALSE },
-  { NULL, NULL, FALSE }
+  { "ID_DRIVE_THUMB", "thumb", TRUE, FALSE },
+  { "ID_DRIVE_FLASH", "flash", FALSE, TRUE },
+  { "ID_DRIVE_FLASH_CF", "flash_cf", FALSE, TRUE },
+  { "ID_DRIVE_FLASH_MS", "flash_ms", FALSE, TRUE },
+  { "ID_DRIVE_FLASH_SM", "flash_sm", FALSE, TRUE },
+  { "ID_DRIVE_FLASH_SD", "flash_sd", FALSE, TRUE },
+  { "ID_DRIVE_FLASH_SDHC", "flash_sdhc", FALSE, TRUE },
+  { "ID_DRIVE_FLASH_SDXC", "flash_sdxc", FALSE, TRUE },
+  { "ID_DRIVE_FLASH_MMC", "flash_mmc", FALSE, TRUE },
+  { "ID_DRIVE_FLOPPY", "floppy", FALSE, TRUE },
+  { "ID_DRIVE_FLOPPY_ZIP", "floppy_zip", FALSE, TRUE },
+  { "ID_DRIVE_FLOPPY_JAZ", "floppy_jaz", FALSE, TRUE },
+  { "ID_CDROM", "optical_cd", FALSE, TRUE },
+  { "ID_CDROM_CD_R", "optical_cd_r", FALSE, TRUE },
+  { "ID_CDROM_CD_RW", "optical_cd_rw", FALSE, TRUE },
+  { "ID_CDROM_DVD", "optical_dvd", FALSE, TRUE },
+  { "ID_CDROM_DVD_R", "optical_dvd_r", FALSE, TRUE },
+  { "ID_CDROM_DVD_RW", "optical_dvd_rw", FALSE, TRUE },
+  { "ID_CDROM_DVD_RAM", "optical_dvd_ram", FALSE, TRUE },
+  { "ID_CDROM_DVD_PLUS_R", "optical_dvd_plus_r", FALSE, TRUE },
+  { "ID_CDROM_DVD_PLUS_RW", "optical_dvd_plus_rw", FALSE, TRUE },
+  { "ID_CDROM_DVD_PLUS_R_DL", "optical_dvd_plus_r_dl", FALSE, TRUE },
+  { "ID_CDROM_DVD_PLUS_RW_DL", "optical_dvd_plus_rw_dl", FALSE, TRUE },
+  { "ID_CDROM_BD", "optical_bd", FALSE, TRUE },
+  { "ID_CDROM_BD_R", "optical_bd_r", FALSE, TRUE },
+  { "ID_CDROM_BD_RE", "optical_bd_re", FALSE, TRUE },
+  { "ID_CDROM_HDDVD", "optical_hddvd", FALSE, TRUE },
+  { "ID_CDROM_HDDVD_R", "optical_hddvd_r", FALSE, TRUE },
+  { "ID_CDROM_HDDVD_RW", "optical_hddvd_rw", FALSE, TRUE },
+  { "ID_CDROM_MO", "optical_mo", FALSE, TRUE },
+  { "ID_CDROM_MRW", "optical_mrw", FALSE, TRUE },
+  { "ID_CDROM_MRW_W", "optical_mrw_w", FALSE, TRUE },
+  { NULL, NULL, FALSE, FALSE }
 };
 
 static const struct
@@ -225,6 +226,7 @@ set_media (UDisksDrive      *iface,
   guint disc_track_count_audio = 0;
   guint disc_track_count_data = 0;
   gboolean force_non_removable = FALSE;
+  gboolean force_removable = FALSE;
   gboolean ejectable;
   gboolean removable;
 
@@ -236,6 +238,8 @@ set_media (UDisksDrive      *iface,
           g_ptr_array_add (media_compat_array, (gpointer) drive_media_mapping[n].media_name);
           if (drive_media_mapping[n].force_non_removable)
             force_non_removable = TRUE;
+          if (drive_media_mapping[n].force_removable)
+            force_removable = TRUE;
         }
     }
   g_ptr_array_sort (media_compat_array, (GCompareFunc) ptr_str_array_compare);
@@ -244,6 +248,8 @@ set_media (UDisksDrive      *iface,
   removable = ejectable = g_udev_device_get_sysfs_attr_as_boolean (device, "removable");
   if (force_non_removable)
     removable = FALSE;
+  if (force_removable)
+    removable = TRUE;
   udisks_drive_set_media_removable (iface, removable);
   if (is_pc_floppy_drive)
     ejectable = FALSE;
@@ -447,6 +453,7 @@ udisks_linux_drive_update (UDisksLinuxDrive       *drive,
   UDisksDaemon *daemon;
   UDisksLinuxProvider *provider;
   gboolean coldplug = FALSE;
+  const gchar *seat;
 
   device = udisks_linux_drive_object_get_device (object, TRUE /* get_hw */);
   if (device == NULL)
@@ -616,6 +623,12 @@ udisks_linux_drive_update (UDisksLinuxDrive       *drive,
     removable_hint = TRUE;
   udisks_drive_set_removable (iface, removable_hint);
 
+  seat = g_udev_device_get_property (device, "ID_SEAT");
+  /* assume seat0 if not set */
+  if (seat == NULL || strlen (seat) == 0)
+    seat = "seat0";
+  udisks_drive_set_seat (iface, seat);
+
   set_media_time_detected (drive, device, is_pc_floppy_drive, coldplug);
 
   /* calculate sort-key  */
@@ -676,17 +689,15 @@ handle_eject (UDisksDrive           *_drive,
   UDisksLinuxDrive *drive = UDISKS_LINUX_DRIVE (_drive);
   UDisksLinuxDriveObject *object;
   UDisksLinuxBlockObject *block_object = NULL;
-  UDisksBlock *block;
-  UDisksDaemon *daemon;
+  UDisksBlock *block = NULL;
+  UDisksDaemon *daemon = NULL;
   const gchar *action_id;
-  gchar *error_message;
-  GError *error;
+  const gchar *message;
+  gchar *error_message = NULL;
+  GError *error = NULL;
+  gchar *escaped_device = NULL;
+  pid_t caller_pid;
 
-  daemon = NULL;
-  block = NULL;
-  error_message = NULL;
-
-  error = NULL;
   object = udisks_daemon_util_dup_object (drive, &error);
   if (object == NULL)
     {
@@ -706,19 +717,45 @@ handle_eject (UDisksDrive           *_drive,
     }
   block = udisks_object_peek_block (UDISKS_OBJECT (block_object));
 
-  /* TODO: is it a good idea to overload modify-device? */
-  action_id = "org.freedesktop.udisks2.modify-device";
+  error = NULL;
+  if (!udisks_daemon_util_get_caller_pid_sync (daemon,
+                                               invocation,
+                                               NULL /* GCancellable */,
+                                               &caller_pid,
+                                               &error))
+    {
+      g_dbus_method_invocation_return_gerror (invocation, error);
+      g_error_free (error);
+      goto out;
+    }
+
+  /* Translators: Shown in authentication dialog when the user
+   * requests ejecting media from a drive.
+   *
+   * Do not translate $(udisks2.device), it's a placeholder and
+   * will be replaced by the name of the drive/device in question
+   */
+  message = N_("Authentication is required to eject $(udisks2.device)");
+  action_id = "org.freedesktop.udisks2.eject-media";
   if (udisks_block_get_hint_system (block))
-    action_id = "org.freedesktop.udisks2.modify-device-system";
+    {
+      action_id = "org.freedesktop.udisks2.eject-media-system";
+    }
+  else if (!udisks_daemon_util_on_same_seat (daemon, UDISKS_OBJECT (object), caller_pid))
+    {
+      action_id = "org.freedesktop.udisks2.eject-media-other-seat";
+    }
 
   /* Check that the user is actually authorized */
   if (!udisks_daemon_util_check_authorization_sync (daemon,
                                                     UDISKS_OBJECT (block_object),
                                                     action_id,
                                                     options,
-                                                    N_("Authentication is required to eject $(udisks2.device)"),
+                                                    message,
                                                     invocation))
     goto out;
+
+  escaped_device = udisks_daemon_util_escape_and_quote (udisks_block_get_device (block));
 
   if (!udisks_daemon_launch_spawned_job_sync (daemon,
                                               UDISKS_OBJECT (object),
@@ -728,13 +765,13 @@ handle_eject (UDisksDrive           *_drive,
                                               NULL, /* gint *out_status */
                                               &error_message,
                                               NULL,  /* input_string */
-                                              "eject \"%s\"",
-                                              udisks_block_get_device (block)))
+                                              "eject %s",
+                                              escaped_device))
     {
       g_dbus_method_invocation_return_error (invocation,
                                              UDISKS_ERROR,
                                              UDISKS_ERROR_FAILED,
-                                             "Error eject %s: %s",
+                                             "Error ejecting %s: %s",
                                              udisks_block_get_device (block),
                                              error_message);
       goto out;
@@ -743,6 +780,7 @@ handle_eject (UDisksDrive           *_drive,
   udisks_drive_complete_eject (UDISKS_DRIVE (drive), invocation);
 
  out:
+  g_free (escaped_device);
   g_clear_object (&block_object);
   g_free (error_message);
   g_clear_object (&object);

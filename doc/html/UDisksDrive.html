@@ -70,6 +70,8 @@ struct              <a class="link" href="UDisksDrive.html#UDisksDriveIface" tit
                                                          <em class="parameter"><code><a href="http://library.gnome.org/devel/gio/unstable/GDBusMethodInvocation.html"><span class="type">GDBusMethodInvocation</span></a> *invocation</code></em>);
 const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="returnvalue">gchar</span></a> *       <a class="link" href="UDisksDrive.html#udisks-drive-get-connection-bus" title="udisks_drive_get_connection_bus ()">udisks_drive_get_connection_bus</a>     (<em class="parameter"><code><a class="link" href="UDisksDrive.html" title="UDisksDrive"><span class="type">UDisksDrive</span></a> *object</code></em>);
 <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>            <a class="link" href="UDisksDrive.html#udisks-drive-get-removable" title="udisks_drive_get_removable ()">udisks_drive_get_removable</a>          (<em class="parameter"><code><a class="link" href="UDisksDrive.html" title="UDisksDrive"><span class="type">UDisksDrive</span></a> *object</code></em>);
+<a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>            <a class="link" href="UDisksDrive.html#udisks-drive-get-ejectable" title="udisks_drive_get_ejectable ()">udisks_drive_get_ejectable</a>          (<em class="parameter"><code><a class="link" href="UDisksDrive.html" title="UDisksDrive"><span class="type">UDisksDrive</span></a> *object</code></em>);
+const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="returnvalue">gchar</span></a> *       <a class="link" href="UDisksDrive.html#udisks-drive-get-seat" title="udisks_drive_get_seat ()">udisks_drive_get_seat</a>               (<em class="parameter"><code><a class="link" href="UDisksDrive.html" title="UDisksDrive"><span class="type">UDisksDrive</span></a> *object</code></em>);
 const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="returnvalue">gchar</span></a> *       <a class="link" href="UDisksDrive.html#udisks-drive-get-media" title="udisks_drive_get_media ()">udisks_drive_get_media</a>              (<em class="parameter"><code><a class="link" href="UDisksDrive.html" title="UDisksDrive"><span class="type">UDisksDrive</span></a> *object</code></em>);
 const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="returnvalue">gchar</span></a> *const * <a class="link" href="UDisksDrive.html#udisks-drive-get-media-compatibility" title="udisks_drive_get_media_compatibility ()">udisks_drive_get_media_compatibility</a>
                                                         (<em class="parameter"><code><a class="link" href="UDisksDrive.html" title="UDisksDrive"><span class="type">UDisksDrive</span></a> *object</code></em>);
@@ -111,6 +113,10 @@ const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.htm
                                                          <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *value</code></em>);
 <span class="returnvalue">void</span>                <a class="link" href="UDisksDrive.html#udisks-drive-set-removable" title="udisks_drive_set_removable ()">udisks_drive_set_removable</a>          (<em class="parameter"><code><a class="link" href="UDisksDrive.html" title="UDisksDrive"><span class="type">UDisksDrive</span></a> *object</code></em>,
                                                          <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"><span class="type">gboolean</span></a> value</code></em>);
+<span class="returnvalue">void</span>                <a class="link" href="UDisksDrive.html#udisks-drive-set-ejectable" title="udisks_drive_set_ejectable ()">udisks_drive_set_ejectable</a>          (<em class="parameter"><code><a class="link" href="UDisksDrive.html" title="UDisksDrive"><span class="type">UDisksDrive</span></a> *object</code></em>,
+                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"><span class="type">gboolean</span></a> value</code></em>);
+<span class="returnvalue">void</span>                <a class="link" href="UDisksDrive.html#udisks-drive-set-seat" title="udisks_drive_set_seat ()">udisks_drive_set_seat</a>               (<em class="parameter"><code><a class="link" href="UDisksDrive.html" title="UDisksDrive"><span class="type">UDisksDrive</span></a> *object</code></em>,
+                                                         <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *value</code></em>);
 <span class="returnvalue">void</span>                <a class="link" href="UDisksDrive.html#udisks-drive-set-media" title="udisks_drive_set_media ()">udisks_drive_set_media</a>              (<em class="parameter"><code><a class="link" href="UDisksDrive.html" title="UDisksDrive"><span class="type">UDisksDrive</span></a> *object</code></em>,
                                                          <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *value</code></em>);
 <span class="returnvalue">void</span>                <a class="link" href="UDisksDrive.html#udisks-drive-set-media-compatibility" title="udisks_drive_set_media_compatibility ()">udisks_drive_set_media_compatibility</a>
@@ -256,6 +262,7 @@ UDisksDrive is implemented by
   "<a class="link" href="UDisksDrive.html#UDisksDrive--removable" title='The "removable" property'>removable</a>"                <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"><span class="type">gboolean</span></a>              : Read / Write
   "<a class="link" href="UDisksDrive.html#UDisksDrive--revision" title='The "revision" property'>revision</a>"                 <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a>*                : Read / Write
   "<a class="link" href="UDisksDrive.html#UDisksDrive--rotation-rate" title='The "rotation-rate" property'>rotation-rate</a>"            <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gint"><span class="type">gint</span></a>                  : Read / Write
+  "<a class="link" href="UDisksDrive.html#UDisksDrive--seat" title='The "seat" property'>seat</a>"                     <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a>*                : Read / Write
   "<a class="link" href="UDisksDrive.html#UDisksDrive--serial" title='The "serial" property'>serial</a>"                   <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a>*                : Read / Write
   "<a class="link" href="UDisksDrive.html#UDisksDrive--size" title='The "size" property'>size</a>"                     <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#guint64"><span class="type">guint64</span></a>               : Read / Write
   "<a class="link" href="UDisksDrive.html#UDisksDrive--sort-key" title='The "sort-key" property'>sort-key</a>"                 <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a>*                : Read / Write
@@ -331,6 +338,8 @@ Abstract interface type for the D-Bus interface <a class="link" href="gdbus-org.
   const gchar * (*get_revision) (UDisksDrive *object);
 
   gint  (*get_rotation_rate) (UDisksDrive *object);
+
+  const gchar * (*get_seat) (UDisksDrive *object);
 
   const gchar * (*get_serial) (UDisksDrive *object);
 
@@ -428,6 +437,10 @@ Virtual table for the D-Bus interface <a class="link" href="gdbus-org.freedeskto
 <tr>
 <td><p><span class="term"><em class="structfield"><code><a name="UDisksDriveIface.get-rotation-rate"></a>get_rotation_rate</code></em> ()</span></p></td>
 <td>Getter for the <a class="link" href="UDisksDrive.html#UDisksDrive--rotation-rate" title='The "rotation-rate" property'><span class="type">"rotation-rate"</span></a> property.</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="structfield"><code><a name="UDisksDriveIface.get-seat"></a>get_seat</code></em> ()</span></p></td>
+<td>Getter for the <a class="link" href="UDisksDrive.html#UDisksDrive--seat" title='The "seat" property'><span class="type">"seat"</span></a> property.</td>
 </tr>
 <tr>
 <td><p><span class="term"><em class="structfield"><code><a name="UDisksDriveIface.get-serial"></a>get_serial</code></em> ()</span></p></td>
@@ -698,6 +711,61 @@ Since this D-Bus property is readable, it is meaningful to use this function on 
 <tr>
 <td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
 <td>The property value.</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="udisks-drive-get-ejectable"></a><h3>udisks_drive_get_ejectable ()</h3>
+<pre class="programlisting"><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>            udisks_drive_get_ejectable          (<em class="parameter"><code><a class="link" href="UDisksDrive.html" title="UDisksDrive"><span class="type">UDisksDrive</span></a> *object</code></em>);</pre>
+<p>
+Gets the value of the <a class="link" href="gdbus-org.freedesktop.UDisks2.Drive.html#gdbus-property-org-freedesktop-UDisks2-Drive.Ejectable" title='The "Ejectable" property'>"Ejectable"</a> D-Bus property.
+</p>
+<p>
+Since this D-Bus property is readable, it is meaningful to use this function on both the client- and service-side.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>object</code></em> :</span></p></td>
+<td>A <a class="link" href="UDisksDrive.html" title="UDisksDrive"><span class="type">UDisksDrive</span></a>.</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td>The property value.</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="udisks-drive-get-seat"></a><h3>udisks_drive_get_seat ()</h3>
+<pre class="programlisting">const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="returnvalue">gchar</span></a> *       udisks_drive_get_seat               (<em class="parameter"><code><a class="link" href="UDisksDrive.html" title="UDisksDrive"><span class="type">UDisksDrive</span></a> *object</code></em>);</pre>
+<p>
+Gets the value of the <a class="link" href="gdbus-org.freedesktop.UDisks2.Drive.html#gdbus-property-org-freedesktop-UDisks2-Drive.Seat" title='The "Seat" property'>"Seat"</a> D-Bus property.
+</p>
+<p>
+Since this D-Bus property is readable, it is meaningful to use this function on both the client- and service-side.
+</p>
+<p>
+</p>
+<div class="warning" style="margin-left: 0.5in; margin-right: 0.5in;">
+<h3 class="title">Warning</h3>The returned value is only valid until the property changes so on the client-side it is only safe to use this function on the thread where <em class="parameter"><code>object</code></em> was constructed. Use <code class="function">udisks_drive_dup_seat()</code> if on another thread.</div>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>object</code></em> :</span></p></td>
+<td>A <a class="link" href="UDisksDrive.html" title="UDisksDrive"><span class="type">UDisksDrive</span></a>.</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td>The property value or <a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a> if the property is not set. Do not free the returned value, it belongs to <em class="parameter"><code>object</code></em>. <span class="annotation">[<a href="http://foldoc.org/transfer%20none"><span class="acronym">transfer none</span></a>]</span>
+</td>
 </tr>
 </tbody>
 </table></div>
@@ -1526,6 +1594,56 @@ Since this D-Bus property is not writable, it is only meaningful to use this fun
                                                          <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"><span class="type">gboolean</span></a> value</code></em>);</pre>
 <p>
 Sets the <a class="link" href="gdbus-org.freedesktop.UDisks2.Drive.html#gdbus-property-org-freedesktop-UDisks2-Drive.Removable" title='The "Removable" property'>"Removable"</a> D-Bus property to <em class="parameter"><code>value</code></em>.
+</p>
+<p>
+Since this D-Bus property is not writable, it is only meaningful to use this function on the service-side.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>object</code></em> :</span></p></td>
+<td>A <a class="link" href="UDisksDrive.html" title="UDisksDrive"><span class="type">UDisksDrive</span></a>.</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>value</code></em> :</span></p></td>
+<td>The value to set.</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="udisks-drive-set-ejectable"></a><h3>udisks_drive_set_ejectable ()</h3>
+<pre class="programlisting"><span class="returnvalue">void</span>                udisks_drive_set_ejectable          (<em class="parameter"><code><a class="link" href="UDisksDrive.html" title="UDisksDrive"><span class="type">UDisksDrive</span></a> *object</code></em>,
+                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"><span class="type">gboolean</span></a> value</code></em>);</pre>
+<p>
+Sets the <a class="link" href="gdbus-org.freedesktop.UDisks2.Drive.html#gdbus-property-org-freedesktop-UDisks2-Drive.Ejectable" title='The "Ejectable" property'>"Ejectable"</a> D-Bus property to <em class="parameter"><code>value</code></em>.
+</p>
+<p>
+Since this D-Bus property is not writable, it is only meaningful to use this function on the service-side.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>object</code></em> :</span></p></td>
+<td>A <a class="link" href="UDisksDrive.html" title="UDisksDrive"><span class="type">UDisksDrive</span></a>.</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>value</code></em> :</span></p></td>
+<td>The value to set.</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="udisks-drive-set-seat"></a><h3>udisks_drive_set_seat ()</h3>
+<pre class="programlisting"><span class="returnvalue">void</span>                udisks_drive_set_seat               (<em class="parameter"><code><a class="link" href="UDisksDrive.html" title="UDisksDrive"><span class="type">UDisksDrive</span></a> *object</code></em>,
+                                                         <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *value</code></em>);</pre>
+<p>
+Sets the <a class="link" href="gdbus-org.freedesktop.UDisks2.Drive.html#gdbus-property-org-freedesktop-UDisks2-Drive.Seat" title='The "Seat" property'>"Seat"</a> D-Bus property to <em class="parameter"><code>value</code></em>.
 </p>
 <p>
 Since this D-Bus property is not writable, it is only meaningful to use this function on the service-side.
@@ -2626,6 +2744,18 @@ Represents the D-Bus property <a class="link" href="gdbus-org.freedesktop.UDisks
 Since the D-Bus property for this <a href="http://library.gnome.org/devel/gobject/unstable/gobject-The-Base-Object-Type.html#GObject"><span class="type">GObject</span></a> property is readable but not writable, it is meaningful to read from it on both the client- and service-side. It is only meaningful, however, to write to it on the service-side.
 </p>
 <p>Default value: 0</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="UDisksDrive--seat"></a><h3>The <code class="literal">"seat"</code> property</h3>
+<pre class="programlisting">  "seat"                     <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a>*                : Read / Write</pre>
+<p>
+Represents the D-Bus property <a class="link" href="gdbus-org.freedesktop.UDisks2.Drive.html#gdbus-property-org-freedesktop-UDisks2-Drive.Seat" title='The "Seat" property'>"Seat"</a>.
+</p>
+<p>
+Since the D-Bus property for this <a href="http://library.gnome.org/devel/gobject/unstable/gobject-The-Base-Object-Type.html#GObject"><span class="type">GObject</span></a> property is readable but not writable, it is meaningful to read from it on both the client- and service-side. It is only meaningful, however, to write to it on the service-side.
+</p>
+<p>Default value: NULL</p>
 </div>
 <hr>
 <div class="refsect2">

@@ -36,6 +36,7 @@
 #include "udisksmountmonitor.h"
 #include "udiskslogging.h"
 #include "udiskslinuxprovider.h"
+#include "udisksdaemonutil.h"
 
 /**
  * SECTION:udiskscleanup
@@ -60,7 +61,7 @@
  *     </thead>
  *     <tbody>
  *       <row>
- *         <entry><filename>/var/lib/udisks2/mounted-fs</filename></entry>
+ *         <entry><filename>/run/udisks2/mounted-fs</filename></entry>
  *         <entry>
  *           A serialized 'a{sa{sv}}' #GVariant mapping from the
  *           mount point (e.g. <filename>/media/EOS_DIGITAL</filename>) into a set of details.
@@ -605,7 +606,7 @@ udisks_cleanup_check_mounted_fs_entry (UDisksCleanup  *cleanup,
       /* if umounting, issue 'change' event on the device after unmounting it */
       change_sysfs_path = g_strdup (g_udev_device_get_sysfs_path (udev_device));
 
-      if (g_udev_device_get_sysfs_attr_as_int (udev_device, "size") > 0)
+      if (g_udev_device_get_sysfs_attr_as_uint64 (udev_device, "size") > 0)
         {
           /* for partition, also check enclosing device */
           if (g_strcmp0 (g_udev_device_get_devtype (udev_device), "partition") == 0)
@@ -614,7 +615,7 @@ udisks_cleanup_check_mounted_fs_entry (UDisksCleanup  *cleanup,
               udev_device_disk = g_udev_device_get_parent_with_subsystem (udev_device, "block", "disk");
               if (udev_device_disk != NULL)
                 {
-                  if (g_udev_device_get_sysfs_attr_as_int (udev_device_disk, "size") > 0)
+                  if (g_udev_device_get_sysfs_attr_as_uint64 (udev_device_disk, "size") > 0)
                     {
                       device_exists = TRUE;
                     }
@@ -672,7 +673,7 @@ udisks_cleanup_check_mounted_fs_entry (UDisksCleanup  *cleanup,
           gchar *error_message;
 
           error_message = NULL;
-          escaped_mount_point = g_strescape (mount_point, NULL);
+          escaped_mount_point = udisks_daemon_util_escape_and_quote (mount_point);
           /* right now -l is the only way to "force unmount" file systems... */
           if (!udisks_daemon_launch_spawned_job_sync (cleanup->daemon,
                                                       NULL, /* UDisksObject */
@@ -682,7 +683,7 @@ udisks_cleanup_check_mounted_fs_entry (UDisksCleanup  *cleanup,
                                                       NULL, /* gint *out_status */
                                                       &error_message,
                                                       NULL,  /* input_string */
-                                                      "umount -l \"%s\"",
+                                                      "umount -l %s",
                                                       escaped_mount_point))
             {
               udisks_error ("Error cleaning up mount point %s: Error unmounting: %s",
@@ -822,7 +823,7 @@ udisks_cleanup_check_mounted_fs (UDisksCleanup *cleanup,
  * @fstab_mount: %TRUE if the device was mounted via /etc/fstab.
  *
  * Adds a new entry to the
- * <filename>/var/lib/udisks2/mounted-fs</filename> file.
+ * <filename>/run/udisks2/mounted-fs</filename> file.
  */
 void
 udisks_cleanup_add_mounted_fs (UDisksCleanup  *cleanup,
@@ -868,7 +869,18 @@ udisks_cleanup_add_mounted_fs (UDisksCleanup  *cleanup,
       g_variant_iter_init (&iter, value);
       while ((child = g_variant_iter_next_value (&iter)) != NULL)
         {
-          g_variant_builder_add_value (&builder, child);
+          const gchar *entry_mount_point;
+          g_variant_get (child, "{&s@a{sv}}", &entry_mount_point, NULL);
+          /* Skip/remove stale entries */
+          if (g_strcmp0 (entry_mount_point, mount_point) == 0)
+            {
+              udisks_warning ("Removing stale entry for mount point `%s' in /run/udisks2/mounted-fs file",
+                              entry_mount_point);
+            }
+          else
+            {
+              g_variant_builder_add_value (&builder, child);
+            }
           g_variant_unref (child);
         }
       g_variant_unref (value);
@@ -924,7 +936,7 @@ udisks_cleanup_add_mounted_fs (UDisksCleanup  *cleanup,
  * @out_fstab_mount: Return location for whether the device was a fstab mount or %NULL.
  *
  * Gets the mount point for @block_device, if it exists in the
- * <filename>/var/lib/udisks2/mounted-fs</filename> file.
+ * <filename>/run/udisks2/mounted-fs</filename> file.
  *
  * Returns: The mount point for @block_device or %NULL if not found.
  */
@@ -1153,7 +1165,7 @@ udisks_cleanup_check_unlocked_luks_entry (UDisksCleanup  *cleanup,
                          major (crypto_device), minor (crypto_device));
 
           error_message = NULL;
-          escaped_device_file = g_strescape (device_file_cleartext, NULL);
+          escaped_device_file = udisks_daemon_util_escape_and_quote (device_file_cleartext);
           if (!udisks_daemon_launch_spawned_job_sync (cleanup->daemon,
                                                       NULL, /* UDisksObject */
                                                       NULL, /* GCancellable */
@@ -1162,7 +1174,7 @@ udisks_cleanup_check_unlocked_luks_entry (UDisksCleanup  *cleanup,
                                                       NULL, /* gint *out_status */
                                                       &error_message,
                                                       NULL,  /* input_string */
-                                                      "cryptsetup luksClose \"%s\"",
+                                                      "cryptsetup luksClose %s",
                                                       escaped_device_file))
             {
               udisks_error ("Error cleaning up LUKS device %s: %s",
@@ -1327,7 +1339,19 @@ udisks_cleanup_add_unlocked_luks (UDisksCleanup  *cleanup,
       g_variant_iter_init (&iter, value);
       while ((child = g_variant_iter_next_value (&iter)) != NULL)
         {
-          g_variant_builder_add_value (&builder, child);
+          guint64 entry_cleartext_device;
+          g_variant_get (child, "{t@a{sv}}", &entry_cleartext_device, NULL);
+          /* Skip/remove stale entries */
+          if ((dev_t) entry_cleartext_device == cleartext_device)
+            {
+              udisks_warning ("Removing stale entry for cleartext device %d:%d in /run/udisks2/unlocked-luks file",
+                              (gint) major (entry_cleartext_device),
+                              (gint) minor (entry_cleartext_device));
+            }
+          else
+            {
+              g_variant_builder_add_value (&builder, child);
+            }
           g_variant_unref (child);
         }
       g_variant_unref (value);
@@ -1482,34 +1506,14 @@ udisks_cleanup_check_loop_entry (UDisksCleanup  *cleanup,
                                  GArray         *devs_to_clean)
 {
   const gchar *loop_device;
-  GVariant *details;
-  gchar *s;
-  gboolean keep;
-  gboolean is_setup;
-  gboolean has_backing_device;
-  gboolean backing_device_mounted;
-  gboolean attempt_no_cleanup;
-  GVariant *backing_file_value;
-  GVariant *backing_file_device_value;
+  GVariant *details = NULL;
+  gboolean keep = FALSE;
+  GVariant *backing_file_value = NULL;
   const gchar *backing_file;
-  dev_t backing_file_device;
   GUdevClient *udev_client;
-  struct stat loop_device_statbuf;
-  gint loop_device_fd;
-  struct loop_info64 li64;
-  UDisksMountMonitor *monitor;
-  GUdevDevice *udev_backing_file_device;
+  GUdevDevice *device = NULL;
+  const gchar *sysfs_backing_file;
 
-  keep = FALSE;
-  attempt_no_cleanup = FALSE;
-  is_setup = FALSE;
-  has_backing_device = FALSE;
-  backing_device_mounted = FALSE;
-  backing_file_value = NULL;
-  backing_file_device_value = NULL;
-  details = NULL;
-
-  monitor = udisks_daemon_get_mount_monitor (cleanup->daemon);
   udev_client = udisks_linux_provider_get_udev_client (udisks_daemon_get_linux_provider (cleanup->daemon));
 
   g_variant_get (value,
@@ -1520,155 +1524,68 @@ udisks_cleanup_check_loop_entry (UDisksCleanup  *cleanup,
   backing_file_value = lookup_asv (details, "backing-file");
   if (backing_file_value == NULL)
     {
+      gchar *s;
       s = g_variant_print (value, TRUE);
       udisks_error ("loop entry %s is invalid: no backing-file key/value pair", s);
       g_free (s);
-      attempt_no_cleanup = TRUE;
       goto out;
     }
   backing_file = g_variant_get_bytestring (backing_file_value);
 
-  backing_file_device_value = lookup_asv (details, "backing-file-device");
-  if (backing_file_device_value == NULL)
+  /* check the loop device is still set up */
+  device = g_udev_client_query_by_device_file (udev_client, loop_device);
+  if (device == NULL)
     {
-      s = g_variant_print (value, TRUE);
-      udisks_error ("loop entry %s is invalid: no backing-file-device key/value pair", s);
-      g_free (s);
-      attempt_no_cleanup = TRUE;
+      udisks_info ("no udev device for %s", loop_device);
       goto out;
     }
-  backing_file_device = g_variant_get_uint64 (backing_file_device_value);
-
-  if (backing_file_device == 0 || major (backing_file_device) == 0)
+  if (g_udev_device_get_sysfs_attr (device, "loop/offset") == NULL)
     {
-      /* major==0 -> not regular block device ... could be e.g. NFS ...
-       * for now, just assume it's still there and mounted
-       */
-      keep = TRUE;
+      udisks_info ("loop device %s is not setup  (no loop/offset sysfs file)", loop_device);
       goto out;
     }
 
-  if (stat (loop_device, &loop_device_statbuf) != 0)
+  /* Check the loop device set up, is the one that _we_ set up
+   *
+   * Note that drivers/block/loop.c:loop_attr_backing_file_show() uses d_path()
+   * on lo_file_name so in the event that the underlying fs was unmounted
+   * (just 'umount -l /path/to/fs/holding/backing/file to try) it cuts
+   * off the mount path.... in this case we simply just give up managing
+   * the loop device
+   */
+  sysfs_backing_file = g_udev_device_get_sysfs_attr (device, "loop/backing_file");
+  if (g_strcmp0 (sysfs_backing_file, backing_file) != 0)
     {
-      udisks_error ("error statting %s: %m", loop_device);
-      attempt_no_cleanup = TRUE;
+      udisks_notice ("unexpected name for %s - expected `%s' but got `%s'",
+                     loop_device, backing_file, sysfs_backing_file);
       goto out;
-    }
-  loop_device_fd = open (loop_device, O_RDONLY);
-  if (loop_device_fd == -1 )
-    {
-      udisks_info ("error opening %s: %m", loop_device);
-      attempt_no_cleanup = TRUE;
-      goto out;
-    }
-  memset (&li64, '\0', sizeof (struct loop_info64));
-  if (ioctl (loop_device_fd, LOOP_GET_STATUS64, &li64) == -1)
-    {
-      udisks_info ("error issuing LOOP_GET_STATUS64 ioctl on %s: %m", loop_device);
-      attempt_no_cleanup = TRUE;
-      close (loop_device_fd);
-      goto out;
-    }
-  close (loop_device_fd);
-  if (strncmp ((const char *) li64.lo_file_name, backing_file, LO_NAME_SIZE - 1) != 0)
-    {
-      udisks_error ("unexpected name for device %s - expected `%s' but got `%s'",
-                    loop_device, backing_file, li64.lo_file_name);
-      attempt_no_cleanup = TRUE;
-      goto out;
-    }
-  is_setup = TRUE;
-
-  /* check with udev if the backing device exists and is still mounted */
-  udev_backing_file_device = g_udev_client_query_by_device_number (udev_client,
-                                                                   G_UDEV_DEVICE_TYPE_BLOCK,
-                                                                   backing_file_device);
-  if (udev_backing_file_device != NULL)
-    {
-      GList *mounts;
-
-      has_backing_device = TRUE;
-      g_object_unref (udev_backing_file_device);
-
-      /* and if it's still mounted */
-      mounts = udisks_mount_monitor_get_mounts_for_dev (monitor, backing_file_device);
-      if (mounts != NULL)
-        backing_device_mounted = TRUE;
-      g_list_foreach (mounts, (GFunc) g_object_unref, NULL);
-      g_list_free (mounts);
     }
 
   /* OK, entry is valid - keep it around */
-  if (is_setup && has_backing_device && backing_device_mounted)
-    keep = TRUE;
+  keep = TRUE;
 
  out:
 
   if (check_only && !keep)
     {
-      g_array_append_val (devs_to_clean, loop_device_statbuf.st_rdev);
+      if (device != NULL)
+        {
+          dev_t dev_number = g_udev_device_get_device_number (device);
+          g_array_append_val (devs_to_clean, dev_number);
+        }
       keep = TRUE;
       goto out2;
     }
 
   if (!keep)
     {
-      if (!attempt_no_cleanup)
-        {
-          if (is_setup)
-            {
-              gchar *escaped_loop_device_file;
-              gchar *error_message;
-
-              if (!has_backing_device)
-                udisks_notice ("Cleaning up loop device %s (backing device %d:%d no longer exist)",
-                               loop_device,
-                               major (backing_file_device), minor (backing_file_device));
-              else
-                udisks_notice ("Cleaning up loop device %s (backing device %d:%d no longer mounted)",
-                               loop_device,
-                               major (backing_file_device), minor (backing_file_device));
-
-              error_message = NULL;
-              escaped_loop_device_file = g_strescape (loop_device, NULL);
-              if (!udisks_daemon_launch_spawned_job_sync (cleanup->daemon,
-                                                          NULL, /* UDisksObject */
-                                                          NULL, /* GCancellable */
-                                                          0,    /* uid_t run_as_uid */
-                                                          0,    /* uid_t run_as_euid */
-                                                          NULL, /* gint *out_status */
-                                                          &error_message,
-                                                          NULL,  /* input_string */
-                                                          "losetup -d \"%s\"",
-                                                          escaped_loop_device_file))
-                {
-                  udisks_error ("Error cleaning up loop device %s: %s",
-                                loop_device, error_message);
-                  g_free (escaped_loop_device_file);
-                  g_free (error_message);
-                  /* keep the entry so we can clean it up later */
-                  keep = TRUE;
-                  goto out2;
-                }
-              g_free (escaped_loop_device_file);
-              g_free (error_message);
-            }
-          else
-            {
-              udisks_notice ("loop device %s was manually deleted", loop_device);
-            }
-        }
-      else
-        {
-          udisks_notice ("Loop device %s was deleted", loop_device);
-        }
+      udisks_notice ("No longer watching loop device %s", loop_device);
     }
 
  out2:
+  g_clear_object (&device);
   if (backing_file_value != NULL)
     g_variant_unref (backing_file_value);
-  if (backing_file_device_value != NULL)
-    g_variant_unref (backing_file_device_value);
   if (details != NULL)
     g_variant_unref (details);
   return keep;
@@ -1807,7 +1724,18 @@ udisks_cleanup_add_loop (UDisksCleanup   *cleanup,
       g_variant_iter_init (&iter, value);
       while ((child = g_variant_iter_next_value (&iter)) != NULL)
         {
-          g_variant_builder_add_value (&builder, child);
+          const gchar *entry_loop_device;
+          g_variant_get (child, "{&s@a{sv}}", &entry_loop_device, NULL);
+          /* Skip/remove stale entries */
+          if (g_strcmp0 (entry_loop_device, device_file) == 0)
+            {
+              udisks_warning ("Removing stale entry for loop device `%s' in /run/udisks2/loop file",
+                              entry_loop_device);
+            }
+          else
+            {
+              g_variant_builder_add_value (&builder, child);
+            }
           g_variant_unref (child);
         }
       g_variant_unref (value);

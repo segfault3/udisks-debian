@@ -33,6 +33,13 @@
 #include "udisksdaemon.h"
 #include "udisksdaemonutil.h"
 #include "udiskscleanup.h"
+#include "udiskslogging.h"
+#include "udiskslinuxblockobject.h"
+#include "udiskslinuxdriveobject.h"
+
+#if defined(HAVE_LIBSYSTEMD_LOGIN)
+#include <systemd/sd-login.h>
+#endif
 
 /**
  * SECTION:udisksdaemonutil
@@ -80,7 +87,7 @@ udisks_decode_udev_string (const gchar *str)
 
           if (str[n + 1] != 'x' || str[n + 2] == '\0' || str[n + 3] == '\0')
             {
-              g_warning ("**** NOTE: malformed encoded string `%s'", str);
+              udisks_warning ("**** NOTE: malformed encoded string `%s'", str);
               break;
             }
 
@@ -98,7 +105,7 @@ udisks_decode_udev_string (const gchar *str)
 
   if (!g_utf8_validate (s->str, -1, &end_valid))
     {
-      g_warning ("The string `%s' is not valid UTF-8. Invalid characters begins at `%s'", s->str, end_valid);
+      udisks_warning ("The string `%s' is not valid UTF-8. Invalid characters begins at `%s'", s->str, end_valid);
       ret = g_strndup (s->str, end_valid - s->str);
       g_string_free (s, TRUE);
     }
@@ -424,21 +431,18 @@ udisks_daemon_util_check_authorization_sync (UDisksDaemon          *daemon,
                                              const gchar           *message,
                                              GDBusMethodInvocation *invocation)
 {
-  PolkitSubject *subject;
-  PolkitDetails *details;
-  PolkitCheckAuthorizationFlags flags;
-  PolkitAuthorizationResult *result;
-  GError *error;
-  gboolean ret;
-  UDisksBlock *block;
-  gboolean auth_no_user_interaction;
-
-  ret = FALSE;
-  subject = NULL;
-  details = NULL;
-  result = NULL;
-  flags = POLKIT_CHECK_AUTHORIZATION_FLAGS_NONE;
-  auth_no_user_interaction = FALSE;
+  PolkitSubject *subject = NULL;
+  PolkitDetails *details = NULL;
+  PolkitCheckAuthorizationFlags flags = POLKIT_CHECK_AUTHORIZATION_FLAGS_NONE;
+  PolkitAuthorizationResult *result = NULL;
+  GError *error = NULL;
+  gboolean ret = FALSE;
+  UDisksBlock *block = NULL;
+  UDisksDrive *drive = NULL;
+  UDisksObject *block_object = NULL;
+  UDisksObject *drive_object = NULL;
+  gboolean auth_no_user_interaction = FALSE;
+  gchar *details_udisks2_device = NULL;
 
   subject = polkit_system_bus_name_new (g_dbus_method_invocation_get_sender (invocation));
   if (options != NULL)
@@ -453,15 +457,60 @@ udisks_daemon_util_check_authorization_sync (UDisksDaemon          *daemon,
 
   details = polkit_details_new ();
   polkit_details_insert (details, "polkit.message", message);
-  polkit_details_insert (details, "polkit.gettext_domain", "udisks2"); /* TODO: set up translation */
+  polkit_details_insert (details, "polkit.gettext_domain", "udisks2");
 
-  /* setup other details that @message can use */
+  /* Find drive associated with the block device, if any */
   if (object != NULL)
     {
-      block = udisks_object_peek_block (object);
+      block = udisks_object_get_block (object);
       if (block != NULL)
-        polkit_details_insert (details, "udisks2.device", udisks_block_get_preferred_device (block));
+        {
+          block_object = g_object_ref (object);
+          drive_object = udisks_daemon_find_object (daemon, udisks_block_get_drive (block));
+          if (drive_object != NULL)
+            drive = udisks_object_get_drive (drive_object);
+        }
     }
+
+  /* If we have a drive, use vendor/model in the message (in addition to Block:preferred-device) */
+  if (drive != NULL)
+    {
+      gchar *s;
+      const gchar *vendor;
+      const gchar *model;
+
+      vendor = udisks_drive_get_vendor (drive);
+      model = udisks_drive_get_model (drive);
+      if (vendor == NULL)
+        vendor = "";
+      if (model == NULL)
+        model = "";
+
+      if (strlen (vendor) > 0 && strlen (model) > 0)
+        s = g_strdup_printf ("%s %s", vendor, model);
+      else if (strlen (vendor) > 0)
+        s = g_strdup (vendor);
+      else
+        s = g_strdup (model);
+
+      if (block != NULL)
+        {
+          details_udisks2_device = g_strdup_printf ("%s (%s)", s, udisks_block_get_preferred_device (block));
+        }
+      else
+        {
+          details_udisks2_device = s;
+          s = NULL;
+        }
+      g_free (s);
+    }
+
+  /* Fall back to Block:preferred-device */
+  if (details_udisks2_device == NULL && block != NULL)
+    details_udisks2_device = udisks_block_dup_preferred_device (block);
+
+  if (details_udisks2_device != NULL)
+    polkit_details_insert (details, "udisks2.device", details_udisks2_device);
 
   error = NULL;
   result = polkit_authority_check_authorization_sync (udisks_daemon_get_authority (daemon),
@@ -503,12 +552,14 @@ udisks_daemon_util_check_authorization_sync (UDisksDaemon          *daemon,
   ret = TRUE;
 
  out:
-  if (subject != NULL)
-    g_object_unref (subject);
-  if (details != NULL)
-    g_object_unref (details);
-  if (result != NULL)
-    g_object_unref (result);
+  g_free (details_udisks2_device);
+  g_clear_object (&block_object);
+  g_clear_object (&drive_object);
+  g_clear_object (&block);
+  g_clear_object (&drive);
+  g_clear_object (&subject);
+  g_clear_object (&details);
+  g_clear_object (&result);
   return ret;
 }
 
@@ -619,6 +670,76 @@ udisks_daemon_util_get_caller_uid_sync (UDisksDaemon            *daemon,
 /* ---------------------------------------------------------------------------------------------------- */
 
 /**
+ * udisks_daemon_util_get_caller_pid_sync:
+ * @daemon: A #UDisksDaemon.
+ * @invocation: A #GDBusMethodInvocation.
+ * @cancellable: (allow-none): A #GCancellable or %NULL.
+ * @out_pid: (out): Return location for resolved pid or %NULL.
+ * @error: Return location for error.
+ *
+ * Gets the UNIX process id of the peer represented by @invocation.
+ *
+ * Returns: %TRUE if the process id was obtained, %FALSE otherwise
+ */
+gboolean
+udisks_daemon_util_get_caller_pid_sync (UDisksDaemon            *daemon,
+                                        GDBusMethodInvocation   *invocation,
+                                        GCancellable            *cancellable,
+                                        pid_t                   *out_pid,
+                                        GError                 **error)
+{
+  gboolean ret;
+  const gchar *caller;
+  GVariant *value;
+  GError *local_error;
+  pid_t pid;
+
+  /* TODO: cache this on @daemon */
+
+  ret = FALSE;
+
+  caller = g_dbus_method_invocation_get_sender (invocation);
+
+  local_error = NULL;
+  value = g_dbus_connection_call_sync (g_dbus_method_invocation_get_connection (invocation),
+                                       "org.freedesktop.DBus",  /* bus name */
+                                       "/org/freedesktop/DBus", /* object path */
+                                       "org.freedesktop.DBus",  /* interface */
+                                       "GetConnectionUnixProcessID", /* method */
+                                       g_variant_new ("(s)", caller),
+                                       G_VARIANT_TYPE ("(u)"),
+                                       G_DBUS_CALL_FLAGS_NONE,
+                                       -1, /* timeout_msec */
+                                       cancellable,
+                                       &local_error);
+  if (value == NULL)
+    {
+      g_set_error (error,
+                   UDISKS_ERROR,
+                   UDISKS_ERROR_FAILED,
+                   "Error determining uid of caller %s: %s (%s, %d)",
+                   caller,
+                   local_error->message,
+                   g_quark_to_string (local_error->domain),
+                   local_error->code);
+      g_error_free (local_error);
+      goto out;
+    }
+
+  G_STATIC_ASSERT (sizeof (uid_t) == sizeof (guint32));
+  g_variant_get (value, "(u)", &pid);
+  if (out_pid != NULL)
+    *out_pid = pid;
+
+  ret = TRUE;
+
+ out:
+  return ret;
+}
+
+/* ---------------------------------------------------------------------------------------------------- */
+
+/**
  * udisks_daemon_util_dup_object:
  * @interface_: (type GDBusInterface): A #GDBusInterface<!-- -->-derived instance.
  * @error: %NULL, or an unset #GError to set if the return value is %NULL.
@@ -648,4 +769,150 @@ udisks_daemon_util_dup_object (gpointer   interface_,
     }
 
   return ret;
+}
+
+static void
+escaper (GString *s, const gchar *str)
+{
+  const gchar *p;
+  for (p = str; *p != '\0'; p++)
+    {
+      gint c = *p;
+      switch (c)
+        {
+        case '"':
+          g_string_append (s, "\\\"");
+          break;
+
+        case '\\':
+          g_string_append (s, "\\\\");
+          break;
+
+        default:
+          g_string_append_c (s, c);
+          break;
+        }
+    }
+}
+
+/**
+ * udisks_daemon_util_escape_and_quote:
+ * @str: The string to escape.
+ *
+ * Like udisks_daemon_util_escape() but also wraps the result in
+ * double-quotes.
+ *
+ * Returns: The double-quoted and escaped string. Free with g_free().
+ */
+gchar *
+udisks_daemon_util_escape_and_quote (const gchar *str)
+{
+  GString *s;
+
+  g_return_val_if_fail (str != NULL, NULL);
+
+  s = g_string_new ("\"");
+  escaper (s, str);
+  g_string_append_c (s, '"');
+
+  return g_string_free (s, FALSE);
+}
+
+/**
+ * udisks_daemon_util_escape:
+ * @str: The string to escape.
+ *
+ * Escapes double-quotes (&quot;) and back-slashes (\) in a string
+ * using back-slash (\).
+ *
+ * Returns: The escaped string. Free with g_free().
+ */
+gchar *
+udisks_daemon_util_escape (const gchar *str)
+{
+  GString *s;
+
+  g_return_val_if_fail (str != NULL, NULL);
+
+  s = g_string_new (NULL);
+  escaper (s, str);
+
+  return g_string_free (s, FALSE);
+}
+
+/**
+ * udisks_daemon_util_on_other_seat:
+ * @daemon: A #UDisksDaemon.
+ * @object: The #GDBusObject that the call is on or %NULL.
+ * @process: The process to check for.
+ *
+ * Checks whether the device represented by @object (if any) is plugged into
+ * a seat where the caller represented by @process is logged in.
+ *
+ * This works if @object is a drive or a block object.
+ *
+ * Returns: %TRUE if @object and @process is on the same seat, %FALSE otherwise.
+ */
+gboolean
+udisks_daemon_util_on_same_seat (UDisksDaemon          *daemon,
+                                 UDisksObject          *object,
+                                 pid_t                  process)
+{
+#if !defined(HAVE_LIBSYSTEMD_LOGIN)
+  /* if we don't have systemd, assume it's always the same seat */
+  return TRUE;
+#else
+  gboolean ret = FALSE;
+  char *session = NULL;
+  char *seat = NULL;
+  const gchar *drive_seat;
+  UDisksObject *drive_object = NULL;
+  UDisksDrive *drive = NULL;
+
+  if (UDISKS_IS_LINUX_BLOCK_OBJECT (object))
+    {
+      UDisksLinuxBlockObject *linux_block_object;
+      UDisksBlock *block;
+      linux_block_object = UDISKS_LINUX_BLOCK_OBJECT (object);
+      block = udisks_object_get_block (UDISKS_OBJECT (linux_block_object));
+      if (block != NULL)
+        {
+          drive_object = udisks_daemon_find_object (daemon, udisks_block_get_drive (block));
+          g_object_unref (block);
+        }
+    }
+  else if (UDISKS_IS_LINUX_DRIVE_OBJECT (object))
+    {
+      drive_object = g_object_ref (object);
+    }
+
+  if (drive_object == NULL)
+    goto out;
+
+  drive = udisks_object_get_drive (UDISKS_OBJECT (drive_object));
+  if (drive == NULL)
+    goto out;
+
+  /* It's not unexpected to not find a session, nor a seat associated with @process */
+  if (sd_pid_get_session (process, &session) == 0)
+    sd_session_get_seat (session, &seat);
+
+  /* If we don't know the seat of the caller, we assume the device is always on another seat */
+  if (seat == NULL)
+    goto out;
+
+  drive_seat = udisks_drive_get_seat (drive);
+  if (g_strcmp0 (seat, drive_seat) == 0)
+    {
+      ret = TRUE;
+      goto out;
+    }
+
+ out:
+  free (seat);
+  free (session);
+  g_clear_object (&drive_object);
+  g_clear_object (&drive);
+  return ret;
+#endif /* HAVE_LIBSYSTEMD_LOGIN */
 }

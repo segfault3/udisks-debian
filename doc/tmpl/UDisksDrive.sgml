@@ -123,6 +123,11 @@ UDisksDrive
 
 </para>
 
+<!-- ##### ARG UDisksDrive:seat ##### -->
+<para>
+
+</para>
+
 <!-- ##### ARG UDisksDrive:serial ##### -->
 <para>
 
@@ -182,6 +187,7 @@ UDisksDrive
 @get_removable: 
 @get_revision: 
 @get_rotation_rate: 
+@get_seat: 
 @get_serial: 
 @get_size: 
 @get_sort_key: 
@@ -263,6 +269,24 @@ UDisksDrive
 
 
 <!-- ##### FUNCTION udisks_drive_get_removable ##### -->
+<para>
+
+</para>
+
+@object: 
+@Returns: 
+
+
+<!-- ##### FUNCTION udisks_drive_get_ejectable ##### -->
+<para>
+
+</para>
+
+@object: 
+@Returns: 
+
+
+<!-- ##### FUNCTION udisks_drive_get_seat ##### -->
 <para>
 
 </para>
@@ -551,6 +575,24 @@ UDisksDrive
 
 
 <!-- ##### FUNCTION udisks_drive_set_removable ##### -->
+<para>
+
+</para>
+
+@object: 
+@value: 
+
+
+<!-- ##### FUNCTION udisks_drive_set_ejectable ##### -->
+<para>
+
+</para>
+
+@object: 
+@value: 
+
+
+<!-- ##### FUNCTION udisks_drive_set_seat ##### -->
 <para>
 
 </para>

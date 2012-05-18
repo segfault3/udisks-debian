@@ -38,7 +38,28 @@ UDisksLoop
 @arg2: 
 @Returns: 
 
+<!-- ##### SIGNAL UDisksLoop::handle-set-autoclear ##### -->
+<para>
+
+</para>
+
+@udisksloop: the object which received the signal.
+@arg1: 
+@arg2: 
+@arg3: 
+@Returns: 
+
+<!-- ##### ARG UDisksLoop:autoclear ##### -->
+<para>
+
+</para>
+
 <!-- ##### ARG UDisksLoop:backing-file ##### -->
+<para>
+
+</para>
+
+<!-- ##### ARG UDisksLoop:setup-by-uid ##### -->
 <para>
 
 </para>
@@ -50,7 +71,10 @@ UDisksLoop
 
 @parent_iface: 
 @handle_delete: 
+@handle_set_autoclear: 
+@get_autoclear: 
 @get_backing_file: 
+@get_setup_by_uid: 
 
 <!-- ##### FUNCTION udisks_loop_interface_info ##### -->
 <para>
@@ -80,6 +104,24 @@ UDisksLoop
 @Returns: 
 
 
+<!-- ##### FUNCTION udisks_loop_get_autoclear ##### -->
+<para>
+
+</para>
+
+@object: 
+@Returns: 
+
+
+<!-- ##### FUNCTION udisks_loop_get_setup_by_uid ##### -->
+<para>
+
+</para>
+
+@object: 
+@Returns: 
+
+
 <!-- ##### FUNCTION udisks_loop_dup_backing_file ##### -->
 <para>
 
@@ -90,6 +132,24 @@ UDisksLoop
 
 
 <!-- ##### FUNCTION udisks_loop_set_backing_file ##### -->
+<para>
+
+</para>
+
+@object: 
+@value: 
+
+
+<!-- ##### FUNCTION udisks_loop_set_autoclear ##### -->
+<para>
+
+</para>
+
+@object: 
+@value: 
+
+
+<!-- ##### FUNCTION udisks_loop_set_setup_by_uid ##### -->
 <para>
 
 </para>
@@ -134,6 +194,52 @@ UDisksLoop
 
 
 <!-- ##### FUNCTION udisks_loop_complete_delete ##### -->
+<para>
+
+</para>
+
+@object: 
+@invocation: 
+
+
+<!-- ##### FUNCTION udisks_loop_call_set_autoclear ##### -->
+<para>
+
+</para>
+
+@proxy: 
+@arg_value: 
+@arg_options: 
+@cancellable: 
+@callback: 
+@user_data: 
+
+
+<!-- ##### FUNCTION udisks_loop_call_set_autoclear_finish ##### -->
+<para>
+
+</para>
+
+@proxy: 
+@res: 
+@error: 
+@Returns: 
+
+
+<!-- ##### FUNCTION udisks_loop_call_set_autoclear_sync ##### -->
+<para>
+
+</para>
+
+@proxy: 
+@arg_value: 
+@arg_options: 
+@cancellable: 
+@error: 
+@Returns: 
+
+
+<!-- ##### FUNCTION udisks_loop_complete_set_autoclear ##### -->
 <para>
 
 </para>
