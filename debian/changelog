@@ -1,6 +1,6 @@
-udisks2 (1.97.0-1) UNRELEASED; urgency=low
+udisks2 (1.97.0-1) experimental; urgency=low
 
   * Initial release. Packaging based on udisks, thanks to Ayan George for
     helping with the packaging!
 
- -- Martin Pitt <mpitt@debian.org>  Fri, 18 May 2012 10:59:22 +0200
+ -- Martin Pitt <mpitt@debian.org>  Fri, 18 May 2012 11:31:01 +0200
