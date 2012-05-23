@@ -1,9 +1,9 @@
-udisks2 (1.97.0-2) UNRELEASED; urgency=low
+udisks2 (1.97.0-2) experimental; urgency=low
 
   * debian/control: Add udev build dependency, as configure.uc needs its
     pkg-config file to check for the udev directory. Fixes FTBFS.
 
- -- Martin Pitt <mpitt@debian.org>  Wed, 23 May 2012 11:37:35 +0200
+ -- Martin Pitt <mpitt@debian.org>  Wed, 23 May 2012 11:40:02 +0200
 
 udisks2 (1.97.0-1) experimental; urgency=low
 
