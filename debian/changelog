@@ -1,3 +1,10 @@
+udisks2 (1.97.0-3) UNRELEASED; urgency=low
+
+  * debian/control: Drop ntfsprogs Recommends. It is a transitional package
+    for ntfs-3g now, which we already recommend.
+
+ -- Martin Pitt <mpitt@debian.org>  Fri, 25 May 2012 07:34:43 +0200
+
 udisks2 (1.97.0-2) experimental; urgency=low
 
   * debian/control: Add udev build dependency, as configure.uc needs its
