@@ -3,6 +3,8 @@ udisks2 (1.98.0-1) UNRELEASED; urgency=low
   * New upstream release.
   * debian/control: Drop ntfsprogs Recommends. It is a transitional package
     for ntfs-3g now, which we already recommend.
+  * Add 00git_no_polkit_fallback.patch: Fix crash if polkit is not available.
+    Patch backported from current upstream git head.
 
  -- Martin Pitt <mpitt@debian.org>  Fri, 25 May 2012 07:34:43 +0200
 
