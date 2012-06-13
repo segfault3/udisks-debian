@@ -24,16 +24,16 @@
 <div class="refnamediv"><table width="100%"><tr>
 <td valign="top">
 <h2><span class="refentrytitle">udisks</span></h2>
-<p>udisks — Introduction to udisks</p>
+<p>udisks — Disk Manager</p>
 </td>
 <td valign="top" align="right"></td>
 </tr></table></div>
 <div class="refsect1">
-<a name="id544440"></a><h2>DESCRIPTION</h2>
+<a name="id474194"></a><h2>DESCRIPTION</h2>
 <p>
       udisks provides interfaces to enumerate and perform operations
-      on storage devices. Any application (including unprivileged
-      ones) can access the
+      on disks and storage devices. Any application (including
+      unprivileged ones) can access the
       <span class="citerefentry"><span class="refentrytitle">udisksd</span>(8)</span>
       daemon via the name <span class="emphasis"><em>org.freedesktop.UDisks2</em></span>
       on the system message bus. In addition to the D-Bus API, a
@@ -41,19 +41,14 @@
       library can be used from C/C++ and any high-level language with
       <a class="ulink" href="https://live.gnome.org/GObjectIntrospection" target="_top">GObjectIntrospection</a>
       support such as Javascript and Python.
-    </p>
-<p>
-      Except for providing a list of devices, support for udev
-      properties as well as routines used to present the devices to
-      the end user, udisks, as a system-level component, is not
-      involved with what a desktop user interface shows the user. For
-      GNOME see these <a class="ulink" href="http://git.gnome.org/browse/gvfs/tree/monitor/udisks2/what-is-shown.txt" target="_top">GVfs
-      notes</a> about what is shown in the desktop user interface
-      and how to influence it.
+      udisks is only indirectly involved in what devices and objects
+      are shown in the user interface. See these
+      <a class="ulink" href="http://git.gnome.org/browse/gvfs/tree/monitor/udisks2/what-is-shown.txt" target="_top">notes</a>
+      for what is shown in GNOME 3.
     </p>
 </div>
 <div class="refsect1">
-<a name="id544483"></a><h2>ACCESS CONTROL</h2>
+<a name="id474232"></a><h2>ACCESS CONTROL</h2>
 <p>
       By default, logged-in users in active log-in sessions are
       permitted to perform operations (for example, mounting,
@@ -64,8 +59,6 @@
       Checks</a></span>”</span> chapter in the udisks documentation for
       more information (<a class="ulink" href="http://udisks.freedesktop.org/docs/latest/udisks-polkit-actions.html" target="_top">available
       online here</a>).
-    </p>
-<p>
       Note that the <code class="literal">x-udisks-auth</code> option can be
       used in the <code class="filename">/etc/fstab</code> and
       <code class="filename">/etc/crypttab</code> files to specify that
@@ -75,7 +68,7 @@
     </p>
 </div>
 <div class="refsect1">
-<a name="id544532"></a><h2>DEVICE INFORMATION</h2>
+<a name="id474276"></a><h2>DEVICE INFORMATION</h2>
 <p>
       udisks relies on recent versions of
       <span class="citerefentry"><span class="refentrytitle">udev</span>(7)</span>
@@ -136,7 +129,7 @@
 </table></div>
 </div>
 <div class="refsect1">
-<a name="id544693"></a><h2>API STABILITY</h2>
+<a name="id474438"></a><h2>API STABILITY</h2>
 <p>
       udisks guarantees a stable D-Bus API within the same major
       version and this guarantee also extends to the client-side
@@ -172,7 +165,7 @@
     </p>
 </div>
 <div class="refsect1">
-<a name="id585046"></a><h2>AUDIENCE</h2>
+<a name="id515196"></a><h2>AUDIENCE</h2>
 <p>
       The intended audience of udisks include operating system
       developers working on the higher-level parts of the operating
@@ -221,14 +214,14 @@
     </p>
 </div>
 <div class="refsect1">
-<a name="id585128"></a><h2>AUTHOR</h2>
+<a name="id515279"></a><h2>AUTHOR</h2>
 <p>
       Written by David Zeuthen <code class="email">&lt;<a class="email" href="mailto:zeuthen@gmail.com">zeuthen@gmail.com</a>&gt;</code> with
       a lot of help from many others.
     </p>
 </div>
 <div class="refsect1">
-<a name="id585140"></a><h2>BUGS</h2>
+<a name="id515291"></a><h2>BUGS</h2>
 <p>
       Please send bug reports to either the distribution bug tracker
       or the upstream bug tracker at
@@ -236,7 +229,7 @@
     </p>
 </div>
 <div class="refsect1">
-<a name="id585155"></a><h2>SEE ALSO</h2>
+<a name="id515306"></a><h2>SEE ALSO</h2>
 <p>
       <span class="citerefentry"><span class="refentrytitle">udev</span>(7)</span>,
       <span class="citerefentry"><span class="refentrytitle">polkit</span>(8)</span>,

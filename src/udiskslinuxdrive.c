@@ -706,16 +706,24 @@ handle_eject (UDisksDrive           *_drive,
     }
 
   daemon = udisks_linux_drive_object_get_daemon (object);
-  block_object = udisks_linux_drive_object_get_block (object, TRUE);
+  block_object = udisks_linux_drive_object_get_block (object, FALSE);
   if (block_object == NULL)
     {
       g_dbus_method_invocation_return_error (invocation,
                                              UDISKS_ERROR,
                                              UDISKS_ERROR_FAILED,
-                                             "Unable to find physical block device for drive");
+                                             "Unable to find block device for drive");
       goto out;
     }
   block = udisks_object_peek_block (UDISKS_OBJECT (block_object));
+
+  /* refuse to eject if drive appears to be in use */
+  if (!udisks_linux_drive_object_is_not_in_use (object, NULL, &error))
+    {
+      g_prefix_error (&error, "Cannot eject drive in use: ");
+      g_dbus_method_invocation_take_error (invocation, error);
+      goto out;
+    }
 
   error = NULL;
   if (!udisks_daemon_util_get_caller_pid_sync (daemon,
@@ -732,10 +740,10 @@ handle_eject (UDisksDrive           *_drive,
   /* Translators: Shown in authentication dialog when the user
    * requests ejecting media from a drive.
    *
-   * Do not translate $(udisks2.device), it's a placeholder and
+   * Do not translate $(drive), it's a placeholder and
    * will be replaced by the name of the drive/device in question
    */
-  message = N_("Authentication is required to eject $(udisks2.device)");
+  message = N_("Authentication is required to eject $(drive)");
   action_id = "org.freedesktop.udisks2.eject-media";
   if (udisks_block_get_hint_system (block))
     {

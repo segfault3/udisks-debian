@@ -249,17 +249,25 @@ authorized, the appropriate error is already returned to the caller
 via <em class="parameter"><code>invocation</code></em>.
 </p>
 <p>
-The calling thread is blocked for the duration of the
-authentication which may be a very long time unless
-<em class="parameter"><code>auth_no_user_interaction</code></em> is <a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#TRUE:CAPS"><code class="literal">TRUE</code></a>.
+The calling thread is blocked for the duration of the authorization
+check which could be a very long time since it may involve
+presenting an authentication dialog and having a human user use
+it. If <span class="quote">“<span class="quote">auth.no_user_interaction</span>”</span> in <em class="parameter"><code>options</code></em> is <a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#TRUE:CAPS"><code class="literal">TRUE</code></a>
+no authentication dialog will be presented and the check is not
+expected to take a long time.
 </p>
 <p>
-The follow variables can be used in <em class="parameter"><code>message</code></em>
-</p>
-<p>
-</p>
-<div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem"><p>udisks2.device - If <em class="parameter"><code>object</code></em> has a <a class="link" href="UDisksBlock.html" title="UDisksBlock"><span class="type">UDisksBlock</span></a> interface, this property is set to the value of the <span class="type">"preferred-device"</span> property.</p></li></ul></div>
-<p>
+See <a class="xref" href="udisks-polkit-actions.html#udisks-polkit-details" title="Table 1. Known polkit variables">Table 1, “Known polkit variables”</a> for the variables that
+can be used in <em class="parameter"><code>message</code></em> but note that not all variables can be used
+in all checks. For example, any check involving a <a class="link" href="UDisksDrive.html" title="UDisksDrive"><span class="type">UDisksDrive</span></a> or a
+<a class="link" href="UDisksBlock.html" title="UDisksBlock"><span class="type">UDisksBlock</span></a> object can safely include the fragment
+<span class="quote">“<span class="quote">$(drive)</span>”</span> since it will always expand to the name of
+the drive, e.g. <span class="quote">“<span class="quote">INTEL SSDSA2MH080G1GC (/dev/sda1)</span>”</span> or
+the block device file e.g. <span class="quote">“<span class="quote">/dev/vg_lucifer/lv_root</span>”</span>
+or <span class="quote">“<span class="quote">/dev/sda1</span>”</span>. However this won't work for operations
+that isn't on a drive or block device, for example calls on the
+<a class="link" href="gdbus-org.freedesktop.UDisks2.Manager.html#gdbus-interface-org-freedesktop-UDisks2-Manager.top_of_page">Manager</a>
+object.
 </p>
 <div class="variablelist"><table border="0">
 <col align="left" valign="top">
@@ -279,7 +287,7 @@ The follow variables can be used in <em class="parameter"><code>message</code></
 </tr>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>options</code></em> :</span></p></td>
-<td>A <a href="http://library.gnome.org/devel/glib/unstable/glib-GVariant.html#GVariant"><span class="type">GVariant</span></a> to check for the <code class="literal">auth.no_user_interaction</code> option or <a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a>. <span class="annotation">[<a href="http://foldoc.org/allow-none"><span class="acronym">allow-none</span></a>]</span>
+<td>A <a href="http://library.gnome.org/devel/glib/unstable/glib-GVariant.html#GVariant"><span class="type">GVariant</span></a> to check for the <span class="quote">“<span class="quote">auth.no_user_interaction</span>”</span> option or <a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a>. <span class="annotation">[<a href="http://foldoc.org/allow-none"><span class="acronym">allow-none</span></a>]</span>
 </td>
 </tr>
 <tr>

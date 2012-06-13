@@ -53,7 +53,7 @@
 <a class="link" href="UDisksLinuxProvider.html" title="UDisksLinuxProvider"><span class="returnvalue">UDisksLinuxProvider</span></a> * <a class="link" href="UDisksDaemon.html#udisks-daemon-get-linux-provider" title="udisks_daemon_get_linux_provider ()">udisks_daemon_get_linux_provider</a>  (<em class="parameter"><code><a class="link" href="UDisksDaemon.html" title="UDisksDaemon"><span class="type">UDisksDaemon</span></a> *daemon</code></em>);
 <a class="link" href="UDisksPersistentStore.html" title="UDisksPersistentStore"><span class="returnvalue">UDisksPersistentStore</span></a> * <a class="link" href="UDisksDaemon.html#udisks-daemon-get-persistent-store" title="udisks_daemon_get_persistent_store ()">udisks_daemon_get_persistent_store</a>
                                                         (<em class="parameter"><code><a class="link" href="UDisksDaemon.html" title="UDisksDaemon"><span class="type">UDisksDaemon</span></a> *daemon</code></em>);
-<a href="/usr/share/gtk-doc/html/polkit-1/PolkitAuthority.html"><span class="returnvalue">PolkitAuthority</span></a> *   <a class="link" href="UDisksDaemon.html#udisks-daemon-get-authority" title="udisks_daemon_get_authority ()">udisks_daemon_get_authority</a>         (<em class="parameter"><code><a class="link" href="UDisksDaemon.html" title="UDisksDaemon"><span class="type">UDisksDaemon</span></a> *daemon</code></em>);
+<a href="http://www.freedesktop.org/software/polkit/docs/latest/PolkitAuthority.html"><span class="returnvalue">PolkitAuthority</span></a> *   <a class="link" href="UDisksDaemon.html#udisks-daemon-get-authority" title="udisks_daemon_get_authority ()">udisks_daemon_get_authority</a>         (<em class="parameter"><code><a class="link" href="UDisksDaemon.html" title="UDisksDaemon"><span class="type">UDisksDaemon</span></a> *daemon</code></em>);
 <a class="link" href="UDisksCleanup.html" title="UDisksCleanup"><span class="returnvalue">UDisksCleanup</span></a> *     <a class="link" href="UDisksDaemon.html#udisks-daemon-get-cleanup" title="udisks_daemon_get_cleanup ()">udisks_daemon_get_cleanup</a>           (<em class="parameter"><code><a class="link" href="UDisksDaemon.html" title="UDisksDaemon"><span class="type">UDisksDaemon</span></a> *daemon</code></em>);
 <a class="link" href="UDisksObject.html" title="UDisksObject"><span class="returnvalue">UDisksObject</span></a> *      (<a class="link" href="UDisksDaemon.html#UDisksDaemonWaitFunc" title="UDisksDaemonWaitFunc ()">*UDisksDaemonWaitFunc</a>)             (<em class="parameter"><code><a class="link" href="UDisksDaemon.html" title="UDisksDaemon"><span class="type">UDisksDaemon</span></a> *daemon</code></em>,
                                                          <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gpointer"><span class="type">gpointer</span></a> user_data</code></em>);
@@ -312,7 +312,7 @@ Gets the object used to store persistent data
 <hr>
 <div class="refsect2">
 <a name="udisks-daemon-get-authority"></a><h3>udisks_daemon_get_authority ()</h3>
-<pre class="programlisting"><a href="/usr/share/gtk-doc/html/polkit-1/PolkitAuthority.html"><span class="returnvalue">PolkitAuthority</span></a> *   udisks_daemon_get_authority         (<em class="parameter"><code><a class="link" href="UDisksDaemon.html" title="UDisksDaemon"><span class="type">UDisksDaemon</span></a> *daemon</code></em>);</pre>
+<pre class="programlisting"><a href="http://www.freedesktop.org/software/polkit/docs/latest/PolkitAuthority.html"><span class="returnvalue">PolkitAuthority</span></a> *   udisks_daemon_get_authority         (<em class="parameter"><code><a class="link" href="UDisksDaemon.html" title="UDisksDaemon"><span class="type">UDisksDaemon</span></a> *daemon</code></em>);</pre>
 <p>
 Gets the PolicyKit authority used by <em class="parameter"><code>daemon</code></em>.
 </p>
@@ -325,7 +325,7 @@ Gets the PolicyKit authority used by <em class="parameter"><code>daemon</code></
 </tr>
 <tr>
 <td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
-<td>A <a href="/usr/share/gtk-doc/html/polkit-1/PolkitAuthority.html"><span class="type">PolkitAuthority</span></a> instance. Do not free, the object is owned by <em class="parameter"><code>daemon</code></em>.</td>
+<td>A <a href="http://www.freedesktop.org/software/polkit/docs/latest/PolkitAuthority.html"><span class="type">PolkitAuthority</span></a> instance. Do not free, the object is owned by <em class="parameter"><code>daemon</code></em>.</td>
 </tr>
 </tbody>
 </table></div>

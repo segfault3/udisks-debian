@@ -1019,6 +1019,7 @@
     <keyword type="function" name="udisks_linux_drive_object_get_device ()" link="UDisksLinuxDriveObject.html#udisks-linux-drive-object-get-device"/>
     <keyword type="function" name="udisks_linux_drive_object_get_devices ()" link="UDisksLinuxDriveObject.html#udisks-linux-drive-object-get-devices"/>
     <keyword type="function" name="udisks_linux_drive_object_housekeeping ()" link="UDisksLinuxDriveObject.html#udisks-linux-drive-object-housekeeping"/>
+    <keyword type="function" name="udisks_linux_drive_object_is_not_in_use ()" link="UDisksLinuxDriveObject.html#udisks-linux-drive-object-is-not-in-use"/>
     <keyword type="property" name="The &quot;daemon&quot; property" link="UDisksLinuxDriveObject.html#UDisksLinuxDriveObject--daemon"/>
     <keyword type="property" name="The &quot;device&quot; property" link="UDisksLinuxDriveObject.html#UDisksLinuxDriveObject--device"/>
     <keyword type="struct" name="UDisksLinuxBlock" link="UDisksLinuxBlock.html#UDisksLinuxBlock-struct"/>

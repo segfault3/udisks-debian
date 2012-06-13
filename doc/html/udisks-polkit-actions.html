@@ -26,9 +26,8 @@
           Many methods and operations offered by udisks requires the
           calling user to be sufficiently authorized. Whether the user
           is authorized is checked using <a class="ulink" href="http://www.freedesktop.org/software/polkit/docs/latest/polkit.8.html" target="_top">polkit</a>
-          and the administrator can configure <a class="ulink" href="http://www.freedesktop.org/software/polkit/docs/latest/pklocalauthority.8.html" target="_top">polkit's
-          local authority</a> (but note that the system may be
-          using another polkit authority implementation).
+          allowing the administrator to configure fine-grained permissions via
+          polkit authorization rules.
         </p>
 <p>
           There is not necessarily a one-to-one relationship between
@@ -62,9 +61,109 @@
           The polkit actions are not considered stable and may change
           from release to release so administrators should take notice
           when upgrading from one version of udisks to another. For
-          example, <code class="filename">.pkla</code> files may need to be
-          updated to match an updated policy.
-          For reference, the polkit actions defined by udisks 1.97.0
+          example, polkit authorization rules may need to be updated
+          to match an updated policy.
+        </p>
+<p>
+          See <a class="xref" href="udisks-polkit-actions.html#udisks-polkit-details" title="Table 1. Known polkit variables">Table 1, “Known polkit variables”</a> for the
+          variables that can be used to assist in determining if the
+          caller is authorized (note that each variable may not be set
+          for request). For example, a polkit authorization rule for
+          any of the
+          <span class="emphasis"><em>org.freedesktop.udisks2.filesystem-mount*</em></span>
+          actions can use the <em class="parameter"><code>device</code></em> variable
+          to determine if the caller is authorized to mount a specific
+          block device.
+        </p>
+<div class="table">
+<a name="udisks-polkit-details"></a><p class="title"><b>Table 1. Known polkit variables</b></p>
+<div class="table-contents"><table summary="Known polkit variables" border="1">
+<colgroup>
+<col>
+<col>
+</colgroup>
+<thead><tr>
+<th align="left">key</th>
+<th align="left">value</th>
+</tr></thead>
+<tbody>
+<tr>
+<td align="left"><em class="parameter"><code>device</code></em></td>
+<td align="left">If the object is a block device, this property is set to the value of the <a class="link" href="gdbus-org.freedesktop.UDisks2.Block.html#gdbus-property-org-freedesktop-UDisks2-Block.PreferredDevice" title='The "PreferredDevice" property'>Block:PreferredDevice</a> property. If set, this is guaranteed to be a device file, for example <span class="quote">“<span class="quote">/dev/vg_lucifer/lv_root</span>”</span> or <span class="quote">“<span class="quote">/dev/sda1</span>”</span>. If the object is not a block device, this is not set.</td>
+</tr>
+<tr>
+<td align="left"><em class="parameter"><code>drive</code></em></td>
+<td align="left">Like the <em class="parameter"><code>device</code></em> variable, but if the object is also a drive, this variable includes Vital Product Data about the drive such as the vendor and model identifiers (if available), for example <span class="quote">“<span class="quote">INTEL SSDSA2MH080G1GC (/dev/sda1)</span>”</span>. Otherwise is just set to the same value as <em class="parameter"><code>device</code></em>. If the object is not a block device, this is not set (it is however set if the object is a block device but not a drive).</td>
+</tr>
+<tr>
+<td align="left"><em class="parameter"><code>drive.wwn</code></em></td>
+<td align="left">If the object is a drive (or a block device that is part of a drive), this is set to the value of the <a class="link" href="gdbus-org.freedesktop.UDisks2.Drive.html#gdbus-property-org-freedesktop-UDisks2-Drive.WWN" title='The "WWN" property'>Drive:WWN</a> property.</td>
+</tr>
+<tr>
+<td align="left"><em class="parameter"><code>drive.serial</code></em></td>
+<td align="left">If the object is a drive (or a block device that is part of a drive), this is set to the value of the <a class="link" href="gdbus-org.freedesktop.UDisks2.Drive.html#gdbus-property-org-freedesktop-UDisks2-Drive.Serial" title='The "Serial" property'>Drive:Serial</a> property.</td>
+</tr>
+<tr>
+<td align="left"><em class="parameter"><code>drive.vendor</code></em></td>
+<td align="left">If the object is a drive (or a block device that is part of a drive), this is set to the value of the <a class="link" href="gdbus-org.freedesktop.UDisks2.Drive.html#gdbus-property-org-freedesktop-UDisks2-Drive.Vendor" title='The "Vendor" property'>Drive:Vendor</a> property.</td>
+</tr>
+<tr>
+<td align="left"><em class="parameter"><code>drive.model</code></em></td>
+<td align="left">If the object is a drive (or a block device that is part of a drive), this is set to the value of the <a class="link" href="gdbus-org.freedesktop.UDisks2.Drive.html#gdbus-property-org-freedesktop-UDisks2-Drive.Model" title='The "Model" property'>Drive:Model</a> property.</td>
+</tr>
+<tr>
+<td align="left"><em class="parameter"><code>drive.revision</code></em></td>
+<td align="left">If the object is a drive (or a block device that is part of a drive), this is set to the value of the <a class="link" href="gdbus-org.freedesktop.UDisks2.Drive.html#gdbus-property-org-freedesktop-UDisks2-Drive.Revision" title='The "Revision" property'>Drive:Revision</a> property.</td>
+</tr>
+<tr>
+<td align="left"><em class="parameter"><code>drive.removable</code></em></td>
+<td align="left">If the object is a drive (or a block device that is part of a drive), this is set to the string <span class="quote">“<span class="quote">true</span>”</span> only if the value of the <a class="link" href="gdbus-org.freedesktop.UDisks2.Drive.html#gdbus-property-org-freedesktop-UDisks2-Drive.Removable" title='The "Removable" property'>Drive:Removable</a> property is <code class="constant">TRUE</code>.</td>
+</tr>
+<tr>
+<td align="left"><em class="parameter"><code>id.type</code></em></td>
+<td align="left">If the object is a block device, this property is set to the value of the <a class="link" href="gdbus-org.freedesktop.UDisks2.Block.html#gdbus-property-org-freedesktop-UDisks2-Block.IdType" title='The "IdType" property'>Block:IdType</a> property.</td>
+</tr>
+<tr>
+<td align="left"><em class="parameter"><code>id.usage</code></em></td>
+<td align="left">If the object is a block device, this property is set to the value of the <a class="link" href="gdbus-org.freedesktop.UDisks2.Block.html#gdbus-property-org-freedesktop-UDisks2-Block.IdUsage" title='The "IdUsage" property'>Block:IdUsage</a> property.</td>
+</tr>
+<tr>
+<td align="left"><em class="parameter"><code>id.version</code></em></td>
+<td align="left">If the object is a block device, this property is set to the value of the <a class="link" href="gdbus-org.freedesktop.UDisks2.Block.html#gdbus-property-org-freedesktop-UDisks2-Block.IdVersion" title='The "IdVersion" property'>Block:IdVersion</a> property.</td>
+</tr>
+<tr>
+<td align="left"><em class="parameter"><code>id.label</code></em></td>
+<td align="left">If the object is a block device, this property is set to the value of the <a class="link" href="gdbus-org.freedesktop.UDisks2.Block.html#gdbus-property-org-freedesktop-UDisks2-Block.IdLabel" title='The "IdLabel" property'>Block:IdLabel</a> property.</td>
+</tr>
+<tr>
+<td align="left"><em class="parameter"><code>id.uuid</code></em></td>
+<td align="left">If the object is a block device, this property is set to the value of the <a class="link" href="gdbus-org.freedesktop.UDisks2.Block.html#gdbus-property-org-freedesktop-UDisks2-Block.IdUUID" title='The "IdUUID" property'>Block:IdUUID</a> property.</td>
+</tr>
+<tr>
+<td align="left"><em class="parameter"><code>partition.number</code></em></td>
+<td align="left">If the object is a partition, this property is set to the value of the <a class="link" href="gdbus-org.freedesktop.UDisks2.Partition.html#gdbus-property-org-freedesktop-UDisks2-Partition.Number" title='The "Number" property'>Partition:Number</a> property.</td>
+</tr>
+<tr>
+<td align="left"><em class="parameter"><code>partition.type</code></em></td>
+<td align="left">If the object is a partition, this property is set to the value of the <a class="link" href="gdbus-org.freedesktop.UDisks2.Partition.html#gdbus-property-org-freedesktop-UDisks2-Partition.Type" title='The "Type" property'>Partition:Type</a> property.</td>
+</tr>
+<tr>
+<td align="left"><em class="parameter"><code>partition.flags</code></em></td>
+<td align="left">If the object is a partition, this property is set to the value of the <a class="link" href="gdbus-org.freedesktop.UDisks2.Partition.html#gdbus-property-org-freedesktop-UDisks2-Partition.Flags" title='The "Flags" property'>Partition:Flags</a> property.</td>
+</tr>
+<tr>
+<td align="left"><em class="parameter"><code>partition.name</code></em></td>
+<td align="left">If the object is a partition, this property is set to the value of the <a class="link" href="gdbus-org.freedesktop.UDisks2.Partition.html#gdbus-property-org-freedesktop-UDisks2-Partition.Name" title='The "Name" property'>Partition:Name</a> property.</td>
+</tr>
+<tr>
+<td align="left"><em class="parameter"><code>partition.uuid</code></em></td>
+<td align="left">If the object is a partition, this property is set to the value of the <a class="link" href="gdbus-org.freedesktop.UDisks2.Partition.html#gdbus-property-org-freedesktop-UDisks2-Partition.UUID" title='The "UUID" property'>Partition:UUID</a> property.</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<br class="table-break"><p>
+          For reference, the polkit actions defined by udisks 1.98.0
 
           are included here:
           </p>
@@ -409,6 +508,17 @@
       &lt;allow_any&gt;auth_admin&lt;/allow_any&gt;
       &lt;allow_inactive&gt;auth_admin&lt;/allow_inactive&gt;
       &lt;allow_active&gt;yes&lt;/allow_active&gt;
+    &lt;/defaults&gt;
+  &lt;/action&gt;
+
+  &lt;!-- Set SMART data from blob --&gt;
+  &lt;action id="org.freedesktop.udisks2.ata-smart-simulate"&gt;
+    &lt;_description&gt;Set SMART data from blob&lt;/_description&gt;
+    &lt;_message&gt;Authentication is required to set SMART data from blob&lt;/_message&gt;
+    &lt;defaults&gt;
+      &lt;allow_any&gt;auth_admin&lt;/allow_any&gt;
+      &lt;allow_inactive&gt;auth_admin&lt;/allow_inactive&gt;
+      &lt;allow_active&gt;auth_admin_keep&lt;/allow_active&gt;
     &lt;/defaults&gt;
   &lt;/action&gt;
 
