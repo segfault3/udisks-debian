@@ -9,6 +9,8 @@ udisks2 (1.98.0-1) UNRELEASED; urgency=low
     upstream git. 1.99 and later will ship that in the source tarball.
   * Add debian/tests/control and debian/tests/upstream-system: DEP-8
     autopkgtest (adapted from udisks package).
+  * debian/control: Change suggestion of cryptsetup to cryptsetup-bin, as that
+    is sufficient for udisks' needs.
 
  -- Martin Pitt <mpitt@debian.org>  Fri, 25 May 2012 07:34:43 +0200
 
