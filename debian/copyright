@@ -5,7 +5,7 @@ Source: http://udisks.freedesktop.org/releases/
 
 Files: *
 Copyright: 2007-2011 David Zeuthen <david@fubar.dk>
-Copyright: 2011 Martin Pitt <martin.pitt@ubuntu.com>
+ 2011 Martin Pitt <martin.pitt@ubuntu.com>
 License: GPL-2+
  This program is free software; you can redistribute it and/or modify
  it under the terms of the GNU General Public License as published by
