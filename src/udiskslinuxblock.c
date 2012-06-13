@@ -1880,10 +1880,10 @@ handle_format (UDisksBlock           *block,
    * device. This includes both creating a filesystem or partition
    * table.
    *
-   * Do not translate $(udisks2.device), it's a placeholder and will
+   * Do not translate $(drive), it's a placeholder and will
    * be replaced by the name of the drive/device in question
    */
-  message = N_("Authentication is required to format $(udisks2.device)");
+  message = N_("Authentication is required to format $(drive)");
   action_id = "org.freedesktop.udisks2.modify-device";
   if (udisks_block_get_hint_system (block))
     {
@@ -2104,6 +2104,7 @@ handle_format (UDisksBlock           *block,
    * trigger an event here
    */
   udisks_linux_block_object_trigger_uevent (UDISKS_LINUX_BLOCK_OBJECT (object_to_mkfs));
+  wait_data->object = object_to_mkfs;
   if (udisks_daemon_wait_for_object_sync (daemon,
                                           wait_for_filesystem,
                                           wait_data,
@@ -2243,10 +2244,10 @@ handle_open_for_backup (UDisksBlock           *block,
                                                     /* Translators: Shown in authentication dialog when creating a
                                                      * disk image file.
                                                      *
-                                                     * Do not translate $(udisks2.device), it's a placeholder and will
+                                                     * Do not translate $(drive), it's a placeholder and will
                                                      * be replaced by the name of the drive/device in question
                                                      */
-                                                    N_("Authentication is required to open $(udisks2.device) for reading"),
+                                                    N_("Authentication is required to open $(drive) for reading"),
                                                     invocation))
     goto out;
 
@@ -2307,10 +2308,10 @@ handle_open_for_restore (UDisksBlock           *block,
                                                     /* Translators: Shown in authentication dialog when restoring
                                                      * from a disk image file.
                                                      *
-                                                     * Do not translate $(udisks2.device), it's a placeholder and will
+                                                     * Do not translate $(drive), it's a placeholder and will
                                                      * be replaced by the name of the drive/device in question
                                                      */
-                                                    N_("Authentication is required to open $(udisks2.device) for writing"),
+                                                    N_("Authentication is required to open $(drive) for writing"),
                                                     invocation))
     goto out;
 

@@ -64,6 +64,10 @@
                                                          <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#guint"><span class="type">guint</span></a> secs_since_last</code></em>,
                                                          <em class="parameter"><code><a href="http://library.gnome.org/devel/gio/unstable/GCancellable.html"><span class="type">GCancellable</span></a> *cancellable</code></em>,
                                                          <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Error-Reporting.html#GError"><span class="type">GError</span></a> **error</code></em>);
+<a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>            <a class="link" href="UDisksLinuxDriveObject.html#udisks-linux-drive-object-is-not-in-use" title="udisks_linux_drive_object_is_not_in_use ()">udisks_linux_drive_object_is_not_in_use</a>
+                                                        (<em class="parameter"><code><a class="link" href="UDisksLinuxDriveObject.html" title="UDisksLinuxDriveObject"><span class="type">UDisksLinuxDriveObject</span></a> *object</code></em>,
+                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/gio/unstable/GCancellable.html"><span class="type">GCancellable</span></a> *cancellable</code></em>,
+                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Error-Reporting.html#GError"><span class="type">GError</span></a> **error</code></em>);
 </pre>
 </div>
 <div class="refsect1">
@@ -307,6 +311,41 @@ they have been cancelled.
 <td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
 <td>
 <a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#TRUE:CAPS"><code class="literal">TRUE</code></a> if the operation succeeded, <a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#FALSE:CAPS"><code class="literal">FALSE</code></a> if <em class="parameter"><code>error</code></em> is set.</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="udisks-linux-drive-object-is-not-in-use"></a><h3>udisks_linux_drive_object_is_not_in_use ()</h3>
+<pre class="programlisting"><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>            udisks_linux_drive_object_is_not_in_use
+                                                        (<em class="parameter"><code><a class="link" href="UDisksLinuxDriveObject.html" title="UDisksLinuxDriveObject"><span class="type">UDisksLinuxDriveObject</span></a> *object</code></em>,
+                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/gio/unstable/GCancellable.html"><span class="type">GCancellable</span></a> *cancellable</code></em>,
+                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Error-Reporting.html#GError"><span class="type">GError</span></a> **error</code></em>);</pre>
+<p>
+Checks if the drive represented by <em class="parameter"><code>object</code></em> is in use and sets
+<em class="parameter"><code>error</code></em> if so.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>object</code></em> :</span></p></td>
+<td>A <a class="link" href="UDisksLinuxDriveObject.html" title="UDisksLinuxDriveObject"><span class="type">UDisksLinuxDriveObject</span></a>.</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>cancellable</code></em> :</span></p></td>
+<td>A <a href="http://library.gnome.org/devel/gio/unstable/GCancellable.html"><span class="type">GCancellable</span></a> or <a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a>. <span class="annotation">[<a href="http://foldoc.org/allow-none"><span class="acronym">allow-none</span></a>]</span>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>error</code></em> :</span></p></td>
+<td>A <a href="http://library.gnome.org/devel/glib/unstable/glib-Error-Reporting.html#GError"><span class="type">GError</span></a> or <a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a>.</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td>
+<a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#TRUE:CAPS"><code class="literal">TRUE</code></a> if <em class="parameter"><code>object</code></em> is not is use, <a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#FALSE:CAPS"><code class="literal">FALSE</code></a> if <em class="parameter"><code>error</code></em> is set.</td>
 </tr>
 </tbody>
 </table></div>

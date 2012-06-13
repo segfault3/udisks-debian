@@ -135,10 +135,8 @@
           calling user to be sufficiently authorized. Whether the user
           is authorized is checked using <ulink
           url="http://www.freedesktop.org/software/polkit/docs/latest/polkit.8.html">polkit</ulink>
-          and the administrator can configure <ulink
-          url="http://www.freedesktop.org/software/polkit/docs/latest/pklocalauthority.8.html">polkit's
-          local authority</ulink> (but note that the system may be
-          using another polkit authority implementation).
+          allowing the administrator to configure fine-grained permissions via
+          polkit authorization rules.
         </para>
         <para>
           There is not necessarily a one-to-one relationship between
@@ -174,8 +172,112 @@
           The polkit actions are not considered stable and may change
           from release to release so administrators should take notice
           when upgrading from one version of udisks to another. For
-          example, <filename>.pkla</filename> files may need to be
-          updated to match an updated policy.
+          example, polkit authorization rules may need to be updated
+          to match an updated policy.
+        </para>
+        <para>
+          See <xref linkend="udisks-polkit-details"/> for the
+          variables that can be used to assist in determining if the
+          caller is authorized (note that each variable may not be set
+          for request). For example, a polkit authorization rule for
+          any of the
+          <emphasis>org.freedesktop.udisks2.filesystem-mount*</emphasis>
+          actions can use the <parameter>device</parameter> variable
+          to determine if the caller is authorized to mount a specific
+          block device.
+        </para>
+
+        <table frame="all" id="udisks-polkit-details">
+          <title>Known polkit variables</title>
+          <tgroup cols="2" align="left" colsep="1" rowsep="1">
+            <thead>
+              <row>
+                <entry>key</entry>
+                <entry>value</entry>
+              </row>
+            </thead>
+            <tbody>
+              <row>
+                <entry><parameter>device</parameter></entry>
+                <entry>If the object is a block device, this property is set to the value of the <link linkend="gdbus-property-org-freedesktop-UDisks2-Block.PreferredDevice">Block:PreferredDevice</link> property. If set, this is guaranteed to be a device file, for example <quote>/dev/vg_lucifer/lv_root</quote> or <quote>/dev/sda1</quote>. If the object is not a block device, this is not set.</entry>
+              </row>
+              <row>
+                <entry><parameter>drive</parameter></entry>
+                <entry>Like the <parameter>device</parameter> variable, but if the object is also a drive, this variable includes Vital Product Data about the drive such as the vendor and model identifiers (if available), for example <quote>INTEL SSDSA2MH080G1GC (/dev/sda1)</quote>. Otherwise is just set to the same value as <parameter>device</parameter>. If the object is not a block device, this is not set (it is however set if the object is a block device but not a drive).</entry>
+              </row>
+
+              <row>
+                <entry><parameter>drive.wwn</parameter></entry>
+                <entry>If the object is a drive (or a block device that is part of a drive), this is set to the value of the <link linkend="gdbus-property-org-freedesktop-UDisks2-Drive.WWN">Drive:WWN</link> property.</entry>
+              </row>
+              <row>
+                <entry><parameter>drive.serial</parameter></entry>
+                <entry>If the object is a drive (or a block device that is part of a drive), this is set to the value of the <link linkend="gdbus-property-org-freedesktop-UDisks2-Drive.Serial">Drive:Serial</link> property.</entry>
+              </row>
+              <row>
+                <entry><parameter>drive.vendor</parameter></entry>
+                <entry>If the object is a drive (or a block device that is part of a drive), this is set to the value of the <link linkend="gdbus-property-org-freedesktop-UDisks2-Drive.Vendor">Drive:Vendor</link> property.</entry>
+              </row>
+              <row>
+                <entry><parameter>drive.model</parameter></entry>
+                <entry>If the object is a drive (or a block device that is part of a drive), this is set to the value of the <link linkend="gdbus-property-org-freedesktop-UDisks2-Drive.Model">Drive:Model</link> property.</entry>
+              </row>
+              <row>
+                <entry><parameter>drive.revision</parameter></entry>
+                <entry>If the object is a drive (or a block device that is part of a drive), this is set to the value of the <link linkend="gdbus-property-org-freedesktop-UDisks2-Drive.Revision">Drive:Revision</link> property.</entry>
+              </row>
+              <row>
+                <entry><parameter>drive.removable</parameter></entry>
+                <entry>If the object is a drive (or a block device that is part of a drive), this is set to the string <quote>true</quote> only if the value of the <link linkend="gdbus-property-org-freedesktop-UDisks2-Drive.Removable">Drive:Removable</link> property is <constant>TRUE</constant>.</entry>
+              </row>
+
+              <row>
+                <entry><parameter>id.type</parameter></entry>
+                <entry>If the object is a block device, this property is set to the value of the <link linkend="gdbus-property-org-freedesktop-UDisks2-Block.IdType">Block:IdType</link> property.</entry>
+              </row>
+              <row>
+                <entry><parameter>id.usage</parameter></entry>
+                <entry>If the object is a block device, this property is set to the value of the <link linkend="gdbus-property-org-freedesktop-UDisks2-Block.IdUsage">Block:IdUsage</link> property.</entry>
+              </row>
+              <row>
+                <entry><parameter>id.version</parameter></entry>
+                <entry>If the object is a block device, this property is set to the value of the <link linkend="gdbus-property-org-freedesktop-UDisks2-Block.IdVersion">Block:IdVersion</link> property.</entry>
+              </row>
+              <row>
+                <entry><parameter>id.label</parameter></entry>
+                <entry>If the object is a block device, this property is set to the value of the <link linkend="gdbus-property-org-freedesktop-UDisks2-Block.IdLabel">Block:IdLabel</link> property.</entry>
+              </row>
+              <row>
+                <entry><parameter>id.uuid</parameter></entry>
+                <entry>If the object is a block device, this property is set to the value of the <link linkend="gdbus-property-org-freedesktop-UDisks2-Block.IdUUID">Block:IdUUID</link> property.</entry>
+              </row>
+
+              <row>
+                <entry><parameter>partition.number</parameter></entry>
+                <entry>If the object is a partition, this property is set to the value of the <link linkend="gdbus-property-org-freedesktop-UDisks2-Partition.Number">Partition:Number</link> property.</entry>
+              </row>
+              <row>
+                <entry><parameter>partition.type</parameter></entry>
+                <entry>If the object is a partition, this property is set to the value of the <link linkend="gdbus-property-org-freedesktop-UDisks2-Partition.Type">Partition:Type</link> property.</entry>
+              </row>
+              <row>
+                <entry><parameter>partition.flags</parameter></entry>
+                <entry>If the object is a partition, this property is set to the value of the <link linkend="gdbus-property-org-freedesktop-UDisks2-Partition.Flags">Partition:Flags</link> property.</entry>
+              </row>
+              <row>
+                <entry><parameter>partition.name</parameter></entry>
+                <entry>If the object is a partition, this property is set to the value of the <link linkend="gdbus-property-org-freedesktop-UDisks2-Partition.Name">Partition:Name</link> property.</entry>
+              </row>
+              <row>
+                <entry><parameter>partition.uuid</parameter></entry>
+                <entry>If the object is a partition, this property is set to the value of the <link linkend="gdbus-property-org-freedesktop-UDisks2-Partition.UUID">Partition:UUID</link> property.</entry>
+              </row>
+
+            </tbody>
+          </tgroup>
+        </table>
+
+        <para>
           For reference, the polkit actions defined by udisks &version;
           are included here:
           <informalexample id="udisks-polkit-actions-file"><programlisting><xi:include xmlns:xi="http://www.w3.org/2001/XInclude" parse="text" href="../data/org.freedesktop.udisks2.policy.in"><xi:fallback>FIXME: MISSING XINCLUDE CONTENT</xi:fallback></xi:include></programlisting></informalexample>

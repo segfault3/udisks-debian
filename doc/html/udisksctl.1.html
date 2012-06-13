@@ -35,12 +35,15 @@
 <div class="cmdsynopsis"><p><code class="command">udisksctl</code>   unmount   { --object-path <em class="replaceable"><code>OBJECT</code></em>  |   --block-device <em class="replaceable"><code>DEVICE</code></em> } [--force] [--no-user-interaction]</p></div>
 <div class="cmdsynopsis"><p><code class="command">udisksctl</code>   unlock   { --object-path <em class="replaceable"><code>OBJECT</code></em>  |   --block-device <em class="replaceable"><code>DEVICE</code></em> } [--no-user-interaction]</p></div>
 <div class="cmdsynopsis"><p><code class="command">udisksctl</code>   lock   { --object-path <em class="replaceable"><code>OBJECT</code></em>  |   --block-device <em class="replaceable"><code>DEVICE</code></em> } [--no-user-interaction]</p></div>
+<div class="cmdsynopsis"><p><code class="command">udisksctl</code>   loop-setup    --file <em class="replaceable"><code>PATH</code></em>  [--read-only] [--offset <em class="replaceable"><code>OFFSET</code></em>] [--size <em class="replaceable"><code>SIZE</code></em>] [--no-user-interaction]</p></div>
+<div class="cmdsynopsis"><p><code class="command">udisksctl</code>   loop-delete   { --object-path <em class="replaceable"><code>OBJECT</code></em>  |   --block-device <em class="replaceable"><code>DEVICE</code></em> } [--no-user-interaction]</p></div>
+<div class="cmdsynopsis"><p><code class="command">udisksctl</code>   smart-simulate    --file <em class="replaceable"><code>PATH</code></em>  { --object-path <em class="replaceable"><code>OBJECT</code></em>  |   --block-device <em class="replaceable"><code>DEVICE</code></em> } [--no-user-interaction]</p></div>
 <div class="cmdsynopsis"><p><code class="command">udisksctl</code>   monitor </p></div>
 <div class="cmdsynopsis"><p><code class="command">udisksctl</code>   dump </p></div>
 <div class="cmdsynopsis"><p><code class="command">udisksctl</code>   help </p></div>
 </div>
 <div class="refsect1">
-<a name="id585447"></a><h2>DESCRIPTION</h2>
+<a name="id516374"></a><h2>DESCRIPTION</h2>
 <p>
       <span class="command"><strong>udisksctl</strong></span> is a command-line program used
       to interact with the
@@ -49,7 +52,7 @@
     </p>
 </div>
 <div class="refsect1">
-<a name="id585467"></a><h2>COMMANDS</h2>
+<a name="id516392"></a><h2>COMMANDS</h2>
 <div class="variablelist"><table border="0">
 <col align="left" valign="top">
 <tbody>
@@ -77,11 +80,10 @@
 <tr>
 <td><p><span class="term"><code class="option">unmount</code></span></p></td>
 <td><p>
-            Unmounts a device previously mounted by
-            <span class="citerefentry"><span class="refentrytitle">udisksd</span>(8)</span>.
-            The option <code class="option">--force</code> can be used to request
-            that the device is unmounted even if active references
-            exists.
+            Unmounts a device. This only works if the device is
+            mounted. The option <code class="option">--force</code> can be used
+            to request that the device is unmounted even if active
+            references exists.
           </p></td>
 </tr>
 <tr>
@@ -96,8 +98,31 @@
 <tr>
 <td><p><span class="term"><code class="option">lock</code></span></p></td>
 <td><p>
-            Locks a device previously unlocked by
-            <span class="citerefentry"><span class="refentrytitle">udisksd</span>(8)</span>.
+            Locks a device. This only works if the device is a
+            cleartext device backed by a cryptotext device.
+          </p></td>
+</tr>
+<tr>
+<td><p><span class="term"><code class="option">loop-setup</code></span></p></td>
+<td><p>
+            Sets up a loop device backed by <em class="replaceable"><code>FILE</code></em>.
+          </p></td>
+</tr>
+<tr>
+<td><p><span class="term"><code class="option">loop-delete</code></span></p></td>
+<td><p>
+            Tears down a loop device.
+          </p></td>
+</tr>
+<tr>
+<td><p><span class="term"><code class="option">smart-simulate</code></span></p></td>
+<td><p>
+            Sets SMART data from the libatasmart blob given by
+            <em class="replaceable"><code>FILE</code></em> - see
+            <code class="filename">/usr/share/doc/libatasmart-devel-VERSION/</code>
+            for blobs shipped with libatasmart. This is a debugging
+            feature used to check that applications act correctly when
+            a disk is failing.
           </p></td>
 </tr>
 <tr>
@@ -122,7 +147,7 @@
 </table></div>
 </div>
 <div class="refsect1">
-<a name="id586092"></a><h2>COMMON OPTIONS</h2>
+<a name="id516582"></a><h2>COMMON OPTIONS</h2>
 <p>
       The option <code class="option">--no-user-interaction</code> can be used
       to request that no interaction (such as the user being
@@ -134,7 +159,7 @@
     </p>
 </div>
 <div class="refsect1">
-<a name="id586113"></a><h2>AUDIENCE</h2>
+<a name="id516602"></a><h2>AUDIENCE</h2>
 <p>
       This program does not assume that the caller is the super user -
       it is intended to be used by unprivileged users and
@@ -149,21 +174,21 @@
     </p>
 </div>
 <div class="refsect1">
-<a name="id586144"></a><h2>BASH COMPLETION</h2>
+<a name="id516633"></a><h2>BASH COMPLETION</h2>
 <p>
       <span class="command"><strong>udisksctl</strong></span> ships with a bash completion script to
       complete commands, objects, block devices and some options.
     </p>
 </div>
 <div class="refsect1">
-<a name="id586157"></a><h2>AUTHOR</h2>
+<a name="id516646"></a><h2>AUTHOR</h2>
 <p>
       Written by David Zeuthen <code class="email">&lt;<a class="email" href="mailto:zeuthen@gmail.com">zeuthen@gmail.com</a>&gt;</code> with
       a lot of help from many others.
     </p>
 </div>
 <div class="refsect1">
-<a name="id586168"></a><h2>BUGS</h2>
+<a name="id516658"></a><h2>BUGS</h2>
 <p>
       Please send bug reports to either the distribution bug tracker
       or the upstream bug tracker at
@@ -171,7 +196,7 @@
     </p>
 </div>
 <div class="refsect1">
-<a name="id586184"></a><h2>SEE ALSO</h2>
+<a name="id516673"></a><h2>SEE ALSO</h2>
 <p>
       <a href="udisks.8.html"><span class="citerefentry"><span class="refentrytitle">udisks</span>(8)</span></a>,
       <a href="udisksd.8.html"><span class="citerefentry"><span class="refentrytitle">udisksd</span>(8)</span></a>,
