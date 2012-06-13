@@ -1,0 +1,4 @@
+Tests: upstream-system
+Depends: udisks2, python3, python3-gi, gir1.2-glib-2.0, gir1.2-udisks-2.0, reiserfsprogs, xfsprogs, ntfs-3g, mtools, lvm2, mdadm, cryptsetup-bin, kpartx, libatasmart-bin, policykit-1
+Restrictions: needs-root 
+Features: no-build-needed
