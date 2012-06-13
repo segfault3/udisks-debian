@@ -1,5 +1,6 @@
-udisks2 (1.97.0-3) UNRELEASED; urgency=low
+udisks2 (1.98.0-1) UNRELEASED; urgency=low
 
+  * New upstream release.
   * debian/control: Drop ntfsprogs Recommends. It is a transitional package
     for ntfs-3g now, which we already recommend.
 
