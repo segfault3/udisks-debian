@@ -26,6 +26,6 @@ def add_info(report):
 if __name__ == '__main__':
     r = {}
     add_info(r)
-    for k, v in r.iteritems():
-        print '%s: "%s"' % (k, v)
+    for k, v in r.items():
+        print('%s: "%s"' % (k, v))
 

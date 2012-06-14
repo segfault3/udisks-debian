@@ -1,3 +1,9 @@
+udisks2 (1.98.0-2) UNRELEASED; urgency=low
+
+  * debian/local/apport-hook.py: Fix syntax to also work with Python 3.
+
+ -- Martin Pitt <mpitt@debian.org>  Thu, 14 Jun 2012 17:05:26 +0200
+
 udisks2 (1.98.0-1) experimental; urgency=low
 
   * New upstream release.
