@@ -21,6 +21,7 @@ Standards-Version: 3.9.3
 Vcs-Git: git://git.debian.org/git/pkg-utopia/udisks2.git
 Vcs-Browser: http://git.debian.org/?p=pkg-utopia/udisks2.git;a=summary
 Homepage: http://www.freedesktop.org/wiki/Software/udisks
+XS-Testsuite: autopkgtest
 
 Package: udisks2
 Architecture: any
