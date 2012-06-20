@@ -1,3 +1,9 @@
+udisks2 (1.98.0-3) UNRELEASED; urgency=low
+
+  * debian/tests/control: Simplify Depends: line using "@".
+
+ -- Martin Pitt <mpitt@debian.org>  Wed, 20 Jun 2012 11:50:01 +0200
+
 udisks2 (1.98.0-2) experimental; urgency=low
 
   * debian/local/apport-hook.py: Fix syntax to also work with Python 3.
