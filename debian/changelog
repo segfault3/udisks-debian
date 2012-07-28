@@ -3,6 +3,8 @@ udisks2 (1.99.0-1) UNRELEASED; urgency=low
   * New upstream release (LP: #1030268)
     - Support Realtek rts5229 SD/MMC card readers. (LP: #1022497)
   * Drop 00git_no_polkit_fallback.patch, upstream now.
+  * Drop debian/local/integration-test, shipped in upstream tarball now.
+  * debian/tests/upstream-system: Run test suite from upstream source.
   * debian/tests/control: Simplify Depends: line using "@".
   * debian/tests/control: Drop undefined "no-build-needed" feature.
 

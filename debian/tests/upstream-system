@@ -3,4 +3,4 @@ set -e
 
 # succeeding test must not write anything to stderr, as per DEP-8
 mkdir -p /var/run/udisks2
-debian/local/integration-test 2>&1
+src/tests/integration-test 2>&1
