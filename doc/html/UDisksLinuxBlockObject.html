@@ -55,6 +55,8 @@
                                                         (<em class="parameter"><code><a class="link" href="UDisksLinuxBlockObject.html" title="UDisksLinuxBlockObject"><span class="type">UDisksLinuxBlockObject</span></a> *object</code></em>);
 <span class="returnvalue">void</span>                <a class="link" href="UDisksLinuxBlockObject.html#udisks-linux-block-object-trigger-uevent" title="udisks_linux_block_object_trigger_uevent ()">udisks_linux_block_object_trigger_uevent</a>
                                                         (<em class="parameter"><code><a class="link" href="UDisksLinuxBlockObject.html" title="UDisksLinuxBlockObject"><span class="type">UDisksLinuxBlockObject</span></a> *object</code></em>);
+<span class="returnvalue">void</span>                <a class="link" href="UDisksLinuxBlockObject.html#udisks-linux-block-object-reread-partition-table" title="udisks_linux_block_object_reread_partition_table ()">udisks_linux_block_object_reread_partition_table</a>
+                                                        (<em class="parameter"><code><a class="link" href="UDisksLinuxBlockObject.html" title="UDisksLinuxBlockObject"><span class="type">UDisksLinuxBlockObject</span></a> *object</code></em>);
 </pre>
 </div>
 <div class="refsect1">
@@ -206,10 +208,29 @@ Triggers a 'change' uevent in the kernel.
 <p>
 The triggered event will bubble up from the kernel through the udev
 stack and will eventually be received by the udisks daemon process
-itself.
+itself. This method does not wait for the event to be received.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody><tr>
+<td><p><span class="term"><em class="parameter"><code>object</code></em> :</span></p></td>
+<td>A <a class="link" href="UDisksLinuxBlockObject.html" title="UDisksLinuxBlockObject"><span class="type">UDisksLinuxBlockObject</span></a>.</td>
+</tr></tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="udisks-linux-block-object-reread-partition-table"></a><h3>udisks_linux_block_object_reread_partition_table ()</h3>
+<pre class="programlisting"><span class="returnvalue">void</span>                udisks_linux_block_object_reread_partition_table
+                                                        (<em class="parameter"><code><a class="link" href="UDisksLinuxBlockObject.html" title="UDisksLinuxBlockObject"><span class="type">UDisksLinuxBlockObject</span></a> *object</code></em>);</pre>
+<p>
+Requests the kernel to re-read the partition table for <em class="parameter"><code>object</code></em>.
 </p>
 <p>
-This method does not wait for the event to be received.
+The events from any change this may cause will bubble up from the
+kernel through the udev stack and will eventually be received by
+the udisks daemon process itself. This method does not wait for the
+event to be received.
 </p>
 <div class="variablelist"><table border="0">
 <col align="left" valign="top">

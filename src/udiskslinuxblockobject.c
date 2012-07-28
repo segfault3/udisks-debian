@@ -30,6 +30,9 @@
 #include <grp.h>
 #include <mntent.h>
 
+#include <sys/ioctl.h>
+#include <linux/fs.h>
+
 #include <string.h>
 #include <stdlib.h>
 #include <glib/gstdio.h>
@@ -143,12 +146,12 @@ udisks_linux_block_object_finalize (GObject *_object)
 }
 
 static void
-udisks_linux_block_object_get_property (GObject    *_object,
+udisks_linux_block_object_get_property (GObject    *__object,
                                         guint       prop_id,
                                         GValue     *value,
                                         GParamSpec *pspec)
 {
-  UDisksLinuxBlockObject *object = UDISKS_LINUX_BLOCK_OBJECT (_object);
+  UDisksLinuxBlockObject *object = UDISKS_LINUX_BLOCK_OBJECT (__object);
 
   switch (prop_id)
     {
@@ -161,18 +164,18 @@ udisks_linux_block_object_get_property (GObject    *_object,
       break;
 
     default:
-      G_OBJECT_WARN_INVALID_PROPERTY_ID (_object, prop_id, pspec);
+      G_OBJECT_WARN_INVALID_PROPERTY_ID (object, prop_id, pspec);
       break;
     }
 }
 
 static void
-udisks_linux_block_object_set_property (GObject      *_object,
+udisks_linux_block_object_set_property (GObject      *__object,
                                         guint         prop_id,
                                         const GValue *value,
                                         GParamSpec   *pspec)
 {
-  UDisksLinuxBlockObject *object = UDISKS_LINUX_BLOCK_OBJECT (_object);
+  UDisksLinuxBlockObject *object = UDISKS_LINUX_BLOCK_OBJECT (__object);
 
   switch (prop_id)
     {
@@ -188,7 +191,7 @@ udisks_linux_block_object_set_property (GObject      *_object,
       break;
 
     default:
-      G_OBJECT_WARN_INVALID_PROPERTY_ID (_object, prop_id, pspec);
+      G_OBJECT_WARN_INVALID_PROPERTY_ID (object, prop_id, pspec);
       break;
     }
 }
@@ -785,9 +788,7 @@ on_mount_monitor_mount_removed (UDisksMountMonitor  *monitor,
  *
  * The triggered event will bubble up from the kernel through the udev
  * stack and will eventually be received by the udisks daemon process
- * itself.
- *
- * This method does not wait for the event to be received.
+ * itself. This method does not wait for the event to be received.
  */
 void
 udisks_linux_block_object_trigger_uevent (UDisksLinuxBlockObject *object)
@@ -820,3 +821,38 @@ udisks_linux_block_object_trigger_uevent (UDisksLinuxBlockObject *object)
 }
 
 /* ---------------------------------------------------------------------------------------------------- */
+
+/**
+ * udisks_linux_block_object_reread_partition_table:
+ * @object: A #UDisksLinuxBlockObject.
+ *
+ * Requests the kernel to re-read the partition table for @object.
+ *
+ * The events from any change this may cause will bubble up from the
+ * kernel through the udev stack and will eventually be received by
+ * the udisks daemon process itself. This method does not wait for the
+ * event to be received.
+ */
+void
+udisks_linux_block_object_reread_partition_table (UDisksLinuxBlockObject *object)
+{
+  const gchar *device_file;
+  gint fd;
+
+  g_return_if_fail (UDISKS_IS_LINUX_BLOCK_OBJECT (object));
+
+  device_file = g_udev_device_get_device_file (object->device);
+  fd = open (device_file, O_RDONLY);
+  if (fd == -1)
+    {
+      udisks_warning ("Error opening %s: %m", device_file);
+    }
+  else
+    {
+      if (ioctl (fd, BLKRRPART) != 0)
+        {
+          udisks_warning ("Error issuing BLKRRPART to %s: %m", device_file);
+        }
+      close (fd);
+    }
+}

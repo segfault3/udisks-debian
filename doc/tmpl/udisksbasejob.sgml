@@ -28,7 +28,17 @@ UDisksBaseJob
 </para>
 
 
+<!-- ##### ARG UDisksBaseJob:auto-estimate ##### -->
+<para>
+
+</para>
+
 <!-- ##### ARG UDisksBaseJob:cancellable ##### -->
+<para>
+
+</para>
+
+<!-- ##### ARG UDisksBaseJob:daemon ##### -->
 <para>
 
 </para>
@@ -39,6 +49,42 @@ UDisksBaseJob
 </para>
 
 @parent_class: 
+
+<!-- ##### FUNCTION udisks_base_job_get_daemon ##### -->
+<para>
+
+</para>
+
+@job: 
+@Returns: 
+
+
+<!-- ##### FUNCTION udisks_base_job_get_cancellable ##### -->
+<para>
+
+</para>
+
+@job: 
+@Returns: 
+
+
+<!-- ##### FUNCTION udisks_base_job_get_auto_estimate ##### -->
+<para>
+
+</para>
+
+@job: 
+@Returns: 
+
+
+<!-- ##### FUNCTION udisks_base_job_set_auto_estimate ##### -->
+<para>
+
+</para>
+
+@job: 
+@value: 
+
 
 <!-- ##### FUNCTION udisks_base_job_add_object ##### -->
 <para>
@@ -56,14 +102,5 @@ UDisksBaseJob
 
 @job: 
 @object: 
-
-
-<!-- ##### FUNCTION udisks_base_job_get_cancellable ##### -->
-<para>
-
-</para>
-
-@job: 
-@Returns: 
 
 

@@ -83,6 +83,58 @@
     -->
     <property name="WWN" type="s" access="read"/>
 
+    <!-- Id:
+         A unique and persistent identifier for the device or blank if
+         no such identifier is available.
+
+         This identifier is guaranteed to not include the slash
+         character '/' (U+002F SOLIDUS) which means it can be used as
+         a filename.
+
+         Examples:
+         <quote>ST32000542AS-6XW00W51</quote>,
+         <quote>HITACHI-HTS723232A7A364-E3834563KRG2HN</quote>,
+         <quote>INTEL-SSDSA2MH080G1GC-CVEM842101HD080DGN</quote>.
+    -->
+    <property name="Id" type="s" access="read"/>
+
+    <!-- Configuration:
+         A set of configuration directives that are applied to the
+         drive when it is connected (e.g. at start-up, hotplug or
+         resume).
+
+         This is an dict of items with the following known keys:
+         <variablelist>
+           <varlistentry>
+             <term>ata-pm-standby (type <literal>'i'</literal>)</term>
+             <listitem><para>
+               The spindown timeout for ATA drives (See ATA command <quote>STANDBY</quote>).
+             </para></listitem>
+           </varlistentry>
+           <varlistentry>
+             <term>ata-apm-level (type <literal>'i'</literal>)</term>
+             <listitem><para>
+               The APM level for ATA drives (See ATA command <quote>SET FEATURES</quote>, sub-commands 0x05 and 0x85).
+             </para></listitem>
+           </varlistentry>
+           <varlistentry>
+             <term>ata-aam-level (type <literal>'i'</literal>)</term>
+             <listitem><para>
+               The AAM level for ATA drives (See ATA command <quote>SET FEATURES</quote>, sub-commands 0x42 and 0xc2).
+             </para></listitem>
+           </varlistentry>
+         </variablelist>
+         The contents of this property is read from the configuration
+         file <filename>/etc/udisks2/IDENTIFIER.conf</filename>
+         where <emphasis>IDENTIFIER</emphasis> is the value of the
+         #org.freedesktop.UDisks2.Drive:Id property. See <xref
+         linkend="udisks.8"/> for the file format of this file.
+
+         Use the org.freedesktop.UDisks2.Drive.SetConfiguration()
+         method to change the value of this property.
+    -->
+    <property name="Configuration" type="a{sv}" access="read"/>
+
     <!-- Media: The kind of media currently in the drive or blank if unknown.
          See the #org.freedesktop.UDisks2.Drive:MediaCompatibility property for known values.
     -->
@@ -276,6 +328,25 @@
     <method name="Eject">
       <arg name="options" direction="in" type="a{sv}"/>
     </method>
+
+    <!--
+        SetConfiguration:
+        @value: The configuration value to set.
+        @options: Options (currently unused except for <link linkend="udisks-std-options">standard options</link>).
+
+        Sets the configuration for the drive. This will store the
+        configuration in the file-system and also apply it to the
+        drive.
+
+        See the #org.freedesktop.UDisks2.Drive:Configuration property
+        for details about valid values and the location of the
+        configuration file that @value will be written to.
+    -->
+    <method name="SetConfiguration">
+      <arg name="value" direction="in" type="a{sv}"/>
+      <arg name="options" direction="in" type="a{sv}"/>
+    </method>
+
   </interface>
 
   <!--
@@ -451,6 +522,125 @@
     <method name="SmartSelftestAbort">
       <arg name="options" direction="in" type="a{sv}"/>
     </method>
+
+    <!-- PmSupported: Whether the drive supports power management. -->
+    <property name="PmSupported" type="b" access="read"/>
+
+    <!-- PmEnabled: Whether power management is enabled. -->
+    <property name="PmEnabled" type="b" access="read"/>
+
+    <!-- ApmSupported: Whether the drive supports Advanced Power Management (APM). -->
+    <property name="ApmSupported" type="b" access="read"/>
+
+    <!-- ApmEnabled: Whether Advanced Power Management (APM) is enabled. -->
+    <property name="ApmEnabled" type="b" access="read"/>
+
+    <!-- AamSupported: Whether the drive supports Automatic Acoustic Management (AAM). -->
+    <property name="AamSupported" type="b" access="read"/>
+
+    <!-- AamEnabled: Whether Automatic Acoustic Management (AAM) is enabled. -->
+    <property name="AamEnabled" type="b" access="read"/>
+
+    <!-- AamVendorRecommendedValue: The vendor-recommended AAM value (or 0 if AAM is not supported). -->
+    <property name="AamVendorRecommendedValue" type="i" access="read"/>
+
+    <!--
+        PmGetState:
+        @options: Options (currently unused except for <link linkend="udisks-std-options">standard options</link>).
+        @state: The current power state.
+
+        Get the current power mode status. This is implemented as a
+        method call as it involves sending a command from the host to
+        the drive and no change notification is available.
+
+        The format of @state is the result obtained from sending the
+        ATA command <quote>CHECK POWER MODE</quote> to the drive.
+        Known values include
+        <variablelist>
+        <varlistentry><term>0x00</term><listitem><para>Standby</para></listitem></varlistentry>
+        <varlistentry><term>0x80</term><listitem><para>Idle</para></listitem></varlistentry>
+        <varlistentry><term>0xff</term><listitem><para>Active/Idle</para></listitem></varlistentry>
+        </variablelist>
+        Typically user interfaces will report "Drive is spun down" if @state is
+        0x00 and "Drive is spun up" otherwise.
+    -->
+    <method name="PmGetState">
+      <arg name="options" direction="in" type="a{sv}"/>
+      <arg name="state" direction="out" type="y"/>
+    </method>
+
+    <!--
+        PmStandby:
+        @options: Options (currently unused except for <link linkend="udisks-std-options">standard options</link>).
+
+        Force the drive to immediately enter the low power consumption
+        <emphasis>standby</emphasis> mode, usually causing it to spin
+        down. This is done by sending the ATA command
+        <quote>STANDBY IMMEDIATE</quote> to the drive.
+    -->
+    <method name="PmStandby">
+      <arg name="options" direction="in" type="a{sv}"/>
+    </method>
+
+    <!--
+        PmWakeup:
+        @options: Options (currently unused except for <link linkend="udisks-std-options">standard options</link>).
+
+        Force the drive to immediately wake up (exiting the low power
+        consumption <emphasis>standby</emphasis> mode), usually
+        causing it to spin up. This is done by reading data from the
+        disk.
+    -->
+    <method name="PmWakeup">
+      <arg name="options" direction="in" type="a{sv}"/>
+    </method>
+
+    <!-- SecurityEraseUnitMinutes:
+         The estimated amount of minutes it takes to complete the
+         <quote>SECURITY ERASE UNIT</quote> command or 0 if this
+         command is not available.
+
+         If set to 510 it means that it takes at least 508 minutes to
+         complete the operation.
+    -->
+    <property name="SecurityEraseUnitMinutes" type="i" access="read"/>
+
+    <!-- SecurityEnhancedEraseUnitMinutes:
+         The estimated amount of minutes it takes to complete the
+         <quote>SECURITY ERASE UNIT</quote> command with enhanced mode
+         specified or 0 if enhanced erase is not available.
+
+         If set to 510 it means that it takes at least 508 minutes to
+         complete the operation.
+    -->
+    <property name="SecurityEnhancedEraseUnitMinutes" type="i" access="read"/>
+
+    <!-- SecurityFrozen:
+         If set to %TRUE the unit is frozen.
+    -->
+    <property name="SecurityFrozen" type="b" access="read"/>
+
+    <!--
+        SecurityEraseUnit:
+        @options: Options - known options (in addition to <link linkend="udisks-std-options">standard options</link>) includes <parameter>enhanced</parameter> (of type 'b').
+
+        Does all the necessary checks and preparations and then sends
+        the <quote>SECURITY ERASE UNIT</quote> command to the
+        drive. If the option @enhanced is set to %TRUE an
+        <emphasis>enhanced secure erase</emphasis> is requested.
+
+        All data on the drive will be irrevocably erased.
+
+        This operation takes either
+        #org.freedesktop.UDisks2.Drive.Ata:SecurityEraseUnitMinutes or
+        #org.freedesktop.UDisks2.Drive.Ata:SecurityEnhancedEraseUnitMinutes
+        minutes to complete depending on whether the @enhanced option
+        is %TRUE.
+    -->
+    <method name="SecurityEraseUnit">
+      <arg name="options" direction="in" type="a{sv}"/>
+    </method>
+
 
   </interface>
 
@@ -804,7 +994,7 @@
     <!--
         Format:
         @type: The type of file system, partition table or other content to format the device with.
-        @options: Options - known options (in addition to <link linkend="udisks-std-options">standard options</link>) includes <parameter>label</parameter> (of type 's'), <parameter>take-ownership</parameter> (of type 'b') and <parameter>encrypt.passphrase</parameter> (of type 's').
+        @options: Options - known options (in addition to <link linkend="udisks-std-options">standard options</link>) includes <parameter>label</parameter> (of type 's'), <parameter>take-ownership</parameter> (of type 'b'), <parameter>encrypt.passphrase</parameter> (of type 's') and <parameter>erase</parameter> (of type 's').
 
         Formats the device with a file system, partition table or
         other well-known content.
@@ -833,6 +1023,13 @@
         given then a LUKS device is created with the given passphrase
         and the file system is created on the unlocked device. The
         unlocked device will be left open.
+
+        If the option <parameter>erase</parameter> is used then the
+        underlying device will be erased. Valid values include
+        <quote>zero</quote> to write zeroes over the entire device
+        before formatting, <quote>ata-secure-erase</quote> to perform
+        a secure erase or <quote>ata-secure-erase-enhanced</quote> to
+        perform an enhanced secure erase.
     -->
     <method name="Format">
       <arg name="type" direction="in" type="s"/>
@@ -867,6 +1064,45 @@
       <annotation name="org.gtk.GDBus.C.UnixFD" value="1"/>
       <arg name="options" direction="in" type="a{sv}"/>
       <arg name="fd" direction="out" type="h"/>
+    </method>
+
+    <!--
+        OpenForBenchmark:
+        @options: Options (currently unused except for <link linkend="udisks-std-options">standard options</link>).
+        @fd: An index for the returned file descriptor.
+
+        Gets a file descriptor for the device that is suitable to be
+        used for benchmarking the device (transfer rate, access time
+        etc.). Note that the file descriptor may be opened with the
+        <literal>O_DIRECT</literal> and <literal>O_SYNC</literal>
+        flags so care must be taken to only perform page-aligned I/O.
+
+        If the <parameter>writable</parameter> in @options is %TRUE
+        then the returned file descriptor will be writable. This only
+        works if the device is not already in use.
+    -->
+    <method name="OpenForBenchmark">
+      <annotation name="org.gtk.GDBus.C.UnixFD" value="1"/>
+      <arg name="options" direction="in" type="a{sv}"/>
+      <arg name="fd" direction="out" type="h"/>
+    </method>
+
+    <!--
+        Rescan:
+        @options: Options (currently unused except for <link linkend="udisks-std-options">standard options</link>).
+
+        Request that the kernel and core OS rescans the contents of
+        the device and update their state to reflect this (including
+        things such as the <filename>/dev/disk/</filename> hierarchy
+        of symlinks). This includes requesting that the kernel
+        re-reads the partition table, if appropriate.
+
+        This is usually not needed since the OS automatically does
+        this when the last process with a writable file descriptor for
+        the device closes it.
+    -->
+    <method name="Rescan">
+      <arg name="options" direction="in" type="a{sv}"/>
     </method>
 
   </interface>
@@ -1344,32 +1580,97 @@
       things, this can be used to draw a spinner in the user interface
       next to e.g. an icon for the drive or device in question.
 
-      A job <emphasis>may</emphasis> convey progress (if the
-      underlying tool used supports it), see the
-      #org.freedesktop.UDisks2.Job:ExpectedEndTime property.
+      The #org.freedesktop.UDisks2.Job:Operation property is used to
+      convey the type of job currently in progress.
+
+      The user id of the user who started the job is set in the
+      #org.freedesktop.UDisks2.Job:StartedByUID property.
+
+      A job <emphasis>may</emphasis> convey how much progress has been
+      made, see the #org.freedesktop.UDisks2.Job:Progress and
+      #org.freedesktop.UDisks2.Job:ProgressValid properties.
 
       When a job completes, the #org.freedesktop.UDisks2.Job::Completed signal
       is emitted.
 
-      To cancel a job use the org.freedesktop.UDisks2.Job.Cancel()
-      method. This will cause the job to complete (with @success set
-      to %FALSE) and the D-Bus method used to initiate the operation
-      to return, usually returning the <literal>org.freedesktop.UDisks2.Error.Cancelled</literal> error.
+      A job may or may not be cancelable, see the
+      #org.freedesktop.UDisks2.Job:Cancelable property. To cancel a
+      job use the org.freedesktop.UDisks2.Job.Cancel() method. This
+      will cause the job to complete (with @success set to %FALSE) and
+      the D-Bus method used to initiate the operation to return,
+      usually returning the
+      <literal>org.freedesktop.UDisks2.Error.Cancelled</literal>
+      error.
   -->
   <interface name="org.freedesktop.UDisks2.Job">
 
-    <!-- Progress: How much progress has been made. Values are in the range 0 to 1. -->
+    <!-- Operation:
+         The type of the operation that the job represents.
+
+         Known job operation types include:
+         <variablelist>
+           <varlistentry><term>ata-smart-selftest</term>
+             <listitem><para>SMART self-test operation.</para></listitem></varlistentry>
+           <varlistentry><term>drive-eject</term>
+             <listitem><para>Ejecting the medium from a drive.</para></listitem></varlistentry>
+           <varlistentry><term>encrypted-unlock</term>
+             <listitem><para>Unlocking encrypted device.</para></listitem></varlistentry>
+           <varlistentry><term>encrypted-lock</term>
+             <listitem><para>Locking encrypted device.</para></listitem></varlistentry>
+           <varlistentry><term>encrypted-modify</term>
+             <listitem><para>Modifying encrypted device.</para></listitem></varlistentry>
+           <varlistentry><term>swapspace-start</term>
+             <listitem><para>Starting swapspace.</para></listitem></varlistentry>
+           <varlistentry><term>swapspace-stop</term>
+             <listitem><para>Stopping swapspace.</para></listitem></varlistentry>
+           <varlistentry><term>filesystem-mount</term>
+             <listitem><para>Mounting a filesystem.</para></listitem></varlistentry>
+           <varlistentry><term>filesystem-unmount</term>
+             <listitem><para>Unmounting a filesystem.</para></listitem></varlistentry>
+           <varlistentry><term>filesystem-modify</term>
+             <listitem><para>Modifying a filesystem.</para></listitem></varlistentry>
+           <varlistentry><term>format-erase</term>
+             <listitem><para>Erasing a device.</para></listitem></varlistentry>
+           <varlistentry><term>format-mkfs</term>
+             <listitem><para>Creating a filesystem.</para></listitem></varlistentry>
+           <varlistentry><term>loop-setup</term>
+             <listitem><para>Setting up a loop device.</para></listitem></varlistentry>
+           <varlistentry><term>partition-modify</term>
+             <listitem><para>Modifying a partition.</para></listitem></varlistentry>
+           <varlistentry><term>partition-delete</term>
+             <listitem><para>Deleting a partition.</para></listitem></varlistentry>
+           <varlistentry><term>partition-create</term>
+             <listitem><para>Creating a partition.</para></listitem></varlistentry>
+           <varlistentry><term>cleanup</term>
+             <listitem><para>Cleaning up devices that were removed without being properly unmounted or shut down.</para></listitem></varlistentry>
+         </variablelist>
+         The
+         <link linkend="udisks-client-get-job-description">udisks_client_get_job_description()</link>
+         function can be used to get a localized human readable description.
+    -->
+    <property name="Operation" type="s" access="read"/>
+
+    <!-- Progress:
+         How much progress has been made. Values are in the range 0 to 1.
+
+         Do not use unless #org.freedesktop.UDisks2.Job:ProgressValid is %TRUE.
+    -->
     <property name="Progress" type="d" access="read"/>
+
+    <!-- ProgressValid: Set to %TRUE if the #org.freedesktop.UDisks2.Job:Progress is valid. -->
+    <property name="ProgressValid" type="b" access="read"/>
+
     <!-- StartTime:
 
-         The point in time (seconds since the <ulink
+         The point in time (micro-seconds since the <ulink
          url="http://en.wikipedia.org/wiki/Unix_epoch">Unix
          Epoch</ulink>) that the job was started.
     -->
     <property name="StartTime" type="t" access="read"/>
+
     <!-- ExpectedEndTime:
 
-         The expected point in time (seconds since the <ulink
+         The expected point in time (micro-seconds since the <ulink
          url="http://en.wikipedia.org/wiki/Unix_epoch">Unix
          Epoch</ulink>) that the job will complete or 0 if unknown.
     -->
@@ -1378,15 +1679,26 @@
     <!-- Objects: The objects that the job is related to, if any. -->
     <property name="Objects" type="ao" access="read"/>
 
+    <!-- StartedByUID:
+         The id of the user who started the job or 0 if started
+         by root or not through udisks.
+    -->
+    <property name="StartedByUID" type="u" access="read"/>
+
     <!--
         Cancel:
         @options: Options (currently unused except for <link linkend="udisks-std-options">standard options</link>).
 
-        Cancels the job.
+        Cancels the job. Fails with the
+        <literal>org.freedesktop.UDisks2.Error.Failed</literal> error
+        if #org.freedesktop.UDisks2.Job:Cancelable is %FALSE.
     -->
     <method name="Cancel">
       <arg name="options" direction="in" type="a{sv}"/>
     </method>
+
+    <!-- Cancelable: Whether the job can be canceled. -->
+    <property name="Cancelable" type="b" access="read"/>
 
     <!--
         Completed:

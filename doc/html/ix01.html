@@ -21,22 +21,32 @@
 </tr></table>
 <div class="index">
 <div class="titlepage"><div><div><h2 class="title">
-<a name="id514722"></a>Index</h2></div></div></div>
+<a name="id520935"></a>Index</h2></div></div></div>
 <div class="index">
 <div class="indexdiv">
 <h3>B</h3>
 <dl>
 <dt>UDisksBaseJob, <a class="indexterm" href="UDisksBaseJob.html#UDisksBaseJob-struct">UDisksBaseJob</a>
 </dt>
+<dt>UDisksBaseJob:auto-estimate, <a class="indexterm" href="UDisksBaseJob.html#UDisksBaseJob--auto-estimate">The "auto-estimate" property</a>
+</dt>
 <dt>UDisksBaseJob:cancellable, <a class="indexterm" href="UDisksBaseJob.html#UDisksBaseJob--cancellable">The "cancellable" property</a>
+</dt>
+<dt>UDisksBaseJob:daemon, <a class="indexterm" href="UDisksBaseJob.html#UDisksBaseJob--daemon">The "daemon" property</a>
 </dt>
 <dt>UDisksBaseJobClass, <a class="indexterm" href="UDisksBaseJob.html#UDisksBaseJobClass">struct UDisksBaseJobClass</a>
 </dt>
 <dt>udisks_base_job_add_object, <a class="indexterm" href="UDisksBaseJob.html#udisks-base-job-add-object">udisks_base_job_add_object ()</a>
 </dt>
+<dt>udisks_base_job_get_auto_estimate, <a class="indexterm" href="UDisksBaseJob.html#udisks-base-job-get-auto-estimate">udisks_base_job_get_auto_estimate ()</a>
+</dt>
 <dt>udisks_base_job_get_cancellable, <a class="indexterm" href="UDisksBaseJob.html#udisks-base-job-get-cancellable">udisks_base_job_get_cancellable ()</a>
 </dt>
+<dt>udisks_base_job_get_daemon, <a class="indexterm" href="UDisksBaseJob.html#udisks-base-job-get-daemon">udisks_base_job_get_daemon ()</a>
+</dt>
 <dt>udisks_base_job_remove_object, <a class="indexterm" href="UDisksBaseJob.html#udisks-base-job-remove-object">udisks_base_job_remove_object ()</a>
+</dt>
+<dt>udisks_base_job_set_auto_estimate, <a class="indexterm" href="UDisksBaseJob.html#udisks-base-job-set-auto-estimate">udisks_base_job_set_auto_estimate ()</a>
 </dt>
 <dt>org.freedesktop.UDisks2.Block, <a class="indexterm" href="gdbus-org.freedesktop.UDisks2.Block.html#gdbus-interface-org-freedesktop-UDisks2-Block.top_of_page">org.freedesktop.UDisks2.Block</a>
 </dt>
@@ -50,9 +60,13 @@
 </dt>
 <dt>org.freedesktop.UDisks2.Block.OpenForBackup(), <a class="indexterm" href="gdbus-org.freedesktop.UDisks2.Block.html#gdbus-method-org-freedesktop-UDisks2-Block.OpenForBackup">The OpenForBackup() method</a>
 </dt>
+<dt>org.freedesktop.UDisks2.Block.OpenForBenchmark(), <a class="indexterm" href="gdbus-org.freedesktop.UDisks2.Block.html#gdbus-method-org-freedesktop-UDisks2-Block.OpenForBenchmark">The OpenForBenchmark() method</a>
+</dt>
 <dt>org.freedesktop.UDisks2.Block.OpenForRestore(), <a class="indexterm" href="gdbus-org.freedesktop.UDisks2.Block.html#gdbus-method-org-freedesktop-UDisks2-Block.OpenForRestore">The OpenForRestore() method</a>
 </dt>
 <dt>org.freedesktop.UDisks2.Block.RemoveConfigurationItem(), <a class="indexterm" href="gdbus-org.freedesktop.UDisks2.Block.html#gdbus-method-org-freedesktop-UDisks2-Block.RemoveConfigurationItem">The RemoveConfigurationItem() method</a>
+</dt>
+<dt>org.freedesktop.UDisks2.Block.Rescan(), <a class="indexterm" href="gdbus-org.freedesktop.UDisks2.Block.html#gdbus-method-org-freedesktop-UDisks2-Block.Rescan">The Rescan() method</a>
 </dt>
 <dt>org.freedesktop.UDisks2.Block.UpdateConfigurationItem(), <a class="indexterm" href="gdbus-org.freedesktop.UDisks2.Block.html#gdbus-method-org-freedesktop-UDisks2-Block.UpdateConfigurationItem">The UpdateConfigurationItem() method</a>
 </dt>
@@ -64,9 +78,13 @@
 </dt>
 <dt>UDisksBlock::handle-open-for-backup, <a class="indexterm" href="UDisksBlock.html#UDisksBlock-handle-open-for-backup">The "handle-open-for-backup" signal</a>
 </dt>
+<dt>UDisksBlock::handle-open-for-benchmark, <a class="indexterm" href="UDisksBlock.html#UDisksBlock-handle-open-for-benchmark">The "handle-open-for-benchmark" signal</a>
+</dt>
 <dt>UDisksBlock::handle-open-for-restore, <a class="indexterm" href="UDisksBlock.html#UDisksBlock-handle-open-for-restore">The "handle-open-for-restore" signal</a>
 </dt>
 <dt>UDisksBlock::handle-remove-configuration-item, <a class="indexterm" href="UDisksBlock.html#UDisksBlock-handle-remove-configuration-item">The "handle-remove-configuration-item" signal</a>
+</dt>
+<dt>UDisksBlock::handle-rescan, <a class="indexterm" href="UDisksBlock.html#UDisksBlock-handle-rescan">The "handle-rescan" signal</a>
 </dt>
 <dt>UDisksBlock::handle-update-configuration-item, <a class="indexterm" href="UDisksBlock.html#UDisksBlock-handle-update-configuration-item">The "handle-update-configuration-item" signal</a>
 </dt>
@@ -184,6 +202,12 @@
 </dt>
 <dt>udisks_block_call_open_for_backup_sync, <a class="indexterm" href="UDisksBlock.html#udisks-block-call-open-for-backup-sync">udisks_block_call_open_for_backup_sync ()</a>
 </dt>
+<dt>udisks_block_call_open_for_benchmark, <a class="indexterm" href="UDisksBlock.html#udisks-block-call-open-for-benchmark">udisks_block_call_open_for_benchmark ()</a>
+</dt>
+<dt>udisks_block_call_open_for_benchmark_finish, <a class="indexterm" href="UDisksBlock.html#udisks-block-call-open-for-benchmark-finish">udisks_block_call_open_for_benchmark_finish ()</a>
+</dt>
+<dt>udisks_block_call_open_for_benchmark_sync, <a class="indexterm" href="UDisksBlock.html#udisks-block-call-open-for-benchmark-sync">udisks_block_call_open_for_benchmark_sync ()</a>
+</dt>
 <dt>udisks_block_call_open_for_restore, <a class="indexterm" href="UDisksBlock.html#udisks-block-call-open-for-restore">udisks_block_call_open_for_restore ()</a>
 </dt>
 <dt>udisks_block_call_open_for_restore_finish, <a class="indexterm" href="UDisksBlock.html#udisks-block-call-open-for-restore-finish">udisks_block_call_open_for_restore_finish ()</a>
@@ -195,6 +219,12 @@
 <dt>udisks_block_call_remove_configuration_item_finish, <a class="indexterm" href="UDisksBlock.html#udisks-block-call-remove-configuration-item-finish">udisks_block_call_remove_configuration_item_finish ()</a>
 </dt>
 <dt>udisks_block_call_remove_configuration_item_sync, <a class="indexterm" href="UDisksBlock.html#udisks-block-call-remove-configuration-item-sync">udisks_block_call_remove_configuration_item_sync ()</a>
+</dt>
+<dt>udisks_block_call_rescan, <a class="indexterm" href="UDisksBlock.html#udisks-block-call-rescan">udisks_block_call_rescan ()</a>
+</dt>
+<dt>udisks_block_call_rescan_finish, <a class="indexterm" href="UDisksBlock.html#udisks-block-call-rescan-finish">udisks_block_call_rescan_finish ()</a>
+</dt>
+<dt>udisks_block_call_rescan_sync, <a class="indexterm" href="UDisksBlock.html#udisks-block-call-rescan-sync">udisks_block_call_rescan_sync ()</a>
 </dt>
 <dt>udisks_block_call_update_configuration_item, <a class="indexterm" href="UDisksBlock.html#udisks-block-call-update-configuration-item">udisks_block_call_update_configuration_item ()</a>
 </dt>
@@ -210,9 +240,13 @@
 </dt>
 <dt>udisks_block_complete_open_for_backup, <a class="indexterm" href="UDisksBlock.html#udisks-block-complete-open-for-backup">udisks_block_complete_open_for_backup ()</a>
 </dt>
+<dt>udisks_block_complete_open_for_benchmark, <a class="indexterm" href="UDisksBlock.html#udisks-block-complete-open-for-benchmark">udisks_block_complete_open_for_benchmark ()</a>
+</dt>
 <dt>udisks_block_complete_open_for_restore, <a class="indexterm" href="UDisksBlock.html#udisks-block-complete-open-for-restore">udisks_block_complete_open_for_restore ()</a>
 </dt>
 <dt>udisks_block_complete_remove_configuration_item, <a class="indexterm" href="UDisksBlock.html#udisks-block-complete-remove-configuration-item">udisks_block_complete_remove_configuration_item ()</a>
+</dt>
+<dt>udisks_block_complete_rescan, <a class="indexterm" href="UDisksBlock.html#udisks-block-complete-rescan">udisks_block_complete_rescan ()</a>
 </dt>
 <dt>udisks_block_complete_update_configuration_item, <a class="indexterm" href="UDisksBlock.html#udisks-block-complete-update-configuration-item">udisks_block_complete_update_configuration_item ()</a>
 </dt>
@@ -399,6 +433,8 @@
 </dt>
 <dt>udisks_client_get_jobs_for_object, <a class="indexterm" href="UDisksClient.html#udisks-client-get-jobs-for-object">udisks_client_get_jobs_for_object ()</a>
 </dt>
+<dt>udisks_client_get_job_description, <a class="indexterm" href="UDisksClient.html#udisks-client-get-job-description">udisks_client_get_job_description ()</a>
+</dt>
 <dt>udisks_client_get_loop_for_block, <a class="indexterm" href="UDisksClient.html#udisks-client-get-loop-for-block">udisks_client_get_loop_for_block ()</a>
 </dt>
 <dt>udisks_client_get_manager, <a class="indexterm" href="UDisksClient.html#udisks-client-get-manager">udisks_client_get_manager ()</a>
@@ -522,15 +558,27 @@
 </dt>
 <dt>udisks_daemon_util_escape_and_quote, <a class="indexterm" href="udisks2-Utilities.html#udisks-daemon-util-escape-and-quote">udisks_daemon_util_escape_and_quote ()</a>
 </dt>
+<dt>udisks_daemon_util_file_set_contents, <a class="indexterm" href="udisks2-Utilities.html#udisks-daemon-util-file-set-contents">udisks_daemon_util_file_set_contents ()</a>
+</dt>
 <dt>udisks_daemon_util_get_caller_pid_sync, <a class="indexterm" href="udisks2-Utilities.html#udisks-daemon-util-get-caller-pid-sync">udisks_daemon_util_get_caller_pid_sync ()</a>
 </dt>
 <dt>udisks_daemon_util_get_caller_uid_sync, <a class="indexterm" href="udisks2-Utilities.html#udisks-daemon-util-get-caller-uid-sync">udisks_daemon_util_get_caller_uid_sync ()</a>
+</dt>
+<dt>udisks_daemon_util_hexdump, <a class="indexterm" href="udisks2-Utilities.html#udisks-daemon-util-hexdump">udisks_daemon_util_hexdump ()</a>
+</dt>
+<dt>udisks_daemon_util_hexdump_debug, <a class="indexterm" href="udisks2-Utilities.html#udisks-daemon-util-hexdump-debug">udisks_daemon_util_hexdump_debug ()</a>
+</dt>
+<dt>udisks_daemon_util_inhibit_system_sync, <a class="indexterm" href="udisks2-Utilities.html#udisks-daemon-util-inhibit-system-sync">udisks_daemon_util_inhibit_system_sync ()</a>
+</dt>
+<dt>udisks_daemon_util_on_same_seat, <a class="indexterm" href="udisks2-Utilities.html#udisks-daemon-util-on-same-seat">udisks_daemon_util_on_same_seat ()</a>
 </dt>
 <dt>udisks_daemon_util_resolve_link, <a class="indexterm" href="udisks2-Utilities.html#udisks-daemon-util-resolve-link">udisks_daemon_util_resolve_link ()</a>
 </dt>
 <dt>udisks_daemon_util_resolve_links, <a class="indexterm" href="udisks2-Utilities.html#udisks-daemon-util-resolve-links">udisks_daemon_util_resolve_links ()</a>
 </dt>
 <dt>udisks_daemon_util_setup_by_user, <a class="indexterm" href="udisks2-Utilities.html#udisks-daemon-util-setup-by-user">udisks_daemon_util_setup_by_user ()</a>
+</dt>
+<dt>udisks_daemon_util_uninhibit_system_sync, <a class="indexterm" href="udisks2-Utilities.html#udisks-daemon-util-uninhibit-system-sync">udisks_daemon_util_uninhibit_system_sync ()</a>
 </dt>
 <dt>udisks_daemon_wait_for_object_sync, <a class="indexterm" href="UDisksDaemon.html#udisks-daemon-wait-for-object-sync">udisks_daemon_wait_for_object_sync ()</a>
 </dt>
@@ -544,6 +592,14 @@
 </dt>
 <dt>org.freedesktop.UDisks2.Drive.Ata, <a class="indexterm" href="gdbus-org.freedesktop.UDisks2.Drive.Ata.html#gdbus-interface-org-freedesktop-UDisks2-Drive-Ata.top_of_page">org.freedesktop.UDisks2.Drive.Ata</a>
 </dt>
+<dt>org.freedesktop.UDisks2.Drive.Ata.PmGetState(), <a class="indexterm" href="gdbus-org.freedesktop.UDisks2.Drive.Ata.html#gdbus-method-org-freedesktop-UDisks2-Drive-Ata.PmGetState">The PmGetState() method</a>
+</dt>
+<dt>org.freedesktop.UDisks2.Drive.Ata.PmStandby(), <a class="indexterm" href="gdbus-org.freedesktop.UDisks2.Drive.Ata.html#gdbus-method-org-freedesktop-UDisks2-Drive-Ata.PmStandby">The PmStandby() method</a>
+</dt>
+<dt>org.freedesktop.UDisks2.Drive.Ata.PmWakeup(), <a class="indexterm" href="gdbus-org.freedesktop.UDisks2.Drive.Ata.html#gdbus-method-org-freedesktop-UDisks2-Drive-Ata.PmWakeup">The PmWakeup() method</a>
+</dt>
+<dt>org.freedesktop.UDisks2.Drive.Ata.SecurityEraseUnit(), <a class="indexterm" href="gdbus-org.freedesktop.UDisks2.Drive.Ata.html#gdbus-method-org-freedesktop-UDisks2-Drive-Ata.SecurityEraseUnit">The SecurityEraseUnit() method</a>
+</dt>
 <dt>org.freedesktop.UDisks2.Drive.Ata.SmartGetAttributes(), <a class="indexterm" href="gdbus-org.freedesktop.UDisks2.Drive.Ata.html#gdbus-method-org-freedesktop-UDisks2-Drive-Ata.SmartGetAttributes">The SmartGetAttributes() method</a>
 </dt>
 <dt>org.freedesktop.UDisks2.Drive.Ata.SmartSelftestAbort(), <a class="indexterm" href="gdbus-org.freedesktop.UDisks2.Drive.Ata.html#gdbus-method-org-freedesktop-UDisks2-Drive-Ata.SmartSelftestAbort">The SmartSelftestAbort() method</a>
@@ -551,6 +607,26 @@
 <dt>org.freedesktop.UDisks2.Drive.Ata.SmartSelftestStart(), <a class="indexterm" href="gdbus-org.freedesktop.UDisks2.Drive.Ata.html#gdbus-method-org-freedesktop-UDisks2-Drive-Ata.SmartSelftestStart">The SmartSelftestStart() method</a>
 </dt>
 <dt>org.freedesktop.UDisks2.Drive.Ata.SmartUpdate(), <a class="indexterm" href="gdbus-org.freedesktop.UDisks2.Drive.Ata.html#gdbus-method-org-freedesktop-UDisks2-Drive-Ata.SmartUpdate">The SmartUpdate() method</a>
+</dt>
+<dt>org.freedesktop.UDisks2.Drive.Ata:AamEnabled, <a class="indexterm" href="gdbus-org.freedesktop.UDisks2.Drive.Ata.html#gdbus-property-org-freedesktop-UDisks2-Drive-Ata.AamEnabled">The "AamEnabled" property</a>
+</dt>
+<dt>org.freedesktop.UDisks2.Drive.Ata:AamSupported, <a class="indexterm" href="gdbus-org.freedesktop.UDisks2.Drive.Ata.html#gdbus-property-org-freedesktop-UDisks2-Drive-Ata.AamSupported">The "AamSupported" property</a>
+</dt>
+<dt>org.freedesktop.UDisks2.Drive.Ata:AamVendorRecommendedValue, <a class="indexterm" href="gdbus-org.freedesktop.UDisks2.Drive.Ata.html#gdbus-property-org-freedesktop-UDisks2-Drive-Ata.AamVendorRecommendedValue">The "AamVendorRecommendedValue" property</a>
+</dt>
+<dt>org.freedesktop.UDisks2.Drive.Ata:ApmEnabled, <a class="indexterm" href="gdbus-org.freedesktop.UDisks2.Drive.Ata.html#gdbus-property-org-freedesktop-UDisks2-Drive-Ata.ApmEnabled">The "ApmEnabled" property</a>
+</dt>
+<dt>org.freedesktop.UDisks2.Drive.Ata:ApmSupported, <a class="indexterm" href="gdbus-org.freedesktop.UDisks2.Drive.Ata.html#gdbus-property-org-freedesktop-UDisks2-Drive-Ata.ApmSupported">The "ApmSupported" property</a>
+</dt>
+<dt>org.freedesktop.UDisks2.Drive.Ata:PmEnabled, <a class="indexterm" href="gdbus-org.freedesktop.UDisks2.Drive.Ata.html#gdbus-property-org-freedesktop-UDisks2-Drive-Ata.PmEnabled">The "PmEnabled" property</a>
+</dt>
+<dt>org.freedesktop.UDisks2.Drive.Ata:PmSupported, <a class="indexterm" href="gdbus-org.freedesktop.UDisks2.Drive.Ata.html#gdbus-property-org-freedesktop-UDisks2-Drive-Ata.PmSupported">The "PmSupported" property</a>
+</dt>
+<dt>org.freedesktop.UDisks2.Drive.Ata:SecurityEnhancedEraseUnitMinutes, <a class="indexterm" href="gdbus-org.freedesktop.UDisks2.Drive.Ata.html#gdbus-property-org-freedesktop-UDisks2-Drive-Ata.SecurityEnhancedEraseUnitMinutes">The "SecurityEnhancedEraseUnitMinutes" property</a>
+</dt>
+<dt>org.freedesktop.UDisks2.Drive.Ata:SecurityEraseUnitMinutes, <a class="indexterm" href="gdbus-org.freedesktop.UDisks2.Drive.Ata.html#gdbus-property-org-freedesktop-UDisks2-Drive-Ata.SecurityEraseUnitMinutes">The "SecurityEraseUnitMinutes" property</a>
+</dt>
+<dt>org.freedesktop.UDisks2.Drive.Ata:SecurityFrozen, <a class="indexterm" href="gdbus-org.freedesktop.UDisks2.Drive.Ata.html#gdbus-property-org-freedesktop-UDisks2-Drive-Ata.SecurityFrozen">The "SecurityFrozen" property</a>
 </dt>
 <dt>org.freedesktop.UDisks2.Drive.Ata:SmartEnabled, <a class="indexterm" href="gdbus-org.freedesktop.UDisks2.Drive.Ata.html#gdbus-property-org-freedesktop-UDisks2-Drive-Ata.SmartEnabled">The "SmartEnabled" property</a>
 </dt>
@@ -576,7 +652,15 @@
 </dt>
 <dt>org.freedesktop.UDisks2.Drive.Eject(), <a class="indexterm" href="gdbus-org.freedesktop.UDisks2.Drive.html#gdbus-method-org-freedesktop-UDisks2-Drive.Eject">The Eject() method</a>
 </dt>
+<dt>org.freedesktop.UDisks2.Drive.SetConfiguration(), <a class="indexterm" href="gdbus-org.freedesktop.UDisks2.Drive.html#gdbus-method-org-freedesktop-UDisks2-Drive.SetConfiguration">The SetConfiguration() method</a>
+</dt>
 <dt>UDisksDrive::handle-eject, <a class="indexterm" href="UDisksDrive.html#UDisksDrive-handle-eject">The "handle-eject" signal</a>
+</dt>
+<dt>UDisksDrive::handle-set-configuration, <a class="indexterm" href="UDisksDrive.html#UDisksDrive-handle-set-configuration">The "handle-set-configuration" signal</a>
+</dt>
+<dt>org.freedesktop.UDisks2.Drive:Configuration, <a class="indexterm" href="gdbus-org.freedesktop.UDisks2.Drive.html#gdbus-property-org-freedesktop-UDisks2-Drive.Configuration">The "Configuration" property</a>
+</dt>
+<dt>UDisksDrive:configuration, <a class="indexterm" href="UDisksDrive.html#UDisksDrive--configuration">The "configuration" property</a>
 </dt>
 <dt>UDisksDrive:connection-bus, <a class="indexterm" href="UDisksDrive.html#UDisksDrive--connection-bus">The "connection-bus" property</a>
 </dt>
@@ -585,6 +669,10 @@
 <dt>org.freedesktop.UDisks2.Drive:Ejectable, <a class="indexterm" href="gdbus-org.freedesktop.UDisks2.Drive.html#gdbus-property-org-freedesktop-UDisks2-Drive.Ejectable">The "Ejectable" property</a>
 </dt>
 <dt>UDisksDrive:ejectable, <a class="indexterm" href="UDisksDrive.html#UDisksDrive--ejectable">The "ejectable" property</a>
+</dt>
+<dt>org.freedesktop.UDisks2.Drive:Id, <a class="indexterm" href="gdbus-org.freedesktop.UDisks2.Drive.html#gdbus-property-org-freedesktop-UDisks2-Drive.Id">The "Id" property</a>
+</dt>
+<dt>UDisksDrive:id, <a class="indexterm" href="UDisksDrive.html#UDisksDrive--id">The "id" property</a>
 </dt>
 <dt>org.freedesktop.UDisks2.Drive:Media, <a class="indexterm" href="gdbus-org.freedesktop.UDisks2.Drive.html#gdbus-property-org-freedesktop-UDisks2-Drive.Media">The "Media" property</a>
 </dt>
@@ -680,6 +768,14 @@
 </dt>
 <dt>UDisksDriveAta, <a class="indexterm" href="UDisksDriveAta.html#UDisksDriveAta-struct">UDisksDriveAta</a>
 </dt>
+<dt>UDisksDriveAta::handle-pm-get-state, <a class="indexterm" href="UDisksDriveAta.html#UDisksDriveAta-handle-pm-get-state">The "handle-pm-get-state" signal</a>
+</dt>
+<dt>UDisksDriveAta::handle-pm-standby, <a class="indexterm" href="UDisksDriveAta.html#UDisksDriveAta-handle-pm-standby">The "handle-pm-standby" signal</a>
+</dt>
+<dt>UDisksDriveAta::handle-pm-wakeup, <a class="indexterm" href="UDisksDriveAta.html#UDisksDriveAta-handle-pm-wakeup">The "handle-pm-wakeup" signal</a>
+</dt>
+<dt>UDisksDriveAta::handle-security-erase-unit, <a class="indexterm" href="UDisksDriveAta.html#UDisksDriveAta-handle-security-erase-unit">The "handle-security-erase-unit" signal</a>
+</dt>
 <dt>UDisksDriveAta::handle-smart-get-attributes, <a class="indexterm" href="UDisksDriveAta.html#UDisksDriveAta-handle-smart-get-attributes">The "handle-smart-get-attributes" signal</a>
 </dt>
 <dt>UDisksDriveAta::handle-smart-selftest-abort, <a class="indexterm" href="UDisksDriveAta.html#UDisksDriveAta-handle-smart-selftest-abort">The "handle-smart-selftest-abort" signal</a>
@@ -687,6 +783,26 @@
 <dt>UDisksDriveAta::handle-smart-selftest-start, <a class="indexterm" href="UDisksDriveAta.html#UDisksDriveAta-handle-smart-selftest-start">The "handle-smart-selftest-start" signal</a>
 </dt>
 <dt>UDisksDriveAta::handle-smart-update, <a class="indexterm" href="UDisksDriveAta.html#UDisksDriveAta-handle-smart-update">The "handle-smart-update" signal</a>
+</dt>
+<dt>UDisksDriveAta:aam-enabled, <a class="indexterm" href="UDisksDriveAta.html#UDisksDriveAta--aam-enabled">The "aam-enabled" property</a>
+</dt>
+<dt>UDisksDriveAta:aam-supported, <a class="indexterm" href="UDisksDriveAta.html#UDisksDriveAta--aam-supported">The "aam-supported" property</a>
+</dt>
+<dt>UDisksDriveAta:aam-vendor-recommended-value, <a class="indexterm" href="UDisksDriveAta.html#UDisksDriveAta--aam-vendor-recommended-value">The "aam-vendor-recommended-value" property</a>
+</dt>
+<dt>UDisksDriveAta:apm-enabled, <a class="indexterm" href="UDisksDriveAta.html#UDisksDriveAta--apm-enabled">The "apm-enabled" property</a>
+</dt>
+<dt>UDisksDriveAta:apm-supported, <a class="indexterm" href="UDisksDriveAta.html#UDisksDriveAta--apm-supported">The "apm-supported" property</a>
+</dt>
+<dt>UDisksDriveAta:pm-enabled, <a class="indexterm" href="UDisksDriveAta.html#UDisksDriveAta--pm-enabled">The "pm-enabled" property</a>
+</dt>
+<dt>UDisksDriveAta:pm-supported, <a class="indexterm" href="UDisksDriveAta.html#UDisksDriveAta--pm-supported">The "pm-supported" property</a>
+</dt>
+<dt>UDisksDriveAta:security-enhanced-erase-unit-minutes, <a class="indexterm" href="UDisksDriveAta.html#UDisksDriveAta--security-enhanced-erase-unit-minutes">The "security-enhanced-erase-unit-minutes" property</a>
+</dt>
+<dt>UDisksDriveAta:security-erase-unit-minutes, <a class="indexterm" href="UDisksDriveAta.html#UDisksDriveAta--security-erase-unit-minutes">The "security-erase-unit-minutes" property</a>
+</dt>
+<dt>UDisksDriveAta:security-frozen, <a class="indexterm" href="UDisksDriveAta.html#UDisksDriveAta--security-frozen">The "security-frozen" property</a>
 </dt>
 <dt>UDisksDriveAta:smart-enabled, <a class="indexterm" href="UDisksDriveAta.html#UDisksDriveAta--smart-enabled">The "smart-enabled" property</a>
 </dt>
@@ -730,6 +846,30 @@
 </dt>
 <dt>UDisksDriveSkeletonClass, <a class="indexterm" href="UDisksDrive.html#UDisksDriveSkeletonClass">struct UDisksDriveSkeletonClass</a>
 </dt>
+<dt>udisks_drive_ata_call_pm_get_state, <a class="indexterm" href="UDisksDriveAta.html#udisks-drive-ata-call-pm-get-state">udisks_drive_ata_call_pm_get_state ()</a>
+</dt>
+<dt>udisks_drive_ata_call_pm_get_state_finish, <a class="indexterm" href="UDisksDriveAta.html#udisks-drive-ata-call-pm-get-state-finish">udisks_drive_ata_call_pm_get_state_finish ()</a>
+</dt>
+<dt>udisks_drive_ata_call_pm_get_state_sync, <a class="indexterm" href="UDisksDriveAta.html#udisks-drive-ata-call-pm-get-state-sync">udisks_drive_ata_call_pm_get_state_sync ()</a>
+</dt>
+<dt>udisks_drive_ata_call_pm_standby, <a class="indexterm" href="UDisksDriveAta.html#udisks-drive-ata-call-pm-standby">udisks_drive_ata_call_pm_standby ()</a>
+</dt>
+<dt>udisks_drive_ata_call_pm_standby_finish, <a class="indexterm" href="UDisksDriveAta.html#udisks-drive-ata-call-pm-standby-finish">udisks_drive_ata_call_pm_standby_finish ()</a>
+</dt>
+<dt>udisks_drive_ata_call_pm_standby_sync, <a class="indexterm" href="UDisksDriveAta.html#udisks-drive-ata-call-pm-standby-sync">udisks_drive_ata_call_pm_standby_sync ()</a>
+</dt>
+<dt>udisks_drive_ata_call_pm_wakeup, <a class="indexterm" href="UDisksDriveAta.html#udisks-drive-ata-call-pm-wakeup">udisks_drive_ata_call_pm_wakeup ()</a>
+</dt>
+<dt>udisks_drive_ata_call_pm_wakeup_finish, <a class="indexterm" href="UDisksDriveAta.html#udisks-drive-ata-call-pm-wakeup-finish">udisks_drive_ata_call_pm_wakeup_finish ()</a>
+</dt>
+<dt>udisks_drive_ata_call_pm_wakeup_sync, <a class="indexterm" href="UDisksDriveAta.html#udisks-drive-ata-call-pm-wakeup-sync">udisks_drive_ata_call_pm_wakeup_sync ()</a>
+</dt>
+<dt>udisks_drive_ata_call_security_erase_unit, <a class="indexterm" href="UDisksDriveAta.html#udisks-drive-ata-call-security-erase-unit">udisks_drive_ata_call_security_erase_unit ()</a>
+</dt>
+<dt>udisks_drive_ata_call_security_erase_unit_finish, <a class="indexterm" href="UDisksDriveAta.html#udisks-drive-ata-call-security-erase-unit-finish">udisks_drive_ata_call_security_erase_unit_finish ()</a>
+</dt>
+<dt>udisks_drive_ata_call_security_erase_unit_sync, <a class="indexterm" href="UDisksDriveAta.html#udisks-drive-ata-call-security-erase-unit-sync">udisks_drive_ata_call_security_erase_unit_sync ()</a>
+</dt>
 <dt>udisks_drive_ata_call_smart_get_attributes, <a class="indexterm" href="UDisksDriveAta.html#udisks-drive-ata-call-smart-get-attributes">udisks_drive_ata_call_smart_get_attributes ()</a>
 </dt>
 <dt>udisks_drive_ata_call_smart_get_attributes_finish, <a class="indexterm" href="UDisksDriveAta.html#udisks-drive-ata-call-smart-get-attributes-finish">udisks_drive_ata_call_smart_get_attributes_finish ()</a>
@@ -754,6 +894,14 @@
 </dt>
 <dt>udisks_drive_ata_call_smart_update_sync, <a class="indexterm" href="UDisksDriveAta.html#udisks-drive-ata-call-smart-update-sync">udisks_drive_ata_call_smart_update_sync ()</a>
 </dt>
+<dt>udisks_drive_ata_complete_pm_get_state, <a class="indexterm" href="UDisksDriveAta.html#udisks-drive-ata-complete-pm-get-state">udisks_drive_ata_complete_pm_get_state ()</a>
+</dt>
+<dt>udisks_drive_ata_complete_pm_standby, <a class="indexterm" href="UDisksDriveAta.html#udisks-drive-ata-complete-pm-standby">udisks_drive_ata_complete_pm_standby ()</a>
+</dt>
+<dt>udisks_drive_ata_complete_pm_wakeup, <a class="indexterm" href="UDisksDriveAta.html#udisks-drive-ata-complete-pm-wakeup">udisks_drive_ata_complete_pm_wakeup ()</a>
+</dt>
+<dt>udisks_drive_ata_complete_security_erase_unit, <a class="indexterm" href="UDisksDriveAta.html#udisks-drive-ata-complete-security-erase-unit">udisks_drive_ata_complete_security_erase_unit ()</a>
+</dt>
 <dt>udisks_drive_ata_complete_smart_get_attributes, <a class="indexterm" href="UDisksDriveAta.html#udisks-drive-ata-complete-smart-get-attributes">udisks_drive_ata_complete_smart_get_attributes ()</a>
 </dt>
 <dt>udisks_drive_ata_complete_smart_selftest_abort, <a class="indexterm" href="UDisksDriveAta.html#udisks-drive-ata-complete-smart-selftest-abort">udisks_drive_ata_complete_smart_selftest_abort ()</a>
@@ -763,6 +911,26 @@
 <dt>udisks_drive_ata_complete_smart_update, <a class="indexterm" href="UDisksDriveAta.html#udisks-drive-ata-complete-smart-update">udisks_drive_ata_complete_smart_update ()</a>
 </dt>
 <dt>udisks_drive_ata_dup_smart_selftest_status, <a class="indexterm" href="UDisksDriveAta.html#udisks-drive-ata-dup-smart-selftest-status">udisks_drive_ata_dup_smart_selftest_status ()</a>
+</dt>
+<dt>udisks_drive_ata_get_aam_enabled, <a class="indexterm" href="UDisksDriveAta.html#udisks-drive-ata-get-aam-enabled">udisks_drive_ata_get_aam_enabled ()</a>
+</dt>
+<dt>udisks_drive_ata_get_aam_supported, <a class="indexterm" href="UDisksDriveAta.html#udisks-drive-ata-get-aam-supported">udisks_drive_ata_get_aam_supported ()</a>
+</dt>
+<dt>udisks_drive_ata_get_aam_vendor_recommended_value, <a class="indexterm" href="UDisksDriveAta.html#udisks-drive-ata-get-aam-vendor-recommended-value">udisks_drive_ata_get_aam_vendor_recommended_value ()</a>
+</dt>
+<dt>udisks_drive_ata_get_apm_enabled, <a class="indexterm" href="UDisksDriveAta.html#udisks-drive-ata-get-apm-enabled">udisks_drive_ata_get_apm_enabled ()</a>
+</dt>
+<dt>udisks_drive_ata_get_apm_supported, <a class="indexterm" href="UDisksDriveAta.html#udisks-drive-ata-get-apm-supported">udisks_drive_ata_get_apm_supported ()</a>
+</dt>
+<dt>udisks_drive_ata_get_pm_enabled, <a class="indexterm" href="UDisksDriveAta.html#udisks-drive-ata-get-pm-enabled">udisks_drive_ata_get_pm_enabled ()</a>
+</dt>
+<dt>udisks_drive_ata_get_pm_supported, <a class="indexterm" href="UDisksDriveAta.html#udisks-drive-ata-get-pm-supported">udisks_drive_ata_get_pm_supported ()</a>
+</dt>
+<dt>udisks_drive_ata_get_security_enhanced_erase_unit_minutes, <a class="indexterm" href="UDisksDriveAta.html#udisks-drive-ata-get-security-enhanced-erase-unit-minutes">udisks_drive_ata_get_security_enhanced_erase_unit_minutes ()</a>
+</dt>
+<dt>udisks_drive_ata_get_security_erase_unit_minutes, <a class="indexterm" href="UDisksDriveAta.html#udisks-drive-ata-get-security-erase-unit-minutes">udisks_drive_ata_get_security_erase_unit_minutes ()</a>
+</dt>
+<dt>udisks_drive_ata_get_security_frozen, <a class="indexterm" href="UDisksDriveAta.html#udisks-drive-ata-get-security-frozen">udisks_drive_ata_get_security_frozen ()</a>
 </dt>
 <dt>udisks_drive_ata_get_smart_enabled, <a class="indexterm" href="UDisksDriveAta.html#udisks-drive-ata-get-smart-enabled">udisks_drive_ata_get_smart_enabled ()</a>
 </dt>
@@ -802,6 +970,26 @@
 </dt>
 <dt>udisks_drive_ata_proxy_new_sync, <a class="indexterm" href="UDisksDriveAta.html#udisks-drive-ata-proxy-new-sync">udisks_drive_ata_proxy_new_sync ()</a>
 </dt>
+<dt>udisks_drive_ata_set_aam_enabled, <a class="indexterm" href="UDisksDriveAta.html#udisks-drive-ata-set-aam-enabled">udisks_drive_ata_set_aam_enabled ()</a>
+</dt>
+<dt>udisks_drive_ata_set_aam_supported, <a class="indexterm" href="UDisksDriveAta.html#udisks-drive-ata-set-aam-supported">udisks_drive_ata_set_aam_supported ()</a>
+</dt>
+<dt>udisks_drive_ata_set_aam_vendor_recommended_value, <a class="indexterm" href="UDisksDriveAta.html#udisks-drive-ata-set-aam-vendor-recommended-value">udisks_drive_ata_set_aam_vendor_recommended_value ()</a>
+</dt>
+<dt>udisks_drive_ata_set_apm_enabled, <a class="indexterm" href="UDisksDriveAta.html#udisks-drive-ata-set-apm-enabled">udisks_drive_ata_set_apm_enabled ()</a>
+</dt>
+<dt>udisks_drive_ata_set_apm_supported, <a class="indexterm" href="UDisksDriveAta.html#udisks-drive-ata-set-apm-supported">udisks_drive_ata_set_apm_supported ()</a>
+</dt>
+<dt>udisks_drive_ata_set_pm_enabled, <a class="indexterm" href="UDisksDriveAta.html#udisks-drive-ata-set-pm-enabled">udisks_drive_ata_set_pm_enabled ()</a>
+</dt>
+<dt>udisks_drive_ata_set_pm_supported, <a class="indexterm" href="UDisksDriveAta.html#udisks-drive-ata-set-pm-supported">udisks_drive_ata_set_pm_supported ()</a>
+</dt>
+<dt>udisks_drive_ata_set_security_enhanced_erase_unit_minutes, <a class="indexterm" href="UDisksDriveAta.html#udisks-drive-ata-set-security-enhanced-erase-unit-minutes">udisks_drive_ata_set_security_enhanced_erase_unit_minutes ()</a>
+</dt>
+<dt>udisks_drive_ata_set_security_erase_unit_minutes, <a class="indexterm" href="UDisksDriveAta.html#udisks-drive-ata-set-security-erase-unit-minutes">udisks_drive_ata_set_security_erase_unit_minutes ()</a>
+</dt>
+<dt>udisks_drive_ata_set_security_frozen, <a class="indexterm" href="UDisksDriveAta.html#udisks-drive-ata-set-security-frozen">udisks_drive_ata_set_security_frozen ()</a>
+</dt>
 <dt>udisks_drive_ata_set_smart_enabled, <a class="indexterm" href="UDisksDriveAta.html#udisks-drive-ata-set-smart-enabled">udisks_drive_ata_set_smart_enabled ()</a>
 </dt>
 <dt>udisks_drive_ata_set_smart_failing, <a class="indexterm" href="UDisksDriveAta.html#udisks-drive-ata-set-smart-failing">udisks_drive_ata_set_smart_failing ()</a>
@@ -832,9 +1020,21 @@
 </dt>
 <dt>udisks_drive_call_eject_sync, <a class="indexterm" href="UDisksDrive.html#udisks-drive-call-eject-sync">udisks_drive_call_eject_sync ()</a>
 </dt>
+<dt>udisks_drive_call_set_configuration, <a class="indexterm" href="UDisksDrive.html#udisks-drive-call-set-configuration">udisks_drive_call_set_configuration ()</a>
+</dt>
+<dt>udisks_drive_call_set_configuration_finish, <a class="indexterm" href="UDisksDrive.html#udisks-drive-call-set-configuration-finish">udisks_drive_call_set_configuration_finish ()</a>
+</dt>
+<dt>udisks_drive_call_set_configuration_sync, <a class="indexterm" href="UDisksDrive.html#udisks-drive-call-set-configuration-sync">udisks_drive_call_set_configuration_sync ()</a>
+</dt>
 <dt>udisks_drive_complete_eject, <a class="indexterm" href="UDisksDrive.html#udisks-drive-complete-eject">udisks_drive_complete_eject ()</a>
 </dt>
+<dt>udisks_drive_complete_set_configuration, <a class="indexterm" href="UDisksDrive.html#udisks-drive-complete-set-configuration">udisks_drive_complete_set_configuration ()</a>
+</dt>
+<dt>udisks_drive_dup_configuration, <a class="indexterm" href="UDisksDrive.html#udisks-drive-dup-configuration">udisks_drive_dup_configuration ()</a>
+</dt>
 <dt>udisks_drive_dup_connection_bus, <a class="indexterm" href="UDisksDrive.html#udisks-drive-dup-connection-bus">udisks_drive_dup_connection_bus ()</a>
+</dt>
+<dt>udisks_drive_dup_id, <a class="indexterm" href="UDisksDrive.html#udisks-drive-dup-id">udisks_drive_dup_id ()</a>
 </dt>
 <dt>udisks_drive_dup_media, <a class="indexterm" href="UDisksDrive.html#udisks-drive-dup-media">udisks_drive_dup_media ()</a>
 </dt>
@@ -844,6 +1044,8 @@
 </dt>
 <dt>udisks_drive_dup_revision, <a class="indexterm" href="UDisksDrive.html#udisks-drive-dup-revision">udisks_drive_dup_revision ()</a>
 </dt>
+<dt>udisks_drive_dup_seat, <a class="indexterm" href="UDisksDrive.html#udisks-drive-dup-seat">udisks_drive_dup_seat ()</a>
+</dt>
 <dt>udisks_drive_dup_serial, <a class="indexterm" href="UDisksDrive.html#udisks-drive-dup-serial">udisks_drive_dup_serial ()</a>
 </dt>
 <dt>udisks_drive_dup_sort_key, <a class="indexterm" href="UDisksDrive.html#udisks-drive-dup-sort-key">udisks_drive_dup_sort_key ()</a>
@@ -852,9 +1054,13 @@
 </dt>
 <dt>udisks_drive_dup_wwn, <a class="indexterm" href="UDisksDrive.html#udisks-drive-dup-wwn">udisks_drive_dup_wwn ()</a>
 </dt>
+<dt>udisks_drive_get_configuration, <a class="indexterm" href="UDisksDrive.html#udisks-drive-get-configuration">udisks_drive_get_configuration ()</a>
+</dt>
 <dt>udisks_drive_get_connection_bus, <a class="indexterm" href="UDisksDrive.html#udisks-drive-get-connection-bus">udisks_drive_get_connection_bus ()</a>
 </dt>
 <dt>udisks_drive_get_ejectable, <a class="indexterm" href="UDisksDrive.html#udisks-drive-get-ejectable">udisks_drive_get_ejectable ()</a>
+</dt>
+<dt>udisks_drive_get_id, <a class="indexterm" href="UDisksDrive.html#udisks-drive-get-id">udisks_drive_get_id ()</a>
 </dt>
 <dt>udisks_drive_get_media, <a class="indexterm" href="UDisksDrive.html#udisks-drive-get-media">udisks_drive_get_media ()</a>
 </dt>
@@ -918,9 +1124,13 @@
 </dt>
 <dt>udisks_drive_proxy_new_sync, <a class="indexterm" href="UDisksDrive.html#udisks-drive-proxy-new-sync">udisks_drive_proxy_new_sync ()</a>
 </dt>
+<dt>udisks_drive_set_configuration, <a class="indexterm" href="UDisksDrive.html#udisks-drive-set-configuration">udisks_drive_set_configuration ()</a>
+</dt>
 <dt>udisks_drive_set_connection_bus, <a class="indexterm" href="UDisksDrive.html#udisks-drive-set-connection-bus">udisks_drive_set_connection_bus ()</a>
 </dt>
 <dt>udisks_drive_set_ejectable, <a class="indexterm" href="UDisksDrive.html#udisks-drive-set-ejectable">udisks_drive_set_ejectable ()</a>
+</dt>
+<dt>udisks_drive_set_id, <a class="indexterm" href="UDisksDrive.html#udisks-drive-set-id">udisks_drive_set_id ()</a>
 </dt>
 <dt>udisks_drive_set_media, <a class="indexterm" href="UDisksDrive.html#udisks-drive-set-media">udisks_drive_set_media ()</a>
 </dt>
@@ -1162,8 +1372,12 @@
 </div>
 <div class="indexdiv">
 <h3>I</h3>
-<dl><dt>udisks_info, <a class="indexterm" href="udisks2-Logging.html#udisks-info">udisks_info()</a>
-</dt></dl>
+<dl>
+<dt>udisks_info, <a class="indexterm" href="udisks2-Logging.html#udisks-info">udisks_info()</a>
+</dt>
+<dt>UDisksInhibitCookie, <a class="indexterm" href="udisks2-Utilities.html#UDisksInhibitCookie">UDisksInhibitCookie</a>
+</dt>
+</dl>
 </div>
 <div class="indexdiv">
 <h3>J</h3>
@@ -1180,6 +1394,10 @@
 </dt>
 <dt>UDisksJob::handle-cancel, <a class="indexterm" href="UDisksJob.html#UDisksJob-handle-cancel">The "handle-cancel" signal</a>
 </dt>
+<dt>org.freedesktop.UDisks2.Job:Cancelable, <a class="indexterm" href="gdbus-org.freedesktop.UDisks2.Job.html#gdbus-property-org-freedesktop-UDisks2-Job.Cancelable">The "Cancelable" property</a>
+</dt>
+<dt>UDisksJob:cancelable, <a class="indexterm" href="UDisksJob.html#UDisksJob--cancelable">The "cancelable" property</a>
+</dt>
 <dt>UDisksJob:expected-end-time, <a class="indexterm" href="UDisksJob.html#UDisksJob--expected-end-time">The "expected-end-time" property</a>
 </dt>
 <dt>org.freedesktop.UDisks2.Job:ExpectedEndTime, <a class="indexterm" href="gdbus-org.freedesktop.UDisks2.Job.html#gdbus-property-org-freedesktop-UDisks2-Job.ExpectedEndTime">The "ExpectedEndTime" property</a>
@@ -1188,11 +1406,23 @@
 </dt>
 <dt>UDisksJob:objects, <a class="indexterm" href="UDisksJob.html#UDisksJob--objects">The "objects" property</a>
 </dt>
+<dt>org.freedesktop.UDisks2.Job:Operation, <a class="indexterm" href="gdbus-org.freedesktop.UDisks2.Job.html#gdbus-property-org-freedesktop-UDisks2-Job.Operation">The "Operation" property</a>
+</dt>
+<dt>UDisksJob:operation, <a class="indexterm" href="UDisksJob.html#UDisksJob--operation">The "operation" property</a>
+</dt>
 <dt>org.freedesktop.UDisks2.Job:Progress, <a class="indexterm" href="gdbus-org.freedesktop.UDisks2.Job.html#gdbus-property-org-freedesktop-UDisks2-Job.Progress">The "Progress" property</a>
 </dt>
 <dt>UDisksJob:progress, <a class="indexterm" href="UDisksJob.html#UDisksJob--progress">The "progress" property</a>
 </dt>
+<dt>UDisksJob:progress-valid, <a class="indexterm" href="UDisksJob.html#UDisksJob--progress-valid">The "progress-valid" property</a>
+</dt>
+<dt>org.freedesktop.UDisks2.Job:ProgressValid, <a class="indexterm" href="gdbus-org.freedesktop.UDisks2.Job.html#gdbus-property-org-freedesktop-UDisks2-Job.ProgressValid">The "ProgressValid" property</a>
+</dt>
 <dt>UDisksJob:start-time, <a class="indexterm" href="UDisksJob.html#UDisksJob--start-time">The "start-time" property</a>
+</dt>
+<dt>UDisksJob:started-by-uid, <a class="indexterm" href="UDisksJob.html#UDisksJob--started-by-uid">The "started-by-uid" property</a>
+</dt>
+<dt>org.freedesktop.UDisks2.Job:StartedByUID, <a class="indexterm" href="gdbus-org.freedesktop.UDisks2.Job.html#gdbus-property-org-freedesktop-UDisks2-Job.StartedByUID">The "StartedByUID" property</a>
 </dt>
 <dt>org.freedesktop.UDisks2.Job:StartTime, <a class="indexterm" href="gdbus-org.freedesktop.UDisks2.Job.html#gdbus-property-org-freedesktop-UDisks2-Job.StartTime">The "StartTime" property</a>
 </dt>
@@ -1216,13 +1446,23 @@
 </dt>
 <dt>udisks_job_dup_objects, <a class="indexterm" href="UDisksJob.html#udisks-job-dup-objects">udisks_job_dup_objects ()</a>
 </dt>
+<dt>udisks_job_dup_operation, <a class="indexterm" href="UDisksJob.html#udisks-job-dup-operation">udisks_job_dup_operation ()</a>
+</dt>
 <dt>udisks_job_emit_completed, <a class="indexterm" href="UDisksJob.html#udisks-job-emit-completed">udisks_job_emit_completed ()</a>
+</dt>
+<dt>udisks_job_get_cancelable, <a class="indexterm" href="UDisksJob.html#udisks-job-get-cancelable">udisks_job_get_cancelable ()</a>
 </dt>
 <dt>udisks_job_get_expected_end_time, <a class="indexterm" href="UDisksJob.html#udisks-job-get-expected-end-time">udisks_job_get_expected_end_time ()</a>
 </dt>
 <dt>udisks_job_get_objects, <a class="indexterm" href="UDisksJob.html#udisks-job-get-objects">udisks_job_get_objects ()</a>
 </dt>
+<dt>udisks_job_get_operation, <a class="indexterm" href="UDisksJob.html#udisks-job-get-operation">udisks_job_get_operation ()</a>
+</dt>
 <dt>udisks_job_get_progress, <a class="indexterm" href="UDisksJob.html#udisks-job-get-progress">udisks_job_get_progress ()</a>
+</dt>
+<dt>udisks_job_get_progress_valid, <a class="indexterm" href="UDisksJob.html#udisks-job-get-progress-valid">udisks_job_get_progress_valid ()</a>
+</dt>
+<dt>udisks_job_get_started_by_uid, <a class="indexterm" href="UDisksJob.html#udisks-job-get-started-by-uid">udisks_job_get_started_by_uid ()</a>
 </dt>
 <dt>udisks_job_get_start_time, <a class="indexterm" href="UDisksJob.html#udisks-job-get-start-time">udisks_job_get_start_time ()</a>
 </dt>
@@ -1242,11 +1482,19 @@
 </dt>
 <dt>udisks_job_proxy_new_sync, <a class="indexterm" href="UDisksJob.html#udisks-job-proxy-new-sync">udisks_job_proxy_new_sync ()</a>
 </dt>
+<dt>udisks_job_set_cancelable, <a class="indexterm" href="UDisksJob.html#udisks-job-set-cancelable">udisks_job_set_cancelable ()</a>
+</dt>
 <dt>udisks_job_set_expected_end_time, <a class="indexterm" href="UDisksJob.html#udisks-job-set-expected-end-time">udisks_job_set_expected_end_time ()</a>
 </dt>
 <dt>udisks_job_set_objects, <a class="indexterm" href="UDisksJob.html#udisks-job-set-objects">udisks_job_set_objects ()</a>
 </dt>
+<dt>udisks_job_set_operation, <a class="indexterm" href="UDisksJob.html#udisks-job-set-operation">udisks_job_set_operation ()</a>
+</dt>
 <dt>udisks_job_set_progress, <a class="indexterm" href="UDisksJob.html#udisks-job-set-progress">udisks_job_set_progress ()</a>
+</dt>
+<dt>udisks_job_set_progress_valid, <a class="indexterm" href="UDisksJob.html#udisks-job-set-progress-valid">udisks_job_set_progress_valid ()</a>
+</dt>
+<dt>udisks_job_set_started_by_uid, <a class="indexterm" href="UDisksJob.html#udisks-job-set-started-by-uid">udisks_job_set_started_by_uid ()</a>
 </dt>
 <dt>udisks_job_set_start_time, <a class="indexterm" href="UDisksJob.html#udisks-job-set-start-time">udisks_job_set_start_time ()</a>
 </dt>
@@ -1301,15 +1549,21 @@
 </dt>
 <dt>udisks_linux_block_object_new, <a class="indexterm" href="UDisksLinuxBlockObject.html#udisks-linux-block-object-new">udisks_linux_block_object_new ()</a>
 </dt>
+<dt>udisks_linux_block_object_reread_partition_table, <a class="indexterm" href="UDisksLinuxBlockObject.html#udisks-linux-block-object-reread-partition-table">udisks_linux_block_object_reread_partition_table ()</a>
+</dt>
 <dt>udisks_linux_block_object_trigger_uevent, <a class="indexterm" href="UDisksLinuxBlockObject.html#udisks-linux-block-object-trigger-uevent">udisks_linux_block_object_trigger_uevent ()</a>
 </dt>
 <dt>udisks_linux_block_object_uevent, <a class="indexterm" href="UDisksLinuxBlockObject.html#udisks-linux-block-object-uevent">udisks_linux_block_object_uevent ()</a>
 </dt>
 <dt>udisks_linux_block_update, <a class="indexterm" href="UDisksLinuxBlock.html#udisks-linux-block-update">udisks_linux_block_update ()</a>
 </dt>
+<dt>udisks_linux_drive_ata_apply_configuration, <a class="indexterm" href="UDisksLinuxDriveAta.html#udisks-linux-drive-ata-apply-configuration">udisks_linux_drive_ata_apply_configuration ()</a>
+</dt>
 <dt>udisks_linux_drive_ata_new, <a class="indexterm" href="UDisksLinuxDriveAta.html#udisks-linux-drive-ata-new">udisks_linux_drive_ata_new ()</a>
 </dt>
 <dt>udisks_linux_drive_ata_refresh_smart_sync, <a class="indexterm" href="UDisksLinuxDriveAta.html#udisks-linux-drive-ata-refresh-smart-sync">udisks_linux_drive_ata_refresh_smart_sync ()</a>
+</dt>
+<dt>udisks_linux_drive_ata_secure_erase_sync, <a class="indexterm" href="UDisksLinuxDriveAta.html#udisks-linux-drive-ata-secure-erase-sync">udisks_linux_drive_ata_secure_erase_sync ()</a>
 </dt>
 <dt>udisks_linux_drive_ata_smart_selftest_sync, <a class="indexterm" href="UDisksLinuxDriveAta.html#udisks-linux-drive-ata-smart-selftest-sync">udisks_linux_drive_ata_smart_selftest_sync ()</a>
 </dt>

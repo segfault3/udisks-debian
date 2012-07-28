@@ -75,6 +75,24 @@
                                                          <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Error-Reporting.html#GError"><span class="type">GError</span></a> **error</code></em>);
 <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="returnvalue">gchar</span></a> *             <a class="link" href="udisks2-Utilities.html#udisks-daemon-util-escape" title="udisks_daemon_util_escape ()">udisks_daemon_util_escape</a>           (<em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *str</code></em>);
 <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="returnvalue">gchar</span></a> *             <a class="link" href="udisks2-Utilities.html#udisks-daemon-util-escape-and-quote" title="udisks_daemon_util_escape_and_quote ()">udisks_daemon_util_escape_and_quote</a> (<em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *str</code></em>);
+typedef             <a class="link" href="udisks2-Utilities.html#UDisksInhibitCookie" title="UDisksInhibitCookie">UDisksInhibitCookie</a>;
+<a class="link" href="udisks2-Utilities.html#UDisksInhibitCookie" title="UDisksInhibitCookie"><span class="returnvalue">UDisksInhibitCookie</span></a> * <a class="link" href="udisks2-Utilities.html#udisks-daemon-util-inhibit-system-sync" title="udisks_daemon_util_inhibit_system_sync ()">udisks_daemon_util_inhibit_system_sync</a>
+                                                        (<em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *reason</code></em>);
+<span class="returnvalue">void</span>                <a class="link" href="udisks2-Utilities.html#udisks-daemon-util-uninhibit-system-sync" title="udisks_daemon_util_uninhibit_system_sync ()">udisks_daemon_util_uninhibit_system_sync</a>
+                                                        (<em class="parameter"><code><a class="link" href="udisks2-Utilities.html#UDisksInhibitCookie" title="UDisksInhibitCookie"><span class="type">UDisksInhibitCookie</span></a> *cookie</code></em>);
+<a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="returnvalue">gchar</span></a> *             <a class="link" href="udisks2-Utilities.html#udisks-daemon-util-hexdump" title="udisks_daemon_util_hexdump ()">udisks_daemon_util_hexdump</a>          (<em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gconstpointer"><span class="type">gconstpointer</span></a> data</code></em>,
+                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gsize"><span class="type">gsize</span></a> len</code></em>);
+<span class="returnvalue">void</span>                <a class="link" href="udisks2-Utilities.html#udisks-daemon-util-hexdump-debug" title="udisks_daemon_util_hexdump_debug ()">udisks_daemon_util_hexdump_debug</a>    (<em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gconstpointer"><span class="type">gconstpointer</span></a> data</code></em>,
+                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gsize"><span class="type">gsize</span></a> len</code></em>);
+<a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>            <a class="link" href="udisks2-Utilities.html#udisks-daemon-util-file-set-contents" title="udisks_daemon_util_file_set_contents ()">udisks_daemon_util_file_set_contents</a>
+                                                        (<em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *filename</code></em>,
+                                                         <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *contents</code></em>,
+                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gssize"><span class="type">gssize</span></a> contents_len</code></em>,
+                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gint"><span class="type">gint</span></a> mode_for_new_file</code></em>,
+                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Error-Reporting.html#GError"><span class="type">GError</span></a> **error</code></em>);
+<a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>            <a class="link" href="udisks2-Utilities.html#udisks-daemon-util-on-same-seat" title="udisks_daemon_util_on_same_seat ()">udisks_daemon_util_on_same_seat</a>     (<em class="parameter"><code><a class="link" href="UDisksDaemon.html" title="UDisksDaemon"><span class="type">UDisksDaemon</span></a> *daemon</code></em>,
+                                                         <em class="parameter"><code><a class="link" href="UDisksObject.html" title="UDisksObject"><span class="type">UDisksObject</span></a> *object</code></em>,
+                                                         <em class="parameter"><code><span class="type">pid_t</span> process</code></em>);
 </pre>
 </div>
 <div class="refsect1">
@@ -516,6 +534,132 @@ double-quotes.
 </tr>
 </tbody>
 </table></div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="UDisksInhibitCookie"></a><h3>UDisksInhibitCookie</h3>
+<pre class="programlisting">typedef struct UDisksInhibitCookie UDisksInhibitCookie;
+</pre>
+<p>
+Opaque data structure used in <a class="link" href="udisks2-Utilities.html#udisks-daemon-util-inhibit-system-sync" title="udisks_daemon_util_inhibit_system_sync ()"><code class="function">udisks_daemon_util_inhibit_system_sync()</code></a> and
+<a class="link" href="udisks2-Utilities.html#udisks-daemon-util-uninhibit-system-sync" title="udisks_daemon_util_uninhibit_system_sync ()"><code class="function">udisks_daemon_util_uninhibit_system_sync()</code></a>.
+</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="udisks-daemon-util-inhibit-system-sync"></a><h3>udisks_daemon_util_inhibit_system_sync ()</h3>
+<pre class="programlisting"><a class="link" href="udisks2-Utilities.html#UDisksInhibitCookie" title="UDisksInhibitCookie"><span class="returnvalue">UDisksInhibitCookie</span></a> * udisks_daemon_util_inhibit_system_sync
+                                                        (<em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *reason</code></em>);</pre>
+<p>
+Tries to inhibit the system.
+</p>
+<p>
+Right now only
+<a class="ulink" href="http://www.freedesktop.org/wiki/Software/systemd/inhibit" target="_top">systemd</a>
+inhibitors are supported but other inhibitors can be added in the future.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>reason</code></em> :</span></p></td>
+<td>A human readable explanation of why the system is being inhibited.</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td>A cookie that can be used with <a class="link" href="udisks2-Utilities.html#udisks-daemon-util-uninhibit-system-sync" title="udisks_daemon_util_uninhibit_system_sync ()"><code class="function">udisks_daemon_util_uninhibit_system_sync()</code></a>.</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="udisks-daemon-util-uninhibit-system-sync"></a><h3>udisks_daemon_util_uninhibit_system_sync ()</h3>
+<pre class="programlisting"><span class="returnvalue">void</span>                udisks_daemon_util_uninhibit_system_sync
+                                                        (<em class="parameter"><code><a class="link" href="udisks2-Utilities.html#UDisksInhibitCookie" title="UDisksInhibitCookie"><span class="type">UDisksInhibitCookie</span></a> *cookie</code></em>);</pre>
+<p>
+Does nothing if <em class="parameter"><code>cookie</code></em> is <a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a>, otherwise uninhibits.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody><tr>
+<td><p><span class="term"><em class="parameter"><code>cookie</code></em> :</span></p></td>
+<td>
+<a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a> or a cookie obtained from <a class="link" href="udisks2-Utilities.html#udisks-daemon-util-inhibit-system-sync" title="udisks_daemon_util_inhibit_system_sync ()"><code class="function">udisks_daemon_util_inhibit_system_sync()</code></a>.</td>
+</tr></tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="udisks-daemon-util-hexdump"></a><h3>udisks_daemon_util_hexdump ()</h3>
+<pre class="programlisting"><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="returnvalue">gchar</span></a> *             udisks_daemon_util_hexdump          (<em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gconstpointer"><span class="type">gconstpointer</span></a> data</code></em>,
+                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gsize"><span class="type">gsize</span></a> len</code></em>);</pre>
+<p>
+Utility function to generate a hexadecimal representation of <em class="parameter"><code>len</code></em>
+bytes of <em class="parameter"><code>data</code></em>.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>data</code></em> :</span></p></td>
+<td>Pointer to data.</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>len</code></em> :</span></p></td>
+<td>Length of data.</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td>A multi-line string. Free with <a href="http://library.gnome.org/devel/glib/unstable/glib-Memory-Allocation.html#g-free"><code class="function">g_free()</code></a> when done using it.</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="udisks-daemon-util-hexdump-debug"></a><h3>udisks_daemon_util_hexdump_debug ()</h3>
+<pre class="programlisting"><span class="returnvalue">void</span>                udisks_daemon_util_hexdump_debug    (<em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gconstpointer"><span class="type">gconstpointer</span></a> data</code></em>,
+                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gsize"><span class="type">gsize</span></a> len</code></em>);</pre>
+<p>
+Utility function to dumps the hexadecimal representation of <em class="parameter"><code>len</code></em>
+bytes of <em class="parameter"><code>data</code></em> generated with <a class="link" href="udisks2-Utilities.html#udisks-daemon-util-hexdump" title="udisks_daemon_util_hexdump ()"><code class="function">udisks_daemon_util_hexdump()</code></a> using
+<a class="link" href="udisks2-Logging.html#udisks-debug" title="udisks_debug()"><code class="function">udisks_debug()</code></a>.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>data</code></em> :</span></p></td>
+<td>Pointer to data.</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>len</code></em> :</span></p></td>
+<td>Length of data.</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="udisks-daemon-util-file-set-contents"></a><h3>udisks_daemon_util_file_set_contents ()</h3>
+<pre class="programlisting"><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>            udisks_daemon_util_file_set_contents
+                                                        (<em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *filename</code></em>,
+                                                         <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *contents</code></em>,
+                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gssize"><span class="type">gssize</span></a> contents_len</code></em>,
+                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gint"><span class="type">gint</span></a> mode_for_new_file</code></em>,
+                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Error-Reporting.html#GError"><span class="type">GError</span></a> **error</code></em>);</pre>
+<p>
+</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="udisks-daemon-util-on-same-seat"></a><h3>udisks_daemon_util_on_same_seat ()</h3>
+<pre class="programlisting"><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>            udisks_daemon_util_on_same_seat     (<em class="parameter"><code><a class="link" href="UDisksDaemon.html" title="UDisksDaemon"><span class="type">UDisksDaemon</span></a> *daemon</code></em>,
+                                                         <em class="parameter"><code><a class="link" href="UDisksObject.html" title="UDisksObject"><span class="type">UDisksObject</span></a> *object</code></em>,
+                                                         <em class="parameter"><code><span class="type">pid_t</span> process</code></em>);</pre>
+<p>
+</p>
 </div>
 </div>
 </div>

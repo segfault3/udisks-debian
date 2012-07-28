@@ -4,7 +4,10 @@ SUBDIRS =
 
 NULL =
 
-EXTRA_DIST =
+EXTRA_DIST = \
+	test_polkitd.py		\
+	integration-test	\
+	$(NULL)
 
 INCLUDES = \
 	-I$(top_builddir) -I$(top_srcdir)	 		\

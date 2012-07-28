@@ -18,6 +18,8 @@
  *
  */
 
+#define _GNU_SOURCE /* for O_DIRECT */
+
 #include "config.h"
 #include <glib/gi18n-lib.h>
 
@@ -48,6 +50,10 @@
 #include "udisksfstabentry.h"
 #include "udiskscrypttabmonitor.h"
 #include "udiskscrypttabentry.h"
+#include "udisksdaemonutil.h"
+#include "udisksbasejob.h"
+#include "udiskssimplejob.h"
+#include "udiskslinuxdriveata.h"
 
 /**
  * SECTION:udiskslinuxblock
@@ -905,111 +911,6 @@ out:
 
 /* ---------------------------------------------------------------------------------------------------- */
 
-/* TODO: maybe move to GLib */
-static gboolean
-_g_file_set_contents_full (const gchar  *filename,
-                           const gchar  *contents,
-                           gssize        contents_len,
-                           gint          mode_for_new_file,
-                           GError      **error)
-{
-  gboolean ret;
-  struct stat statbuf;
-  gint mode;
-  gchar *tmpl;
-  gint fd;
-  FILE *f;
-
-  ret = FALSE;
-  tmpl = NULL;
-
-  if (stat (filename, &statbuf) != 0)
-    {
-      if (errno == ENOENT)
-        {
-          mode = mode_for_new_file;
-        }
-      else
-        {
-          g_set_error (error,
-                       G_IO_ERROR,
-                       g_io_error_from_errno (errno),
-                       "Error stat(2)'ing %s: %m",
-                       filename);
-          goto out;
-        }
-    }
-  else
-    {
-      mode = statbuf.st_mode;
-    }
-
-  tmpl = g_strdup_printf ("%s.XXXXXX", filename);
-  fd = g_mkstemp_full (tmpl, O_RDWR, mode);
-  if (fd == -1)
-    {
-      g_set_error (error,
-                   G_IO_ERROR,
-                   g_io_error_from_errno (errno),
-                   "Error creating temporary file: %m");
-      goto out;
-    }
-
-  f = fdopen (fd, "w");
-  if (f == NULL)
-    {
-      g_set_error (error,
-                   G_IO_ERROR,
-                   g_io_error_from_errno (errno),
-                   "Error calling fdopen: %m");
-      g_unlink (tmpl);
-      goto out;
-    }
-
-  if (contents_len < 0 )
-    contents_len = strlen (contents);
-  if (fwrite (contents, 1, contents_len, f) != contents_len)
-    {
-      g_set_error (error,
-                   G_IO_ERROR,
-                   g_io_error_from_errno (errno),
-                   "Error calling fwrite on temp file: %m");
-      fclose (f);
-      g_unlink (tmpl);
-      goto out;
-    }
-
-  if (fsync (fileno (f)) != 0)
-    {
-      g_set_error (error,
-                   G_IO_ERROR,
-                   g_io_error_from_errno (errno),
-                   "Error calling fsync on temp file: %m");
-      fclose (f);
-      g_unlink (tmpl);
-      goto out;
-    }
-  fclose (f);
-
-  if (rename (tmpl, filename) != 0)
-    {
-      g_set_error (error,
-                   G_IO_ERROR,
-                   g_io_error_from_errno (errno),
-                   "Error renaming temp file to final file: %m");
-      g_unlink (tmpl);
-      goto out;
-    }
-
-  ret = TRUE;
-
- out:
-  g_free (tmpl);
-  return ret;
-}
-
-/* ---------------------------------------------------------------------------------------------------- */
-
 static gboolean
 add_remove_fstab_entry (GVariant  *remove,
                         GVariant  *add,
@@ -1160,11 +1061,11 @@ add_remove_fstab_entry (GVariant  *remove,
       g_free (escaped_opts);
     }
 
-  if (!_g_file_set_contents_full ("/etc/fstab",
-                                  str->str,
-                                  -1,
-                                  0644, /* mode to use if non-existant */
-                                  error) != 0)
+  if (!udisks_daemon_util_file_set_contents ("/etc/fstab",
+                                             str->str,
+                                             -1,
+                                             0644, /* mode to use if non-existant */
+                                             error) != 0)
     goto out;
 
   ret = TRUE;
@@ -1386,11 +1287,11 @@ add_remove_crypttab_entry (GVariant  *remove,
                   goto out;
             }
 
-          if (!_g_file_set_contents_full (filename,
-                                          add_passphrase_contents,
-                                          -1,
-                                          0600, /* mode to use if non-existant */
-                                          error))
+          if (!udisks_daemon_util_file_set_contents (filename,
+                                                     add_passphrase_contents,
+                                                     -1,
+                                                     0600, /* mode to use if non-existant */
+                                                     error))
             {
               g_free (filename);
               goto out;
@@ -1404,11 +1305,11 @@ add_remove_crypttab_entry (GVariant  *remove,
                               add_options);
     }
 
-  if (!_g_file_set_contents_full ("/etc/crypttab",
-                                  str->str,
-                                  -1,
-                                  0600, /* mode to use if non-existant */
-                                  error) != 0)
+  if (!udisks_daemon_util_file_set_contents ("/etc/crypttab",
+                                             str->str,
+                                             -1,
+                                             0600, /* mode to use if non-existant */
+                                             error) != 0)
     goto out;
 
   ret = TRUE;
@@ -1820,6 +1721,167 @@ wait_for_luks_cleartext (UDisksDaemon *daemon,
 /* ---------------------------------------------------------------------------------------------------- */
 
 static gboolean
+erase_ata_device (UDisksBlock  *block,
+                  UDisksObject *object,
+                  UDisksDaemon *daemon,
+                  uid_t         caller_uid,
+                  gboolean      enhanced,
+                  GError      **error)
+{
+  gboolean ret = FALSE;
+  UDisksObject *drive_object = NULL;
+  UDisksDriveAta *ata = NULL;
+
+  drive_object = udisks_daemon_find_object (daemon, udisks_block_get_drive (block));
+  if (drive_object == NULL)
+    {
+      g_set_error (error, UDISKS_ERROR, UDISKS_ERROR_FAILED, "No drive object");
+      goto out;
+    }
+  ata = udisks_object_get_drive_ata (drive_object);
+  if (ata == NULL)
+    {
+      g_set_error (error, UDISKS_ERROR, UDISKS_ERROR_FAILED, "Drive is not an ATA drive");
+      goto out;
+    }
+
+  /* sleep a tiny bit here to avoid the secure erase code racing with
+   * programs spawned by udev
+   */
+  g_usleep (500 * 1000);
+
+  ret = udisks_linux_drive_ata_secure_erase_sync (UDISKS_LINUX_DRIVE_ATA (ata),
+                                                  caller_uid,
+                                                  enhanced,
+                                                  error);
+
+ out:
+  g_clear_object (&ata);
+  g_clear_object (&drive_object);
+  return ret;
+}
+
+/* ---------------------------------------------------------------------------------------------------- */
+
+#define ERASE_SIZE (1 * 1024*1024)
+
+static gboolean
+erase_device (UDisksBlock  *block,
+              UDisksObject *object,
+              UDisksDaemon *daemon,
+              uid_t         caller_uid,
+              const gchar  *erase_type,
+              GError      **error)
+{
+  gboolean ret = FALSE;
+  const gchar *device_file = NULL;
+  UDisksBaseJob *job = NULL;
+  gint fd = -1;
+  guint64 size;
+  guint64 pos;
+  guchar *buf = NULL;
+  gint64 time_of_last_signal;
+  GError *local_error = NULL;
+
+  if (g_strcmp0 (erase_type, "ata-secure-erase") == 0)
+    {
+      ret = erase_ata_device (block, object, daemon, caller_uid, FALSE, error);
+      goto out;
+    }
+  else if (g_strcmp0 (erase_type, "ata-secure-erase-enhanced") == 0)
+    {
+      ret = erase_ata_device (block, object, daemon, caller_uid, TRUE, error);
+      goto out;
+    }
+  else if (g_strcmp0 (erase_type, "zero") != 0)
+    {
+      g_set_error (&local_error, UDISKS_ERROR, UDISKS_ERROR_FAILED,
+                   "Unknown or unsupported erase type `%s'",
+                   erase_type);
+      goto out;
+    }
+
+  device_file = udisks_block_get_device (block);
+  fd = open (device_file, O_WRONLY | O_SYNC | O_EXCL);
+  if (fd == -1)
+    {
+      g_set_error (&local_error, UDISKS_ERROR, UDISKS_ERROR_FAILED,
+                   "Error opening device %s: %m", device_file);
+      goto out;
+    }
+
+  job = udisks_daemon_launch_simple_job (daemon, object, "format-erase", caller_uid, NULL);
+  udisks_base_job_set_auto_estimate (UDISKS_BASE_JOB (job), TRUE);
+  udisks_job_set_progress_valid (UDISKS_JOB (job), TRUE);
+
+  if (ioctl (fd, BLKGETSIZE64, &size) != 0)
+    {
+      g_set_error (&local_error, UDISKS_ERROR, UDISKS_ERROR_FAILED,
+                   "Error doing BLKGETSIZE64 iotctl on %s: %m", device_file);
+      goto out;
+    }
+
+  buf = g_new0 (guchar, ERASE_SIZE);
+  pos = 0;
+  time_of_last_signal = g_get_monotonic_time ();
+  while (pos < size)
+    {
+      size_t to_write;
+      ssize_t num_written;
+      gint64 now;
+
+      to_write = MIN (size - pos, ERASE_SIZE);
+    again:
+      num_written = write (fd, buf, to_write);
+      if (num_written == -1 || num_written == 0)
+        {
+          if (errno == EINTR)
+            goto again;
+          g_set_error (&local_error, UDISKS_ERROR, UDISKS_ERROR_FAILED,
+                       "Error writing %d bytes to %s: %m",
+                       (gint) to_write, device_file);
+          goto out;
+        }
+      pos += num_written;
+
+      if (g_cancellable_is_cancelled (udisks_base_job_get_cancellable (job)))
+        {
+          g_set_error (&local_error, UDISKS_ERROR, UDISKS_ERROR_CANCELLED,
+                       "Job was canceled");
+          goto out;
+        }
+
+      /* only emit D-Bus signal at most once a second */
+      now = g_get_monotonic_time ();
+      if (now - time_of_last_signal > G_USEC_PER_SEC)
+        {
+          /* TODO: estimation etc. */
+          udisks_job_set_progress (UDISKS_JOB (job), ((gdouble) pos) / size);
+          time_of_last_signal = now;
+        }
+    }
+
+  ret = TRUE;
+
+ out:
+  if (job != NULL)
+    {
+      if (local_error != NULL)
+        udisks_simple_job_complete (UDISKS_SIMPLE_JOB (job), FALSE, local_error->message);
+      else
+        udisks_simple_job_complete (UDISKS_SIMPLE_JOB (job), TRUE, "");
+    }
+  if (local_error != NULL)
+    g_propagate_error (error, local_error);
+  g_free (buf);
+  if (fd != -1)
+    close (fd);
+  return ret;
+}
+
+/* ---------------------------------------------------------------------------------------------------- */
+
+static gboolean
 handle_format (UDisksBlock           *block,
                GDBusMethodInvocation *invocation,
                const gchar           *type,
@@ -1847,9 +1909,12 @@ handle_format (UDisksBlock           *block,
   pid_t caller_pid;
   gboolean take_ownership = FALSE;
   gchar *encrypt_passphrase = NULL;
+  gchar *erase_type = NULL;
   gchar *mapped_name = NULL;
   const gchar *label = NULL;
   gchar *escaped_device = NULL;
+  gboolean was_partitioned = FALSE;
+  UDisksInhibitCookie *inhibit_cookie = NULL;
 
   error = NULL;
   object = udisks_daemon_util_dup_object (block, &error);
@@ -1864,6 +1929,10 @@ handle_format (UDisksBlock           *block,
   command = NULL;
   error_message = NULL;
 
+  g_variant_lookup (options, "take-ownership", "b", &take_ownership);
+  g_variant_lookup (options, "encrypt.passphrase", "s", &encrypt_passphrase);
+  g_variant_lookup (options, "erase", "s", &erase_type);
+
   error = NULL;
   if (!udisks_daemon_util_get_caller_pid_sync (daemon,
                                                invocation,
@@ -1876,22 +1945,38 @@ handle_format (UDisksBlock           *block,
       goto out;
     }
 
-  /* Translators: Shown in authentication dialog when formatting a
-   * device. This includes both creating a filesystem or partition
-   * table.
-   *
-   * Do not translate $(drive), it's a placeholder and will
-   * be replaced by the name of the drive/device in question
-   */
-  message = N_("Authentication is required to format $(drive)");
-  action_id = "org.freedesktop.udisks2.modify-device";
-  if (udisks_block_get_hint_system (block))
+  if (g_strcmp0 (erase_type, "ata-secure-erase") == 0 ||
+      g_strcmp0 (erase_type, "ata-secure-erase-enhanced") == 0)
     {
-      action_id = "org.freedesktop.udisks2.modify-device-system";
+      /* Translators: Shown in authentication dialog when the user
+       * requests erasing a hard disk using the SECURE ERASE UNIT
+       * command.
+       *
+       * Do not translate $(drive), it's a placeholder and
+       * will be replaced by the name of the drive/device in question
+       */
+      message = N_("Authentication is required to perform a secure erase of $(drive)");
+      action_id = "org.freedesktop.udisks2.ata-secure-erase";
     }
-  else if (!udisks_daemon_util_on_same_seat (daemon, object, caller_pid))
+  else
     {
-      action_id = "org.freedesktop.udisks2.modify-device-other-seat";
+      /* Translators: Shown in authentication dialog when formatting a
+       * device. This includes both creating a filesystem or partition
+       * table.
+       *
+       * Do not translate $(drive), it's a placeholder and will
+       * be replaced by the name of the drive/device in question
+       */
+      message = N_("Authentication is required to format $(drive)");
+      action_id = "org.freedesktop.udisks2.modify-device";
+      if (udisks_block_get_hint_system (block))
+        {
+          action_id = "org.freedesktop.udisks2.modify-device-system";
+        }
+      else if (!udisks_daemon_util_on_same_seat (daemon, object, caller_pid))
+        {
+          action_id = "org.freedesktop.udisks2.modify-device-other-seat";
+        }
     }
 
   error = NULL;
@@ -1924,16 +2009,16 @@ handle_format (UDisksBlock           *block,
                                                     invocation))
     goto out;
 
-  g_variant_lookup (options, "take-ownership", "b", &take_ownership);
-  g_variant_lookup (options, "encrypt.passphrase", "s", &encrypt_passphrase);
+  inhibit_cookie = udisks_daemon_util_inhibit_system_sync (N_("Formatting Device"));
 
   escaped_device = udisks_daemon_util_escape_and_quote (udisks_block_get_device (block));
 
-  /* First wipe the device */
-  wait_data = g_new0 (FormatWaitData, 1);
-  wait_data->object = object;
+  was_partitioned = (udisks_object_peek_partition_table (object) != NULL);
+
+  /* First wipe the device... */
   if (!udisks_daemon_launch_spawned_job_sync (daemon,
                                               object,
+                                              "format-erase", caller_uid,
                                               NULL, /* cancellable */
                                               0,    /* uid_t run_as_uid */
                                               0,    /* uid_t run_as_euid */
@@ -1951,16 +2036,37 @@ handle_format (UDisksBlock           *block,
       g_free (error_message);
       goto out;
     }
+  /* ...then wait until this change has taken effect */
+  wait_data = g_new0 (FormatWaitData, 1);
+  wait_data->object = object;
+  wait_data->type = "empty";
+  udisks_linux_block_object_trigger_uevent (UDISKS_LINUX_BLOCK_OBJECT (object));
+  if (was_partitioned)
+    udisks_linux_block_object_reread_partition_table (UDISKS_LINUX_BLOCK_OBJECT (object));
   if (udisks_daemon_wait_for_object_sync (daemon,
                                           wait_for_filesystem,
                                           wait_data,
                                           NULL,
-                                          30,
+                                          15,
                                           &error) == NULL)
     {
       g_prefix_error (&error, "Error synchronizing after initial wipe: ");
       g_dbus_method_invocation_take_error (invocation, error);
       goto out;
+    }
+
+  /* Erase the device, if requested
+   *
+   * (but not if using encryption, we want to erase the cleartext device, see below)
+   */
+  if (erase_type != NULL && encrypt_passphrase == NULL)
+    {
+      if (!erase_device (block, object, daemon, caller_uid, erase_type, &error))
+        {
+          g_prefix_error (&error, "Error erasing device: ");
+          g_dbus_method_invocation_take_error (invocation, error);
+          goto out;
+        }
     }
 
   /* And now create the desired filesystem */
@@ -1971,6 +2077,7 @@ handle_format (UDisksBlock           *block,
       /* Create it */
       if (!udisks_daemon_launch_spawned_job_sync (daemon,
                                                   object,
+                                                  "format-mkfs", caller_uid,
                                                   NULL, /* cancellable */
                                                   0,    /* uid_t run_as_uid */
                                                   0,    /* uid_t run_as_euid */
@@ -2006,6 +2113,7 @@ handle_format (UDisksBlock           *block,
       mapped_name = g_strdup_printf ("luks-%s", udisks_block_get_id_uuid (block));
       if (!udisks_daemon_launch_spawned_job_sync (daemon,
                                                   object,
+                                                  "format-mkfs", caller_uid,
                                                   NULL, /* cancellable */
                                                   0,    /* uid_t run_as_uid */
                                                   0,    /* uid_t run_as_euid */
@@ -2063,6 +2171,17 @@ handle_format (UDisksBlock           *block,
       block_to_mkfs = block;
     }
 
+  /* If using encryption, now erase the cleartext device (if requested) */
+  if (encrypt_passphrase != NULL && erase_type != NULL)
+    {
+      if (!erase_device (block_to_mkfs, object_to_mkfs, daemon, caller_uid, erase_type, &error))
+        {
+          g_prefix_error (&error, "Error erasing cleartext device: ");
+          g_dbus_method_invocation_take_error (invocation, error);
+          goto out;
+        }
+    }
+
   /* Set label, if needed */
   if (g_variant_lookup (options, "label", "&s", &label))
     {
@@ -2084,6 +2203,7 @@ handle_format (UDisksBlock           *block,
   g_free (tmp);
   if (!udisks_daemon_launch_spawned_job_sync (daemon,
                                               object_to_mkfs,
+                                              "format-mkfs", caller_uid,
                                               NULL, /* cancellable */
                                               0,    /* uid_t run_as_uid */
                                               0,    /* uid_t run_as_euid */
@@ -2195,9 +2315,11 @@ handle_format (UDisksBlock           *block,
   udisks_block_complete_format (block, invocation);
 
  out:
+  udisks_daemon_util_uninhibit_system_sync (inhibit_cookie);
   g_free (escaped_device);
   g_free (mapped_name);
   g_free (command);
+  g_free (erase_type);
   g_free (encrypt_passphrase);
   g_clear_object (&cleartext_object);
   g_clear_object (&cleartext_block);
@@ -2337,6 +2459,134 @@ handle_open_for_restore (UDisksBlock           *block,
 
 /* ---------------------------------------------------------------------------------------------------- */
 
+static gboolean
+handle_open_for_benchmark (UDisksBlock           *block,
+                           GDBusMethodInvocation *invocation,
+                           GUnixFDList           *fd_list,
+                           GVariant              *options)
+{
+  UDisksObject *object;
+  UDisksDaemon *daemon;
+  const gchar *action_id;
+  const gchar *device;
+  GUnixFDList *out_fd_list = NULL;
+  gboolean opt_writable = FALSE;
+  GError *error;
+  gint fd;
+  gint open_flags;
+
+  error = NULL;
+  object = udisks_daemon_util_dup_object (block, &error);
+  if (object == NULL)
+    {
+      g_dbus_method_invocation_take_error (invocation, error);
+      goto out;
+    }
+
+  daemon = udisks_linux_block_object_get_daemon (UDISKS_LINUX_BLOCK_OBJECT (object));
+
+  action_id = "org.freedesktop.udisks2.open-device";
+  if (udisks_block_get_hint_system (block))
+    action_id = "org.freedesktop.udisks2.open-device-system";
+
+  if (!udisks_daemon_util_check_authorization_sync (daemon,
+                                                    object,
+                                                    action_id,
+                                                    options,
+                                                    /* Translators: Shown in authentication dialog when an application
+                                                     * wants to benchmark a device.
+                                                     *
+                                                     * Do not translate $(drive), it's a placeholder and will
+                                                     * be replaced by the name of the drive/device in question
+                                                     */
+                                                    N_("Authentication is required to open $(drive) for benchmarking"),
+                                                    invocation))
+    goto out;
+
+  g_variant_lookup (options, "writable", "b", &opt_writable);
+
+  if (opt_writable)
+    open_flags = O_RDWR  | O_EXCL;
+  else
+    open_flags = O_RDONLY;
+
+  open_flags |= O_DIRECT | O_SYNC | O_CLOEXEC;
+
+  device = udisks_block_get_device (UDISKS_BLOCK (block));
+
+  fd = open (device, open_flags);
+  if (fd == -1)
+    {
+      g_dbus_method_invocation_return_error (invocation, UDISKS_ERROR, UDISKS_ERROR_FAILED,
+                                             "Error opening %s: %m", device);
+      goto out;
+    }
+
+  out_fd_list = g_unix_fd_list_new_from_array (&fd, 1);
+  udisks_block_complete_open_for_backup (block, invocation, out_fd_list, g_variant_new_handle (0));
+
+ out:
+  g_clear_object (&out_fd_list);
+  g_clear_object (&object);
+  return TRUE; /* returning true means that we handled the method invocation */
+}
+
+/* ---------------------------------------------------------------------------------------------------- */
+
+static gboolean
+handle_rescan (UDisksBlock           *block,
+               GDBusMethodInvocation *invocation,
+               GVariant              *options)
+{
+  UDisksObject *object = NULL;
+  GUdevDevice *udev_device = NULL;
+  UDisksDaemon *daemon;
+  const gchar *action_id;
+  const gchar *message;
+  GError *error = NULL;
+
+  object = udisks_daemon_util_dup_object (block, &error);
+  if (object == NULL)
+    {
+      g_dbus_method_invocation_take_error (invocation, error);
+      goto out;
+    }
+
+  daemon = udisks_linux_block_object_get_daemon (UDISKS_LINUX_BLOCK_OBJECT (object));
+
+  /* Translators: Shown in authentication dialog when an application
+   * wants to rescan a device.
+   *
+   * Do not translate $(drive), it's a placeholder and will
+   * be replaced by the name of the drive/device in question
+   */
+  message = N_("Authentication is required to rescan $(drive)");
+  action_id = "org.freedesktop.udisks2.rescan";
+
+  if (!udisks_daemon_util_check_authorization_sync (daemon,
+                                                    object,
+                                                    action_id,
+                                                    options,
+                                                    message,
+                                                    invocation))
+    goto out;
+
+  udev_device = udisks_linux_block_object_get_device (UDISKS_LINUX_BLOCK_OBJECT (object));
+
+  udisks_linux_block_object_trigger_uevent (UDISKS_LINUX_BLOCK_OBJECT (object));
+  if (g_strcmp0 (g_udev_device_get_devtype (udev_device), "disk") == 0)
+    udisks_linux_block_object_reread_partition_table (UDISKS_LINUX_BLOCK_OBJECT (object));
+
+  udisks_block_complete_rescan (block, invocation);
+
+ out:
+  g_clear_object (&udev_device);
+  g_clear_object (&object);
+  return TRUE; /* returning true means that we handled the method invocation */
+}
+
+/* ---------------------------------------------------------------------------------------------------- */
+
 static void
 block_iface_init (UDisksBlockIface *iface)
 {
@@ -2347,4 +2597,6 @@ block_iface_init (UDisksBlockIface *iface)
   iface->handle_format                    = handle_format;
   iface->handle_open_for_backup           = handle_open_for_backup;
   iface->handle_open_for_restore          = handle_open_for_restore;
+  iface->handle_open_for_benchmark        = handle_open_for_benchmark;
+  iface->handle_rescan                    = handle_rescan;
 }

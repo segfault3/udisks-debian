@@ -69,6 +69,7 @@ UDisksSpawnedJob
 @input_string: 
 @run_as_uid: 
 @run_as_euid: 
+@daemon: 
 @cancellable: 
 @Returns: 
 

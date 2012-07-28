@@ -224,6 +224,8 @@ udisks_daemon_constructed (GObject *object)
   daemon->persistent_store = udisks_persistent_store_new (PACKAGE_LOCALSTATE_DIR "/lib/udisks2",
                                                           "/run/udisks2");
 
+  daemon->cleanup = udisks_cleanup_new (daemon);
+
   g_signal_connect (daemon->mount_monitor,
                     "mount-removed",
                     G_CALLBACK (mount_monitor_on_mount_removed),
@@ -241,7 +243,6 @@ udisks_daemon_constructed (GObject *object)
   g_dbus_object_manager_server_set_connection (daemon->object_manager, daemon->connection);
 
   /* Start cleaning up */
-  daemon->cleanup = udisks_cleanup_new (daemon);
   udisks_cleanup_start (daemon->cleanup);
   udisks_cleanup_check (daemon->cleanup);
 
@@ -518,6 +519,8 @@ static guint job_id = 0;
 UDisksBaseJob *
 udisks_daemon_launch_simple_job (UDisksDaemon    *daemon,
                                  UDisksObject    *object,
+                                 const gchar     *job_operation,
+                                 uid_t            job_started_by_uid,
                                  GCancellable    *cancellable)
 {
   UDisksSimpleJob *job;
@@ -526,7 +529,7 @@ udisks_daemon_launch_simple_job (UDisksDaemon    *daemon,
 
   g_return_val_if_fail (UDISKS_IS_DAEMON (daemon), NULL);
 
-  job = udisks_simple_job_new (cancellable);
+  job = udisks_simple_job_new (daemon, cancellable);
   if (object != NULL)
     udisks_base_job_add_object (UDISKS_BASE_JOB (job), object);
 
@@ -535,6 +538,10 @@ udisks_daemon_launch_simple_job (UDisksDaemon    *daemon,
   job_object = udisks_object_skeleton_new (job_object_path);
   udisks_object_skeleton_set_job (job_object, UDISKS_JOB (job));
   g_free (job_object_path);
+
+  udisks_job_set_cancelable (UDISKS_JOB (job), TRUE);
+  udisks_job_set_operation (UDISKS_JOB (job), job_operation);
+  udisks_job_set_started_by_uid (UDISKS_JOB (job), job_started_by_uid);
 
   g_dbus_object_manager_server_export (daemon->object_manager, G_DBUS_OBJECT_SKELETON (job_object));
   g_signal_connect_after (job,
@@ -575,6 +582,8 @@ udisks_daemon_launch_simple_job (UDisksDaemon    *daemon,
 UDisksBaseJob *
 udisks_daemon_launch_threaded_job  (UDisksDaemon    *daemon,
                                     UDisksObject    *object,
+                                    const gchar     *job_operation,
+                                    uid_t            job_started_by_uid,
                                     UDisksThreadedJobFunc job_func,
                                     gpointer         user_data,
                                     GDestroyNotify   user_data_free_func,
@@ -590,6 +599,7 @@ udisks_daemon_launch_threaded_job  (UDisksDaemon    *daemon,
   job = udisks_threaded_job_new (job_func,
                                  user_data,
                                  user_data_free_func,
+                                 daemon,
                                  cancellable);
   if (object != NULL)
     udisks_base_job_add_object (UDISKS_BASE_JOB (job), object);
@@ -599,6 +609,10 @@ udisks_daemon_launch_threaded_job  (UDisksDaemon    *daemon,
   job_object = udisks_object_skeleton_new (job_object_path);
   udisks_object_skeleton_set_job (job_object, UDISKS_JOB (job));
   g_free (job_object_path);
+
+  udisks_job_set_cancelable (UDISKS_JOB (job), TRUE);
+  udisks_job_set_operation (UDISKS_JOB (job), job_operation);
+  udisks_job_set_started_by_uid (UDISKS_JOB (job), job_started_by_uid);
 
   g_dbus_object_manager_server_export (daemon->object_manager, G_DBUS_OBJECT_SKELETON (job_object));
   g_signal_connect_after (job,
@@ -638,6 +652,8 @@ udisks_daemon_launch_threaded_job  (UDisksDaemon    *daemon,
 UDisksBaseJob *
 udisks_daemon_launch_spawned_job (UDisksDaemon    *daemon,
                                   UDisksObject    *object,
+                                  const gchar     *job_operation,
+                                  uid_t            job_started_by_uid,
                                   GCancellable    *cancellable,
                                   uid_t            run_as_uid,
                                   uid_t            run_as_euid,
@@ -658,7 +674,7 @@ udisks_daemon_launch_spawned_job (UDisksDaemon    *daemon,
   va_start (var_args, command_line_format);
   command_line = g_strdup_vprintf (command_line_format, var_args);
   va_end (var_args);
-  job = udisks_spawned_job_new (command_line, input_string, run_as_uid, run_as_euid, cancellable);
+  job = udisks_spawned_job_new (command_line, input_string, run_as_uid, run_as_euid, daemon, cancellable);
   g_free (command_line);
 
   if (object != NULL)
@@ -669,6 +685,10 @@ udisks_daemon_launch_spawned_job (UDisksDaemon    *daemon,
   job_object = udisks_object_skeleton_new (job_object_path);
   udisks_object_skeleton_set_job (job_object, UDISKS_JOB (job));
   g_free (job_object_path);
+
+  udisks_job_set_cancelable (UDISKS_JOB (job), TRUE);
+  udisks_job_set_operation (UDISKS_JOB (job), job_operation);
+  udisks_job_set_started_by_uid (UDISKS_JOB (job), job_started_by_uid);
 
   g_dbus_object_manager_server_export (daemon->object_manager, G_DBUS_OBJECT_SKELETON (job_object));
   g_signal_connect_after (job,
@@ -736,6 +756,8 @@ spawned_job_sync_on_completed (UDisksJob    *job,
 gboolean
 udisks_daemon_launch_spawned_job_sync (UDisksDaemon    *daemon,
                                        UDisksObject    *object,
+                                       const gchar     *job_operation,
+                                       uid_t            job_started_by_uid,
                                        GCancellable    *cancellable,
                                        uid_t            run_as_uid,
                                        uid_t            run_as_euid,
@@ -766,6 +788,8 @@ udisks_daemon_launch_spawned_job_sync (UDisksDaemon    *daemon,
   va_end (var_args);
   job = udisks_daemon_launch_spawned_job (daemon,
                                           object,
+                                          job_operation,
+                                          job_started_by_uid,
                                           cancellable,
                                           run_as_uid,
                                           run_as_euid,

@@ -39,7 +39,8 @@ noinst_PROGRAMS = udisks-test$(EXEEXT) udisks-test-helper$(EXEEXT)
 subdir = src/tests
 DIST_COMMON = $(srcdir)/Makefile.am $(srcdir)/Makefile.in
 ACLOCAL_M4 = $(top_srcdir)/aclocal.m4
-am__aclocal_m4_deps = $(top_srcdir)/configure.ac
+am__aclocal_m4_deps = $(top_srcdir)/acinclude.m4 \
+	$(top_srcdir)/configure.ac
 am__configure_deps = $(am__aclocal_m4_deps) $(CONFIGURE_DEPENDENCIES) \
 	$(ACLOCAL_M4)
 mkinstalldirs = $(SHELL) $(top_srcdir)/mkinstalldirs
@@ -330,7 +331,11 @@ top_srcdir = @top_srcdir@
 udevdir = @udevdir@
 SUBDIRS = 
 NULL = 
-EXTRA_DIST = 
+EXTRA_DIST = \
+	test_polkitd.py		\
+	integration-test	\
+	$(NULL)
+
 INCLUDES = \
 	-I$(top_builddir) -I$(top_srcdir)	 		\
 	-I$(top_builddir)/src -I$(top_srcdir)/src 		\

@@ -20,6 +20,8 @@
 
 #include "config.h"
 #include <glib/gi18n-lib.h>
+#include <glib/gstdio.h>
+#include <gio/gunixfdlist.h>
 
 #include <stdio.h>
 
@@ -569,6 +571,9 @@ udisks_daemon_util_check_authorization_sync (UDisksDaemon          *daemon,
         }
 
       partition = udisks_object_get_partition (object);
+
+      if (drive == NULL)
+        drive = udisks_object_get_drive (object);
     }
 
   if (block != NULL)
@@ -652,14 +657,25 @@ udisks_daemon_util_check_authorization_sync (UDisksDaemon          *daemon,
                                                       &error);
   if (result == NULL)
     {
-      g_dbus_method_invocation_return_error (invocation,
-                                             UDISKS_ERROR,
-                                             UDISKS_ERROR_FAILED,
-                                             "Error checking authorization: %s (%s, %d)",
-                                             error->message,
-                                             g_quark_to_string (error->domain),
-                                             error->code);
-      g_error_free (error);
+      if (error->domain != POLKIT_ERROR)
+        {
+          /* assume polkit authority is not available (e.g. could be the service
+           * manager returning org.freedesktop.systemd1.Masked)
+           */
+          g_error_free (error);
+          ret = check_authorization_no_polkit (daemon, object, action_id, options, message, invocation);
+        }
+      else
+        {
+          g_dbus_method_invocation_return_error (invocation,
+                                                 UDISKS_ERROR,
+                                                 UDISKS_ERROR_FAILED,
+                                                 "Error checking authorization: %s (%s, %d)",
+                                                 error->message,
+                                                 g_quark_to_string (error->domain),
+                                                 error->code);
+          g_error_free (error);
+        }
       goto out;
     }
   if (!polkit_authorization_result_get_is_authorized (result))
@@ -758,7 +774,10 @@ udisks_daemon_util_get_caller_uid_sync (UDisksDaemon            *daemon,
       goto out;
     }
 
-  G_STATIC_ASSERT (sizeof (uid_t) == sizeof (guint32));
+  {
+    G_STATIC_ASSERT (sizeof (uid_t) == sizeof (guint32));
+  }
+
   g_variant_get (value, "(u)", &uid);
   if (out_uid != NULL)
     *out_uid = uid;
@@ -857,7 +876,9 @@ udisks_daemon_util_get_caller_pid_sync (UDisksDaemon            *daemon,
       goto out;
     }
 
-  G_STATIC_ASSERT (sizeof (uid_t) == sizeof (guint32));
+  {
+    G_STATIC_ASSERT (sizeof (uid_t) == sizeof (guint32));
+  }
   g_variant_get (value, "(u)", &pid);
   if (out_pid != NULL)
     *out_pid = pid;
@@ -1047,3 +1068,310 @@ udisks_daemon_util_on_same_seat (UDisksDaemon          *daemon,
   return ret;
 #endif /* HAVE_LIBSYSTEMD_LOGIN */
 }
+
+/**
+ * udisks_daemon_util_hexdump:
+ * @data: Pointer to data.
+ * @len: Length of data.
+ *
+ * Utility function to generate a hexadecimal representation of @len
+ * bytes of @data.
+ *
+ * Returns: A multi-line string. Free with g_free() when done using it.
+ */
+gchar *
+udisks_daemon_util_hexdump (gconstpointer data, gsize len)
+{
+  const guchar *bdata = data;
+  guint n, m;
+  GString *ret;
+
+  ret = g_string_new (NULL);
+  for (n = 0; n < len; n += 16)
+    {
+      g_string_append_printf (ret, "%04x: ", n);
+
+      for (m = n; m < n + 16; m++)
+        {
+          if (m > n && (m%4) == 0)
+            g_string_append_c (ret, ' ');
+          if (m < len)
+            g_string_append_printf (ret, "%02x ", bdata[m]);
+          else
+            g_string_append (ret, "   ");
+        }
+
+      g_string_append (ret, "   ");
+
+      for (m = n; m < len && m < n + 16; m++)
+        g_string_append_c (ret, g_ascii_isprint (bdata[m]) ? bdata[m] : '.');
+
+      g_string_append_c (ret, '\n');
+    }
+
+  return g_string_free (ret, FALSE);
+}
+
+/**
+ * udisks_daemon_util_hexdump_debug:
+ * @data: Pointer to data.
+ * @len: Length of data.
+ *
+ * Utility function to dumps the hexadecimal representation of @len
+ * bytes of @data generated with udisks_daemon_util_hexdump() using
+ * udisks_debug().
+ */
+void
+udisks_daemon_util_hexdump_debug (gconstpointer data, gsize len)
+{
+  gchar *s = udisks_daemon_util_hexdump (data, len);
+  udisks_debug ("Hexdump of %" G_GSIZE_FORMAT " bytes:\n%s", len, s);
+  g_free (s);
+}
+
+/* ---------------------------------------------------------------------------------------------------- */
+
+/**
+ * @filename: (type filename): Name of a file to write @contents to, in the GLib file name encoding.
+ * @contents: (array length=length) (element-type guint8): String to write to the file.
+ * @length: Length of @contents, or -1 if @contents is a NUL-terminated string.
+ * @mode_for_new_file: Mode for new file.
+ * @error: Return location for a #GError, or %NULL.
+ *
+ * Like g_file_set_contents() but preserves the mode of the file if it
+ * already exists and sets it to @mode_for_new_file otherwise.
+ *
+ * Return value: %TRUE on success, %FALSE if an error occurred
+ */
+gboolean
+udisks_daemon_util_file_set_contents (const gchar  *filename,
+                                      const gchar  *contents,
+                                      gssize        contents_len,
+                                      gint          mode_for_new_file,
+                                      GError      **error)
+{
+  gboolean ret;
+  struct stat statbuf;
+  gint mode;
+  gchar *tmpl;
+  gint fd;
+  FILE *f;
+
+  ret = FALSE;
+  tmpl = NULL;
+
+  if (stat (filename, &statbuf) != 0)
+    {
+      if (errno == ENOENT)
+        {
+          mode = mode_for_new_file;
+        }
+      else
+        {
+          g_set_error (error,
+                       G_IO_ERROR,
+                       g_io_error_from_errno (errno),
+                       "Error stat(2)'ing %s: %m",
+                       filename);
+          goto out;
+        }
+    }
+  else
+    {
+      mode = statbuf.st_mode;
+    }
+
+  tmpl = g_strdup_printf ("%s.XXXXXX", filename);
+  fd = g_mkstemp_full (tmpl, O_RDWR, mode);
+  if (fd == -1)
+    {
+      g_set_error (error,
+                   G_IO_ERROR,
+                   g_io_error_from_errno (errno),
+                   "Error creating temporary file: %m");
+      goto out;
+    }
+
+  f = fdopen (fd, "w");
+  if (f == NULL)
+    {
+      g_set_error (error,
+                   G_IO_ERROR,
+                   g_io_error_from_errno (errno),
+                   "Error calling fdopen: %m");
+      g_unlink (tmpl);
+      goto out;
+    }
+
+  if (contents_len < 0 )
+    contents_len = strlen (contents);
+  if (fwrite (contents, 1, contents_len, f) != (gsize) contents_len)
+    {
+      g_set_error (error,
+                   G_IO_ERROR,
+                   g_io_error_from_errno (errno),
+                   "Error calling fwrite on temp file: %m");
+      fclose (f);
+      g_unlink (tmpl);
+      goto out;
+    }
+
+  if (fsync (fileno (f)) != 0)
+    {
+      g_set_error (error,
+                   G_IO_ERROR,
+                   g_io_error_from_errno (errno),
+                   "Error calling fsync on temp file: %m");
+      fclose (f);
+      g_unlink (tmpl);
+      goto out;
+    }
+  fclose (f);
+
+  if (rename (tmpl, filename) != 0)
+    {
+      g_set_error (error,
+                   G_IO_ERROR,
+                   g_io_error_from_errno (errno),
+                   "Error renaming temp file to final file: %m");
+      g_unlink (tmpl);
+      goto out;
+    }
+
+  ret = TRUE;
+
+ out:
+  g_free (tmpl);
+  return ret;
+}
+
+/* ---------------------------------------------------------------------------------------------------- */
+
+/**
+ * UDisksInhibitCookie:
+ *
+ * Opaque data structure used in udisks_daemon_util_inhibit_system_sync() and
+ * udisks_daemon_util_uninhibit_system_sync().
+ */
+struct UDisksInhibitCookie
+{
+  /*< private >*/
+  guint32 magic;
+#ifdef HAVE_LIBSYSTEMD_LOGIN
+  gint fd;
+#endif
+};
+
+/**
+ * udisks_daemon_util_inhibit_system_sync:
+ * @reason: A human readable explanation of why the system is being inhibited.
+ *
+ * Tries to inhibit the system.
+ *
+ * Right now only
+ * <ulink url="http://www.freedesktop.org/wiki/Software/systemd/inhibit">systemd</ulink>
+ * inhibitors are supported but other inhibitors can be added in the future.
+ *
+ * Returns: A cookie that can be used with udisks_daemon_util_uninhibit_system_sync().
+ */
+UDisksInhibitCookie *
+udisks_daemon_util_inhibit_system_sync (const gchar  *reason)
+{
+#ifdef HAVE_LIBSYSTEMD_LOGIN
+  UDisksInhibitCookie *ret = NULL;
+  GDBusConnection *connection = NULL;
+  GVariant *value = NULL;
+  GUnixFDList *fd_list = NULL;
+  gint32 index = -1;
+  GError *error = NULL;
+
+  g_return_val_if_fail (reason != NULL, NULL);
+
+  connection = g_bus_get_sync (G_BUS_TYPE_SYSTEM, NULL, &error);
+  if (connection == NULL)
+    {
+      udisks_error ("Error getting system bus: %s (%s, %d)",
+                    error->message, g_quark_to_string (error->domain), error->code);
+      g_clear_error (&error);
+      goto out;
+    }
+
+  value = g_dbus_connection_call_with_unix_fd_list_sync (connection,
+                                                         "org.freedesktop.login1",
+                                                         "/org/freedesktop/login1",
+                                                         "org.freedesktop.login1.Manager",
+                                                         "Inhibit",
+                                                         g_variant_new ("(ssss)",
+                                                                        "sleep:shutdown:idle", /* what */
+                                                                        "Disk Manager",        /* who */
+                                                                        reason,                /* why */
+                                                                        "block"),              /* mode */
+                                                         G_VARIANT_TYPE ("(h)"),
+                                                         G_DBUS_CALL_FLAGS_NONE,
+                                                         -1,       /* default timeout */
+                                                         NULL,     /* fd_list */
+                                                         &fd_list, /* out_fd_list */
+                                                         NULL, /* GCancellable */
+                                                         &error);
+  if (value == NULL)
+    {
+      udisks_error ("Error inhibiting: %s (%s, %d)",
+                    error->message, g_quark_to_string (error->domain), error->code);
+      g_clear_error (&error);
+      goto out;
+    }
+
+  g_variant_get (value, "(h)", &index);
+  g_assert (index >= 0 && index < g_unix_fd_list_get_length (fd_list));
+
+  ret = g_new0 (UDisksInhibitCookie, 1);
+  ret->magic = 0xdeadbeef;
+  ret->fd = g_unix_fd_list_get (fd_list, index, &error);
+  if (ret->fd == -1)
+    {
+      udisks_error ("Error getting fd: %s (%s, %d)",
+                    error->message, g_quark_to_string (error->domain), error->code);
+      g_clear_error (&error);
+      g_free (ret);
+      ret = NULL;
+      goto out;
+    }
+
+ out:
+  if (value != NULL)
+    g_variant_unref (value);
+  g_clear_object (&fd_list);
+  g_clear_object (&connection);
+  return ret;
+#else
+  /* non-systemd: just return a dummy pointer */
+  g_return_val_if_fail (reason != NULL, NULL);
+  return (UDisksInhibitCookie* ) &udisks_daemon_util_inhibit_system_sync;
+#endif
+}
+
+/**
+ * udisks_daemon_util_uninhibit_system_sync:
+ * @cookie: %NULL or a cookie obtained from udisks_daemon_util_inhibit_system_sync().
+ *
+ * Does nothing if @cookie is %NULL, otherwise uninhibits.
+ */
+void
+udisks_daemon_util_uninhibit_system_sync (UDisksInhibitCookie *cookie)
+{
+#ifdef HAVE_LIBSYSTEMD_LOGIN
+  if (cookie != NULL)
+    {
+      g_assert (cookie->magic == 0xdeadbeef);
+      if (close (cookie->fd) != 0)
+        {
+          udisks_error ("Error closing inhbit-fd: %m");
+        }
+      g_free (cookie);
+    }
+#else
+  /* non-systemd: check dummy pointer */
+  g_warn_if_fail (cookie == (UDisksInhibitCookie* ) &udisks_daemon_util_inhibit_system_sync);
+#endif
+}
+

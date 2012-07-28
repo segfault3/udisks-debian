@@ -73,6 +73,7 @@ UDisksThreadedJob
 @job_func: 
 @user_data: 
 @user_data_free_func: 
+@daemon: 
 @cancellable: 
 @Returns: 
 

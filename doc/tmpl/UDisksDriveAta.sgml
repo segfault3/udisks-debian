@@ -28,6 +28,46 @@ UDisksDriveAta
 </para>
 
 
+<!-- ##### SIGNAL UDisksDriveAta::handle-pm-get-state ##### -->
+<para>
+
+</para>
+
+@udisksdriveata: the object which received the signal.
+@arg1: 
+@arg2: 
+@Returns: 
+
+<!-- ##### SIGNAL UDisksDriveAta::handle-pm-standby ##### -->
+<para>
+
+</para>
+
+@udisksdriveata: the object which received the signal.
+@arg1: 
+@arg2: 
+@Returns: 
+
+<!-- ##### SIGNAL UDisksDriveAta::handle-pm-wakeup ##### -->
+<para>
+
+</para>
+
+@udisksdriveata: the object which received the signal.
+@arg1: 
+@arg2: 
+@Returns: 
+
+<!-- ##### SIGNAL UDisksDriveAta::handle-security-erase-unit ##### -->
+<para>
+
+</para>
+
+@udisksdriveata: the object which received the signal.
+@arg1: 
+@arg2: 
+@Returns: 
+
 <!-- ##### SIGNAL UDisksDriveAta::handle-smart-get-attributes ##### -->
 <para>
 
@@ -68,6 +108,56 @@ UDisksDriveAta
 @arg1: 
 @arg2: 
 @Returns: 
+
+<!-- ##### ARG UDisksDriveAta:aam-enabled ##### -->
+<para>
+
+</para>
+
+<!-- ##### ARG UDisksDriveAta:aam-supported ##### -->
+<para>
+
+</para>
+
+<!-- ##### ARG UDisksDriveAta:aam-vendor-recommended-value ##### -->
+<para>
+
+</para>
+
+<!-- ##### ARG UDisksDriveAta:apm-enabled ##### -->
+<para>
+
+</para>
+
+<!-- ##### ARG UDisksDriveAta:apm-supported ##### -->
+<para>
+
+</para>
+
+<!-- ##### ARG UDisksDriveAta:pm-enabled ##### -->
+<para>
+
+</para>
+
+<!-- ##### ARG UDisksDriveAta:pm-supported ##### -->
+<para>
+
+</para>
+
+<!-- ##### ARG UDisksDriveAta:security-enhanced-erase-unit-minutes ##### -->
+<para>
+
+</para>
+
+<!-- ##### ARG UDisksDriveAta:security-erase-unit-minutes ##### -->
+<para>
+
+</para>
+
+<!-- ##### ARG UDisksDriveAta:security-frozen ##### -->
+<para>
+
+</para>
 
 <!-- ##### ARG UDisksDriveAta:smart-enabled ##### -->
 <para>
@@ -130,10 +220,24 @@ UDisksDriveAta
 </para>
 
 @parent_iface: 
+@handle_pm_get_state: 
+@handle_pm_standby: 
+@handle_pm_wakeup: 
+@handle_security_erase_unit: 
 @handle_smart_get_attributes: 
 @handle_smart_selftest_abort: 
 @handle_smart_selftest_start: 
 @handle_smart_update: 
+@get_aam_enabled: 
+@get_aam_supported: 
+@get_aam_vendor_recommended_value: 
+@get_apm_enabled: 
+@get_apm_supported: 
+@get_pm_enabled: 
+@get_pm_supported: 
+@get_security_enhanced_erase_unit_minutes: 
+@get_security_erase_unit_minutes: 
+@get_security_frozen: 
 @get_smart_enabled: 
 @get_smart_failing: 
 @get_smart_num_attributes_failed_in_the_past: 
@@ -346,6 +450,185 @@ UDisksDriveAta
 @invocation: 
 
 
+<!-- ##### FUNCTION udisks_drive_ata_call_pm_get_state ##### -->
+<para>
+
+</para>
+
+@proxy: 
+@arg_options: 
+@cancellable: 
+@callback: 
+@user_data: 
+
+
+<!-- ##### FUNCTION udisks_drive_ata_call_pm_get_state_finish ##### -->
+<para>
+
+</para>
+
+@proxy: 
+@out_state: 
+@res: 
+@error: 
+@Returns: 
+
+
+<!-- ##### FUNCTION udisks_drive_ata_call_pm_get_state_sync ##### -->
+<para>
+
+</para>
+
+@proxy: 
+@arg_options: 
+@out_state: 
+@cancellable: 
+@error: 
+@Returns: 
+
+
+<!-- ##### FUNCTION udisks_drive_ata_complete_pm_get_state ##### -->
+<para>
+
+</para>
+
+@object: 
+@invocation: 
+@state: 
+
+
+<!-- ##### FUNCTION udisks_drive_ata_call_pm_standby ##### -->
+<para>
+
+</para>
+
+@proxy: 
+@arg_options: 
+@cancellable: 
+@callback: 
+@user_data: 
+
+
+<!-- ##### FUNCTION udisks_drive_ata_call_pm_standby_finish ##### -->
+<para>
+
+</para>
+
+@proxy: 
+@res: 
+@error: 
+@Returns: 
+
+
+<!-- ##### FUNCTION udisks_drive_ata_call_pm_standby_sync ##### -->
+<para>
+
+</para>
+
+@proxy: 
+@arg_options: 
+@cancellable: 
+@error: 
+@Returns: 
+
+
+<!-- ##### FUNCTION udisks_drive_ata_complete_pm_standby ##### -->
+<para>
+
+</para>
+
+@object: 
+@invocation: 
+
+
+<!-- ##### FUNCTION udisks_drive_ata_call_pm_wakeup ##### -->
+<para>
+
+</para>
+
+@proxy: 
+@arg_options: 
+@cancellable: 
+@callback: 
+@user_data: 
+
+
+<!-- ##### FUNCTION udisks_drive_ata_call_pm_wakeup_finish ##### -->
+<para>
+
+</para>
+
+@proxy: 
+@res: 
+@error: 
+@Returns: 
+
+
+<!-- ##### FUNCTION udisks_drive_ata_call_pm_wakeup_sync ##### -->
+<para>
+
+</para>
+
+@proxy: 
+@arg_options: 
+@cancellable: 
+@error: 
+@Returns: 
+
+
+<!-- ##### FUNCTION udisks_drive_ata_complete_pm_wakeup ##### -->
+<para>
+
+</para>
+
+@object: 
+@invocation: 
+
+
+<!-- ##### FUNCTION udisks_drive_ata_call_security_erase_unit ##### -->
+<para>
+
+</para>
+
+@proxy: 
+@arg_options: 
+@cancellable: 
+@callback: 
+@user_data: 
+
+
+<!-- ##### FUNCTION udisks_drive_ata_call_security_erase_unit_finish ##### -->
+<para>
+
+</para>
+
+@proxy: 
+@res: 
+@error: 
+@Returns: 
+
+
+<!-- ##### FUNCTION udisks_drive_ata_call_security_erase_unit_sync ##### -->
+<para>
+
+</para>
+
+@proxy: 
+@arg_options: 
+@cancellable: 
+@error: 
+@Returns: 
+
+
+<!-- ##### FUNCTION udisks_drive_ata_complete_security_erase_unit ##### -->
+<para>
+
+</para>
+
+@object: 
+@invocation: 
+
+
 <!-- ##### FUNCTION udisks_drive_ata_get_smart_supported ##### -->
 <para>
 
@@ -454,6 +737,96 @@ UDisksDriveAta
 @Returns: 
 
 
+<!-- ##### FUNCTION udisks_drive_ata_get_aam_enabled ##### -->
+<para>
+
+</para>
+
+@object: 
+@Returns: 
+
+
+<!-- ##### FUNCTION udisks_drive_ata_get_aam_supported ##### -->
+<para>
+
+</para>
+
+@object: 
+@Returns: 
+
+
+<!-- ##### FUNCTION udisks_drive_ata_get_aam_vendor_recommended_value ##### -->
+<para>
+
+</para>
+
+@object: 
+@Returns: 
+
+
+<!-- ##### FUNCTION udisks_drive_ata_get_apm_enabled ##### -->
+<para>
+
+</para>
+
+@object: 
+@Returns: 
+
+
+<!-- ##### FUNCTION udisks_drive_ata_get_apm_supported ##### -->
+<para>
+
+</para>
+
+@object: 
+@Returns: 
+
+
+<!-- ##### FUNCTION udisks_drive_ata_get_pm_enabled ##### -->
+<para>
+
+</para>
+
+@object: 
+@Returns: 
+
+
+<!-- ##### FUNCTION udisks_drive_ata_get_pm_supported ##### -->
+<para>
+
+</para>
+
+@object: 
+@Returns: 
+
+
+<!-- ##### FUNCTION udisks_drive_ata_get_security_enhanced_erase_unit_minutes ##### -->
+<para>
+
+</para>
+
+@object: 
+@Returns: 
+
+
+<!-- ##### FUNCTION udisks_drive_ata_get_security_erase_unit_minutes ##### -->
+<para>
+
+</para>
+
+@object: 
+@Returns: 
+
+
+<!-- ##### FUNCTION udisks_drive_ata_get_security_frozen ##### -->
+<para>
+
+</para>
+
+@object: 
+@Returns: 
+
+
 <!-- ##### FUNCTION udisks_drive_ata_set_smart_supported ##### -->
 <para>
 
@@ -545,6 +918,96 @@ UDisksDriveAta
 
 
 <!-- ##### FUNCTION udisks_drive_ata_set_smart_selftest_status ##### -->
+<para>
+
+</para>
+
+@object: 
+@value: 
+
+
+<!-- ##### FUNCTION udisks_drive_ata_set_aam_enabled ##### -->
+<para>
+
+</para>
+
+@object: 
+@value: 
+
+
+<!-- ##### FUNCTION udisks_drive_ata_set_aam_supported ##### -->
+<para>
+
+</para>
+
+@object: 
+@value: 
+
+
+<!-- ##### FUNCTION udisks_drive_ata_set_aam_vendor_recommended_value ##### -->
+<para>
+
+</para>
+
+@object: 
+@value: 
+
+
+<!-- ##### FUNCTION udisks_drive_ata_set_apm_enabled ##### -->
+<para>
+
+</para>
+
+@object: 
+@value: 
+
+
+<!-- ##### FUNCTION udisks_drive_ata_set_apm_supported ##### -->
+<para>
+
+</para>
+
+@object: 
+@value: 
+
+
+<!-- ##### FUNCTION udisks_drive_ata_set_pm_enabled ##### -->
+<para>
+
+</para>
+
+@object: 
+@value: 
+
+
+<!-- ##### FUNCTION udisks_drive_ata_set_pm_supported ##### -->
+<para>
+
+</para>
+
+@object: 
+@value: 
+
+
+<!-- ##### FUNCTION udisks_drive_ata_set_security_enhanced_erase_unit_minutes ##### -->
+<para>
+
+</para>
+
+@object: 
+@value: 
+
+
+<!-- ##### FUNCTION udisks_drive_ata_set_security_erase_unit_minutes ##### -->
+<para>
+
+</para>
+
+@object: 
+@value: 
+
+
+<!-- ##### FUNCTION udisks_drive_ata_set_security_frozen ##### -->
 <para>
 
 </para>
