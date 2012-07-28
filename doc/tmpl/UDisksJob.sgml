@@ -47,6 +47,11 @@ UDisksJob
 @arg2: 
 @Returns: 
 
+<!-- ##### ARG UDisksJob:cancelable ##### -->
+<para>
+
+</para>
+
 <!-- ##### ARG UDisksJob:expected-end-time ##### -->
 <para>
 
@@ -57,12 +62,27 @@ UDisksJob
 
 </para>
 
+<!-- ##### ARG UDisksJob:operation ##### -->
+<para>
+
+</para>
+
 <!-- ##### ARG UDisksJob:progress ##### -->
 <para>
 
 </para>
 
+<!-- ##### ARG UDisksJob:progress-valid ##### -->
+<para>
+
+</para>
+
 <!-- ##### ARG UDisksJob:start-time ##### -->
+<para>
+
+</para>
+
+<!-- ##### ARG UDisksJob:started-by-uid ##### -->
 <para>
 
 </para>
@@ -74,10 +94,14 @@ UDisksJob
 
 @parent_iface: 
 @handle_cancel: 
+@get_cancelable: 
 @get_expected_end_time: 
 @get_objects: 
+@get_operation: 
 @get_progress: 
+@get_progress_valid: 
 @get_start_time: 
+@get_started_by_uid: 
 @completed: 
 
 <!-- ##### FUNCTION udisks_job_interface_info ##### -->
@@ -189,7 +213,52 @@ UDisksJob
 @Returns: 
 
 
+<!-- ##### FUNCTION udisks_job_get_cancelable ##### -->
+<para>
+
+</para>
+
+@object: 
+@Returns: 
+
+
+<!-- ##### FUNCTION udisks_job_get_operation ##### -->
+<para>
+
+</para>
+
+@object: 
+@Returns: 
+
+
+<!-- ##### FUNCTION udisks_job_get_progress_valid ##### -->
+<para>
+
+</para>
+
+@object: 
+@Returns: 
+
+
+<!-- ##### FUNCTION udisks_job_get_started_by_uid ##### -->
+<para>
+
+</para>
+
+@object: 
+@Returns: 
+
+
 <!-- ##### FUNCTION udisks_job_dup_objects ##### -->
+<para>
+
+</para>
+
+@object: 
+@Returns: 
+
+
+<!-- ##### FUNCTION udisks_job_dup_operation ##### -->
 <para>
 
 </para>
@@ -226,6 +295,42 @@ UDisksJob
 
 
 <!-- ##### FUNCTION udisks_job_set_objects ##### -->
+<para>
+
+</para>
+
+@object: 
+@value: 
+
+
+<!-- ##### FUNCTION udisks_job_set_cancelable ##### -->
+<para>
+
+</para>
+
+@object: 
+@value: 
+
+
+<!-- ##### FUNCTION udisks_job_set_operation ##### -->
+<para>
+
+</para>
+
+@object: 
+@value: 
+
+
+<!-- ##### FUNCTION udisks_job_set_progress_valid ##### -->
+<para>
+
+</para>
+
+@object: 
+@value: 
+
+
+<!-- ##### FUNCTION udisks_job_set_started_by_uid ##### -->
 <para>
 
 </para>

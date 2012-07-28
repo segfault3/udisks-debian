@@ -1680,10 +1680,10 @@ udisks_client_get_jobs_for_object (UDisksClient  *client,
   object_proxies = g_dbus_object_manager_get_objects (client->object_manager);
   for (l = object_proxies; l != NULL; l = l->next)
     {
-      UDisksObject *object = UDISKS_OBJECT (l->data);
+      UDisksObject *job_object = UDISKS_OBJECT (l->data);
       UDisksJob *job;
 
-      job = udisks_object_get_job (object);
+      job = udisks_object_get_job (job_object);
       if (job != NULL)
         {
           const gchar *const *object_paths;
@@ -1755,6 +1755,16 @@ on_object_added (GDBusObjectManager  *manager,
                  gpointer             user_data)
 {
   UDisksClient *client = UDISKS_CLIENT (user_data);
+  GList *interfaces, *l;
+
+  interfaces = g_dbus_object_get_interfaces (object);
+  for (l = interfaces; l != NULL; l = l->next)
+    {
+      init_interface_proxy (client, G_DBUS_PROXY (l->data));
+    }
+  g_list_foreach (interfaces, (GFunc) g_object_unref, NULL);
+  g_list_free (interfaces);
+
   queue_changed (client);
 }
 
@@ -2114,7 +2124,7 @@ udisks_client_get_media_compat_for_display (UDisksClient       *client,
 
 /* ---------------------------------------------------------------------------------------------------- */
 
-const static struct
+static const struct
 {
   const gchar *usage;
   const gchar *type;
@@ -2158,6 +2168,10 @@ const static struct
   {"raid",       "zfs_member",        NULL,    NC_("fs-type", "ZFS Device"),                        NC_("fs-type", "ZFS")},
   {"crypto",     "crypto_LUKS",       "*",     NC_("fs-type", "LUKS Encryption (version %s)"),      NC_("fs-type", "LUKS")},
   {"crypto",     "crypto_LUKS",       NULL,    NC_("fs-type", "LUKS Encryption"),                   NC_("fs-type", "LUKS")},
+  {"filesystem", "VMFS",              "*",     NC_("fs-type", "VMFS (version %s)"),                 NC_("fs-type", "VMFS (v%s)")},
+  {"filesystem", "VMFS",              NULL,    NC_("fs-type", "VMFS"),                              NC_("fs-type", "VMFS")},
+  {"raid",       "VMFS_volume_member", "*",    NC_("fs-type", "VMFS Volume Member (version %s)"),   NC_("fs-type", "VMFS Member (v%s)")},
+  {"raid",       "VMFS_volume_member", NULL,   NC_("fs-type", "VMFS Volume Member"),                NC_("fs-type", "VMFS Member")},
   {NULL, NULL, NULL, NULL}
 };
 
@@ -2201,11 +2215,15 @@ udisks_client_get_id_for_display (UDisksClient *client,
           else if ((g_strcmp0 (id_type[n].version, version) == 0 && strlen (version) > 0) ||
                    (g_strcmp0 (id_type[n].version, "*") == 0 && strlen (version) > 0))
             {
+              /* we know better than the compiler here */
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wformat-nonliteral"
               if (long_string)
                 ret = g_strdup_printf (g_dpgettext2 (GETTEXT_PACKAGE, "fs-type", id_type[n].long_name), version);
               else
                 ret = g_strdup_printf (g_dpgettext2 (GETTEXT_PACKAGE, "fs-type", id_type[n].short_name), version);
               goto out;
+#pragma GCC diagnostic pop
             }
         }
     }
@@ -2256,7 +2274,7 @@ udisks_client_get_id_for_display (UDisksClient *client,
 
 /* ---------------------------------------------------------------------------------------------------- */
 
-const static struct
+static const struct
 {
   const gchar *type;
   const gchar *name;
@@ -2302,7 +2320,7 @@ udisks_client_get_partition_table_type_for_display (UDisksClient  *client,
 
 /* ---------------------------------------------------------------------------------------------------- */
 
-const static struct
+static const struct
 {
   const gchar *type;
   const gchar *subtype;
@@ -2397,7 +2415,7 @@ udisks_client_get_partition_table_subtypes (UDisksClient   *client,
 #define F_CONLY  UDISKS_PARTITION_TYPE_INFO_FLAGS_CREATE_ONLY
 #define F_SYSTEM UDISKS_PARTITION_TYPE_INFO_FLAGS_SYSTEM
 
-const static struct
+static const struct
 {
   const gchar *table_type;
   const gchar *table_subtype;
@@ -2413,14 +2431,14 @@ const static struct
   {"gpt", "generic",   "c12a7328-f81f-11d2-ba4b-00a0c93ec93b", NC_("part-type", "EFI System"), F_SYSTEM},
   {"gpt", "generic",   "21686148-6449-6e6f-744e-656564454649", NC_("part-type", "BIOS Boot"), F_SYSTEM},
   /* Linux */
-  {"gpt", "linux",     "ebd0a0a2-b9e5-4433-87c0-68b6b72699c7", NC_("part-type", "Basic Data"), 0}, /* same as ms bdp */
+  {"gpt", "linux",     "0fc63daf-8483-4772-8e79-3d69d8477de4", NC_("part-type", "Linux Filesystem"), 0},
   {"gpt", "linux",     "a19d880f-05fc-4d3b-a006-743f0f84911e", NC_("part-type", "Linux RAID"), F_RAID},
   {"gpt", "linux",     "0657fd6d-a4ab-43c4-84e5-0933c84b4f4f", NC_("part-type", "Linux Swap"), F_SWAP},
   {"gpt", "linux",     "e6d6d379-f507-44c2-a23c-238f2a3df928", NC_("part-type", "Linux LVM"), F_RAID},
   {"gpt", "linux",     "8da63339-0007-60c0-c436-083ac8230908", NC_("part-type", "Linux Reserved"), 0},
   /* Microsoft */
+  {"gpt", "microsoft", "ebd0a0a2-b9e5-4433-87c0-68b6b72699c7", NC_("part-type", "Basic Data"), 0},
   {"gpt", "microsoft", "e3c9e316-0b5c-4db8-817d-f92df00215ae", NC_("part-type", "Microsoft Reserved"), 0},
-  {"gpt", "microsoft", "ebd0a0a2-b9e5-4433-87c0-68b6b72699c7", NC_("part-type", "Microsoft Basic Data"), 0}, /* same as Linux Basic Data */
   {"gpt", "microsoft", "5808c8aa-7e8f-42e0-85d2-e1e90434cfb3", NC_("part-type", "Microsoft LDM metadata"), 0},
   {"gpt", "microsoft", "af9b60a0-1431-4f62-bc68-3311714a69ad", NC_("part-type", "Microsoft LDM data"), 0},
   {"gpt", "microsoft", "de94bba4-06d1-4d40-a16a-bfd50179d6ac", NC_("part-type", "Microsoft Windows Recovery Environment"), 0},
@@ -2433,6 +2451,7 @@ const static struct
   {"gpt", "apple",     "426f6f74-0000-11aa-aa11-00306543ecac", NC_("part-type", "Apple Boot"), F_SYSTEM},
   {"gpt", "apple",     "4c616265-6c00-11aa-aa11-00306543ecac", NC_("part-type", "Apple Label"), 0},
   {"gpt", "apple",     "5265636f-7665-11aa-aa11-00306543ecac", NC_("part-type", "Apple TV Recovery"), F_SYSTEM},
+  {"gpt", "apple",     "53746f72-6167-11aa-aa11-00306543ecac", NC_("part-type", "Apple Core Storage"), F_RAID},
   /* HP-UX */
   {"gpt", "other",     "75894c1e-3aeb-11d3-b7c1-7b03a0000000", NC_("part-type", "HP-UX Data"), 0},
   {"gpt", "other",     "e2a1e728-32e3-11d6-a682-7b03a0000000", NC_("part-type", "HP-UX Service"), 0},
@@ -2464,6 +2483,9 @@ const static struct
   {"gpt", "other",     "49f48daa-b10e-11dc-b99b-0019d1879648", NC_("part-type", "NetBSD RAID"), F_RAID},
   {"gpt", "other",     "2db519c4-b10f-11dc-b99b-0019d1879648", NC_("part-type", "NetBSD Concatenated"), 0},
   {"gpt", "other",     "2db519ec-b10f-11dc-b99b-0019d1879648", NC_("part-type", "NetBSD Encrypted"), 0},
+  /* VMWare, see http://blogs.vmware.com/vsphere/2011/08/vsphere-50-storage-features-part-7-gpt.html */
+  {"gpt", "other",     "aa31e02a-400f-11db-9590-000c2911d1b8", NC_("part-type", "VMWare VMFS"), 0},
+  {"gpt", "other",     "9d275380-40ad-11db-bf97-000c2911d1b8", NC_("part-type", "VMWare vmkcore"), 0},
 
   /* see http://developer.apple.com/documentation/mac/devices/devices-126.html
    *     http://lists.apple.com/archives/Darwin-drivers/2003/May/msg00021.html */
@@ -2589,6 +2611,60 @@ udisks_client_get_partition_type_for_display (UDisksClient  *client,
     }
 
  out:
+  return ret;
+}
+
+/* ---------------------------------------------------------------------------------------------------- */
+
+/**
+ * udisks_client_get_job_description:
+ * @client: A #UDisksClient.
+ * @job: A #UDisksJob.
+ *
+ * Gets a human-readable and localized text string describing the
+ * operation of @job.
+ *
+ * Returns: A string that should be freed with g_free().
+ */
+gchar *
+udisks_client_get_job_description (UDisksClient   *client,
+                                   UDisksJob      *job)
+{
+  static gsize once = 0;
+  static GHashTable *hash = NULL;
+  gchar *ret = NULL;
+
+  g_return_val_if_fail (UDISKS_IS_CLIENT (client), NULL);
+
+  if (g_once_init_enter (&once))
+    {
+      hash = g_hash_table_new (g_str_hash, g_str_equal);
+      g_hash_table_insert (hash, (gpointer) "ata-smart-selftest",   (gpointer) C_("job", "SMART self-test"));
+      g_hash_table_insert (hash, (gpointer) "drive-eject",          (gpointer) C_("job", "Ejecting Medium"));
+      g_hash_table_insert (hash, (gpointer) "encrypted-unlock",     (gpointer) C_("job", "Unlocking Device"));
+      g_hash_table_insert (hash, (gpointer) "encrypted-lock",       (gpointer) C_("job", "Locking Device"));
+      g_hash_table_insert (hash, (gpointer) "encrypted-modify",     (gpointer) C_("job", "Modifying Encrypted Device"));
+      g_hash_table_insert (hash, (gpointer) "swapspace-start",      (gpointer) C_("job", "Starting Swap Device"));
+      g_hash_table_insert (hash, (gpointer) "swapspace-stop",       (gpointer) C_("job", "Stopping Swap Device"));
+      g_hash_table_insert (hash, (gpointer) "filesystem-mount",     (gpointer) C_("job", "Mounting Filesystem"));
+      g_hash_table_insert (hash, (gpointer) "filesystem-unmount",   (gpointer) C_("job", "Unmounting Filesystem"));
+      g_hash_table_insert (hash, (gpointer) "filesystem-modify",    (gpointer) C_("job", "Modifying Filesystem"));
+      g_hash_table_insert (hash, (gpointer) "format-erase",         (gpointer) C_("job", "Erasing Device"));
+      g_hash_table_insert (hash, (gpointer) "format-mkfs",          (gpointer) C_("job", "Creating Filesystem"));
+      g_hash_table_insert (hash, (gpointer) "loop-setup",           (gpointer) C_("job", "Setting Up Loop Device"));
+      g_hash_table_insert (hash, (gpointer) "partition-modify",     (gpointer) C_("job", "Modifying Partition"));
+      g_hash_table_insert (hash, (gpointer) "partition-delete",     (gpointer) C_("job", "Deleting Partition"));
+      g_hash_table_insert (hash, (gpointer) "partition-create",     (gpointer) C_("job", "Creating Partition"));
+      g_hash_table_insert (hash, (gpointer) "cleanup",              (gpointer) C_("job", "Cleaning Up"));
+      g_hash_table_insert (hash, (gpointer) "ata-secure-erase",     (gpointer) C_("job", "ATA Secure Erase"));
+      g_hash_table_insert (hash, (gpointer) "ata-enhanced-secure-erase", (gpointer) C_("job", "ATA Enhanced Secure Erase"));
+      g_once_init_leave (&once, (gsize) 1);
+    }
+
+  ret = g_strdup (g_hash_table_lookup (hash, udisks_job_get_operation (job)));
+  if (ret == NULL)
+    ret = g_strdup_printf (C_("unknown-job", "Unknown (%s)"), udisks_job_get_operation (job));
+
   return ret;
 }
 

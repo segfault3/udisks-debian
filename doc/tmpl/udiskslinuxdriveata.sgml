@@ -44,6 +44,7 @@ udiskslinuxdriveata
 
 @drive: 
 @object: 
+@Returns: 
 
 
 <!-- ##### FUNCTION udisks_linux_drive_ata_refresh_smart_sync ##### -->
@@ -67,6 +68,28 @@ udiskslinuxdriveata
 @drive: 
 @type: 
 @cancellable: 
+@error: 
+@Returns: 
+
+
+<!-- ##### FUNCTION udisks_linux_drive_ata_apply_configuration ##### -->
+<para>
+
+</para>
+
+@drive: 
+@device: 
+@configuration: 
+
+
+<!-- ##### FUNCTION udisks_linux_drive_ata_secure_erase_sync ##### -->
+<para>
+
+</para>
+
+@drive: 
+@caller_uid: 
+@enhanced: 
 @error: 
 @Returns: 
 

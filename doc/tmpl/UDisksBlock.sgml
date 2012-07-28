@@ -71,6 +71,17 @@ UDisksBlock
 @arg3: 
 @Returns: 
 
+<!-- ##### SIGNAL UDisksBlock::handle-open-for-benchmark ##### -->
+<para>
+
+</para>
+
+@udisksblock: the object which received the signal.
+@arg1: 
+@arg2: 
+@arg3: 
+@Returns: 
+
 <!-- ##### SIGNAL UDisksBlock::handle-open-for-restore ##### -->
 <para>
 
@@ -91,6 +102,16 @@ UDisksBlock
 @arg1: 
 @arg2: 
 @arg3: 
+@Returns: 
+
+<!-- ##### SIGNAL UDisksBlock::handle-rescan ##### -->
+<para>
+
+</para>
+
+@udisksblock: the object which received the signal.
+@arg1: 
+@arg2: 
 @Returns: 
 
 <!-- ##### SIGNAL UDisksBlock::handle-update-configuration-item ##### -->
@@ -215,8 +236,10 @@ UDisksBlock
 @handle_format: 
 @handle_get_secret_configuration: 
 @handle_open_for_backup: 
+@handle_open_for_benchmark: 
 @handle_open_for_restore: 
 @handle_remove_configuration_item: 
+@handle_rescan: 
 @handle_update_configuration_item: 
 @get_configuration: 
 @get_crypto_backing_device: 
@@ -593,6 +616,102 @@ UDisksBlock
 @invocation: 
 @fd_list: 
 @fd: 
+
+
+<!-- ##### FUNCTION udisks_block_call_open_for_benchmark ##### -->
+<para>
+
+</para>
+
+@proxy: 
+@arg_options: 
+@fd_list: 
+@cancellable: 
+@callback: 
+@user_data: 
+
+
+<!-- ##### FUNCTION udisks_block_call_open_for_benchmark_finish ##### -->
+<para>
+
+</para>
+
+@proxy: 
+@out_fd: 
+@out_fd_list: 
+@res: 
+@error: 
+@Returns: 
+
+
+<!-- ##### FUNCTION udisks_block_call_open_for_benchmark_sync ##### -->
+<para>
+
+</para>
+
+@proxy: 
+@arg_options: 
+@fd_list: 
+@out_fd: 
+@out_fd_list: 
+@cancellable: 
+@error: 
+@Returns: 
+
+
+<!-- ##### FUNCTION udisks_block_complete_open_for_benchmark ##### -->
+<para>
+
+</para>
+
+@object: 
+@invocation: 
+@fd_list: 
+@fd: 
+
+
+<!-- ##### FUNCTION udisks_block_call_rescan ##### -->
+<para>
+
+</para>
+
+@proxy: 
+@arg_options: 
+@cancellable: 
+@callback: 
+@user_data: 
+
+
+<!-- ##### FUNCTION udisks_block_call_rescan_finish ##### -->
+<para>
+
+</para>
+
+@proxy: 
+@res: 
+@error: 
+@Returns: 
+
+
+<!-- ##### FUNCTION udisks_block_call_rescan_sync ##### -->
+<para>
+
+</para>
+
+@proxy: 
+@arg_options: 
+@cancellable: 
+@error: 
+@Returns: 
+
+
+<!-- ##### FUNCTION udisks_block_complete_rescan ##### -->
+<para>
+
+</para>
+
+@object: 
+@invocation: 
 
 
 <!-- ##### FUNCTION udisks_block_get_configuration ##### -->

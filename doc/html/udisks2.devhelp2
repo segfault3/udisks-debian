@@ -95,14 +95,18 @@
     <sub name="Object Hierarchy" link="gio-hierarchy.html"/>
   </chapters>
   <functions>
+    <keyword type="" name="ATA group" link="udisks.8.html#id480549"/>
     <keyword type="method" name="The LoopSetup() method" link="gdbus-org.freedesktop.UDisks2.Manager.html#gdbus-method-org-freedesktop-UDisks2-Manager.LoopSetup"/>
     <keyword type="property" name="The &quot;Version&quot; property" link="gdbus-org.freedesktop.UDisks2.Manager.html#gdbus-property-org-freedesktop-UDisks2-Manager.Version"/>
     <keyword type="method" name="The Eject() method" link="gdbus-org.freedesktop.UDisks2.Drive.html#gdbus-method-org-freedesktop-UDisks2-Drive.Eject"/>
+    <keyword type="method" name="The SetConfiguration() method" link="gdbus-org.freedesktop.UDisks2.Drive.html#gdbus-method-org-freedesktop-UDisks2-Drive.SetConfiguration"/>
     <keyword type="property" name="The &quot;Vendor&quot; property" link="gdbus-org.freedesktop.UDisks2.Drive.html#gdbus-property-org-freedesktop-UDisks2-Drive.Vendor"/>
     <keyword type="property" name="The &quot;Model&quot; property" link="gdbus-org.freedesktop.UDisks2.Drive.html#gdbus-property-org-freedesktop-UDisks2-Drive.Model"/>
     <keyword type="property" name="The &quot;Revision&quot; property" link="gdbus-org.freedesktop.UDisks2.Drive.html#gdbus-property-org-freedesktop-UDisks2-Drive.Revision"/>
     <keyword type="property" name="The &quot;Serial&quot; property" link="gdbus-org.freedesktop.UDisks2.Drive.html#gdbus-property-org-freedesktop-UDisks2-Drive.Serial"/>
     <keyword type="property" name="The &quot;WWN&quot; property" link="gdbus-org.freedesktop.UDisks2.Drive.html#gdbus-property-org-freedesktop-UDisks2-Drive.WWN"/>
+    <keyword type="property" name="The &quot;Id&quot; property" link="gdbus-org.freedesktop.UDisks2.Drive.html#gdbus-property-org-freedesktop-UDisks2-Drive.Id"/>
+    <keyword type="property" name="The &quot;Configuration&quot; property" link="gdbus-org.freedesktop.UDisks2.Drive.html#gdbus-property-org-freedesktop-UDisks2-Drive.Configuration"/>
     <keyword type="property" name="The &quot;Media&quot; property" link="gdbus-org.freedesktop.UDisks2.Drive.html#gdbus-property-org-freedesktop-UDisks2-Drive.Media"/>
     <keyword type="property" name="The &quot;MediaCompatibility&quot; property" link="gdbus-org.freedesktop.UDisks2.Drive.html#gdbus-property-org-freedesktop-UDisks2-Drive.MediaCompatibility"/>
     <keyword type="property" name="The &quot;MediaRemovable&quot; property" link="gdbus-org.freedesktop.UDisks2.Drive.html#gdbus-property-org-freedesktop-UDisks2-Drive.MediaRemovable"/>
@@ -127,6 +131,10 @@
     <keyword type="method" name="The SmartGetAttributes() method" link="gdbus-org.freedesktop.UDisks2.Drive.Ata.html#gdbus-method-org-freedesktop-UDisks2-Drive-Ata.SmartGetAttributes"/>
     <keyword type="method" name="The SmartSelftestStart() method" link="gdbus-org.freedesktop.UDisks2.Drive.Ata.html#gdbus-method-org-freedesktop-UDisks2-Drive-Ata.SmartSelftestStart"/>
     <keyword type="method" name="The SmartSelftestAbort() method" link="gdbus-org.freedesktop.UDisks2.Drive.Ata.html#gdbus-method-org-freedesktop-UDisks2-Drive-Ata.SmartSelftestAbort"/>
+    <keyword type="method" name="The PmGetState() method" link="gdbus-org.freedesktop.UDisks2.Drive.Ata.html#gdbus-method-org-freedesktop-UDisks2-Drive-Ata.PmGetState"/>
+    <keyword type="method" name="The PmStandby() method" link="gdbus-org.freedesktop.UDisks2.Drive.Ata.html#gdbus-method-org-freedesktop-UDisks2-Drive-Ata.PmStandby"/>
+    <keyword type="method" name="The PmWakeup() method" link="gdbus-org.freedesktop.UDisks2.Drive.Ata.html#gdbus-method-org-freedesktop-UDisks2-Drive-Ata.PmWakeup"/>
+    <keyword type="method" name="The SecurityEraseUnit() method" link="gdbus-org.freedesktop.UDisks2.Drive.Ata.html#gdbus-method-org-freedesktop-UDisks2-Drive-Ata.SecurityEraseUnit"/>
     <keyword type="property" name="The &quot;SmartSupported&quot; property" link="gdbus-org.freedesktop.UDisks2.Drive.Ata.html#gdbus-property-org-freedesktop-UDisks2-Drive-Ata.SmartSupported"/>
     <keyword type="property" name="The &quot;SmartEnabled&quot; property" link="gdbus-org.freedesktop.UDisks2.Drive.Ata.html#gdbus-property-org-freedesktop-UDisks2-Drive-Ata.SmartEnabled"/>
     <keyword type="property" name="The &quot;SmartUpdated&quot; property" link="gdbus-org.freedesktop.UDisks2.Drive.Ata.html#gdbus-property-org-freedesktop-UDisks2-Drive-Ata.SmartUpdated"/>
@@ -138,6 +146,16 @@
     <keyword type="property" name="The &quot;SmartNumBadSectors&quot; property" link="gdbus-org.freedesktop.UDisks2.Drive.Ata.html#gdbus-property-org-freedesktop-UDisks2-Drive-Ata.SmartNumBadSectors"/>
     <keyword type="property" name="The &quot;SmartSelftestStatus&quot; property" link="gdbus-org.freedesktop.UDisks2.Drive.Ata.html#gdbus-property-org-freedesktop-UDisks2-Drive-Ata.SmartSelftestStatus"/>
     <keyword type="property" name="The &quot;SmartSelftestPercentRemaining&quot; property" link="gdbus-org.freedesktop.UDisks2.Drive.Ata.html#gdbus-property-org-freedesktop-UDisks2-Drive-Ata.SmartSelftestPercentRemaining"/>
+    <keyword type="property" name="The &quot;PmSupported&quot; property" link="gdbus-org.freedesktop.UDisks2.Drive.Ata.html#gdbus-property-org-freedesktop-UDisks2-Drive-Ata.PmSupported"/>
+    <keyword type="property" name="The &quot;PmEnabled&quot; property" link="gdbus-org.freedesktop.UDisks2.Drive.Ata.html#gdbus-property-org-freedesktop-UDisks2-Drive-Ata.PmEnabled"/>
+    <keyword type="property" name="The &quot;ApmSupported&quot; property" link="gdbus-org.freedesktop.UDisks2.Drive.Ata.html#gdbus-property-org-freedesktop-UDisks2-Drive-Ata.ApmSupported"/>
+    <keyword type="property" name="The &quot;ApmEnabled&quot; property" link="gdbus-org.freedesktop.UDisks2.Drive.Ata.html#gdbus-property-org-freedesktop-UDisks2-Drive-Ata.ApmEnabled"/>
+    <keyword type="property" name="The &quot;AamSupported&quot; property" link="gdbus-org.freedesktop.UDisks2.Drive.Ata.html#gdbus-property-org-freedesktop-UDisks2-Drive-Ata.AamSupported"/>
+    <keyword type="property" name="The &quot;AamEnabled&quot; property" link="gdbus-org.freedesktop.UDisks2.Drive.Ata.html#gdbus-property-org-freedesktop-UDisks2-Drive-Ata.AamEnabled"/>
+    <keyword type="property" name="The &quot;AamVendorRecommendedValue&quot; property" link="gdbus-org.freedesktop.UDisks2.Drive.Ata.html#gdbus-property-org-freedesktop-UDisks2-Drive-Ata.AamVendorRecommendedValue"/>
+    <keyword type="property" name="The &quot;SecurityEraseUnitMinutes&quot; property" link="gdbus-org.freedesktop.UDisks2.Drive.Ata.html#gdbus-property-org-freedesktop-UDisks2-Drive-Ata.SecurityEraseUnitMinutes"/>
+    <keyword type="property" name="The &quot;SecurityEnhancedEraseUnitMinutes&quot; property" link="gdbus-org.freedesktop.UDisks2.Drive.Ata.html#gdbus-property-org-freedesktop-UDisks2-Drive-Ata.SecurityEnhancedEraseUnitMinutes"/>
+    <keyword type="property" name="The &quot;SecurityFrozen&quot; property" link="gdbus-org.freedesktop.UDisks2.Drive.Ata.html#gdbus-property-org-freedesktop-UDisks2-Drive-Ata.SecurityFrozen"/>
     <keyword type="method" name="The AddConfigurationItem() method" link="gdbus-org.freedesktop.UDisks2.Block.html#gdbus-method-org-freedesktop-UDisks2-Block.AddConfigurationItem"/>
     <keyword type="method" name="The RemoveConfigurationItem() method" link="gdbus-org.freedesktop.UDisks2.Block.html#gdbus-method-org-freedesktop-UDisks2-Block.RemoveConfigurationItem"/>
     <keyword type="method" name="The UpdateConfigurationItem() method" link="gdbus-org.freedesktop.UDisks2.Block.html#gdbus-method-org-freedesktop-UDisks2-Block.UpdateConfigurationItem"/>
@@ -145,6 +163,8 @@
     <keyword type="method" name="The Format() method" link="gdbus-org.freedesktop.UDisks2.Block.html#gdbus-method-org-freedesktop-UDisks2-Block.Format"/>
     <keyword type="method" name="The OpenForBackup() method" link="gdbus-org.freedesktop.UDisks2.Block.html#gdbus-method-org-freedesktop-UDisks2-Block.OpenForBackup"/>
     <keyword type="method" name="The OpenForRestore() method" link="gdbus-org.freedesktop.UDisks2.Block.html#gdbus-method-org-freedesktop-UDisks2-Block.OpenForRestore"/>
+    <keyword type="method" name="The OpenForBenchmark() method" link="gdbus-org.freedesktop.UDisks2.Block.html#gdbus-method-org-freedesktop-UDisks2-Block.OpenForBenchmark"/>
+    <keyword type="method" name="The Rescan() method" link="gdbus-org.freedesktop.UDisks2.Block.html#gdbus-method-org-freedesktop-UDisks2-Block.Rescan"/>
     <keyword type="property" name="The &quot;Device&quot; property" link="gdbus-org.freedesktop.UDisks2.Block.html#gdbus-property-org-freedesktop-UDisks2-Block.Device"/>
     <keyword type="property" name="The &quot;PreferredDevice&quot; property" link="gdbus-org.freedesktop.UDisks2.Block.html#gdbus-property-org-freedesktop-UDisks2-Block.PreferredDevice"/>
     <keyword type="property" name="The &quot;Symlinks&quot; property" link="gdbus-org.freedesktop.UDisks2.Block.html#gdbus-property-org-freedesktop-UDisks2-Block.Symlinks"/>
@@ -198,10 +218,14 @@
     <keyword type="property" name="The &quot;SetupByUID&quot; property" link="gdbus-org.freedesktop.UDisks2.Loop.html#gdbus-property-org-freedesktop-UDisks2-Loop.SetupByUID"/>
     <keyword type="method" name="The Cancel() method" link="gdbus-org.freedesktop.UDisks2.Job.html#gdbus-method-org-freedesktop-UDisks2-Job.Cancel"/>
     <keyword type="signal" name="The &quot;Completed&quot; signal" link="gdbus-org.freedesktop.UDisks2.Job.html#gdbus-signal-org-freedesktop-UDisks2-Job.Completed"/>
+    <keyword type="property" name="The &quot;Operation&quot; property" link="gdbus-org.freedesktop.UDisks2.Job.html#gdbus-property-org-freedesktop-UDisks2-Job.Operation"/>
     <keyword type="property" name="The &quot;Progress&quot; property" link="gdbus-org.freedesktop.UDisks2.Job.html#gdbus-property-org-freedesktop-UDisks2-Job.Progress"/>
+    <keyword type="property" name="The &quot;ProgressValid&quot; property" link="gdbus-org.freedesktop.UDisks2.Job.html#gdbus-property-org-freedesktop-UDisks2-Job.ProgressValid"/>
     <keyword type="property" name="The &quot;StartTime&quot; property" link="gdbus-org.freedesktop.UDisks2.Job.html#gdbus-property-org-freedesktop-UDisks2-Job.StartTime"/>
     <keyword type="property" name="The &quot;ExpectedEndTime&quot; property" link="gdbus-org.freedesktop.UDisks2.Job.html#gdbus-property-org-freedesktop-UDisks2-Job.ExpectedEndTime"/>
     <keyword type="property" name="The &quot;Objects&quot; property" link="gdbus-org.freedesktop.UDisks2.Job.html#gdbus-property-org-freedesktop-UDisks2-Job.Objects"/>
+    <keyword type="property" name="The &quot;StartedByUID&quot; property" link="gdbus-org.freedesktop.UDisks2.Job.html#gdbus-property-org-freedesktop-UDisks2-Job.StartedByUID"/>
+    <keyword type="property" name="The &quot;Cancelable&quot; property" link="gdbus-org.freedesktop.UDisks2.Job.html#gdbus-property-org-freedesktop-UDisks2-Job.Cancelable"/>
     <keyword type="macro" name="UDISKS_MAJOR_VERSION" link="UDisksClient.html#UDISKS-MAJOR-VERSION:CAPS"/>
     <keyword type="macro" name="UDISKS_MINOR_VERSION" link="UDisksClient.html#UDISKS-MINOR-VERSION:CAPS"/>
     <keyword type="macro" name="UDISKS_MICRO_VERSION" link="UDisksClient.html#UDISKS-MICRO-VERSION:CAPS"/>
@@ -225,6 +249,7 @@
     <keyword type="function" name="udisks_client_get_loop_for_block ()" link="UDisksClient.html#udisks-client-get-loop-for-block"/>
     <keyword type="function" name="udisks_client_get_partitions ()" link="UDisksClient.html#udisks-client-get-partitions"/>
     <keyword type="function" name="udisks_client_get_jobs_for_object ()" link="UDisksClient.html#udisks-client-get-jobs-for-object"/>
+    <keyword type="function" name="udisks_client_get_job_description ()" link="UDisksClient.html#udisks-client-get-job-description"/>
     <keyword type="function" name="udisks_client_get_drive_info ()" link="UDisksClient.html#udisks-client-get-drive-info"/>
     <keyword type="function" name="udisks_client_get_partition_info ()" link="UDisksClient.html#udisks-client-get-partition-info"/>
     <keyword type="function" name="udisks_client_get_size_for_display ()" link="UDisksClient.html#udisks-client-get-size-for-display"/>
@@ -336,6 +361,10 @@
     <keyword type="function" name="udisks_drive_call_eject_finish ()" link="UDisksDrive.html#udisks-drive-call-eject-finish"/>
     <keyword type="function" name="udisks_drive_call_eject_sync ()" link="UDisksDrive.html#udisks-drive-call-eject-sync"/>
     <keyword type="function" name="udisks_drive_complete_eject ()" link="UDisksDrive.html#udisks-drive-complete-eject"/>
+    <keyword type="function" name="udisks_drive_call_set_configuration ()" link="UDisksDrive.html#udisks-drive-call-set-configuration"/>
+    <keyword type="function" name="udisks_drive_call_set_configuration_finish ()" link="UDisksDrive.html#udisks-drive-call-set-configuration-finish"/>
+    <keyword type="function" name="udisks_drive_call_set_configuration_sync ()" link="UDisksDrive.html#udisks-drive-call-set-configuration-sync"/>
+    <keyword type="function" name="udisks_drive_complete_set_configuration ()" link="UDisksDrive.html#udisks-drive-complete-set-configuration"/>
     <keyword type="function" name="udisks_drive_get_connection_bus ()" link="UDisksDrive.html#udisks-drive-get-connection-bus"/>
     <keyword type="function" name="udisks_drive_get_removable ()" link="UDisksDrive.html#udisks-drive-get-removable"/>
     <keyword type="function" name="udisks_drive_get_ejectable ()" link="UDisksDrive.html#udisks-drive-get-ejectable"/>
@@ -361,7 +390,10 @@
     <keyword type="function" name="udisks_drive_get_vendor ()" link="UDisksDrive.html#udisks-drive-get-vendor"/>
     <keyword type="function" name="udisks_drive_get_wwn ()" link="UDisksDrive.html#udisks-drive-get-wwn"/>
     <keyword type="function" name="udisks_drive_get_sort_key ()" link="UDisksDrive.html#udisks-drive-get-sort-key"/>
+    <keyword type="function" name="udisks_drive_get_configuration ()" link="UDisksDrive.html#udisks-drive-get-configuration"/>
+    <keyword type="function" name="udisks_drive_get_id ()" link="UDisksDrive.html#udisks-drive-get-id"/>
     <keyword type="function" name="udisks_drive_dup_connection_bus ()" link="UDisksDrive.html#udisks-drive-dup-connection-bus"/>
+    <keyword type="function" name="udisks_drive_dup_seat ()" link="UDisksDrive.html#udisks-drive-dup-seat"/>
     <keyword type="function" name="udisks_drive_dup_media ()" link="UDisksDrive.html#udisks-drive-dup-media"/>
     <keyword type="function" name="udisks_drive_dup_media_compatibility ()" link="UDisksDrive.html#udisks-drive-dup-media-compatibility"/>
     <keyword type="function" name="udisks_drive_dup_model ()" link="UDisksDrive.html#udisks-drive-dup-model"/>
@@ -370,6 +402,8 @@
     <keyword type="function" name="udisks_drive_dup_vendor ()" link="UDisksDrive.html#udisks-drive-dup-vendor"/>
     <keyword type="function" name="udisks_drive_dup_wwn ()" link="UDisksDrive.html#udisks-drive-dup-wwn"/>
     <keyword type="function" name="udisks_drive_dup_sort_key ()" link="UDisksDrive.html#udisks-drive-dup-sort-key"/>
+    <keyword type="function" name="udisks_drive_dup_configuration ()" link="UDisksDrive.html#udisks-drive-dup-configuration"/>
+    <keyword type="function" name="udisks_drive_dup_id ()" link="UDisksDrive.html#udisks-drive-dup-id"/>
     <keyword type="function" name="udisks_drive_set_connection_bus ()" link="UDisksDrive.html#udisks-drive-set-connection-bus"/>
     <keyword type="function" name="udisks_drive_set_removable ()" link="UDisksDrive.html#udisks-drive-set-removable"/>
     <keyword type="function" name="udisks_drive_set_ejectable ()" link="UDisksDrive.html#udisks-drive-set-ejectable"/>
@@ -395,6 +429,8 @@
     <keyword type="function" name="udisks_drive_set_vendor ()" link="UDisksDrive.html#udisks-drive-set-vendor"/>
     <keyword type="function" name="udisks_drive_set_wwn ()" link="UDisksDrive.html#udisks-drive-set-wwn"/>
     <keyword type="function" name="udisks_drive_set_sort_key ()" link="UDisksDrive.html#udisks-drive-set-sort-key"/>
+    <keyword type="function" name="udisks_drive_set_configuration ()" link="UDisksDrive.html#udisks-drive-set-configuration"/>
+    <keyword type="function" name="udisks_drive_set_id ()" link="UDisksDrive.html#udisks-drive-set-id"/>
     <keyword type="struct" name="struct UDisksDriveProxy" link="UDisksDrive.html#UDisksDriveProxy-struct"/>
     <keyword type="struct" name="struct UDisksDriveProxyClass" link="UDisksDrive.html#UDisksDriveProxyClass"/>
     <keyword type="function" name="udisks_drive_proxy_new ()" link="UDisksDrive.html#udisks-drive-proxy-new"/>
@@ -406,8 +442,10 @@
     <keyword type="struct" name="struct UDisksDriveSkeleton" link="UDisksDrive.html#UDisksDriveSkeleton-struct"/>
     <keyword type="struct" name="struct UDisksDriveSkeletonClass" link="UDisksDrive.html#UDisksDriveSkeletonClass"/>
     <keyword type="function" name="udisks_drive_skeleton_new ()" link="UDisksDrive.html#udisks-drive-skeleton-new"/>
+    <keyword type="property" name="The &quot;configuration&quot; property" link="UDisksDrive.html#UDisksDrive--configuration"/>
     <keyword type="property" name="The &quot;connection-bus&quot; property" link="UDisksDrive.html#UDisksDrive--connection-bus"/>
     <keyword type="property" name="The &quot;ejectable&quot; property" link="UDisksDrive.html#UDisksDrive--ejectable"/>
+    <keyword type="property" name="The &quot;id&quot; property" link="UDisksDrive.html#UDisksDrive--id"/>
     <keyword type="property" name="The &quot;media&quot; property" link="UDisksDrive.html#UDisksDrive--media"/>
     <keyword type="property" name="The &quot;media-available&quot; property" link="UDisksDrive.html#UDisksDrive--media-available"/>
     <keyword type="property" name="The &quot;media-change-detected&quot; property" link="UDisksDrive.html#UDisksDrive--media-change-detected"/>
@@ -432,6 +470,7 @@
     <keyword type="property" name="The &quot;vendor&quot; property" link="UDisksDrive.html#UDisksDrive--vendor"/>
     <keyword type="property" name="The &quot;wwn&quot; property" link="UDisksDrive.html#UDisksDrive--wwn"/>
     <keyword type="signal" name="The &quot;handle-eject&quot; signal" link="UDisksDrive.html#UDisksDrive-handle-eject"/>
+    <keyword type="signal" name="The &quot;handle-set-configuration&quot; signal" link="UDisksDrive.html#UDisksDrive-handle-set-configuration"/>
     <keyword type="struct" name="UDisksDriveAta" link="UDisksDriveAta.html#UDisksDriveAta-struct"/>
     <keyword type="struct" name="struct UDisksDriveAtaIface" link="UDisksDriveAta.html#UDisksDriveAtaIface"/>
     <keyword type="function" name="udisks_drive_ata_interface_info ()" link="UDisksDriveAta.html#udisks-drive-ata-interface-info"/>
@@ -452,6 +491,22 @@
     <keyword type="function" name="udisks_drive_ata_call_smart_selftest_start_finish ()" link="UDisksDriveAta.html#udisks-drive-ata-call-smart-selftest-start-finish"/>
     <keyword type="function" name="udisks_drive_ata_call_smart_selftest_start_sync ()" link="UDisksDriveAta.html#udisks-drive-ata-call-smart-selftest-start-sync"/>
     <keyword type="function" name="udisks_drive_ata_complete_smart_selftest_start ()" link="UDisksDriveAta.html#udisks-drive-ata-complete-smart-selftest-start"/>
+    <keyword type="function" name="udisks_drive_ata_call_pm_get_state ()" link="UDisksDriveAta.html#udisks-drive-ata-call-pm-get-state"/>
+    <keyword type="function" name="udisks_drive_ata_call_pm_get_state_finish ()" link="UDisksDriveAta.html#udisks-drive-ata-call-pm-get-state-finish"/>
+    <keyword type="function" name="udisks_drive_ata_call_pm_get_state_sync ()" link="UDisksDriveAta.html#udisks-drive-ata-call-pm-get-state-sync"/>
+    <keyword type="function" name="udisks_drive_ata_complete_pm_get_state ()" link="UDisksDriveAta.html#udisks-drive-ata-complete-pm-get-state"/>
+    <keyword type="function" name="udisks_drive_ata_call_pm_standby ()" link="UDisksDriveAta.html#udisks-drive-ata-call-pm-standby"/>
+    <keyword type="function" name="udisks_drive_ata_call_pm_standby_finish ()" link="UDisksDriveAta.html#udisks-drive-ata-call-pm-standby-finish"/>
+    <keyword type="function" name="udisks_drive_ata_call_pm_standby_sync ()" link="UDisksDriveAta.html#udisks-drive-ata-call-pm-standby-sync"/>
+    <keyword type="function" name="udisks_drive_ata_complete_pm_standby ()" link="UDisksDriveAta.html#udisks-drive-ata-complete-pm-standby"/>
+    <keyword type="function" name="udisks_drive_ata_call_pm_wakeup ()" link="UDisksDriveAta.html#udisks-drive-ata-call-pm-wakeup"/>
+    <keyword type="function" name="udisks_drive_ata_call_pm_wakeup_finish ()" link="UDisksDriveAta.html#udisks-drive-ata-call-pm-wakeup-finish"/>
+    <keyword type="function" name="udisks_drive_ata_call_pm_wakeup_sync ()" link="UDisksDriveAta.html#udisks-drive-ata-call-pm-wakeup-sync"/>
+    <keyword type="function" name="udisks_drive_ata_complete_pm_wakeup ()" link="UDisksDriveAta.html#udisks-drive-ata-complete-pm-wakeup"/>
+    <keyword type="function" name="udisks_drive_ata_call_security_erase_unit ()" link="UDisksDriveAta.html#udisks-drive-ata-call-security-erase-unit"/>
+    <keyword type="function" name="udisks_drive_ata_call_security_erase_unit_finish ()" link="UDisksDriveAta.html#udisks-drive-ata-call-security-erase-unit-finish"/>
+    <keyword type="function" name="udisks_drive_ata_call_security_erase_unit_sync ()" link="UDisksDriveAta.html#udisks-drive-ata-call-security-erase-unit-sync"/>
+    <keyword type="function" name="udisks_drive_ata_complete_security_erase_unit ()" link="UDisksDriveAta.html#udisks-drive-ata-complete-security-erase-unit"/>
     <keyword type="function" name="udisks_drive_ata_get_smart_supported ()" link="UDisksDriveAta.html#udisks-drive-ata-get-smart-supported"/>
     <keyword type="function" name="udisks_drive_ata_get_smart_enabled ()" link="UDisksDriveAta.html#udisks-drive-ata-get-smart-enabled"/>
     <keyword type="function" name="udisks_drive_ata_get_smart_updated ()" link="UDisksDriveAta.html#udisks-drive-ata-get-smart-updated"/>
@@ -464,6 +519,16 @@
     <keyword type="function" name="udisks_drive_ata_get_smart_selftest_percent_remaining ()" link="UDisksDriveAta.html#udisks-drive-ata-get-smart-selftest-percent-remaining"/>
     <keyword type="function" name="udisks_drive_ata_get_smart_selftest_status ()" link="UDisksDriveAta.html#udisks-drive-ata-get-smart-selftest-status"/>
     <keyword type="function" name="udisks_drive_ata_dup_smart_selftest_status ()" link="UDisksDriveAta.html#udisks-drive-ata-dup-smart-selftest-status"/>
+    <keyword type="function" name="udisks_drive_ata_get_aam_enabled ()" link="UDisksDriveAta.html#udisks-drive-ata-get-aam-enabled"/>
+    <keyword type="function" name="udisks_drive_ata_get_aam_supported ()" link="UDisksDriveAta.html#udisks-drive-ata-get-aam-supported"/>
+    <keyword type="function" name="udisks_drive_ata_get_aam_vendor_recommended_value ()" link="UDisksDriveAta.html#udisks-drive-ata-get-aam-vendor-recommended-value"/>
+    <keyword type="function" name="udisks_drive_ata_get_apm_enabled ()" link="UDisksDriveAta.html#udisks-drive-ata-get-apm-enabled"/>
+    <keyword type="function" name="udisks_drive_ata_get_apm_supported ()" link="UDisksDriveAta.html#udisks-drive-ata-get-apm-supported"/>
+    <keyword type="function" name="udisks_drive_ata_get_pm_enabled ()" link="UDisksDriveAta.html#udisks-drive-ata-get-pm-enabled"/>
+    <keyword type="function" name="udisks_drive_ata_get_pm_supported ()" link="UDisksDriveAta.html#udisks-drive-ata-get-pm-supported"/>
+    <keyword type="function" name="udisks_drive_ata_get_security_enhanced_erase_unit_minutes ()" link="UDisksDriveAta.html#udisks-drive-ata-get-security-enhanced-erase-unit-minutes"/>
+    <keyword type="function" name="udisks_drive_ata_get_security_erase_unit_minutes ()" link="UDisksDriveAta.html#udisks-drive-ata-get-security-erase-unit-minutes"/>
+    <keyword type="function" name="udisks_drive_ata_get_security_frozen ()" link="UDisksDriveAta.html#udisks-drive-ata-get-security-frozen"/>
     <keyword type="function" name="udisks_drive_ata_set_smart_supported ()" link="UDisksDriveAta.html#udisks-drive-ata-set-smart-supported"/>
     <keyword type="function" name="udisks_drive_ata_set_smart_enabled ()" link="UDisksDriveAta.html#udisks-drive-ata-set-smart-enabled"/>
     <keyword type="function" name="udisks_drive_ata_set_smart_updated ()" link="UDisksDriveAta.html#udisks-drive-ata-set-smart-updated"/>
@@ -475,6 +540,16 @@
     <keyword type="function" name="udisks_drive_ata_set_smart_num_bad_sectors ()" link="UDisksDriveAta.html#udisks-drive-ata-set-smart-num-bad-sectors"/>
     <keyword type="function" name="udisks_drive_ata_set_smart_selftest_percent_remaining ()" link="UDisksDriveAta.html#udisks-drive-ata-set-smart-selftest-percent-remaining"/>
     <keyword type="function" name="udisks_drive_ata_set_smart_selftest_status ()" link="UDisksDriveAta.html#udisks-drive-ata-set-smart-selftest-status"/>
+    <keyword type="function" name="udisks_drive_ata_set_aam_enabled ()" link="UDisksDriveAta.html#udisks-drive-ata-set-aam-enabled"/>
+    <keyword type="function" name="udisks_drive_ata_set_aam_supported ()" link="UDisksDriveAta.html#udisks-drive-ata-set-aam-supported"/>
+    <keyword type="function" name="udisks_drive_ata_set_aam_vendor_recommended_value ()" link="UDisksDriveAta.html#udisks-drive-ata-set-aam-vendor-recommended-value"/>
+    <keyword type="function" name="udisks_drive_ata_set_apm_enabled ()" link="UDisksDriveAta.html#udisks-drive-ata-set-apm-enabled"/>
+    <keyword type="function" name="udisks_drive_ata_set_apm_supported ()" link="UDisksDriveAta.html#udisks-drive-ata-set-apm-supported"/>
+    <keyword type="function" name="udisks_drive_ata_set_pm_enabled ()" link="UDisksDriveAta.html#udisks-drive-ata-set-pm-enabled"/>
+    <keyword type="function" name="udisks_drive_ata_set_pm_supported ()" link="UDisksDriveAta.html#udisks-drive-ata-set-pm-supported"/>
+    <keyword type="function" name="udisks_drive_ata_set_security_enhanced_erase_unit_minutes ()" link="UDisksDriveAta.html#udisks-drive-ata-set-security-enhanced-erase-unit-minutes"/>
+    <keyword type="function" name="udisks_drive_ata_set_security_erase_unit_minutes ()" link="UDisksDriveAta.html#udisks-drive-ata-set-security-erase-unit-minutes"/>
+    <keyword type="function" name="udisks_drive_ata_set_security_frozen ()" link="UDisksDriveAta.html#udisks-drive-ata-set-security-frozen"/>
     <keyword type="struct" name="struct UDisksDriveAtaProxy" link="UDisksDriveAta.html#UDisksDriveAtaProxy-struct"/>
     <keyword type="struct" name="struct UDisksDriveAtaProxyClass" link="UDisksDriveAta.html#UDisksDriveAtaProxyClass"/>
     <keyword type="function" name="udisks_drive_ata_proxy_new ()" link="UDisksDriveAta.html#udisks-drive-ata-proxy-new"/>
@@ -486,6 +561,16 @@
     <keyword type="struct" name="struct UDisksDriveAtaSkeleton" link="UDisksDriveAta.html#UDisksDriveAtaSkeleton-struct"/>
     <keyword type="struct" name="struct UDisksDriveAtaSkeletonClass" link="UDisksDriveAta.html#UDisksDriveAtaSkeletonClass"/>
     <keyword type="function" name="udisks_drive_ata_skeleton_new ()" link="UDisksDriveAta.html#udisks-drive-ata-skeleton-new"/>
+    <keyword type="property" name="The &quot;aam-enabled&quot; property" link="UDisksDriveAta.html#UDisksDriveAta--aam-enabled"/>
+    <keyword type="property" name="The &quot;aam-supported&quot; property" link="UDisksDriveAta.html#UDisksDriveAta--aam-supported"/>
+    <keyword type="property" name="The &quot;aam-vendor-recommended-value&quot; property" link="UDisksDriveAta.html#UDisksDriveAta--aam-vendor-recommended-value"/>
+    <keyword type="property" name="The &quot;apm-enabled&quot; property" link="UDisksDriveAta.html#UDisksDriveAta--apm-enabled"/>
+    <keyword type="property" name="The &quot;apm-supported&quot; property" link="UDisksDriveAta.html#UDisksDriveAta--apm-supported"/>
+    <keyword type="property" name="The &quot;pm-enabled&quot; property" link="UDisksDriveAta.html#UDisksDriveAta--pm-enabled"/>
+    <keyword type="property" name="The &quot;pm-supported&quot; property" link="UDisksDriveAta.html#UDisksDriveAta--pm-supported"/>
+    <keyword type="property" name="The &quot;security-enhanced-erase-unit-minutes&quot; property" link="UDisksDriveAta.html#UDisksDriveAta--security-enhanced-erase-unit-minutes"/>
+    <keyword type="property" name="The &quot;security-erase-unit-minutes&quot; property" link="UDisksDriveAta.html#UDisksDriveAta--security-erase-unit-minutes"/>
+    <keyword type="property" name="The &quot;security-frozen&quot; property" link="UDisksDriveAta.html#UDisksDriveAta--security-frozen"/>
     <keyword type="property" name="The &quot;smart-enabled&quot; property" link="UDisksDriveAta.html#UDisksDriveAta--smart-enabled"/>
     <keyword type="property" name="The &quot;smart-failing&quot; property" link="UDisksDriveAta.html#UDisksDriveAta--smart-failing"/>
     <keyword type="property" name="The &quot;smart-num-attributes-failed-in-the-past&quot; property" link="UDisksDriveAta.html#UDisksDriveAta--smart-num-attributes-failed-in-the-past"/>
@@ -497,6 +582,10 @@
     <keyword type="property" name="The &quot;smart-supported&quot; property" link="UDisksDriveAta.html#UDisksDriveAta--smart-supported"/>
     <keyword type="property" name="The &quot;smart-temperature&quot; property" link="UDisksDriveAta.html#UDisksDriveAta--smart-temperature"/>
     <keyword type="property" name="The &quot;smart-updated&quot; property" link="UDisksDriveAta.html#UDisksDriveAta--smart-updated"/>
+    <keyword type="signal" name="The &quot;handle-pm-get-state&quot; signal" link="UDisksDriveAta.html#UDisksDriveAta-handle-pm-get-state"/>
+    <keyword type="signal" name="The &quot;handle-pm-standby&quot; signal" link="UDisksDriveAta.html#UDisksDriveAta-handle-pm-standby"/>
+    <keyword type="signal" name="The &quot;handle-pm-wakeup&quot; signal" link="UDisksDriveAta.html#UDisksDriveAta-handle-pm-wakeup"/>
+    <keyword type="signal" name="The &quot;handle-security-erase-unit&quot; signal" link="UDisksDriveAta.html#UDisksDriveAta-handle-security-erase-unit"/>
     <keyword type="signal" name="The &quot;handle-smart-get-attributes&quot; signal" link="UDisksDriveAta.html#UDisksDriveAta-handle-smart-get-attributes"/>
     <keyword type="signal" name="The &quot;handle-smart-selftest-abort&quot; signal" link="UDisksDriveAta.html#UDisksDriveAta-handle-smart-selftest-abort"/>
     <keyword type="signal" name="The &quot;handle-smart-selftest-start&quot; signal" link="UDisksDriveAta.html#UDisksDriveAta-handle-smart-selftest-start"/>
@@ -514,11 +603,20 @@
     <keyword type="function" name="udisks_job_get_progress ()" link="UDisksJob.html#udisks-job-get-progress"/>
     <keyword type="function" name="udisks_job_get_start_time ()" link="UDisksJob.html#udisks-job-get-start-time"/>
     <keyword type="function" name="udisks_job_get_objects ()" link="UDisksJob.html#udisks-job-get-objects"/>
+    <keyword type="function" name="udisks_job_get_cancelable ()" link="UDisksJob.html#udisks-job-get-cancelable"/>
+    <keyword type="function" name="udisks_job_get_operation ()" link="UDisksJob.html#udisks-job-get-operation"/>
+    <keyword type="function" name="udisks_job_get_progress_valid ()" link="UDisksJob.html#udisks-job-get-progress-valid"/>
+    <keyword type="function" name="udisks_job_get_started_by_uid ()" link="UDisksJob.html#udisks-job-get-started-by-uid"/>
     <keyword type="function" name="udisks_job_dup_objects ()" link="UDisksJob.html#udisks-job-dup-objects"/>
+    <keyword type="function" name="udisks_job_dup_operation ()" link="UDisksJob.html#udisks-job-dup-operation"/>
     <keyword type="function" name="udisks_job_set_expected_end_time ()" link="UDisksJob.html#udisks-job-set-expected-end-time"/>
     <keyword type="function" name="udisks_job_set_progress ()" link="UDisksJob.html#udisks-job-set-progress"/>
     <keyword type="function" name="udisks_job_set_start_time ()" link="UDisksJob.html#udisks-job-set-start-time"/>
     <keyword type="function" name="udisks_job_set_objects ()" link="UDisksJob.html#udisks-job-set-objects"/>
+    <keyword type="function" name="udisks_job_set_cancelable ()" link="UDisksJob.html#udisks-job-set-cancelable"/>
+    <keyword type="function" name="udisks_job_set_operation ()" link="UDisksJob.html#udisks-job-set-operation"/>
+    <keyword type="function" name="udisks_job_set_progress_valid ()" link="UDisksJob.html#udisks-job-set-progress-valid"/>
+    <keyword type="function" name="udisks_job_set_started_by_uid ()" link="UDisksJob.html#udisks-job-set-started-by-uid"/>
     <keyword type="struct" name="struct UDisksJobProxy" link="UDisksJob.html#UDisksJobProxy-struct"/>
     <keyword type="struct" name="struct UDisksJobProxyClass" link="UDisksJob.html#UDisksJobProxyClass"/>
     <keyword type="function" name="udisks_job_proxy_new ()" link="UDisksJob.html#udisks-job-proxy-new"/>
@@ -530,10 +628,14 @@
     <keyword type="struct" name="struct UDisksJobSkeleton" link="UDisksJob.html#UDisksJobSkeleton-struct"/>
     <keyword type="struct" name="struct UDisksJobSkeletonClass" link="UDisksJob.html#UDisksJobSkeletonClass"/>
     <keyword type="function" name="udisks_job_skeleton_new ()" link="UDisksJob.html#udisks-job-skeleton-new"/>
+    <keyword type="property" name="The &quot;cancelable&quot; property" link="UDisksJob.html#UDisksJob--cancelable"/>
     <keyword type="property" name="The &quot;expected-end-time&quot; property" link="UDisksJob.html#UDisksJob--expected-end-time"/>
     <keyword type="property" name="The &quot;objects&quot; property" link="UDisksJob.html#UDisksJob--objects"/>
+    <keyword type="property" name="The &quot;operation&quot; property" link="UDisksJob.html#UDisksJob--operation"/>
     <keyword type="property" name="The &quot;progress&quot; property" link="UDisksJob.html#UDisksJob--progress"/>
+    <keyword type="property" name="The &quot;progress-valid&quot; property" link="UDisksJob.html#UDisksJob--progress-valid"/>
     <keyword type="property" name="The &quot;start-time&quot; property" link="UDisksJob.html#UDisksJob--start-time"/>
+    <keyword type="property" name="The &quot;started-by-uid&quot; property" link="UDisksJob.html#UDisksJob--started-by-uid"/>
     <keyword type="signal" name="The &quot;completed&quot; signal" link="UDisksJob.html#UDisksJob-completed"/>
     <keyword type="signal" name="The &quot;handle-cancel&quot; signal" link="UDisksJob.html#UDisksJob-handle-cancel"/>
     <keyword type="struct" name="UDisksBlock" link="UDisksBlock.html#UDisksBlock-struct"/>
@@ -568,6 +670,14 @@
     <keyword type="function" name="udisks_block_call_open_for_restore_finish ()" link="UDisksBlock.html#udisks-block-call-open-for-restore-finish"/>
     <keyword type="function" name="udisks_block_call_open_for_restore_sync ()" link="UDisksBlock.html#udisks-block-call-open-for-restore-sync"/>
     <keyword type="function" name="udisks_block_complete_open_for_restore ()" link="UDisksBlock.html#udisks-block-complete-open-for-restore"/>
+    <keyword type="function" name="udisks_block_call_open_for_benchmark ()" link="UDisksBlock.html#udisks-block-call-open-for-benchmark"/>
+    <keyword type="function" name="udisks_block_call_open_for_benchmark_finish ()" link="UDisksBlock.html#udisks-block-call-open-for-benchmark-finish"/>
+    <keyword type="function" name="udisks_block_call_open_for_benchmark_sync ()" link="UDisksBlock.html#udisks-block-call-open-for-benchmark-sync"/>
+    <keyword type="function" name="udisks_block_complete_open_for_benchmark ()" link="UDisksBlock.html#udisks-block-complete-open-for-benchmark"/>
+    <keyword type="function" name="udisks_block_call_rescan ()" link="UDisksBlock.html#udisks-block-call-rescan"/>
+    <keyword type="function" name="udisks_block_call_rescan_finish ()" link="UDisksBlock.html#udisks-block-call-rescan-finish"/>
+    <keyword type="function" name="udisks_block_call_rescan_sync ()" link="UDisksBlock.html#udisks-block-call-rescan-sync"/>
+    <keyword type="function" name="udisks_block_complete_rescan ()" link="UDisksBlock.html#udisks-block-complete-rescan"/>
     <keyword type="function" name="udisks_block_get_configuration ()" link="UDisksBlock.html#udisks-block-get-configuration"/>
     <keyword type="function" name="udisks_block_get_crypto_backing_device ()" link="UDisksBlock.html#udisks-block-get-crypto-backing-device"/>
     <keyword type="function" name="udisks_block_get_device ()" link="UDisksBlock.html#udisks-block-get-device"/>
@@ -656,8 +766,10 @@
     <keyword type="signal" name="The &quot;handle-format&quot; signal" link="UDisksBlock.html#UDisksBlock-handle-format"/>
     <keyword type="signal" name="The &quot;handle-get-secret-configuration&quot; signal" link="UDisksBlock.html#UDisksBlock-handle-get-secret-configuration"/>
     <keyword type="signal" name="The &quot;handle-open-for-backup&quot; signal" link="UDisksBlock.html#UDisksBlock-handle-open-for-backup"/>
+    <keyword type="signal" name="The &quot;handle-open-for-benchmark&quot; signal" link="UDisksBlock.html#UDisksBlock-handle-open-for-benchmark"/>
     <keyword type="signal" name="The &quot;handle-open-for-restore&quot; signal" link="UDisksBlock.html#UDisksBlock-handle-open-for-restore"/>
     <keyword type="signal" name="The &quot;handle-remove-configuration-item&quot; signal" link="UDisksBlock.html#UDisksBlock-handle-remove-configuration-item"/>
+    <keyword type="signal" name="The &quot;handle-rescan&quot; signal" link="UDisksBlock.html#UDisksBlock-handle-rescan"/>
     <keyword type="signal" name="The &quot;handle-update-configuration-item&quot; signal" link="UDisksBlock.html#UDisksBlock-handle-update-configuration-item"/>
     <keyword type="struct" name="UDisksPartition" link="UDisksPartition.html#UDisksPartition-struct"/>
     <keyword type="struct" name="struct UDisksPartitionIface" link="UDisksPartition.html#UDisksPartitionIface"/>
@@ -875,6 +987,13 @@
     <keyword type="function" name="udisks_daemon_util_dup_object ()" link="udisks2-Utilities.html#udisks-daemon-util-dup-object"/>
     <keyword type="function" name="udisks_daemon_util_escape ()" link="udisks2-Utilities.html#udisks-daemon-util-escape"/>
     <keyword type="function" name="udisks_daemon_util_escape_and_quote ()" link="udisks2-Utilities.html#udisks-daemon-util-escape-and-quote"/>
+    <keyword type="typedef" name="UDisksInhibitCookie" link="udisks2-Utilities.html#UDisksInhibitCookie"/>
+    <keyword type="function" name="udisks_daemon_util_inhibit_system_sync ()" link="udisks2-Utilities.html#udisks-daemon-util-inhibit-system-sync"/>
+    <keyword type="function" name="udisks_daemon_util_uninhibit_system_sync ()" link="udisks2-Utilities.html#udisks-daemon-util-uninhibit-system-sync"/>
+    <keyword type="function" name="udisks_daemon_util_hexdump ()" link="udisks2-Utilities.html#udisks-daemon-util-hexdump"/>
+    <keyword type="function" name="udisks_daemon_util_hexdump_debug ()" link="udisks2-Utilities.html#udisks-daemon-util-hexdump-debug"/>
+    <keyword type="function" name="udisks_daemon_util_file_set_contents ()" link="udisks2-Utilities.html#udisks-daemon-util-file-set-contents"/>
+    <keyword type="function" name="udisks_daemon_util_on_same_seat ()" link="udisks2-Utilities.html#udisks-daemon-util-on-same-seat"/>
     <keyword type="enum" name="enum UDisksLogLevel" link="udisks2-Logging.html#UDisksLogLevel"/>
     <keyword type="function" name="udisks_log ()" link="udisks2-Logging.html#udisks-log"/>
     <keyword type="macro" name="udisks_debug()" link="udisks2-Logging.html#udisks-debug"/>
@@ -972,10 +1091,15 @@
     <keyword type="signal" name="The &quot;entry-removed&quot; signal" link="UDisksCrypttabMonitor.html#UDisksCrypttabMonitor-entry-removed"/>
     <keyword type="struct" name="UDisksBaseJob" link="UDisksBaseJob.html#UDisksBaseJob-struct"/>
     <keyword type="struct" name="struct UDisksBaseJobClass" link="UDisksBaseJob.html#UDisksBaseJobClass"/>
+    <keyword type="function" name="udisks_base_job_get_daemon ()" link="UDisksBaseJob.html#udisks-base-job-get-daemon"/>
+    <keyword type="function" name="udisks_base_job_get_cancellable ()" link="UDisksBaseJob.html#udisks-base-job-get-cancellable"/>
+    <keyword type="function" name="udisks_base_job_get_auto_estimate ()" link="UDisksBaseJob.html#udisks-base-job-get-auto-estimate"/>
+    <keyword type="function" name="udisks_base_job_set_auto_estimate ()" link="UDisksBaseJob.html#udisks-base-job-set-auto-estimate"/>
     <keyword type="function" name="udisks_base_job_add_object ()" link="UDisksBaseJob.html#udisks-base-job-add-object"/>
     <keyword type="function" name="udisks_base_job_remove_object ()" link="UDisksBaseJob.html#udisks-base-job-remove-object"/>
-    <keyword type="function" name="udisks_base_job_get_cancellable ()" link="UDisksBaseJob.html#udisks-base-job-get-cancellable"/>
+    <keyword type="property" name="The &quot;auto-estimate&quot; property" link="UDisksBaseJob.html#UDisksBaseJob--auto-estimate"/>
     <keyword type="property" name="The &quot;cancellable&quot; property" link="UDisksBaseJob.html#UDisksBaseJob--cancellable"/>
+    <keyword type="property" name="The &quot;daemon&quot; property" link="UDisksBaseJob.html#UDisksBaseJob--daemon"/>
     <keyword type="struct" name="UDisksSimpleJob" link="UDisksSimpleJob.html#UDisksSimpleJob-struct"/>
     <keyword type="function" name="udisks_simple_job_new ()" link="UDisksSimpleJob.html#udisks-simple-job-new"/>
     <keyword type="function" name="udisks_simple_job_complete ()" link="UDisksSimpleJob.html#udisks-simple-job-complete"/>
@@ -1011,6 +1135,8 @@
     <keyword type="function" name="udisks_linux_drive_ata_update ()" link="UDisksLinuxDriveAta.html#udisks-linux-drive-ata-update"/>
     <keyword type="function" name="udisks_linux_drive_ata_refresh_smart_sync ()" link="UDisksLinuxDriveAta.html#udisks-linux-drive-ata-refresh-smart-sync"/>
     <keyword type="function" name="udisks_linux_drive_ata_smart_selftest_sync ()" link="UDisksLinuxDriveAta.html#udisks-linux-drive-ata-smart-selftest-sync"/>
+    <keyword type="function" name="udisks_linux_drive_ata_apply_configuration ()" link="UDisksLinuxDriveAta.html#udisks-linux-drive-ata-apply-configuration"/>
+    <keyword type="function" name="udisks_linux_drive_ata_secure_erase_sync ()" link="UDisksLinuxDriveAta.html#udisks-linux-drive-ata-secure-erase-sync"/>
     <keyword type="struct" name="UDisksLinuxDriveObject" link="UDisksLinuxDriveObject.html#UDisksLinuxDriveObject-struct"/>
     <keyword type="function" name="udisks_linux_drive_object_new ()" link="UDisksLinuxDriveObject.html#udisks-linux-drive-object-new"/>
     <keyword type="function" name="udisks_linux_drive_object_uevent ()" link="UDisksLinuxDriveObject.html#udisks-linux-drive-object-uevent"/>
@@ -1049,6 +1175,7 @@
     <keyword type="function" name="udisks_linux_block_object_get_daemon ()" link="UDisksLinuxBlockObject.html#udisks-linux-block-object-get-daemon"/>
     <keyword type="function" name="udisks_linux_block_object_get_device ()" link="UDisksLinuxBlockObject.html#udisks-linux-block-object-get-device"/>
     <keyword type="function" name="udisks_linux_block_object_trigger_uevent ()" link="UDisksLinuxBlockObject.html#udisks-linux-block-object-trigger-uevent"/>
+    <keyword type="function" name="udisks_linux_block_object_reread_partition_table ()" link="UDisksLinuxBlockObject.html#udisks-linux-block-object-reread-partition-table"/>
     <keyword type="property" name="The &quot;daemon&quot; property" link="UDisksLinuxBlockObject.html#UDisksLinuxBlockObject--daemon"/>
     <keyword type="property" name="The &quot;device&quot; property" link="UDisksLinuxBlockObject.html#UDisksLinuxBlockObject--device"/>
     <keyword type="constant" name="UDISKS_PARTITION_TYPE_INFO_FLAGS_NONE" link="UDisksClient.html#UDISKS-PARTITION-TYPE-INFO-FLAGS-NONE:CAPS"/>

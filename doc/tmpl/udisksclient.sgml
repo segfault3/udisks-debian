@@ -253,6 +253,16 @@ UDisksClient
 @Returns: 
 
 
+<!-- ##### FUNCTION udisks_client_get_job_description ##### -->
+<para>
+
+</para>
+
+@client: 
+@job: 
+@Returns: 
+
+
 <!-- ##### FUNCTION udisks_client_get_drive_info ##### -->
 <para>
 

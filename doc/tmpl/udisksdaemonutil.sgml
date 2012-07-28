@@ -152,3 +152,69 @@ udisksdaemonutil
 @Returns: 
 
 
+<!-- ##### TYPEDEF UDisksInhibitCookie ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### FUNCTION udisks_daemon_util_inhibit_system_sync ##### -->
+<para>
+
+</para>
+
+@reason: 
+@Returns: 
+
+
+<!-- ##### FUNCTION udisks_daemon_util_uninhibit_system_sync ##### -->
+<para>
+
+</para>
+
+@cookie: 
+
+
+<!-- ##### FUNCTION udisks_daemon_util_hexdump ##### -->
+<para>
+
+</para>
+
+@data: 
+@len: 
+@Returns: 
+
+
+<!-- ##### FUNCTION udisks_daemon_util_hexdump_debug ##### -->
+<para>
+
+</para>
+
+@data: 
+@len: 
+
+
+<!-- ##### FUNCTION udisks_daemon_util_file_set_contents ##### -->
+<para>
+
+</para>
+
+@filename: 
+@contents: 
+@contents_len: 
+@mode_for_new_file: 
+@error: 
+@Returns: 
+
+
+<!-- ##### FUNCTION udisks_daemon_util_on_same_seat ##### -->
+<para>
+
+</para>
+
+@daemon: 
+@object: 
+@process: 
+@Returns: 
+
+

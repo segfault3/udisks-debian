@@ -84,3 +84,11 @@ UDisksLinuxBlockObject
 @object: 
 
 
+<!-- ##### FUNCTION udisks_linux_block_object_reread_partition_table ##### -->
+<para>
+
+</para>
+
+@object: 
+
+

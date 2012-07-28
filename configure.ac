@@ -1,6 +1,6 @@
 
 m4_define([udisks_major_version], [1])
-m4_define([udisks_minor_version], [98])
+m4_define([udisks_minor_version], [99])
 m4_define([udisks_micro_version], [0])
 
 m4_define([udisks_version], [udisks_major_version.udisks_minor_version.udisks_micro_version])
@@ -36,6 +36,59 @@ GNOME_COMMON_INIT
 GNOME_DEBUG_CHECK
 GNOME_COMPILE_WARNINGS([maximum])
 GNOME_MAINTAINER_MODE_DEFINES
+
+# Compilation
+#
+
+CC_CHECK_CFLAGS_APPEND([                          \
+        -Waggregate-return                        \
+        -Wall                                     \
+        -W                                        \
+        -Wextra                                   \
+        -Wcast-align                              \
+        -Wdeclaration-after-statement             \
+        -Wendif-labels                            \
+        -Werror=format-security                   \
+        -Werror=implicit-function-declaration     \
+        -Werror=overflow                          \
+        -Wformat-nonliteral                       \
+        -Wformat=2                                \
+        -Wimplicit                                \
+        -Winit-self                               \
+        -Wlogical-op                              \
+        -Wmissing-declarations                    \
+        -Wmissing-format-attribute                \
+        -Wmissing-include-dirs                    \
+        -Wmissing-noreturn                        \
+        -Wmissing-prototypes                      \
+        -Wnested-externs                          \
+        -Wno-inline                               \
+        -Wno-long-long                            \
+        -Wno-missing-field-initializers           \
+        -Wno-overlength-strings                   \
+        -Wno-switch-enum                          \
+        -Wno-unused-parameter                     \
+        -Wno-unused-result                        \
+        -Wold-style-definition                    \
+        -Wpacked                                  \
+        -Wpointer-arith                           \
+        -Wshadow                                  \
+        -Wsign-compare                            \
+        -Wstrict-aliasing=2                       \
+        -Wstrict-prototypes                       \
+        -Wundef                                   \
+        -Wuninitialized                           \
+        -Wmaybe-uninitialized                     \
+        -Wunsafe-loop-optimizations               \
+        -Wvla                                     \
+        -Wwrite-strings                           \
+        -fdata-sections                           \
+        -fdiagnostics-show-option                 \
+        -ffast-math                               \
+        -ffunction-sections                       \
+        -fno-common                               \
+        -fno-strict-aliasing                      \
+])
 
 AC_PATH_PROG([XSLTPROC], [xsltproc])
 if test -z "$XSLTPROC"; then

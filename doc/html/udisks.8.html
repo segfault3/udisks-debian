@@ -29,12 +29,12 @@
 <td valign="top" align="right"></td>
 </tr></table></div>
 <div class="refsect1">
-<a name="id474194"></a><h2>DESCRIPTION</h2>
+<a name="id480406"></a><h2>DESCRIPTION</h2>
 <p>
       udisks provides interfaces to enumerate and perform operations
       on disks and storage devices. Any application (including
       unprivileged ones) can access the
-      <span class="citerefentry"><span class="refentrytitle">udisksd</span>(8)</span>
+      <a href="udisksd.8.html"><span class="citerefentry"><span class="refentrytitle">udisksd</span>(8)</span></a>
       daemon via the name <span class="emphasis"><em>org.freedesktop.UDisks2</em></span>
       on the system message bus. In addition to the D-Bus API, a
       library, <code class="filename">libudisks2</code> is also provided. This
@@ -48,7 +48,7 @@
     </p>
 </div>
 <div class="refsect1">
-<a name="id474232"></a><h2>ACCESS CONTROL</h2>
+<a name="id480447"></a><h2>ACCESS CONTROL</h2>
 <p>
       By default, logged-in users in active log-in sessions are
       permitted to perform operations (for example, mounting,
@@ -68,7 +68,98 @@
     </p>
 </div>
 <div class="refsect1">
-<a name="id474276"></a><h2>DEVICE INFORMATION</h2>
+<a name="id480492"></a><h2>DRIVE CONFIGURATION</h2>
+<p>
+      At start-up and when a drive is connected,
+      <a href="udisksd.8.html"><span class="citerefentry"><span class="refentrytitle">udisksd</span>(8)</span></a>
+      will apply configuration stored in the file
+      <code class="filename">/etc/udisks2/IDENTIFIER.conf</code>
+      where <span class="emphasis"><em>IDENTIFIER</em></span> is the value of the
+      <a class="link" href="gdbus-org.freedesktop.UDisks2.Drive.html#gdbus-property-org-freedesktop-UDisks2-Drive.Id" title='The "Id" property'>Drive:Id</a>
+      property for the drive. If the file changes on disk its new
+      contents will also be applied to the drive.
+      Typically, users or administrators will never need to edit drive
+      configuration files as they are effectively managed through
+      graphical applications such as
+      <span class="citerefentry"><span class="refentrytitle">gnome-disks</span>(1)</span>.
+      Manually editing configuration files is however supported — the file
+      format is a simple <span class="emphasis"><em>.ini-like format</em></span>
+      (see the
+      <a class="ulink" href="http://freedesktop.org/wiki/Specifications/desktop-entry-spec" target="_top">Desktop Entry Specification</a>
+      for the exact syntax). New groups and keys may
+      be added in the future.
+    </p>
+<div class="refsect2">
+<a name="id480549"></a><h3>ATA group</h3>
+<p>
+        The <code class="literal">ATA</code> group is for settings that apply to
+        drives using the ATA command-set. The following keys are
+        supported:
+      </p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><code class="option">StandbyTimeout</code></span></p></td>
+<td><p>
+              The standby timeout.  A value of zero means "timeouts
+              are disabled": the device will not automatically enter
+              standby mode.  Values from 1 to 240 specify multiples of
+              5 seconds, yielding timeouts from 5 seconds to 20
+              minutes. Values from 241 to 251 specify from 1 to 11
+              units of 30 minutes, yielding timeouts from 30 minutes
+              to 5.5 hours.  A value of 252 signifies a timeout of 21
+              minutes. A value of 253 sets a vendor-defined timeout
+              period between 8 and 12 hours, and the value 254 is
+              reserved.  255 is interpreted as 21 minutes plus 15
+              seconds. Note that some older drives may have very
+              different interpretations of these values.
+              This is similar to the <code class="option">-S</code> option in
+              <span class="citerefentry"><span class="refentrytitle">hdparm</span>(8)</span>.
+            </p></td>
+</tr>
+<tr>
+<td><p><span class="term"><code class="option">APMLevel</code></span></p></td>
+<td><p>
+              The Advanced Power Management level.  A low value means
+              aggressive power management and a high value means
+              better performance. Possible settings range from values
+              1 through 127 (which permit spin-down), and values 128
+              through 254 (which do not permit spin-down).  The
+              highest degree of power management is attained with a
+              setting of 1, and the highest I/O performance with a
+              setting of 254. A value of 255 tells hdparm to disable
+              Advanced Power Management altogether on the drive (not
+              all drives support disabling it, but most do).
+              This is similar to the <code class="option">-B</code> option in
+              <span class="citerefentry"><span class="refentrytitle">hdparm</span>(8)</span>.
+            </p></td>
+</tr>
+<tr>
+<td><p><span class="term"><code class="option">AAMLevel</code></span></p></td>
+<td><p>
+              The Automatic Acoustic Management level. Most modern
+              harddisk drives have the ability to speed down the head
+              movements to reduce their noise output. The possible
+              values are between 0 and 254. 128 is the most quiet (and
+              therefore slowest) setting and 254 the fastest (and
+              loudest). Some drives have only two levels (quiet /
+              fast), while others may have different levels between
+              128 and 254. At the moment, most drives only support 3
+              options, off, quiet, and fast. These have been assigned
+              the values 0, 128, and 254 at present, respectively, but
+              integer space has been incorporated for future
+              expansion, should this change.
+              This is similar to the <code class="option">-M</code> option in
+              <span class="citerefentry"><span class="refentrytitle">hdparm</span>(8)</span>.
+            </p></td>
+</tr>
+</tbody>
+</table></div>
+</div>
+</div>
+<div class="refsect1">
+<a name="id480671"></a><h2>DEVICE INFORMATION</h2>
 <p>
       udisks relies on recent versions of
       <span class="citerefentry"><span class="refentrytitle">udev</span>(7)</span>
@@ -129,7 +220,7 @@
 </table></div>
 </div>
 <div class="refsect1">
-<a name="id474438"></a><h2>API STABILITY</h2>
+<a name="id521678"></a><h2>API STABILITY</h2>
 <p>
       udisks guarantees a stable D-Bus API within the same major
       version and this guarantee also extends to the client-side
@@ -161,11 +252,11 @@
       or
       <span class="citerefentry"><span class="refentrytitle">gdbus</span>(1)</span>
       to interact with
-      <span class="citerefentry"><span class="refentrytitle">udisksd</span>(8)</span>.
+      <a href="udisksd.8.html"><span class="citerefentry"><span class="refentrytitle">udisksd</span>(8)</span></a>.
     </p>
 </div>
 <div class="refsect1">
-<a name="id515196"></a><h2>AUDIENCE</h2>
+<a name="id521750"></a><h2>AUDIENCE</h2>
 <p>
       The intended audience of udisks include operating system
       developers working on the higher-level parts of the operating
@@ -214,14 +305,14 @@
     </p>
 </div>
 <div class="refsect1">
-<a name="id515279"></a><h2>AUTHOR</h2>
+<a name="id521833"></a><h2>AUTHOR</h2>
 <p>
       Written by David Zeuthen <code class="email">&lt;<a class="email" href="mailto:zeuthen@gmail.com">zeuthen@gmail.com</a>&gt;</code> with
       a lot of help from many others.
     </p>
 </div>
 <div class="refsect1">
-<a name="id515291"></a><h2>BUGS</h2>
+<a name="id521844"></a><h2>BUGS</h2>
 <p>
       Please send bug reports to either the distribution bug tracker
       or the upstream bug tracker at
@@ -229,12 +320,13 @@
     </p>
 </div>
 <div class="refsect1">
-<a name="id515306"></a><h2>SEE ALSO</h2>
+<a name="id521860"></a><h2>SEE ALSO</h2>
 <p>
       <span class="citerefentry"><span class="refentrytitle">udev</span>(7)</span>,
       <span class="citerefentry"><span class="refentrytitle">polkit</span>(8)</span>,
       <a href="udisksd.8.html"><span class="citerefentry"><span class="refentrytitle">udisksd</span>(8)</span></a>,
-      <a href="udisksctl.1.html"><span class="citerefentry"><span class="refentrytitle">udisksctl</span>(1)</span></a>
+      <a href="udisksctl.1.html"><span class="citerefentry"><span class="refentrytitle">udisksctl</span>(1)</span></a>,
+      <span class="citerefentry"><span class="refentrytitle">gnome-disks</span>(1)</span>
     </p>
 </div>
 </div>

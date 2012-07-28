@@ -163,7 +163,7 @@
 </table></div>
 </div>
 <br class="table-break"><p>
-          For reference, the polkit actions defined by udisks 1.98.0
+          For reference, the polkit actions defined by udisks 1.99.0
 
           are included here:
           </p>
@@ -443,6 +443,17 @@
     &lt;/defaults&gt;
   &lt;/action&gt;
 
+  &lt;!-- rescan a device --&gt;
+  &lt;action id="org.freedesktop.udisks2.rescan"&gt;
+    &lt;_description&gt;Rescan a device&lt;/_description&gt;
+    &lt;_message&gt;Authentication is to rescan a device&lt;/_message&gt;
+    &lt;defaults&gt;
+      &lt;allow_any&gt;auth_admin&lt;/allow_any&gt;
+      &lt;allow_inactive&gt;auth_admin&lt;/allow_inactive&gt;
+      &lt;allow_active&gt;yes&lt;/allow_active&gt;
+    &lt;/defaults&gt;
+  &lt;/action&gt;
+
   &lt;!-- ###################################################################### --&gt;
   &lt;!-- Open a device for reading (for creating / restoring disk images) --&gt;
 
@@ -498,6 +509,19 @@
   &lt;/action&gt;
 
   &lt;!-- ###################################################################### --&gt;
+  &lt;!-- Drive configuration (Power Management, Acustics, etc.) --&gt;
+
+  &lt;action id="org.freedesktop.udisks2.modify-drive-settings"&gt;
+    &lt;_description&gt;Modify drive settings&lt;/_description&gt;
+    &lt;_message&gt;Authentication is required to modify drive settings&lt;/_message&gt;
+    &lt;defaults&gt;
+      &lt;allow_any&gt;auth_admin&lt;/allow_any&gt;
+      &lt;allow_inactive&gt;auth_admin&lt;/allow_inactive&gt;
+      &lt;allow_active&gt;auth_admin_keep&lt;/allow_active&gt;
+    &lt;/defaults&gt;
+  &lt;/action&gt;
+
+  &lt;!-- ###################################################################### --&gt;
   &lt;!-- ATA SMART --&gt;
 
   &lt;!-- Update/refresh SMART data --&gt;
@@ -526,6 +550,92 @@
   &lt;action id="org.freedesktop.udisks2.ata-smart-selftest"&gt;
     &lt;_description&gt;Run SMART self-test&lt;/_description&gt;
     &lt;_message&gt;Authentication is required to run a SMART self-test&lt;/_message&gt;
+    &lt;defaults&gt;
+      &lt;allow_any&gt;auth_admin&lt;/allow_any&gt;
+      &lt;allow_inactive&gt;auth_admin&lt;/allow_inactive&gt;
+      &lt;allow_active&gt;auth_admin_keep&lt;/allow_active&gt;
+    &lt;/defaults&gt;
+  &lt;/action&gt;
+
+  &lt;!-- ###################################################################### --&gt;
+  &lt;!-- ATA Power Management --&gt;
+
+  &lt;!-- Check power state --&gt;
+  &lt;action id="org.freedesktop.udisks2.ata-check-power"&gt;
+    &lt;_description&gt;Check power state&lt;/_description&gt;
+    &lt;_message&gt;Authentication is required to check the power state&lt;/_message&gt;
+    &lt;defaults&gt;
+      &lt;allow_any&gt;auth_admin&lt;/allow_any&gt;
+      &lt;allow_inactive&gt;auth_admin&lt;/allow_inactive&gt;
+      &lt;allow_active&gt;yes&lt;/allow_active&gt;
+    &lt;/defaults&gt;
+  &lt;/action&gt;
+
+  &lt;!-- Send standby command / resume from standby --&gt;
+  &lt;action id="org.freedesktop.udisks2.ata-standby"&gt;
+    &lt;_description&gt;Send standby command&lt;/_description&gt;
+    &lt;_message&gt;Authentication is required to put a drive into standby mode&lt;/_message&gt;
+    &lt;defaults&gt;
+      &lt;allow_any&gt;auth_admin&lt;/allow_any&gt;
+      &lt;allow_inactive&gt;auth_admin&lt;/allow_inactive&gt;
+      &lt;allow_active&gt;yes&lt;/allow_active&gt;
+    &lt;/defaults&gt;
+  &lt;/action&gt;
+
+  &lt;!-- Send standby command / resume from standby to a drive considered a "system device" --&gt;
+  &lt;action id="org.freedesktop.udisks2.ata-standby-system"&gt;
+    &lt;_description&gt;Send standby command to a system drive&lt;/_description&gt;
+    &lt;_message&gt;Authentication is required to put a drive into standby mode&lt;/_message&gt;
+    &lt;defaults&gt;
+      &lt;allow_any&gt;auth_admin&lt;/allow_any&gt;
+      &lt;allow_inactive&gt;auth_admin&lt;/allow_inactive&gt;
+      &lt;allow_active&gt;auth_admin_keep&lt;/allow_active&gt;
+    &lt;/defaults&gt;
+  &lt;/action&gt;
+
+  &lt;!-- Send standby command  / resume from standby to a drive on another seat --&gt;
+  &lt;action id="org.freedesktop.udisks2.ata-standby-other-seat"&gt;
+    &lt;_description&gt;Send standby command to drive on other seat&lt;/_description&gt;
+    &lt;_message&gt;Authentication is required to put a drive into standby mode&lt;/_message&gt;
+    &lt;defaults&gt;
+      &lt;allow_any&gt;auth_admin&lt;/allow_any&gt;
+      &lt;allow_inactive&gt;auth_admin&lt;/allow_inactive&gt;
+      &lt;allow_active&gt;auth_admin_keep&lt;/allow_active&gt;
+    &lt;/defaults&gt;
+  &lt;/action&gt;
+
+  &lt;!-- ###################################################################### --&gt;
+  &lt;!-- ATA Secure Erase --&gt;
+
+  &lt;!-- Send SECURE ERASE UNIT command --&gt;
+  &lt;action id="org.freedesktop.udisks2.ata-secure-erase"&gt;
+    &lt;_description&gt;Securely erase a hard disk&lt;/_description&gt;
+    &lt;_message&gt;Authentication is required to securely erase a hard disk&lt;/_message&gt;
+    &lt;defaults&gt;
+      &lt;allow_any&gt;auth_admin&lt;/allow_any&gt;
+      &lt;allow_inactive&gt;auth_admin&lt;/allow_inactive&gt;
+      &lt;allow_active&gt;auth_admin_keep&lt;/allow_active&gt;
+    &lt;/defaults&gt;
+  &lt;/action&gt;
+
+  &lt;!-- ###################################################################### --&gt;
+  &lt;!-- Canceling jobs --&gt;
+
+  &lt;!-- Cancel own job --&gt;
+  &lt;action id="org.freedesktop.udisks2.cancel-job"&gt;
+    &lt;_description&gt;Cancel job&lt;/_description&gt;
+    &lt;_message&gt;Authentication is required to cancel a job&lt;/_message&gt;
+    &lt;defaults&gt;
+      &lt;allow_any&gt;auth_admin&lt;/allow_any&gt;
+      &lt;allow_inactive&gt;auth_admin&lt;/allow_inactive&gt;
+      &lt;allow_active&gt;yes&lt;/allow_active&gt;
+    &lt;/defaults&gt;
+  &lt;/action&gt;
+
+  &lt;!-- Cancel own job --&gt;
+  &lt;action id="org.freedesktop.udisks2.cancel-job-other-user"&gt;
+    &lt;_description&gt;Cancel job started by another user&lt;/_description&gt;
+    &lt;_message&gt;Authentication is required to cancel a job started by another user&lt;/_message&gt;
     &lt;defaults&gt;
       &lt;allow_any&gt;auth_admin&lt;/allow_any&gt;
       &lt;allow_inactive&gt;auth_admin&lt;/allow_inactive&gt;

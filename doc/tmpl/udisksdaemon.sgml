@@ -213,6 +213,8 @@ UDisksDaemon
 
 @daemon: 
 @object: 
+@job_operation: 
+@job_started_by_uid: 
 @cancellable: 
 @Returns: 
 
@@ -224,6 +226,8 @@ UDisksDaemon
 
 @daemon: 
 @object: 
+@job_operation: 
+@job_started_by_uid: 
 @cancellable: 
 @run_as_uid: 
 @run_as_euid: 
@@ -240,6 +244,8 @@ UDisksDaemon
 
 @daemon: 
 @object: 
+@job_operation: 
+@job_started_by_uid: 
 @cancellable: 
 @run_as_uid: 
 @run_as_euid: 
@@ -258,6 +264,8 @@ UDisksDaemon
 
 @daemon: 
 @object: 
+@job_operation: 
+@job_started_by_uid: 
 @job_func: 
 @user_data: 
 @user_data_free_func: 

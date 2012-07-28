@@ -88,6 +88,8 @@
                                                          <em class="parameter"><code><a class="link" href="UDisksPartitionTable.html" title="UDisksPartitionTable"><span class="type">UDisksPartitionTable</span></a> *table</code></em>);
 <a href="http://library.gnome.org/devel/glib/unstable/glib-Doubly-Linked-Lists.html#GList"><span class="returnvalue">GList</span></a> *             <a class="link" href="UDisksClient.html#udisks-client-get-jobs-for-object" title="udisks_client_get_jobs_for_object ()">udisks_client_get_jobs_for_object</a>   (<em class="parameter"><code><a class="link" href="UDisksClient.html" title="UDisksClient"><span class="type">UDisksClient</span></a> *client</code></em>,
                                                          <em class="parameter"><code><a class="link" href="UDisksObject.html" title="UDisksObject"><span class="type">UDisksObject</span></a> *object</code></em>);
+<a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="returnvalue">gchar</span></a> *             <a class="link" href="UDisksClient.html#udisks-client-get-job-description" title="udisks_client_get_job_description ()">udisks_client_get_job_description</a>   (<em class="parameter"><code><a class="link" href="UDisksClient.html" title="UDisksClient"><span class="type">UDisksClient</span></a> *client</code></em>,
+                                                         <em class="parameter"><code><a class="link" href="UDisksJob.html" title="UDisksJob"><span class="type">UDisksJob</span></a> *job</code></em>);
 
 <span class="returnvalue">void</span>                <a class="link" href="UDisksClient.html#udisks-client-get-drive-info" title="udisks_client_get_drive_info ()">udisks_client_get_drive_info</a>        (<em class="parameter"><code><a class="link" href="UDisksClient.html" title="UDisksClient"><span class="type">UDisksClient</span></a> *client</code></em>,
                                                          <em class="parameter"><code><a class="link" href="UDisksDrive.html" title="UDisksDrive"><span class="type">UDisksDrive</span></a> *drive</code></em>,
@@ -190,7 +192,7 @@ The major version of the libudisks2 header files.
 <hr>
 <div class="refsect2">
 <a name="UDISKS-MINOR-VERSION:CAPS"></a><h3>UDISKS_MINOR_VERSION</h3>
-<pre class="programlisting">#define UDISKS_MINOR_VERSION 98
+<pre class="programlisting">#define UDISKS_MINOR_VERSION 99
 </pre>
 <p>
 The minor version of the libudisks2 header files.
@@ -766,6 +768,33 @@ Gets all the <a class="link" href="UDisksJob.html" title="UDisksJob"><span class
 returned list should be freed with <a href="http://library.gnome.org/devel/glib/unstable/glib-Doubly-Linked-Lists.html#g-list-free"><code class="function">g_list_free()</code></a> after each
 element has been freed with <a href="http://library.gnome.org/devel/gobject/unstable/gobject-The-Base-Object-Type.html#g-object-unref"><code class="function">g_object_unref()</code></a>. <span class="annotation">[<a href="http://foldoc.org/transfer%20full"><span class="acronym">transfer full</span></a>][<a href="http://foldoc.org/element-type"><span class="acronym">element-type</span></a> UDisksJob]</span>
 </td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="udisks-client-get-job-description"></a><h3>udisks_client_get_job_description ()</h3>
+<pre class="programlisting"><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="returnvalue">gchar</span></a> *             udisks_client_get_job_description   (<em class="parameter"><code><a class="link" href="UDisksClient.html" title="UDisksClient"><span class="type">UDisksClient</span></a> *client</code></em>,
+                                                         <em class="parameter"><code><a class="link" href="UDisksJob.html" title="UDisksJob"><span class="type">UDisksJob</span></a> *job</code></em>);</pre>
+<p>
+Gets a human-readable and localized text string describing the
+operation of <em class="parameter"><code>job</code></em>.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>client</code></em> :</span></p></td>
+<td>A <a class="link" href="UDisksClient.html" title="UDisksClient"><span class="type">UDisksClient</span></a>.</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>job</code></em> :</span></p></td>
+<td>A <a class="link" href="UDisksJob.html" title="UDisksJob"><span class="type">UDisksJob</span></a>.</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td>A string that should be freed with <a href="http://library.gnome.org/devel/glib/unstable/glib-Memory-Allocation.html#g-free"><code class="function">g_free()</code></a>.</td>
 </tr>
 </tbody>
 </table></div>

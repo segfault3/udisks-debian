@@ -55,10 +55,13 @@
                          OUT h         fd);
 <a class="link" href="gdbus-org.freedesktop.UDisks2.Block.html#gdbus-method-org-freedesktop-UDisks2-Block.OpenForRestore" title="The OpenForRestore() method">OpenForRestore</a>          (IN  a{sv}     options,
                          OUT h         fd);
+<a class="link" href="gdbus-org.freedesktop.UDisks2.Block.html#gdbus-method-org-freedesktop-UDisks2-Block.OpenForBenchmark" title="The OpenForBenchmark() method">OpenForBenchmark</a>        (IN  a{sv}     options,
+                         OUT h         fd);
+<a class="link" href="gdbus-org.freedesktop.UDisks2.Block.html#gdbus-method-org-freedesktop-UDisks2-Block.Rescan" title="The Rescan() method">Rescan</a>                  (IN  a{sv}     options);
 </pre>
 </div>
 <div class="refsect1">
-<a name="id537659"></a><h2>Properties</h2>
+<a name="id538825"></a><h2>Properties</h2>
 <pre class="synopsis">
 <a class="link" href="gdbus-org.freedesktop.UDisks2.Block.html#gdbus-property-org-freedesktop-UDisks2-Block.Device" title='The "Device" property'>Device</a>               readable   ay
 <a class="link" href="gdbus-org.freedesktop.UDisks2.Block.html#gdbus-property-org-freedesktop-UDisks2-Block.PreferredDevice" title='The "PreferredDevice" property'>PreferredDevice</a>      readable   ay
@@ -244,6 +247,13 @@ Format (IN  s     type,
         and the file system is created on the unlocked device. The
         unlocked device will be left open.
 </p>
+<p>        If the option <em class="parameter"><code>erase</code></em> is used then the
+        underlying device will be erased. Valid values include
+        <span class="quote">“<span class="quote">zero</span>”</span> to write zeroes over the entire device
+        before formatting, <span class="quote">“<span class="quote">ata-secure-erase</span>”</span> to perform
+        a secure erase or <span class="quote">“<span class="quote">ata-secure-erase-enhanced</span>”</span> to
+        perform an enhanced secure erase.
+</p>
 <div class="variablelist"><table border="0">
 <col align="left" valign="top">
 <tbody>
@@ -253,7 +263,7 @@ Format (IN  s     type,
 </tr>
 <tr>
 <td><p><span class="term"><code class="literal">IN a{sv} <em class="parameter"><code>options</code></em></code>:</span></p></td>
-<td><p>Options - known options (in addition to <a class="link" href="udisks-std-options.html" title="The options parameter">standard options</a>) includes <em class="parameter"><code>label</code></em> (of type 's'), <em class="parameter"><code>take-ownership</code></em> (of type 'b') and <em class="parameter"><code>encrypt.passphrase</code></em> (of type 's').</p></td>
+<td><p>Options - known options (in addition to <a class="link" href="udisks-std-options.html" title="The options parameter">standard options</a>) includes <em class="parameter"><code>label</code></em> (of type 's'), <em class="parameter"><code>take-ownership</code></em> (of type 'b'), <em class="parameter"><code>encrypt.passphrase</code></em> (of type 's') and <em class="parameter"><code>erase</code></em> (of type 's').</p></td>
 </tr>
 </tbody>
 </table></div>
@@ -306,6 +316,61 @@ OpenForRestore (IN  a{sv} options,
 <td><p>An index for the returned file descriptor.</p></td>
 </tr>
 </tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="gdbus-method-org-freedesktop-UDisks2-Block.OpenForBenchmark"></a><h3>The OpenForBenchmark() method</h3>
+<pre class="programlisting">
+OpenForBenchmark (IN  a{sv} options,
+                  OUT h     fd);
+</pre>
+<p>        Gets a file descriptor for the device that is suitable to be
+        used for benchmarking the device (transfer rate, access time
+        etc.). Note that the file descriptor may be opened with the
+        <code class="literal">O_DIRECT</code> and <code class="literal">O_SYNC</code>
+        flags so care must be taken to only perform page-aligned I/O.
+</p>
+<p>        If the <em class="parameter"><code>writable</code></em> in <em class="parameter"><code>options</code></em> is <code class="constant">TRUE</code>
+        then the returned file descriptor will be writable. This only
+        works if the device is not already in use.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><code class="literal">IN a{sv} <em class="parameter"><code>options</code></em></code>:</span></p></td>
+<td><p>Options (currently unused except for <a class="link" href="udisks-std-options.html" title="The options parameter">standard options</a>).</p></td>
+</tr>
+<tr>
+<td><p><span class="term"><code class="literal">OUT h <em class="parameter"><code>fd</code></em></code>:</span></p></td>
+<td><p>An index for the returned file descriptor.</p></td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="gdbus-method-org-freedesktop-UDisks2-Block.Rescan"></a><h3>The Rescan() method</h3>
+<pre class="programlisting">
+Rescan (IN  a{sv} options);
+</pre>
+<p>        Request that the kernel and core OS rescans the contents of
+        the device and update their state to reflect this (including
+        things such as the <code class="filename">/dev/disk/</code> hierarchy
+        of symlinks). This includes requesting that the kernel
+        re-reads the partition table, if appropriate.
+</p>
+<p>        This is usually not needed since the OS automatically does
+        this when the last process with a writable file descriptor for
+        the device closes it.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody><tr>
+<td><p><span class="term"><code class="literal">IN a{sv} <em class="parameter"><code>options</code></em></code>:</span></p></td>
+<td><p>Options (currently unused except for <a class="link" href="udisks-std-options.html" title="The options parameter">standard options</a>).</p></td>
+</tr></tbody>
 </table></div>
 </div>
 </div>

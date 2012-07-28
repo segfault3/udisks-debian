@@ -677,6 +677,7 @@ udisks_cleanup_check_mounted_fs_entry (UDisksCleanup  *cleanup,
           /* right now -l is the only way to "force unmount" file systems... */
           if (!udisks_daemon_launch_spawned_job_sync (cleanup->daemon,
                                                       NULL, /* UDisksObject */
+                                                      "cleanup", 0, /* StartedByUID */
                                                       NULL, /* GCancellable */
                                                       0,    /* uid_t run_as_uid */
                                                       0,    /* uid_t run_as_euid */
@@ -999,24 +1000,24 @@ udisks_cleanup_find_mounted_fs (UDisksCleanup   *cleanup,
                   ret = g_strdup (mount_point);
                   if (out_uid != NULL)
                     {
-                      GVariant *value;
-                      value = lookup_asv (details, "mounted-by-uid");
+                      GVariant *lookup_value;
+                      lookup_value = lookup_asv (details, "mounted-by-uid");
                       *out_uid = 0;
-                      if (value != NULL)
+                      if (lookup_value != NULL)
                         {
-                          *out_uid = g_variant_get_uint32 (value);
-                          g_variant_unref (value);
+                          *out_uid = g_variant_get_uint32 (lookup_value);
+                          g_variant_unref (lookup_value);
                         }
                     }
                   if (out_fstab_mount != NULL)
                     {
-                      GVariant *value;
-                      value = lookup_asv (details, "fstab-mount");
+                      GVariant *lookup_value;
+                      lookup_value = lookup_asv (details, "fstab-mount");
                       *out_fstab_mount = FALSE;
-                      if (value != NULL)
+                      if (lookup_value != NULL)
                         {
-                          *out_fstab_mount = g_variant_get_boolean (value);
-                          g_variant_unref (value);
+                          *out_fstab_mount = g_variant_get_boolean (lookup_value);
+                          g_variant_unref (lookup_value);
                         }
                     }
                   g_variant_unref (block_device_value);
@@ -1168,6 +1169,7 @@ udisks_cleanup_check_unlocked_luks_entry (UDisksCleanup  *cleanup,
           escaped_device_file = udisks_daemon_util_escape_and_quote (device_file_cleartext);
           if (!udisks_daemon_launch_spawned_job_sync (cleanup->daemon,
                                                       NULL, /* UDisksObject */
+                                                      "cleanup", 0, /* StartedByUID */
                                                       NULL, /* GCancellable */
                                                       0,    /* uid_t run_as_uid */
                                                       0,    /* uid_t run_as_euid */
@@ -1468,13 +1470,13 @@ udisks_cleanup_find_unlocked_luks (UDisksCleanup   *cleanup,
                   ret = cleartext_device;
                   if (out_uid != NULL)
                     {
-                      GVariant *value;
-                      value = lookup_asv (details, "unlocked-by-uid");
+                      GVariant *lookup_value;
+                      lookup_value = lookup_asv (details, "unlocked-by-uid");
                       *out_uid = 0;
-                      if (value != NULL)
+                      if (lookup_value != NULL)
                         {
-                          *out_uid = g_variant_get_uint32 (value);
-                          g_variant_unref (value);
+                          *out_uid = g_variant_get_uint32 (lookup_value);
+                          g_variant_unref (lookup_value);
                         }
                     }
                   g_variant_unref (crypto_device_value);
@@ -1846,13 +1848,13 @@ udisks_cleanup_has_loop (UDisksCleanup   *cleanup,
               ret = TRUE;
               if (out_uid != NULL)
                 {
-                  GVariant *value;
-                  value = lookup_asv (details, "setup-by-uid");
+                  GVariant *lookup_value;
+                  lookup_value = lookup_asv (details, "setup-by-uid");
                   *out_uid = 0;
-                  if (value != NULL)
+                  if (lookup_value != NULL)
                     {
-                      *out_uid = g_variant_get_uint32 (value);
-                      g_variant_unref (value);
+                      *out_uid = g_variant_get_uint32 (lookup_value);
+                      g_variant_unref (lookup_value);
                     }
                 }
               g_variant_unref (details);

@@ -38,12 +38,33 @@ UDisksDrive
 @arg2: 
 @Returns: 
 
+<!-- ##### SIGNAL UDisksDrive::handle-set-configuration ##### -->
+<para>
+
+</para>
+
+@udisksdrive: the object which received the signal.
+@arg1: 
+@arg2: 
+@arg3: 
+@Returns: 
+
+<!-- ##### ARG UDisksDrive:configuration ##### -->
+<para>
+
+</para>
+
 <!-- ##### ARG UDisksDrive:connection-bus ##### -->
 <para>
 
 </para>
 
 <!-- ##### ARG UDisksDrive:ejectable ##### -->
+<para>
+
+</para>
+
+<!-- ##### ARG UDisksDrive:id ##### -->
 <para>
 
 </para>
@@ -170,8 +191,11 @@ UDisksDrive
 
 @parent_iface: 
 @handle_eject: 
+@handle_set_configuration: 
+@get_configuration: 
 @get_connection_bus: 
 @get_ejectable: 
+@get_id: 
 @get_media: 
 @get_media_available: 
 @get_media_change_detected: 
@@ -251,6 +275,52 @@ UDisksDrive
 
 
 <!-- ##### FUNCTION udisks_drive_complete_eject ##### -->
+<para>
+
+</para>
+
+@object: 
+@invocation: 
+
+
+<!-- ##### FUNCTION udisks_drive_call_set_configuration ##### -->
+<para>
+
+</para>
+
+@proxy: 
+@arg_value: 
+@arg_options: 
+@cancellable: 
+@callback: 
+@user_data: 
+
+
+<!-- ##### FUNCTION udisks_drive_call_set_configuration_finish ##### -->
+<para>
+
+</para>
+
+@proxy: 
+@res: 
+@error: 
+@Returns: 
+
+
+<!-- ##### FUNCTION udisks_drive_call_set_configuration_sync ##### -->
+<para>
+
+</para>
+
+@proxy: 
+@arg_value: 
+@arg_options: 
+@cancellable: 
+@error: 
+@Returns: 
+
+
+<!-- ##### FUNCTION udisks_drive_complete_set_configuration ##### -->
 <para>
 
 </para>
@@ -484,7 +554,34 @@ UDisksDrive
 @Returns: 
 
 
+<!-- ##### FUNCTION udisks_drive_get_configuration ##### -->
+<para>
+
+</para>
+
+@object: 
+@Returns: 
+
+
+<!-- ##### FUNCTION udisks_drive_get_id ##### -->
+<para>
+
+</para>
+
+@object: 
+@Returns: 
+
+
 <!-- ##### FUNCTION udisks_drive_dup_connection_bus ##### -->
+<para>
+
+</para>
+
+@object: 
+@Returns: 
+
+
+<!-- ##### FUNCTION udisks_drive_dup_seat ##### -->
 <para>
 
 </para>
@@ -557,6 +654,24 @@ UDisksDrive
 
 
 <!-- ##### FUNCTION udisks_drive_dup_sort_key ##### -->
+<para>
+
+</para>
+
+@object: 
+@Returns: 
+
+
+<!-- ##### FUNCTION udisks_drive_dup_configuration ##### -->
+<para>
+
+</para>
+
+@object: 
+@Returns: 
+
+
+<!-- ##### FUNCTION udisks_drive_dup_id ##### -->
 <para>
 
 </para>
@@ -782,6 +897,24 @@ UDisksDrive
 
 
 <!-- ##### FUNCTION udisks_drive_set_sort_key ##### -->
+<para>
+
+</para>
+
+@object: 
+@value: 
+
+
+<!-- ##### FUNCTION udisks_drive_set_configuration ##### -->
+<para>
+
+</para>
+
+@object: 
+@value: 
+
+
+<!-- ##### FUNCTION udisks_drive_set_id ##### -->
 <para>
 
 </para>
