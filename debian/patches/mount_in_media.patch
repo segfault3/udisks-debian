@@ -1,0 +1,57 @@
+Description: Mount drives in /media, not /run/media/, to stay FHS compatible.
+Author: Martin Pitt <martin.pitt@ubuntu.com>
+Bug: https://bugs.freedesktop.org/show_bug.cgi?id=51709
+Bug-Debian: http://bugs.debian.org/680403
+Bug-Ubuntu: https://launchpad.net/bugs/1020759
+
+Index: udisks2/src/tests/integration-test
+===================================================================
+--- udisks2.orig/src/tests/integration-test	2012-08-22 12:25:42.346463891 +0200
++++ udisks2/src/tests/integration-test	2012-08-22 12:25:55.010464502 +0200
+@@ -806,7 +806,7 @@
+         # mount
+         mount_path = fs.call_mount_sync(no_options, None)
+ 
+-        self.assertTrue(mount_path.startswith('/run/media/'), mount_path)
++        self.assertTrue(mount_path.startswith('/media/'), mount_path)
+         if label:
+             self.assertTrue(mount_path.endswith(label))
+ 
+Index: udisks2/src/udiskslinuxfilesystem.c
+===================================================================
+--- udisks2.orig/src/udiskslinuxfilesystem.c	2012-07-28 13:32:27.629931122 +0200
++++ udisks2/src/udiskslinuxfilesystem.c	2012-08-22 12:24:55.062461601 +0200
+@@ -859,26 +859,26 @@
+     }
+ 
+   /* If we know the user-name and it doesn't have any '/' character in
+-   * it, mount in /run/media/$USER
++   * it, mount in /media/$USER
+    */
+   if (user_name != NULL && strstr (user_name, "/") == NULL)
+     {
+-      mount_dir = g_strdup_printf ("/run/media/%s", user_name);
++      mount_dir = g_strdup_printf ("/media/%s", user_name);
+       if (!g_file_test (mount_dir, G_FILE_TEST_EXISTS))
+         {
+-          /* First ensure that /run/media exists */
+-          if (!g_file_test ("/run/media", G_FILE_TEST_EXISTS))
++          /* First ensure that /media exists */
++          if (!g_file_test ("/media", G_FILE_TEST_EXISTS))
+             {
+-              if (g_mkdir ("/run/media", 0755) != 0)
++              if (g_mkdir ("/media", 0755) != 0)
+                 {
+                   g_set_error (error,
+                                UDISKS_ERROR,
+                                UDISKS_ERROR_FAILED,
+-                               "Error creating directory /run/media: %m");
++                               "Error creating directory /media: %m");
+                   goto out;
+                 }
+             }
+-          /* Then create the per-user /run/media/$USER */
++          /* Then create the per-user /media/$USER */
+           if (g_mkdir (mount_dir, 0700) != 0)
+             {
+               g_set_error (error,

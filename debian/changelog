@@ -1,3 +1,10 @@
+udisks2 (1.99.0-2) UNRELEASED; urgency=low
+
+  * Add mount_in_media.patch: Mount drives in /media, not /run/media/, to stay
+    FHS compatible. (Closes: #680403, LP: #1020759)
+
+ -- Martin Pitt <mpitt@debian.org>  Wed, 22 Aug 2012 12:27:32 +0200
+
 udisks2 (1.99.0-1) experimental; urgency=low
 
   * New upstream release (LP: #1030268)
