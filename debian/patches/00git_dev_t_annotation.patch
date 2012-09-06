@@ -1,0 +1,34 @@
+commit 3b135a8d49a3b10b6b6ac050cfd457fa027f8b73
+Author: Martin Pitt <martinpitt@gnome.org>
+Date:   Wed Sep 5 18:29:21 2012 +0200
+
+    Add workaround annotation for udisks_client_get_block_for_dev()
+    
+    The gobject-introspection parser does not know how to properly handle dev_t
+    arguments (https://bugzilla.gnome.org/show_bug.cgi?id=584517) and treats them
+    as gint. But as the native API expects a 64 bit integer, you'll get garbage in
+    the upper word on 32 bit platforms, which cause
+    UDisks.Block.get_block_for_dev() to never find a match when using through
+    introspection.
+    
+    https://bugs.freedesktop.org/show_bug.cgi?id=54566
+
+diff --git a/udisks/udisksclient.c b/udisks/udisksclient.c
+index 17d0914..9981a93 100644
+--- a/udisks/udisksclient.c
++++ b/udisks/udisksclient.c
+@@ -640,10 +640,13 @@ udisks_client_get_block_for_uuid (UDisksClient        *client,
+ 
+ /* ---------------------------------------------------------------------------------------------------- */
+ 
++/* Note: The (type guint64) is a workaround for g-i mishandling dev_t, see
++ * https://bugzilla.gnome.org/show_bug.cgi?id=584517 */
++
+ /**
+  * udisks_client_get_block_for_dev:
+  * @client: A #UDisksClient.
+- * @block_device_number: A #dev_t to get a #UDisksBlock for.
++ * @block_device_number: (type guint64): A #dev_t to get a #UDisksBlock for.
+  *
+  * Gets the #UDisksBlock corresponding to @block_device_number, if any.
+  *

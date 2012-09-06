@@ -1,3 +1,12 @@
+udisks2 (1.99.0-3) UNRELEASED; urgency=low
+
+  * Add 00git_dev_t_annotation.patch: Add workaround annotation for
+    udisks_client_get_block_for_dev(), to fix UDisks.Block.get_block_for_dev()
+    on 32 bit platforms when calling it through introspection. Patch also
+    committed to upstream git.
+
+ -- Martin Pitt <mpitt@debian.org>  Thu, 06 Sep 2012 10:22:34 +0200
+
 udisks2 (1.99.0-2) experimental; urgency=low
 
   * Add mount_in_media.patch: Mount drives in /media, not /run/media/, to stay

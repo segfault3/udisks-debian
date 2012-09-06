@@ -1,2 +1,3 @@
 # Debian patches for udisks
+00git_dev_t_annotation.patch
 mount_in_media.patch
