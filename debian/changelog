@@ -4,6 +4,9 @@ udisks2 (1.99.0-3) UNRELEASED; urgency=low
     udisks_client_get_block_for_dev(), to fix UDisks.Block.get_block_for_dev()
     on 32 bit platforms when calling it through introspection. Patch also
     committed to upstream git.
+  * Add 00git_testsuite.patch: Pull latest test suite updates from trunk. This
+    includes a new test case for permissions for removable devices, plus some
+    race condition fixes.
 
  -- Martin Pitt <mpitt@debian.org>  Thu, 06 Sep 2012 10:22:34 +0200
 
