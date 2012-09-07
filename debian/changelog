@@ -9,6 +9,9 @@ udisks2 (1.99.0-4) UNRELEASED; urgency=low
     Otherwise udisks does not clean up old mount points that it created after
     a reboot. (LP: #1043772)
   * debian/udisks2.postinst: Migrate the mounted-fs file on upgrades.
+  * Update 00git_testsuite.patch: Pull latest test suite updates from trunk.
+    This now covers handling of existing mount points, and mounting read-only
+    devices, which reproduces LP #435192.
 
  -- Martin Pitt <mpitt@debian.org>  Fri, 07 Sep 2012 15:34:58 +0200
 
