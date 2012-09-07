@@ -1,4 +1,4 @@
-Description: Mount drives in /media, not /run/media/, to stay FHS compatible.
+Description: Mount drives in /media, not /run/media/, to stay FHS compatible. As on Debian and Ubuntu /media is not currently a tmpfs, we need to put the "mounted-fs" file to a persistent path as well.
 Author: Martin Pitt <martin.pitt@ubuntu.com>
 Bug: https://bugs.freedesktop.org/show_bug.cgi?id=51709
 Bug-Debian: http://bugs.debian.org/680403
@@ -6,8 +6,8 @@ Bug-Ubuntu: https://launchpad.net/bugs/1020759
 
 Index: udisks2/src/udiskslinuxfilesystem.c
 ===================================================================
---- udisks2.orig/src/udiskslinuxfilesystem.c	2012-07-28 13:32:27.629931122 +0200
-+++ udisks2/src/udiskslinuxfilesystem.c	2012-08-22 12:24:55.062461601 +0200
+--- udisks2.orig/src/udiskslinuxfilesystem.c	2012-09-06 10:22:25.000000000 +0200
++++ udisks2/src/udiskslinuxfilesystem.c	2012-09-07 15:55:28.775184539 +0200
 @@ -859,26 +859,26 @@
      }
  
@@ -42,3 +42,52 @@ Index: udisks2/src/udiskslinuxfilesystem.c
            if (g_mkdir (mount_dir, 0700) != 0)
              {
                g_set_error (error,
+Index: udisks2/src/udiskscleanup.c
+===================================================================
+--- udisks2.orig/src/udiskscleanup.c	2012-07-28 13:32:27.617931122 +0200
++++ udisks2/src/udiskscleanup.c	2012-09-07 15:56:57.387188826 +0200
+@@ -753,7 +753,7 @@
+   /* load existing entries */
+   error = NULL;
+   value = udisks_persistent_store_get (cleanup->persistent_store,
+-                                       UDISKS_PERSISTENT_FLAGS_TEMPORARY_STORE,
++                                       UDISKS_PERSISTENT_FLAGS_NORMAL_STORE,
+                                        "mounted-fs",
+                                        G_VARIANT_TYPE ("a{sa{sv}}"),
+                                        &error);
+@@ -790,7 +790,7 @@
+     {
+       error = NULL;
+       if (!udisks_persistent_store_set (cleanup->persistent_store,
+-                                        UDISKS_PERSISTENT_FLAGS_TEMPORARY_STORE,
++                                        UDISKS_PERSISTENT_FLAGS_NORMAL_STORE,
+                                         "mounted-fs",
+                                         G_VARIANT_TYPE ("a{sa{sv}}"),
+                                         new_value, /* consumes new_value */
+@@ -848,7 +848,7 @@
+   /* load existing entries */
+   error = NULL;
+   value = udisks_persistent_store_get (cleanup->persistent_store,
+-                                       UDISKS_PERSISTENT_FLAGS_TEMPORARY_STORE,
++                                       UDISKS_PERSISTENT_FLAGS_NORMAL_STORE,
+                                        "mounted-fs",
+                                        G_VARIANT_TYPE ("a{sa{sv}}"),
+                                        &error);
+@@ -913,7 +913,7 @@
+   /* save new entries */
+   error = NULL;
+   if (!udisks_persistent_store_set (cleanup->persistent_store,
+-                                    UDISKS_PERSISTENT_FLAGS_TEMPORARY_STORE,
++                                    UDISKS_PERSISTENT_FLAGS_NORMAL_STORE,
+                                     "mounted-fs",
+                                     G_VARIANT_TYPE ("a{sa{sv}}"),
+                                     new_value, /* consumes new_value */
+@@ -961,7 +961,7 @@
+   /* load existing entries */
+   error = NULL;
+   value = udisks_persistent_store_get (cleanup->persistent_store,
+-                                       UDISKS_PERSISTENT_FLAGS_TEMPORARY_STORE,
++                                       UDISKS_PERSISTENT_FLAGS_NORMAL_STORE,
+                                        "mounted-fs",
+                                        G_VARIANT_TYPE ("a{sa{sv}}"),
+                                        &error);

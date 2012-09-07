@@ -4,6 +4,10 @@ udisks2 (1.99.0-4) UNRELEASED; urgency=low
     operations for anyone but root while a program is running. This is similar
     to udisks 1.x's "udisks --inhibit .." command. Install it into
     /usr/lib/udisks2/.
+  * mount_in_media.patch: As on Debian and Ubuntu /media is not currently a
+    tmpfs, we need to put the "mounted-fs" file to a persistent path as well.
+    Otherwise udisks does not clean up old mount points that it created after
+    a reboot. (LP: #1043772)
 
  -- Martin Pitt <mpitt@debian.org>  Fri, 07 Sep 2012 15:34:58 +0200
 
