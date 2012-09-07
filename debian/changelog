@@ -1,3 +1,12 @@
+udisks2 (1.99.0-4) UNRELEASED; urgency=low
+
+  * Add debian/local/udisks2-inhibit: Hack to disallow udisks2 mount
+    operations for anyone but root while a program is running. This is similar
+    to udisks 1.x's "udisks --inhibit .." command. Install it into
+    /usr/lib/udisks2/.
+
+ -- Martin Pitt <mpitt@debian.org>  Fri, 07 Sep 2012 15:34:58 +0200
+
 udisks2 (1.99.0-3) experimental; urgency=low
 
   * Add 00git_dev_t_annotation.patch: Add workaround annotation for
