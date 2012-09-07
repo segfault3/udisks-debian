@@ -8,6 +8,7 @@ udisks2 (1.99.0-4) UNRELEASED; urgency=low
     tmpfs, we need to put the "mounted-fs" file to a persistent path as well.
     Otherwise udisks does not clean up old mount points that it created after
     a reboot. (LP: #1043772)
+  * debian/udisks2.postinst: Migrate the mounted-fs file on upgrades.
 
  -- Martin Pitt <mpitt@debian.org>  Fri, 07 Sep 2012 15:34:58 +0200
 
