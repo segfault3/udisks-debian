@@ -1,4 +1,4 @@
-udisks2 (1.99.0-5) UNRELEASED; urgency=low
+udisks2 (1.99.0-5) experimental; urgency=low
 
   * debian/local/udisks2-inhibit: Fix crash when /run/udisks2 does not exist
     yet. (LP: #1048211)
@@ -6,7 +6,7 @@ udisks2 (1.99.0-5) UNRELEASED; urgency=low
     disables the tests for mounting XFS and reiserfs on read-only devices, as
     this is known-broken without a workaround.
 
- -- Martin Pitt <mpitt@debian.org>  Mon, 10 Sep 2012 11:24:15 +0200
+ -- Martin Pitt <mpitt@debian.org>  Mon, 10 Sep 2012 16:03:40 +0200
 
 udisks2 (1.99.0-4) experimental; urgency=low
 
