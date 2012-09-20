@@ -71,9 +71,9 @@ struct              <a class="link" href="UDisksJob.html#UDisksJobIface" title="
 <span class="returnvalue">void</span>                <a class="link" href="UDisksJob.html#udisks-job-emit-completed" title="udisks_job_emit_completed ()">udisks_job_emit_completed</a>           (<em class="parameter"><code><a class="link" href="UDisksJob.html" title="UDisksJob"><span class="type">UDisksJob</span></a> *object</code></em>,
                                                          <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"><span class="type">gboolean</span></a> arg_success</code></em>,
                                                          <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *arg_message</code></em>);
-<a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#guint64"><span class="returnvalue">guint64</span></a>             <a class="link" href="UDisksJob.html#udisks-job-get-expected-end-time" title="udisks_job_get_expected_end_time ()">udisks_job_get_expected_end_time</a>    (<em class="parameter"><code><a class="link" href="UDisksJob.html" title="UDisksJob"><span class="type">UDisksJob</span></a> *object</code></em>);
+<span class="returnvalue">guint64</span>             <a class="link" href="UDisksJob.html#udisks-job-get-expected-end-time" title="udisks_job_get_expected_end_time ()">udisks_job_get_expected_end_time</a>    (<em class="parameter"><code><a class="link" href="UDisksJob.html" title="UDisksJob"><span class="type">UDisksJob</span></a> *object</code></em>);
 <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gdouble"><span class="returnvalue">gdouble</span></a>             <a class="link" href="UDisksJob.html#udisks-job-get-progress" title="udisks_job_get_progress ()">udisks_job_get_progress</a>             (<em class="parameter"><code><a class="link" href="UDisksJob.html" title="UDisksJob"><span class="type">UDisksJob</span></a> *object</code></em>);
-<a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#guint64"><span class="returnvalue">guint64</span></a>             <a class="link" href="UDisksJob.html#udisks-job-get-start-time" title="udisks_job_get_start_time ()">udisks_job_get_start_time</a>           (<em class="parameter"><code><a class="link" href="UDisksJob.html" title="UDisksJob"><span class="type">UDisksJob</span></a> *object</code></em>);
+<span class="returnvalue">guint64</span>             <a class="link" href="UDisksJob.html#udisks-job-get-start-time" title="udisks_job_get_start_time ()">udisks_job_get_start_time</a>           (<em class="parameter"><code><a class="link" href="UDisksJob.html" title="UDisksJob"><span class="type">UDisksJob</span></a> *object</code></em>);
 const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="returnvalue">gchar</span></a> *const * <a class="link" href="UDisksJob.html#udisks-job-get-objects" title="udisks_job_get_objects ()">udisks_job_get_objects</a>             (<em class="parameter"><code><a class="link" href="UDisksJob.html" title="UDisksJob"><span class="type">UDisksJob</span></a> *object</code></em>);
 <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>            <a class="link" href="UDisksJob.html#udisks-job-get-cancelable" title="udisks_job_get_cancelable ()">udisks_job_get_cancelable</a>           (<em class="parameter"><code><a class="link" href="UDisksJob.html" title="UDisksJob"><span class="type">UDisksJob</span></a> *object</code></em>);
 const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="returnvalue">gchar</span></a> *       <a class="link" href="UDisksJob.html#udisks-job-get-operation" title="udisks_job_get_operation ()">udisks_job_get_operation</a>            (<em class="parameter"><code><a class="link" href="UDisksJob.html" title="UDisksJob"><span class="type">UDisksJob</span></a> *object</code></em>);
@@ -82,11 +82,11 @@ const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.htm
 <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="returnvalue">gchar</span></a> **            <a class="link" href="UDisksJob.html#udisks-job-dup-objects" title="udisks_job_dup_objects ()">udisks_job_dup_objects</a>              (<em class="parameter"><code><a class="link" href="UDisksJob.html" title="UDisksJob"><span class="type">UDisksJob</span></a> *object</code></em>);
 <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="returnvalue">gchar</span></a> *             <a class="link" href="UDisksJob.html#udisks-job-dup-operation" title="udisks_job_dup_operation ()">udisks_job_dup_operation</a>            (<em class="parameter"><code><a class="link" href="UDisksJob.html" title="UDisksJob"><span class="type">UDisksJob</span></a> *object</code></em>);
 <span class="returnvalue">void</span>                <a class="link" href="UDisksJob.html#udisks-job-set-expected-end-time" title="udisks_job_set_expected_end_time ()">udisks_job_set_expected_end_time</a>    (<em class="parameter"><code><a class="link" href="UDisksJob.html" title="UDisksJob"><span class="type">UDisksJob</span></a> *object</code></em>,
-                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#guint64"><span class="type">guint64</span></a> value</code></em>);
+                                                         <em class="parameter"><code><span class="type">guint64</span> value</code></em>);
 <span class="returnvalue">void</span>                <a class="link" href="UDisksJob.html#udisks-job-set-progress" title="udisks_job_set_progress ()">udisks_job_set_progress</a>             (<em class="parameter"><code><a class="link" href="UDisksJob.html" title="UDisksJob"><span class="type">UDisksJob</span></a> *object</code></em>,
                                                          <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gdouble"><span class="type">gdouble</span></a> value</code></em>);
 <span class="returnvalue">void</span>                <a class="link" href="UDisksJob.html#udisks-job-set-start-time" title="udisks_job_set_start_time ()">udisks_job_set_start_time</a>           (<em class="parameter"><code><a class="link" href="UDisksJob.html" title="UDisksJob"><span class="type">UDisksJob</span></a> *object</code></em>,
-                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#guint64"><span class="type">guint64</span></a> value</code></em>);
+                                                         <em class="parameter"><code><span class="type">guint64</span> value</code></em>);
 <span class="returnvalue">void</span>                <a class="link" href="UDisksJob.html#udisks-job-set-objects" title="udisks_job_set_objects ()">udisks_job_set_objects</a>              (<em class="parameter"><code><a class="link" href="UDisksJob.html" title="UDisksJob"><span class="type">UDisksJob</span></a> *object</code></em>,
                                                          <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *const *value</code></em>);
 <span class="returnvalue">void</span>                <a class="link" href="UDisksJob.html#udisks-job-set-cancelable" title="udisks_job_set_cancelable ()">udisks_job_set_cancelable</a>           (<em class="parameter"><code><a class="link" href="UDisksJob.html" title="UDisksJob"><span class="type">UDisksJob</span></a> *object</code></em>,
@@ -177,12 +177,12 @@ UDisksJob is implemented by
 <a name="UDisksJob.properties"></a><h2>Properties</h2>
 <pre class="synopsis">
   "<a class="link" href="UDisksJob.html#UDisksJob--cancelable" title='The "cancelable" property'>cancelable</a>"               <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"><span class="type">gboolean</span></a>              : Read / Write
-  "<a class="link" href="UDisksJob.html#UDisksJob--expected-end-time" title='The "expected-end-time" property'>expected-end-time</a>"        <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#guint64"><span class="type">guint64</span></a>               : Read / Write
+  "<a class="link" href="UDisksJob.html#UDisksJob--expected-end-time" title='The "expected-end-time" property'>expected-end-time</a>"        <span class="type">guint64</span>               : Read / Write
   "<a class="link" href="UDisksJob.html#UDisksJob--objects" title='The "objects" property'>objects</a>"                  <a href="http://library.gnome.org/devel/gobject/unstable/gobject-Boxed-Types.html#GStrv"><span class="type">GStrv</span></a>                 : Read / Write
   "<a class="link" href="UDisksJob.html#UDisksJob--operation" title='The "operation" property'>operation</a>"                <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a>*                : Read / Write
   "<a class="link" href="UDisksJob.html#UDisksJob--progress" title='The "progress" property'>progress</a>"                 <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gdouble"><span class="type">gdouble</span></a>               : Read / Write
   "<a class="link" href="UDisksJob.html#UDisksJob--progress-valid" title='The "progress-valid" property'>progress-valid</a>"           <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"><span class="type">gboolean</span></a>              : Read / Write
-  "<a class="link" href="UDisksJob.html#UDisksJob--start-time" title='The "start-time" property'>start-time</a>"               <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#guint64"><span class="type">guint64</span></a>               : Read / Write
+  "<a class="link" href="UDisksJob.html#UDisksJob--start-time" title='The "start-time" property'>start-time</a>"               <span class="type">guint64</span>               : Read / Write
   "<a class="link" href="UDisksJob.html#UDisksJob--started-by-uid" title='The "started-by-uid" property'>started-by-uid</a>"           <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#guint"><span class="type">guint</span></a>                 : Read / Write
 </pre>
 </div>
@@ -513,7 +513,7 @@ Emits the <a class="link" href="gdbus-org.freedesktop.UDisks2.Job.html#gdbus-sig
 <hr>
 <div class="refsect2">
 <a name="udisks-job-get-expected-end-time"></a><h3>udisks_job_get_expected_end_time ()</h3>
-<pre class="programlisting"><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#guint64"><span class="returnvalue">guint64</span></a>             udisks_job_get_expected_end_time    (<em class="parameter"><code><a class="link" href="UDisksJob.html" title="UDisksJob"><span class="type">UDisksJob</span></a> *object</code></em>);</pre>
+<pre class="programlisting"><span class="returnvalue">guint64</span>             udisks_job_get_expected_end_time    (<em class="parameter"><code><a class="link" href="UDisksJob.html" title="UDisksJob"><span class="type">UDisksJob</span></a> *object</code></em>);</pre>
 <p>
 Gets the value of the <a class="link" href="gdbus-org.freedesktop.UDisks2.Job.html#gdbus-property-org-freedesktop-UDisks2-Job.ExpectedEndTime" title='The "ExpectedEndTime" property'>"ExpectedEndTime"</a> D-Bus property.
 </p>
@@ -561,7 +561,7 @@ Since this D-Bus property is readable, it is meaningful to use this function on 
 <hr>
 <div class="refsect2">
 <a name="udisks-job-get-start-time"></a><h3>udisks_job_get_start_time ()</h3>
-<pre class="programlisting"><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#guint64"><span class="returnvalue">guint64</span></a>             udisks_job_get_start_time           (<em class="parameter"><code><a class="link" href="UDisksJob.html" title="UDisksJob"><span class="type">UDisksJob</span></a> *object</code></em>);</pre>
+<pre class="programlisting"><span class="returnvalue">guint64</span>             udisks_job_get_start_time           (<em class="parameter"><code><a class="link" href="UDisksJob.html" title="UDisksJob"><span class="type">UDisksJob</span></a> *object</code></em>);</pre>
 <p>
 Gets the value of the <a class="link" href="gdbus-org.freedesktop.UDisks2.Job.html#gdbus-property-org-freedesktop-UDisks2-Job.StartTime" title='The "StartTime" property'>"StartTime"</a> D-Bus property.
 </p>
@@ -770,7 +770,7 @@ Since this D-Bus property is readable, it is meaningful to use this function on 
 <div class="refsect2">
 <a name="udisks-job-set-expected-end-time"></a><h3>udisks_job_set_expected_end_time ()</h3>
 <pre class="programlisting"><span class="returnvalue">void</span>                udisks_job_set_expected_end_time    (<em class="parameter"><code><a class="link" href="UDisksJob.html" title="UDisksJob"><span class="type">UDisksJob</span></a> *object</code></em>,
-                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#guint64"><span class="type">guint64</span></a> value</code></em>);</pre>
+                                                         <em class="parameter"><code><span class="type">guint64</span> value</code></em>);</pre>
 <p>
 Sets the <a class="link" href="gdbus-org.freedesktop.UDisks2.Job.html#gdbus-property-org-freedesktop-UDisks2-Job.ExpectedEndTime" title='The "ExpectedEndTime" property'>"ExpectedEndTime"</a> D-Bus property to <em class="parameter"><code>value</code></em>.
 </p>
@@ -820,7 +820,7 @@ Since this D-Bus property is not writable, it is only meaningful to use this fun
 <div class="refsect2">
 <a name="udisks-job-set-start-time"></a><h3>udisks_job_set_start_time ()</h3>
 <pre class="programlisting"><span class="returnvalue">void</span>                udisks_job_set_start_time           (<em class="parameter"><code><a class="link" href="UDisksJob.html" title="UDisksJob"><span class="type">UDisksJob</span></a> *object</code></em>,
-                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#guint64"><span class="type">guint64</span></a> value</code></em>);</pre>
+                                                         <em class="parameter"><code><span class="type">guint64</span> value</code></em>);</pre>
 <p>
 Sets the <a class="link" href="gdbus-org.freedesktop.UDisks2.Job.html#gdbus-property-org-freedesktop-UDisks2-Job.StartTime" title='The "StartTime" property'>"StartTime"</a> D-Bus property to <em class="parameter"><code>value</code></em>.
 </p>
@@ -1329,7 +1329,7 @@ Since the D-Bus property for this <a href="http://library.gnome.org/devel/gobjec
 <hr>
 <div class="refsect2">
 <a name="UDisksJob--expected-end-time"></a><h3>The <code class="literal">"expected-end-time"</code> property</h3>
-<pre class="programlisting">  "expected-end-time"        <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#guint64"><span class="type">guint64</span></a>               : Read / Write</pre>
+<pre class="programlisting">  "expected-end-time"        <span class="type">guint64</span>               : Read / Write</pre>
 <p>
 Represents the D-Bus property <a class="link" href="gdbus-org.freedesktop.UDisks2.Job.html#gdbus-property-org-freedesktop-UDisks2-Job.ExpectedEndTime" title='The "ExpectedEndTime" property'>"ExpectedEndTime"</a>.
 </p>
@@ -1388,7 +1388,7 @@ Since the D-Bus property for this <a href="http://library.gnome.org/devel/gobjec
 <hr>
 <div class="refsect2">
 <a name="UDisksJob--start-time"></a><h3>The <code class="literal">"start-time"</code> property</h3>
-<pre class="programlisting">  "start-time"               <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#guint64"><span class="type">guint64</span></a>               : Read / Write</pre>
+<pre class="programlisting">  "start-time"               <span class="type">guint64</span>               : Read / Write</pre>
 <p>
 Represents the D-Bus property <a class="link" href="gdbus-org.freedesktop.UDisks2.Job.html#gdbus-property-org-freedesktop-UDisks2-Job.StartTime" title='The "StartTime" property'>"StartTime"</a>.
 </p>

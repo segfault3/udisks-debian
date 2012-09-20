@@ -40,7 +40,7 @@
 <pre class="synopsis"><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="returnvalue">gchar</span></a> *             <a class="link" href="udisks2-Utilities.html#udisks-decode-udev-string" title="udisks_decode_udev_string ()">udisks_decode_udev_string</a>           (<em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *str</code></em>);
 <span class="returnvalue">void</span>                <a class="link" href="udisks2-Utilities.html#udisks-safe-append-to-object-path" title="udisks_safe_append_to_object_path ()">udisks_safe_append_to_object_path</a>   (<em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Strings.html#GString"><span class="type">GString</span></a> *str</code></em>,
                                                          <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *s</code></em>);
-<a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#guint64"><span class="returnvalue">guint64</span></a>             <a class="link" href="udisks2-Utilities.html#udisks-daemon-util-block-get-size" title="udisks_daemon_util_block_get_size ()">udisks_daemon_util_block_get_size</a>   (<em class="parameter"><code><a href="/usr/share/gtk-doc/html/gudev/GUdevDevice.html"><span class="type">GUdevDevice</span></a> *device</code></em>,
+<span class="returnvalue">guint64</span>             <a class="link" href="udisks2-Utilities.html#udisks-daemon-util-block-get-size" title="udisks_daemon_util_block_get_size ()">udisks_daemon_util_block_get_size</a>   (<em class="parameter"><code><a href="/usr/share/gtk-doc/html/gudev/gudev-GUdevDevice.html#GUdevDevice"><span class="type">GUdevDevice</span></a> *device</code></em>,
                                                          <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"><span class="type">gboolean</span></a> *out_media_available</code></em>,
                                                          <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"><span class="type">gboolean</span></a> *out_media_change_detected</code></em>);
 <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="returnvalue">gchar</span></a> *             <a class="link" href="udisks2-Utilities.html#udisks-daemon-util-resolve-link" title="udisks_daemon_util_resolve_link ()">udisks_daemon_util_resolve_link</a>     (<em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *path</code></em>,
@@ -81,13 +81,13 @@ typedef             <a class="link" href="udisks2-Utilities.html#UDisksInhibitCo
 <span class="returnvalue">void</span>                <a class="link" href="udisks2-Utilities.html#udisks-daemon-util-uninhibit-system-sync" title="udisks_daemon_util_uninhibit_system_sync ()">udisks_daemon_util_uninhibit_system_sync</a>
                                                         (<em class="parameter"><code><a class="link" href="udisks2-Utilities.html#UDisksInhibitCookie" title="UDisksInhibitCookie"><span class="type">UDisksInhibitCookie</span></a> *cookie</code></em>);
 <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="returnvalue">gchar</span></a> *             <a class="link" href="udisks2-Utilities.html#udisks-daemon-util-hexdump" title="udisks_daemon_util_hexdump ()">udisks_daemon_util_hexdump</a>          (<em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gconstpointer"><span class="type">gconstpointer</span></a> data</code></em>,
-                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gsize"><span class="type">gsize</span></a> len</code></em>);
+                                                         <em class="parameter"><code><span class="type">gsize</span> len</code></em>);
 <span class="returnvalue">void</span>                <a class="link" href="udisks2-Utilities.html#udisks-daemon-util-hexdump-debug" title="udisks_daemon_util_hexdump_debug ()">udisks_daemon_util_hexdump_debug</a>    (<em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gconstpointer"><span class="type">gconstpointer</span></a> data</code></em>,
-                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gsize"><span class="type">gsize</span></a> len</code></em>);
+                                                         <em class="parameter"><code><span class="type">gsize</span> len</code></em>);
 <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>            <a class="link" href="udisks2-Utilities.html#udisks-daemon-util-file-set-contents" title="udisks_daemon_util_file_set_contents ()">udisks_daemon_util_file_set_contents</a>
                                                         (<em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *filename</code></em>,
                                                          <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *contents</code></em>,
-                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gssize"><span class="type">gssize</span></a> contents_len</code></em>,
+                                                         <em class="parameter"><code><span class="type">gssize</span> contents_len</code></em>,
                                                          <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gint"><span class="type">gint</span></a> mode_for_new_file</code></em>,
                                                          <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Error-Reporting.html#GError"><span class="type">GError</span></a> **error</code></em>);
 <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>            <a class="link" href="udisks2-Utilities.html#udisks-daemon-util-on-same-seat" title="udisks_daemon_util_on_same_seat ()">udisks_daemon_util_on_same_seat</a>     (<em class="parameter"><code><a class="link" href="UDisksDaemon.html" title="UDisksDaemon"><span class="type">UDisksDaemon</span></a> *daemon</code></em>,
@@ -165,7 +165,7 @@ to the original string.
 <hr>
 <div class="refsect2">
 <a name="udisks-daemon-util-block-get-size"></a><h3>udisks_daemon_util_block_get_size ()</h3>
-<pre class="programlisting"><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#guint64"><span class="returnvalue">guint64</span></a>             udisks_daemon_util_block_get_size   (<em class="parameter"><code><a href="/usr/share/gtk-doc/html/gudev/GUdevDevice.html"><span class="type">GUdevDevice</span></a> *device</code></em>,
+<pre class="programlisting"><span class="returnvalue">guint64</span>             udisks_daemon_util_block_get_size   (<em class="parameter"><code><a href="/usr/share/gtk-doc/html/gudev/gudev-GUdevDevice.html#GUdevDevice"><span class="type">GUdevDevice</span></a> *device</code></em>,
                                                          <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"><span class="type">gboolean</span></a> *out_media_available</code></em>,
                                                          <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"><span class="type">gboolean</span></a> *out_media_change_detected</code></em>);</pre>
 <p>
@@ -176,7 +176,7 @@ Gets the size of the <em class="parameter"><code>device</code></em> top-level bl
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>device</code></em> :</span></p></td>
-<td>A <a href="/usr/share/gtk-doc/html/gudev/GUdevDevice.html"><span class="type">GUdevDevice</span></a> for a top-level block device.</td>
+<td>A <a href="/usr/share/gtk-doc/html/gudev/gudev-GUdevDevice.html#GUdevDevice"><span class="type">GUdevDevice</span></a> for a top-level block device.</td>
 </tr>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>out_media_available</code></em> :</span></p></td>
@@ -593,7 +593,7 @@ Does nothing if <em class="parameter"><code>cookie</code></em> is <a href="http:
 <div class="refsect2">
 <a name="udisks-daemon-util-hexdump"></a><h3>udisks_daemon_util_hexdump ()</h3>
 <pre class="programlisting"><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="returnvalue">gchar</span></a> *             udisks_daemon_util_hexdump          (<em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gconstpointer"><span class="type">gconstpointer</span></a> data</code></em>,
-                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gsize"><span class="type">gsize</span></a> len</code></em>);</pre>
+                                                         <em class="parameter"><code><span class="type">gsize</span> len</code></em>);</pre>
 <p>
 Utility function to generate a hexadecimal representation of <em class="parameter"><code>len</code></em>
 bytes of <em class="parameter"><code>data</code></em>.
@@ -620,7 +620,7 @@ bytes of <em class="parameter"><code>data</code></em>.
 <div class="refsect2">
 <a name="udisks-daemon-util-hexdump-debug"></a><h3>udisks_daemon_util_hexdump_debug ()</h3>
 <pre class="programlisting"><span class="returnvalue">void</span>                udisks_daemon_util_hexdump_debug    (<em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gconstpointer"><span class="type">gconstpointer</span></a> data</code></em>,
-                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gsize"><span class="type">gsize</span></a> len</code></em>);</pre>
+                                                         <em class="parameter"><code><span class="type">gsize</span> len</code></em>);</pre>
 <p>
 Utility function to dumps the hexadecimal representation of <em class="parameter"><code>len</code></em>
 bytes of <em class="parameter"><code>data</code></em> generated with <a class="link" href="udisks2-Utilities.html#udisks-daemon-util-hexdump" title="udisks_daemon_util_hexdump ()"><code class="function">udisks_daemon_util_hexdump()</code></a> using
@@ -646,7 +646,7 @@ bytes of <em class="parameter"><code>data</code></em> generated with <a class="l
 <pre class="programlisting"><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>            udisks_daemon_util_file_set_contents
                                                         (<em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *filename</code></em>,
                                                          <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *contents</code></em>,
-                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gssize"><span class="type">gssize</span></a> contents_len</code></em>,
+                                                         <em class="parameter"><code><span class="type">gssize</span> contents_len</code></em>,
                                                          <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gint"><span class="type">gint</span></a> mode_for_new_file</code></em>,
                                                          <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Error-Reporting.html#GError"><span class="type">GError</span></a> **error</code></em>);</pre>
 <p>

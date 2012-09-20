@@ -100,7 +100,7 @@ struct              <a class="link" href="UDisksPartition.html#UDisksPartitionIf
 <span class="returnvalue">void</span>                <a class="link" href="UDisksPartition.html#udisks-partition-complete-set-name" title="udisks_partition_complete_set_name ()">udisks_partition_complete_set_name</a>  (<em class="parameter"><code><a class="link" href="UDisksPartition.html" title="UDisksPartition"><span class="type">UDisksPartition</span></a> *object</code></em>,
                                                          <em class="parameter"><code><a href="http://library.gnome.org/devel/gio/unstable/GDBusMethodInvocation.html"><span class="type">GDBusMethodInvocation</span></a> *invocation</code></em>);
 <span class="returnvalue">void</span>                <a class="link" href="UDisksPartition.html#udisks-partition-call-set-flags" title="udisks_partition_call_set_flags ()">udisks_partition_call_set_flags</a>     (<em class="parameter"><code><a class="link" href="UDisksPartition.html" title="UDisksPartition"><span class="type">UDisksPartition</span></a> *proxy</code></em>,
-                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#guint64"><span class="type">guint64</span></a> arg_flags</code></em>,
+                                                         <em class="parameter"><code><span class="type">guint64</span> arg_flags</code></em>,
                                                          <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-GVariant.html#GVariant"><span class="type">GVariant</span></a> *arg_options</code></em>,
                                                          <em class="parameter"><code><a href="http://library.gnome.org/devel/gio/unstable/GCancellable.html"><span class="type">GCancellable</span></a> *cancellable</code></em>,
                                                          <em class="parameter"><code><a href="http://library.gnome.org/devel/gio/unstable/GAsyncResult.html#GAsyncReadyCallback"><span class="type">GAsyncReadyCallback</span></a> callback</code></em>,
@@ -111,7 +111,7 @@ struct              <a class="link" href="UDisksPartition.html#UDisksPartitionIf
                                                          <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Error-Reporting.html#GError"><span class="type">GError</span></a> **error</code></em>);
 <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>            <a class="link" href="UDisksPartition.html#udisks-partition-call-set-flags-sync" title="udisks_partition_call_set_flags_sync ()">udisks_partition_call_set_flags_sync</a>
                                                         (<em class="parameter"><code><a class="link" href="UDisksPartition.html" title="UDisksPartition"><span class="type">UDisksPartition</span></a> *proxy</code></em>,
-                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#guint64"><span class="type">guint64</span></a> arg_flags</code></em>,
+                                                         <em class="parameter"><code><span class="type">guint64</span> arg_flags</code></em>,
                                                          <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-GVariant.html#GVariant"><span class="type">GVariant</span></a> *arg_options</code></em>,
                                                          <em class="parameter"><code><a href="http://library.gnome.org/devel/gio/unstable/GCancellable.html"><span class="type">GCancellable</span></a> *cancellable</code></em>,
                                                          <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Error-Reporting.html#GError"><span class="type">GError</span></a> **error</code></em>);
@@ -119,9 +119,9 @@ struct              <a class="link" href="UDisksPartition.html#UDisksPartitionIf
                                                          <em class="parameter"><code><a href="http://library.gnome.org/devel/gio/unstable/GDBusMethodInvocation.html"><span class="type">GDBusMethodInvocation</span></a> *invocation</code></em>);
 <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#guint"><span class="returnvalue">guint</span></a>               <a class="link" href="UDisksPartition.html#udisks-partition-get-number" title="udisks_partition_get_number ()">udisks_partition_get_number</a>         (<em class="parameter"><code><a class="link" href="UDisksPartition.html" title="UDisksPartition"><span class="type">UDisksPartition</span></a> *object</code></em>);
 const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="returnvalue">gchar</span></a> *       <a class="link" href="UDisksPartition.html#udisks-partition-get-type-" title="udisks_partition_get_type_ ()">udisks_partition_get_type_</a>          (<em class="parameter"><code><a class="link" href="UDisksPartition.html" title="UDisksPartition"><span class="type">UDisksPartition</span></a> *object</code></em>);
-<a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#guint64"><span class="returnvalue">guint64</span></a>             <a class="link" href="UDisksPartition.html#udisks-partition-get-offset" title="udisks_partition_get_offset ()">udisks_partition_get_offset</a>         (<em class="parameter"><code><a class="link" href="UDisksPartition.html" title="UDisksPartition"><span class="type">UDisksPartition</span></a> *object</code></em>);
-<a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#guint64"><span class="returnvalue">guint64</span></a>             <a class="link" href="UDisksPartition.html#udisks-partition-get-size" title="udisks_partition_get_size ()">udisks_partition_get_size</a>           (<em class="parameter"><code><a class="link" href="UDisksPartition.html" title="UDisksPartition"><span class="type">UDisksPartition</span></a> *object</code></em>);
-<a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#guint64"><span class="returnvalue">guint64</span></a>             <a class="link" href="UDisksPartition.html#udisks-partition-get-flags" title="udisks_partition_get_flags ()">udisks_partition_get_flags</a>          (<em class="parameter"><code><a class="link" href="UDisksPartition.html" title="UDisksPartition"><span class="type">UDisksPartition</span></a> *object</code></em>);
+<span class="returnvalue">guint64</span>             <a class="link" href="UDisksPartition.html#udisks-partition-get-offset" title="udisks_partition_get_offset ()">udisks_partition_get_offset</a>         (<em class="parameter"><code><a class="link" href="UDisksPartition.html" title="UDisksPartition"><span class="type">UDisksPartition</span></a> *object</code></em>);
+<span class="returnvalue">guint64</span>             <a class="link" href="UDisksPartition.html#udisks-partition-get-size" title="udisks_partition_get_size ()">udisks_partition_get_size</a>           (<em class="parameter"><code><a class="link" href="UDisksPartition.html" title="UDisksPartition"><span class="type">UDisksPartition</span></a> *object</code></em>);
+<span class="returnvalue">guint64</span>             <a class="link" href="UDisksPartition.html#udisks-partition-get-flags" title="udisks_partition_get_flags ()">udisks_partition_get_flags</a>          (<em class="parameter"><code><a class="link" href="UDisksPartition.html" title="UDisksPartition"><span class="type">UDisksPartition</span></a> *object</code></em>);
 const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="returnvalue">gchar</span></a> *       <a class="link" href="UDisksPartition.html#udisks-partition-get-name" title="udisks_partition_get_name ()">udisks_partition_get_name</a>           (<em class="parameter"><code><a class="link" href="UDisksPartition.html" title="UDisksPartition"><span class="type">UDisksPartition</span></a> *object</code></em>);
 const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="returnvalue">gchar</span></a> *       <a class="link" href="UDisksPartition.html#udisks-partition-get-uuid" title="udisks_partition_get_uuid ()">udisks_partition_get_uuid</a>           (<em class="parameter"><code><a class="link" href="UDisksPartition.html" title="UDisksPartition"><span class="type">UDisksPartition</span></a> *object</code></em>);
 const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="returnvalue">gchar</span></a> *       <a class="link" href="UDisksPartition.html#udisks-partition-get-table" title="udisks_partition_get_table ()">udisks_partition_get_table</a>          (<em class="parameter"><code><a class="link" href="UDisksPartition.html" title="UDisksPartition"><span class="type">UDisksPartition</span></a> *object</code></em>);
@@ -136,11 +136,11 @@ const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.htm
 <span class="returnvalue">void</span>                <a class="link" href="UDisksPartition.html#udisks-partition-set-type-" title="udisks_partition_set_type_ ()">udisks_partition_set_type_</a>          (<em class="parameter"><code><a class="link" href="UDisksPartition.html" title="UDisksPartition"><span class="type">UDisksPartition</span></a> *object</code></em>,
                                                          <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *value</code></em>);
 <span class="returnvalue">void</span>                <a class="link" href="UDisksPartition.html#udisks-partition-set-offset" title="udisks_partition_set_offset ()">udisks_partition_set_offset</a>         (<em class="parameter"><code><a class="link" href="UDisksPartition.html" title="UDisksPartition"><span class="type">UDisksPartition</span></a> *object</code></em>,
-                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#guint64"><span class="type">guint64</span></a> value</code></em>);
+                                                         <em class="parameter"><code><span class="type">guint64</span> value</code></em>);
 <span class="returnvalue">void</span>                <a class="link" href="UDisksPartition.html#udisks-partition-set-size" title="udisks_partition_set_size ()">udisks_partition_set_size</a>           (<em class="parameter"><code><a class="link" href="UDisksPartition.html" title="UDisksPartition"><span class="type">UDisksPartition</span></a> *object</code></em>,
-                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#guint64"><span class="type">guint64</span></a> value</code></em>);
+                                                         <em class="parameter"><code><span class="type">guint64</span> value</code></em>);
 <span class="returnvalue">void</span>                <a class="link" href="UDisksPartition.html#udisks-partition-set-flags" title="udisks_partition_set_flags ()">udisks_partition_set_flags</a>          (<em class="parameter"><code><a class="link" href="UDisksPartition.html" title="UDisksPartition"><span class="type">UDisksPartition</span></a> *object</code></em>,
-                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#guint64"><span class="type">guint64</span></a> value</code></em>);
+                                                         <em class="parameter"><code><span class="type">guint64</span> value</code></em>);
 <span class="returnvalue">void</span>                <a class="link" href="UDisksPartition.html#udisks-partition-set-name" title="udisks_partition_set_name ()">udisks_partition_set_name</a>           (<em class="parameter"><code><a class="link" href="UDisksPartition.html" title="UDisksPartition"><span class="type">UDisksPartition</span></a> *object</code></em>,
                                                          <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *value</code></em>);
 <span class="returnvalue">void</span>                <a class="link" href="UDisksPartition.html#udisks-partition-set-uuid" title="udisks_partition_set_uuid ()">udisks_partition_set_uuid</a>           (<em class="parameter"><code><a class="link" href="UDisksPartition.html" title="UDisksPartition"><span class="type">UDisksPartition</span></a> *object</code></em>,
@@ -858,7 +858,7 @@ This method will free <em class="parameter"><code>invocation</code></em>, you ca
 <div class="refsect2">
 <a name="udisks-partition-call-set-flags"></a><h3>udisks_partition_call_set_flags ()</h3>
 <pre class="programlisting"><span class="returnvalue">void</span>                udisks_partition_call_set_flags     (<em class="parameter"><code><a class="link" href="UDisksPartition.html" title="UDisksPartition"><span class="type">UDisksPartition</span></a> *proxy</code></em>,
-                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#guint64"><span class="type">guint64</span></a> arg_flags</code></em>,
+                                                         <em class="parameter"><code><span class="type">guint64</span> arg_flags</code></em>,
                                                          <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-GVariant.html#GVariant"><span class="type">GVariant</span></a> *arg_options</code></em>,
                                                          <em class="parameter"><code><a href="http://library.gnome.org/devel/gio/unstable/GCancellable.html"><span class="type">GCancellable</span></a> *cancellable</code></em>,
                                                          <em class="parameter"><code><a href="http://library.gnome.org/devel/gio/unstable/GAsyncResult.html#GAsyncReadyCallback"><span class="type">GAsyncReadyCallback</span></a> callback</code></em>,
@@ -941,7 +941,7 @@ Finishes an operation started with <a class="link" href="UDisksPartition.html#ud
 <a name="udisks-partition-call-set-flags-sync"></a><h3>udisks_partition_call_set_flags_sync ()</h3>
 <pre class="programlisting"><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>            udisks_partition_call_set_flags_sync
                                                         (<em class="parameter"><code><a class="link" href="UDisksPartition.html" title="UDisksPartition"><span class="type">UDisksPartition</span></a> *proxy</code></em>,
-                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#guint64"><span class="type">guint64</span></a> arg_flags</code></em>,
+                                                         <em class="parameter"><code><span class="type">guint64</span> arg_flags</code></em>,
                                                          <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-GVariant.html#GVariant"><span class="type">GVariant</span></a> *arg_options</code></em>,
                                                          <em class="parameter"><code><a href="http://library.gnome.org/devel/gio/unstable/GCancellable.html"><span class="type">GCancellable</span></a> *cancellable</code></em>,
                                                          <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Error-Reporting.html#GError"><span class="type">GError</span></a> **error</code></em>);</pre>
@@ -1068,7 +1068,7 @@ Since this D-Bus property is readable, it is meaningful to use this function on 
 <hr>
 <div class="refsect2">
 <a name="udisks-partition-get-offset"></a><h3>udisks_partition_get_offset ()</h3>
-<pre class="programlisting"><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#guint64"><span class="returnvalue">guint64</span></a>             udisks_partition_get_offset         (<em class="parameter"><code><a class="link" href="UDisksPartition.html" title="UDisksPartition"><span class="type">UDisksPartition</span></a> *object</code></em>);</pre>
+<pre class="programlisting"><span class="returnvalue">guint64</span>             udisks_partition_get_offset         (<em class="parameter"><code><a class="link" href="UDisksPartition.html" title="UDisksPartition"><span class="type">UDisksPartition</span></a> *object</code></em>);</pre>
 <p>
 Gets the value of the <a class="link" href="gdbus-org.freedesktop.UDisks2.Partition.html#gdbus-property-org-freedesktop-UDisks2-Partition.Offset" title='The "Offset" property'>"Offset"</a> D-Bus property.
 </p>
@@ -1092,7 +1092,7 @@ Since this D-Bus property is readable, it is meaningful to use this function on 
 <hr>
 <div class="refsect2">
 <a name="udisks-partition-get-size"></a><h3>udisks_partition_get_size ()</h3>
-<pre class="programlisting"><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#guint64"><span class="returnvalue">guint64</span></a>             udisks_partition_get_size           (<em class="parameter"><code><a class="link" href="UDisksPartition.html" title="UDisksPartition"><span class="type">UDisksPartition</span></a> *object</code></em>);</pre>
+<pre class="programlisting"><span class="returnvalue">guint64</span>             udisks_partition_get_size           (<em class="parameter"><code><a class="link" href="UDisksPartition.html" title="UDisksPartition"><span class="type">UDisksPartition</span></a> *object</code></em>);</pre>
 <p>
 Gets the value of the <a class="link" href="gdbus-org.freedesktop.UDisks2.Partition.html#gdbus-property-org-freedesktop-UDisks2-Partition.Size" title='The "Size" property'>"Size"</a> D-Bus property.
 </p>
@@ -1116,7 +1116,7 @@ Since this D-Bus property is readable, it is meaningful to use this function on 
 <hr>
 <div class="refsect2">
 <a name="udisks-partition-get-flags"></a><h3>udisks_partition_get_flags ()</h3>
-<pre class="programlisting"><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#guint64"><span class="returnvalue">guint64</span></a>             udisks_partition_get_flags          (<em class="parameter"><code><a class="link" href="UDisksPartition.html" title="UDisksPartition"><span class="type">UDisksPartition</span></a> *object</code></em>);</pre>
+<pre class="programlisting"><span class="returnvalue">guint64</span>             udisks_partition_get_flags          (<em class="parameter"><code><a class="link" href="UDisksPartition.html" title="UDisksPartition"><span class="type">UDisksPartition</span></a> *object</code></em>);</pre>
 <p>
 Gets the value of the <a class="link" href="gdbus-org.freedesktop.UDisks2.Partition.html#gdbus-property-org-freedesktop-UDisks2-Partition.Flags" title='The "Flags" property'>"Flags"</a> D-Bus property.
 </p>
@@ -1432,7 +1432,7 @@ Since this D-Bus property is not writable, it is only meaningful to use this fun
 <div class="refsect2">
 <a name="udisks-partition-set-offset"></a><h3>udisks_partition_set_offset ()</h3>
 <pre class="programlisting"><span class="returnvalue">void</span>                udisks_partition_set_offset         (<em class="parameter"><code><a class="link" href="UDisksPartition.html" title="UDisksPartition"><span class="type">UDisksPartition</span></a> *object</code></em>,
-                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#guint64"><span class="type">guint64</span></a> value</code></em>);</pre>
+                                                         <em class="parameter"><code><span class="type">guint64</span> value</code></em>);</pre>
 <p>
 Sets the <a class="link" href="gdbus-org.freedesktop.UDisks2.Partition.html#gdbus-property-org-freedesktop-UDisks2-Partition.Offset" title='The "Offset" property'>"Offset"</a> D-Bus property to <em class="parameter"><code>value</code></em>.
 </p>
@@ -1457,7 +1457,7 @@ Since this D-Bus property is not writable, it is only meaningful to use this fun
 <div class="refsect2">
 <a name="udisks-partition-set-size"></a><h3>udisks_partition_set_size ()</h3>
 <pre class="programlisting"><span class="returnvalue">void</span>                udisks_partition_set_size           (<em class="parameter"><code><a class="link" href="UDisksPartition.html" title="UDisksPartition"><span class="type">UDisksPartition</span></a> *object</code></em>,
-                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#guint64"><span class="type">guint64</span></a> value</code></em>);</pre>
+                                                         <em class="parameter"><code><span class="type">guint64</span> value</code></em>);</pre>
 <p>
 Sets the <a class="link" href="gdbus-org.freedesktop.UDisks2.Partition.html#gdbus-property-org-freedesktop-UDisks2-Partition.Size" title='The "Size" property'>"Size"</a> D-Bus property to <em class="parameter"><code>value</code></em>.
 </p>
@@ -1482,7 +1482,7 @@ Since this D-Bus property is not writable, it is only meaningful to use this fun
 <div class="refsect2">
 <a name="udisks-partition-set-flags"></a><h3>udisks_partition_set_flags ()</h3>
 <pre class="programlisting"><span class="returnvalue">void</span>                udisks_partition_set_flags          (<em class="parameter"><code><a class="link" href="UDisksPartition.html" title="UDisksPartition"><span class="type">UDisksPartition</span></a> *object</code></em>,
-                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#guint64"><span class="type">guint64</span></a> value</code></em>);</pre>
+                                                         <em class="parameter"><code><span class="type">guint64</span> value</code></em>);</pre>
 <p>
 Sets the <a class="link" href="gdbus-org.freedesktop.UDisks2.Partition.html#gdbus-property-org-freedesktop-UDisks2-Partition.Flags" title='The "Flags" property'>"Flags"</a> D-Bus property to <em class="parameter"><code>value</code></em>.
 </p>

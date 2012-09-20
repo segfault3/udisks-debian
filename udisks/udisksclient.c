@@ -640,10 +640,13 @@ udisks_client_get_block_for_uuid (UDisksClient        *client,
 
 /* ---------------------------------------------------------------------------------------------------- */
 
+/* Note: The (type guint64) is a workaround for g-i mishandling dev_t, see
+ * https://bugzilla.gnome.org/show_bug.cgi?id=584517 */
+
 /**
  * udisks_client_get_block_for_dev:
  * @client: A #UDisksClient.
- * @block_device_number: A #dev_t to get a #UDisksBlock for.
+ * @block_device_number: (type guint64): A #dev_t to get a #UDisksBlock for.
  *
  * Gets the #UDisksBlock corresponding to @block_device_number, if any.
  *
@@ -2158,6 +2161,8 @@ static const struct
   {"filesystem", "iso9660",           NULL,    NC_("fs-type", "ISO 9660"),                          NC_("fs-type", "ISO9660")},
   {"filesystem", "udf",               "*",     NC_("fs-type", "UDF (version %s)"),                  NC_("fs-type", "UDF")},
   {"filesystem", "udf",               NULL,    NC_("fs-type", "UDF"),                               NC_("fs-type", "UDF")},
+  {"filesystem", "exfat",             NULL,    NC_("fs-type", "exFAT"),                             NC_("fs-type", "exFAT")},
+  {"filesystem", "exfat",             "*",     NC_("fs-type", "exFAT (version %s)"),                NC_("fs-type", "exFAT")},
   {"other",      "swap",              "*",     NC_("fs-type", "Swap (version %s)"),                 NC_("fs-type", "Swap")},
   {"other",      "swap",              NULL,    NC_("fs-type", "Swap"),                              NC_("fs-type", "Swap")},
   {"raid",       "LVM2_member",       "*",     NC_("fs-type", "LVM2 Physical Volume (%s)"),         NC_("fs-type", "LVM2 PV")},
@@ -2166,6 +2171,8 @@ static const struct
   {"raid",       "linux_raid_member", NULL,    NC_("fs-type", "Software RAID Component"),           NC_("fs-type", "MD Raid")},
   {"raid",       "zfs_member",        "*",     NC_("fs-type", "ZFS Device (ZPool version %s)"),     NC_("fs-type", "ZFS (v%s)")},
   {"raid",       "zfs_member",        NULL,    NC_("fs-type", "ZFS Device"),                        NC_("fs-type", "ZFS")},
+  {"raid",       "isw_raid_member",   "*",     NC_("fs-type", "Intel Matrix RAID Member (version %s)"), NC_("fs-type", "IMSM RAID (%s)")},
+  {"raid",       "isw_raid_member",   NULL,    NC_("fs-type", "Intel Matrix RAID Member"),          NC_("fs-type", "IMSM RAID")},
   {"crypto",     "crypto_LUKS",       "*",     NC_("fs-type", "LUKS Encryption (version %s)"),      NC_("fs-type", "LUKS")},
   {"crypto",     "crypto_LUKS",       NULL,    NC_("fs-type", "LUKS Encryption"),                   NC_("fs-type", "LUKS")},
   {"filesystem", "VMFS",              "*",     NC_("fs-type", "VMFS (version %s)"),                 NC_("fs-type", "VMFS (v%s)")},
