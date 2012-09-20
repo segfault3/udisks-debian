@@ -1,4 +1,4 @@
-udisks2 (1.99.0+git20120919-1) UNRELEASED; urgency=low
+udisks2 (1.99.0+git20120919-1) experimental; urgency=low
 
   * Update to current upstream git head:
     - configure.ac: raise gudev dependency
@@ -15,7 +15,7 @@ udisks2 (1.99.0+git20120919-1) UNRELEASED; urgency=low
   * debian/udisks2.install: Install umount.udisks2 into /sbin; our old
     util-linux version does not yet find it in /usr/sbin/. (LP: #1019651)
 
- -- Martin Pitt <mpitt@debian.org>  Thu, 20 Sep 2012 11:28:30 +0200
+ -- Martin Pitt <mpitt@debian.org>  Thu, 20 Sep 2012 12:04:46 +0200
 
 udisks2 (1.99.0-5) experimental; urgency=low
 
