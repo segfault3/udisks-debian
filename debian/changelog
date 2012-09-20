@@ -1,5 +1,17 @@
-udisks2 (1.99.0-6) UNRELEASED; urgency=low
+udisks2 (1.99.0+git20120919-1) UNRELEASED; urgency=low
 
+  * Update to current upstream git head:
+    - configure.ac: raise gudev dependency
+    - Update list of recovery/system partitions
+    - Add support for creating exFAT filesystems and changing exFAT labels
+    - Add textual descriptions for IMSM Raid members
+    - Use all-caps for RAID in descriptions
+    - Lots of test suite robustifications and added tests
+    - Enable large file support (LP: #1039022)
+    - Mount vfat with "flush" option
+  * Drop 00git_dev_t_annotation.patch, 00git_testsuite.patch.
+  * debian/control: Bump libgudev-1.0-dev build dependency as per upstream
+    configure.ac.
   * debian/udisks2.install: Install umount.udisks2 into /sbin; our old
     util-linux version does not yet find it in /usr/sbin/. (LP: #1019651)
 
