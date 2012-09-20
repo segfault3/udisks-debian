@@ -102,7 +102,7 @@
                                                          <em class="parameter"><code><a class="link" href="UDisksPartition.html" title="UDisksPartition"><span class="type">UDisksPartition</span></a> *partition</code></em>);
 
 <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="returnvalue">gchar</span></a> *             <a class="link" href="UDisksClient.html#udisks-client-get-size-for-display" title="udisks_client_get_size_for_display ()">udisks_client_get_size_for_display</a>  (<em class="parameter"><code><a class="link" href="UDisksClient.html" title="UDisksClient"><span class="type">UDisksClient</span></a> *client</code></em>,
-                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#guint64"><span class="type">guint64</span></a> size</code></em>,
+                                                         <em class="parameter"><code><span class="type">guint64</span> size</code></em>,
                                                          <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"><span class="type">gboolean</span></a> use_pow2</code></em>,
                                                          <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"><span class="type">gboolean</span></a> long_string</code></em>);
 <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="returnvalue">gchar</span></a> *             <a class="link" href="UDisksClient.html#udisks-client-get-id-for-display" title="udisks_client_get_id_for_display ()">udisks_client_get_id_for_display</a>    (<em class="parameter"><code><a class="link" href="UDisksClient.html" title="UDisksClient"><span class="type">UDisksClient</span></a> *client</code></em>,
@@ -192,7 +192,7 @@ The major version of the libudisks2 header files.
 <hr>
 <div class="refsect2">
 <a name="UDISKS-MINOR-VERSION:CAPS"></a><h3>UDISKS_MINOR_VERSION</h3>
-<pre class="programlisting">#define UDISKS_MINOR_VERSION 99
+<pre class="programlisting">#define UDISKS_MINOR_VERSION 100
 </pre>
 <p>
 The minor version of the libudisks2 header files.
@@ -486,7 +486,8 @@ Gets the <a class="link" href="UDisksBlock.html" title="UDisksBlock"><span class
 </tr>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>block_device_number</code></em> :</span></p></td>
-<td>A <span class="type">dev_t</span> to get a <a class="link" href="UDisksBlock.html" title="UDisksBlock"><span class="type">UDisksBlock</span></a> for.</td>
+<td>A <span class="type">dev_t</span> to get a <a class="link" href="UDisksBlock.html" title="UDisksBlock"><span class="type">UDisksBlock</span></a> for. <span class="annotation">[<a href="http://foldoc.org/type"><span class="acronym">type</span></a> guint64]</span>
+</td>
 </tr>
 <tr>
 <td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
@@ -1026,7 +1027,7 @@ partition type, flags (if any) and name (if any).
 <div class="refsect2">
 <a name="udisks-client-get-size-for-display"></a><h3>udisks_client_get_size_for_display ()</h3>
 <pre class="programlisting"><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="returnvalue">gchar</span></a> *             udisks_client_get_size_for_display  (<em class="parameter"><code><a class="link" href="UDisksClient.html" title="UDisksClient"><span class="type">UDisksClient</span></a> *client</code></em>,
-                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#guint64"><span class="type">guint64</span></a> size</code></em>,
+                                                         <em class="parameter"><code><span class="type">guint64</span> size</code></em>,
                                                          <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"><span class="type">gboolean</span></a> use_pow2</code></em>,
                                                          <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"><span class="type">gboolean</span></a> long_string</code></em>);</pre>
 <p>

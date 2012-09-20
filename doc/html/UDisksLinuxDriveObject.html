@@ -45,16 +45,16 @@
 <a name="UDisksLinuxDriveObject.synopsis"></a><h2>Synopsis</h2>
 <pre class="synopsis">                    <a class="link" href="UDisksLinuxDriveObject.html#UDisksLinuxDriveObject-struct" title="UDisksLinuxDriveObject">UDisksLinuxDriveObject</a>;
 <a class="link" href="UDisksLinuxDriveObject.html" title="UDisksLinuxDriveObject"><span class="returnvalue">UDisksLinuxDriveObject</span></a> * <a class="link" href="UDisksLinuxDriveObject.html#udisks-linux-drive-object-new" title="udisks_linux_drive_object_new ()">udisks_linux_drive_object_new</a>  (<em class="parameter"><code><a class="link" href="UDisksDaemon.html" title="UDisksDaemon"><span class="type">UDisksDaemon</span></a> *daemon</code></em>,
-                                                         <em class="parameter"><code><a href="/usr/share/gtk-doc/html/gudev/GUdevDevice.html"><span class="type">GUdevDevice</span></a> *device</code></em>);
+                                                         <em class="parameter"><code><a href="/usr/share/gtk-doc/html/gudev/gudev-GUdevDevice.html#GUdevDevice"><span class="type">GUdevDevice</span></a> *device</code></em>);
 <span class="returnvalue">void</span>                <a class="link" href="UDisksLinuxDriveObject.html#udisks-linux-drive-object-uevent" title="udisks_linux_drive_object_uevent ()">udisks_linux_drive_object_uevent</a>    (<em class="parameter"><code><a class="link" href="UDisksLinuxDriveObject.html" title="UDisksLinuxDriveObject"><span class="type">UDisksLinuxDriveObject</span></a> *object</code></em>,
                                                          <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *action</code></em>,
-                                                         <em class="parameter"><code><a href="/usr/share/gtk-doc/html/gudev/GUdevDevice.html"><span class="type">GUdevDevice</span></a> *device</code></em>);
+                                                         <em class="parameter"><code><a href="/usr/share/gtk-doc/html/gudev/gudev-GUdevDevice.html#GUdevDevice"><span class="type">GUdevDevice</span></a> *device</code></em>);
 <a class="link" href="UDisksDaemon.html" title="UDisksDaemon"><span class="returnvalue">UDisksDaemon</span></a> *      <a class="link" href="UDisksLinuxDriveObject.html#udisks-linux-drive-object-get-daemon" title="udisks_linux_drive_object_get_daemon ()">udisks_linux_drive_object_get_daemon</a>
                                                         (<em class="parameter"><code><a class="link" href="UDisksLinuxDriveObject.html" title="UDisksLinuxDriveObject"><span class="type">UDisksLinuxDriveObject</span></a> *object</code></em>);
 <a class="link" href="UDisksLinuxBlockObject.html" title="UDisksLinuxBlockObject"><span class="returnvalue">UDisksLinuxBlockObject</span></a> * <a class="link" href="UDisksLinuxDriveObject.html#udisks-linux-drive-object-get-block" title="udisks_linux_drive_object_get_block ()">udisks_linux_drive_object_get_block</a>
                                                         (<em class="parameter"><code><a class="link" href="UDisksLinuxDriveObject.html" title="UDisksLinuxDriveObject"><span class="type">UDisksLinuxDriveObject</span></a> *object</code></em>,
                                                          <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"><span class="type">gboolean</span></a> get_hw</code></em>);
-<a href="/usr/share/gtk-doc/html/gudev/GUdevDevice.html"><span class="returnvalue">GUdevDevice</span></a> *       <a class="link" href="UDisksLinuxDriveObject.html#udisks-linux-drive-object-get-device" title="udisks_linux_drive_object_get_device ()">udisks_linux_drive_object_get_device</a>
+<a href="/usr/share/gtk-doc/html/gudev/gudev-GUdevDevice.html#GUdevDevice"><span class="returnvalue">GUdevDevice</span></a> *       <a class="link" href="UDisksLinuxDriveObject.html#udisks-linux-drive-object-get-device" title="udisks_linux_drive_object_get_device ()">udisks_linux_drive_object_get_device</a>
                                                         (<em class="parameter"><code><a class="link" href="UDisksLinuxDriveObject.html" title="UDisksLinuxDriveObject"><span class="type">UDisksLinuxDriveObject</span></a> *object</code></em>,
                                                          <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"><span class="type">gboolean</span></a> get_hw</code></em>);
 <a href="http://library.gnome.org/devel/glib/unstable/glib-Doubly-Linked-Lists.html#GList"><span class="returnvalue">GList</span></a> *             <a class="link" href="UDisksLinuxDriveObject.html#udisks-linux-drive-object-get-devices" title="udisks_linux_drive_object_get_devices ()">udisks_linux_drive_object_get_devices</a>
@@ -89,7 +89,7 @@ UDisksLinuxDriveObject implements
 <a name="UDisksLinuxDriveObject.properties"></a><h2>Properties</h2>
 <pre class="synopsis">
   "<a class="link" href="UDisksLinuxDriveObject.html#UDisksLinuxDriveObject--daemon" title='The "daemon" property'>daemon</a>"                   <a class="link" href="UDisksDaemon.html" title="UDisksDaemon"><span class="type">UDisksDaemon</span></a>*         : Read / Write / Construct Only
-  "<a class="link" href="UDisksLinuxDriveObject.html#UDisksLinuxDriveObject--device" title='The "device" property'>device</a>"                   <a href="/usr/share/gtk-doc/html/gudev/GUdevDevice.html"><span class="type">GUdevDevice</span></a>*          : Write / Construct Only
+  "<a class="link" href="UDisksLinuxDriveObject.html#UDisksLinuxDriveObject--device" title='The "device" property'>device</a>"                   <a href="/usr/share/gtk-doc/html/gudev/gudev-GUdevDevice.html#GUdevDevice"><span class="type">GUdevDevice</span></a>*          : Write / Construct Only
 </pre>
 </div>
 <div class="refsect1">
@@ -112,7 +112,7 @@ should only be accessed using the provided API.
 <div class="refsect2">
 <a name="udisks-linux-drive-object-new"></a><h3>udisks_linux_drive_object_new ()</h3>
 <pre class="programlisting"><a class="link" href="UDisksLinuxDriveObject.html" title="UDisksLinuxDriveObject"><span class="returnvalue">UDisksLinuxDriveObject</span></a> * udisks_linux_drive_object_new  (<em class="parameter"><code><a class="link" href="UDisksDaemon.html" title="UDisksDaemon"><span class="type">UDisksDaemon</span></a> *daemon</code></em>,
-                                                         <em class="parameter"><code><a href="/usr/share/gtk-doc/html/gudev/GUdevDevice.html"><span class="type">GUdevDevice</span></a> *device</code></em>);</pre>
+                                                         <em class="parameter"><code><a href="/usr/share/gtk-doc/html/gudev/gudev-GUdevDevice.html#GUdevDevice"><span class="type">GUdevDevice</span></a> *device</code></em>);</pre>
 <p>
 Create a new drive object.
 </p>
@@ -125,7 +125,7 @@ Create a new drive object.
 </tr>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>device</code></em> :</span></p></td>
-<td>The <a href="/usr/share/gtk-doc/html/gudev/GUdevDevice.html"><span class="type">GUdevDevice</span></a> for the sysfs block device.</td>
+<td>The <a href="/usr/share/gtk-doc/html/gudev/gudev-GUdevDevice.html#GUdevDevice"><span class="type">GUdevDevice</span></a> for the sysfs block device.</td>
 </tr>
 <tr>
 <td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
@@ -139,7 +139,7 @@ Create a new drive object.
 <a name="udisks-linux-drive-object-uevent"></a><h3>udisks_linux_drive_object_uevent ()</h3>
 <pre class="programlisting"><span class="returnvalue">void</span>                udisks_linux_drive_object_uevent    (<em class="parameter"><code><a class="link" href="UDisksLinuxDriveObject.html" title="UDisksLinuxDriveObject"><span class="type">UDisksLinuxDriveObject</span></a> *object</code></em>,
                                                          <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *action</code></em>,
-                                                         <em class="parameter"><code><a href="/usr/share/gtk-doc/html/gudev/GUdevDevice.html"><span class="type">GUdevDevice</span></a> *device</code></em>);</pre>
+                                                         <em class="parameter"><code><a href="/usr/share/gtk-doc/html/gudev/gudev-GUdevDevice.html#GUdevDevice"><span class="type">GUdevDevice</span></a> *device</code></em>);</pre>
 <p>
 Updates all information on interfaces on <em class="parameter"><code>drive</code></em>.
 </p>
@@ -157,7 +157,7 @@ Updates all information on interfaces on <em class="parameter"><code>drive</code
 </tr>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>device</code></em> :</span></p></td>
-<td>A <a href="/usr/share/gtk-doc/html/gudev/GUdevDevice.html"><span class="type">GUdevDevice</span></a> device object or <a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a> if the device hasn't changed.</td>
+<td>A <a href="/usr/share/gtk-doc/html/gudev/gudev-GUdevDevice.html#GUdevDevice"><span class="type">GUdevDevice</span></a> device object or <a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a> if the device hasn't changed.</td>
 </tr>
 </tbody>
 </table></div>
@@ -215,11 +215,11 @@ must be freed with <a href="http://library.gnome.org/devel/gobject/unstable/gobj
 <hr>
 <div class="refsect2">
 <a name="udisks-linux-drive-object-get-device"></a><h3>udisks_linux_drive_object_get_device ()</h3>
-<pre class="programlisting"><a href="/usr/share/gtk-doc/html/gudev/GUdevDevice.html"><span class="returnvalue">GUdevDevice</span></a> *       udisks_linux_drive_object_get_device
+<pre class="programlisting"><a href="/usr/share/gtk-doc/html/gudev/gudev-GUdevDevice.html#GUdevDevice"><span class="returnvalue">GUdevDevice</span></a> *       udisks_linux_drive_object_get_device
                                                         (<em class="parameter"><code><a class="link" href="UDisksLinuxDriveObject.html" title="UDisksLinuxDriveObject"><span class="type">UDisksLinuxDriveObject</span></a> *object</code></em>,
                                                          <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"><span class="type">gboolean</span></a> get_hw</code></em>);</pre>
 <p>
-Gets one of the <a href="/usr/share/gtk-doc/html/gudev/GUdevDevice.html"><span class="type">GUdevDevice</span></a> object associated with <em class="parameter"><code>object</code></em>.
+Gets one of the <a href="/usr/share/gtk-doc/html/gudev/gudev-GUdevDevice.html#GUdevDevice"><span class="type">GUdevDevice</span></a> object associated with <em class="parameter"><code>object</code></em>.
 </p>
 <p>
 If <em class="parameter"><code>get_hw</code></em> is <a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#TRUE:CAPS"><code class="literal">TRUE</code></a> and <em class="parameter"><code>object</code></em> represents a multipath device then
@@ -239,7 +239,7 @@ is useful if you e.g. need to configure the physical hardware.
 </tr>
 <tr>
 <td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
-<td>A <a href="/usr/share/gtk-doc/html/gudev/GUdevDevice.html"><span class="type">GUdevDevice</span></a> or <a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a>. The returned object must be freed
+<td>A <a href="/usr/share/gtk-doc/html/gudev/gudev-GUdevDevice.html#GUdevDevice"><span class="type">GUdevDevice</span></a> or <a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a>. The returned object must be freed
 with <a href="http://library.gnome.org/devel/gobject/unstable/gobject-The-Base-Object-Type.html#g-object-unref"><code class="function">g_object_unref()</code></a>.</td>
 </tr>
 </tbody>
@@ -251,7 +251,7 @@ with <a href="http://library.gnome.org/devel/gobject/unstable/gobject-The-Base-O
 <pre class="programlisting"><a href="http://library.gnome.org/devel/glib/unstable/glib-Doubly-Linked-Lists.html#GList"><span class="returnvalue">GList</span></a> *             udisks_linux_drive_object_get_devices
                                                         (<em class="parameter"><code><a class="link" href="UDisksLinuxDriveObject.html" title="UDisksLinuxDriveObject"><span class="type">UDisksLinuxDriveObject</span></a> *object</code></em>);</pre>
 <p>
-Gets the current <a href="/usr/share/gtk-doc/html/gudev/GUdevDevice.html"><span class="type">GUdevDevice</span></a> objects associated with <em class="parameter"><code>object</code></em>.
+Gets the current <a href="/usr/share/gtk-doc/html/gudev/gudev-GUdevDevice.html#GUdevDevice"><span class="type">GUdevDevice</span></a> objects associated with <em class="parameter"><code>object</code></em>.
 </p>
 <div class="variablelist"><table border="0">
 <col align="left" valign="top">
@@ -262,7 +262,7 @@ Gets the current <a href="/usr/share/gtk-doc/html/gudev/GUdevDevice.html"><span 
 </tr>
 <tr>
 <td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
-<td>A list of <a href="/usr/share/gtk-doc/html/gudev/GUdevDevice.html"><span class="type">GUdevDevice</span></a> objects. Free each element with
+<td>A list of <a href="/usr/share/gtk-doc/html/gudev/gudev-GUdevDevice.html#GUdevDevice"><span class="type">GUdevDevice</span></a> objects. Free each element with
 <a href="http://library.gnome.org/devel/gobject/unstable/gobject-The-Base-Object-Type.html#g-object-unref"><code class="function">g_object_unref()</code></a>, then free the list with <a href="http://library.gnome.org/devel/glib/unstable/glib-Doubly-Linked-Lists.html#g-list-free"><code class="function">g_list_free()</code></a>.</td>
 </tr>
 </tbody>
@@ -363,9 +363,9 @@ The <a class="link" href="UDisksDaemon.html" title="UDisksDaemon"><span class="t
 <hr>
 <div class="refsect2">
 <a name="UDisksLinuxDriveObject--device"></a><h3>The <code class="literal">"device"</code> property</h3>
-<pre class="programlisting">  "device"                   <a href="/usr/share/gtk-doc/html/gudev/GUdevDevice.html"><span class="type">GUdevDevice</span></a>*          : Write / Construct Only</pre>
+<pre class="programlisting">  "device"                   <a href="/usr/share/gtk-doc/html/gudev/gudev-GUdevDevice.html#GUdevDevice"><span class="type">GUdevDevice</span></a>*          : Write / Construct Only</pre>
 <p>
-The <a href="/usr/share/gtk-doc/html/gudev/GUdevDevice.html"><span class="type">GUdevDevice</span></a> for the object. Connect to the <a href="http://library.gnome.org/devel/gobject/unstable/gobject-The-Base-Object-Type.html#GObject-notify"><span class="type">"notify"</span></a>
+The <a href="/usr/share/gtk-doc/html/gudev/gudev-GUdevDevice.html#GUdevDevice"><span class="type">GUdevDevice</span></a> for the object. Connect to the <a href="http://library.gnome.org/devel/gobject/unstable/gobject-The-Base-Object-Type.html#GObject-notify"><span class="type">"notify"</span></a>
 signal to get notified whenever this is updated.
 </p>
 </div>
