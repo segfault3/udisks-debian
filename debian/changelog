@@ -9,6 +9,8 @@ udisks2 (2.0.0-1) UNRELEASED; urgency=low
     - Lots of documentation updates and corrections
     - Update translations from Transifex
   * debian/rules: Call dh_install with --fail-missing.
+  * debian/udisks2.install: Install bash completion from/to
+    usr/share/bash-completion/.
 
  -- Martin Pitt <mpitt@debian.org>  Fri, 05 Oct 2012 10:01:29 +0200
 
