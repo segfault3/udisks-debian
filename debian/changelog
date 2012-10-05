@@ -8,6 +8,7 @@ udisks2 (2.0.0-1) UNRELEASED; urgency=low
     - Don't require that users define UDISKS_API_IS_SUBJECT_TO_CHANGE
     - Lots of documentation updates and corrections
     - Update translations from Transifex
+  * debian/rules: Call dh_install with --fail-missing.
 
  -- Martin Pitt <mpitt@debian.org>  Fri, 05 Oct 2012 10:01:29 +0200
 
