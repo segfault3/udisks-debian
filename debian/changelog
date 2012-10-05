@@ -1,4 +1,4 @@
-udisks2 (2.0.0-1) UNRELEASED; urgency=low
+udisks2 (2.0.0-1) experimental; urgency=low
 
   * Final 2.0.0 release. Changes since our git snapshot:
     - Only do the isohybrid hack for the first partition
@@ -14,7 +14,7 @@ udisks2 (2.0.0-1) UNRELEASED; urgency=low
   * Add debian/udisks2.maintscript: Remove bash completion in /etc/ on
     upgrade.
 
- -- Martin Pitt <mpitt@debian.org>  Fri, 05 Oct 2012 10:01:29 +0200
+ -- Martin Pitt <mpitt@debian.org>  Fri, 05 Oct 2012 10:32:14 +0200
 
 udisks2 (1.99.0+git20120919-1) experimental; urgency=low
 
