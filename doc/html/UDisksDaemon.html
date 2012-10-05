@@ -3,7 +3,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>UDisksDaemon</title>
-<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.77.1">
 <link rel="home" href="index.html" title="UDisks Reference Manual">
 <link rel="up" href="ref-daemon-core.html" title="Core">
 <link rel="prev" href="udisks2-Logging.html" title="Logging">
@@ -53,7 +53,7 @@
 <a class="link" href="UDisksLinuxProvider.html" title="UDisksLinuxProvider"><span class="returnvalue">UDisksLinuxProvider</span></a> * <a class="link" href="UDisksDaemon.html#udisks-daemon-get-linux-provider" title="udisks_daemon_get_linux_provider ()">udisks_daemon_get_linux_provider</a>  (<em class="parameter"><code><a class="link" href="UDisksDaemon.html" title="UDisksDaemon"><span class="type">UDisksDaemon</span></a> *daemon</code></em>);
 <a class="link" href="UDisksPersistentStore.html" title="UDisksPersistentStore"><span class="returnvalue">UDisksPersistentStore</span></a> * <a class="link" href="UDisksDaemon.html#udisks-daemon-get-persistent-store" title="udisks_daemon_get_persistent_store ()">udisks_daemon_get_persistent_store</a>
                                                         (<em class="parameter"><code><a class="link" href="UDisksDaemon.html" title="UDisksDaemon"><span class="type">UDisksDaemon</span></a> *daemon</code></em>);
-<span class="returnvalue">PolkitAuthority</span> *   <a class="link" href="UDisksDaemon.html#udisks-daemon-get-authority" title="udisks_daemon_get_authority ()">udisks_daemon_get_authority</a>         (<em class="parameter"><code><a class="link" href="UDisksDaemon.html" title="UDisksDaemon"><span class="type">UDisksDaemon</span></a> *daemon</code></em>);
+<a href="http://www.freedesktop.org/software/polkit/docs/latest/PolkitAuthority.html"><span class="returnvalue">PolkitAuthority</span></a> *   <a class="link" href="UDisksDaemon.html#udisks-daemon-get-authority" title="udisks_daemon_get_authority ()">udisks_daemon_get_authority</a>         (<em class="parameter"><code><a class="link" href="UDisksDaemon.html" title="UDisksDaemon"><span class="type">UDisksDaemon</span></a> *daemon</code></em>);
 <a class="link" href="UDisksCleanup.html" title="UDisksCleanup"><span class="returnvalue">UDisksCleanup</span></a> *     <a class="link" href="UDisksDaemon.html#udisks-daemon-get-cleanup" title="udisks_daemon_get_cleanup ()">udisks_daemon_get_cleanup</a>           (<em class="parameter"><code><a class="link" href="UDisksDaemon.html" title="UDisksDaemon"><span class="type">UDisksDaemon</span></a> *daemon</code></em>);
 <a class="link" href="UDisksObject.html" title="UDisksObject"><span class="returnvalue">UDisksObject</span></a> *      (<a class="link" href="UDisksDaemon.html#UDisksDaemonWaitFunc" title="UDisksDaemonWaitFunc ()">*UDisksDaemonWaitFunc</a>)             (<em class="parameter"><code><a class="link" href="UDisksDaemon.html" title="UDisksDaemon"><span class="type">UDisksDaemon</span></a> *daemon</code></em>,
                                                          <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gpointer"><span class="type">gpointer</span></a> user_data</code></em>);
@@ -150,8 +150,11 @@ only be accessed using the provided API.
 <p>
 Create a new daemon object for exporting objects on <em class="parameter"><code>connection</code></em>.
 </p>
-<div class="variablelist"><table border="0">
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
 <col align="left" valign="top">
+<col>
+</colgroup>
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>connection</code></em> :</span></p></td>
@@ -171,8 +174,11 @@ Create a new daemon object for exporting objects on <em class="parameter"><code>
 <p>
 Gets the D-Bus connection used by <em class="parameter"><code>daemon</code></em>.
 </p>
-<div class="variablelist"><table border="0">
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
 <col align="left" valign="top">
+<col>
+</colgroup>
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>daemon</code></em> :</span></p></td>
@@ -193,8 +199,11 @@ Gets the D-Bus connection used by <em class="parameter"><code>daemon</code></em>
 <p>
 Gets the D-Bus object manager used by <em class="parameter"><code>daemon</code></em>.
 </p>
-<div class="variablelist"><table border="0">
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
 <col align="left" valign="top">
+<col>
+</colgroup>
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>daemon</code></em> :</span></p></td>
@@ -214,8 +223,11 @@ Gets the D-Bus object manager used by <em class="parameter"><code>daemon</code><
 <p>
 Gets the mount monitor used by <em class="parameter"><code>daemon</code></em>.
 </p>
-<div class="variablelist"><table border="0">
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
 <col align="left" valign="top">
+<col>
+</colgroup>
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>daemon</code></em> :</span></p></td>
@@ -236,8 +248,11 @@ Gets the mount monitor used by <em class="parameter"><code>daemon</code></em>.
 <p>
 Gets the fstab monitor used by <em class="parameter"><code>daemon</code></em>.
 </p>
-<div class="variablelist"><table border="0">
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
 <col align="left" valign="top">
+<col>
+</colgroup>
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>daemon</code></em> :</span></p></td>
@@ -259,8 +274,11 @@ Gets the fstab monitor used by <em class="parameter"><code>daemon</code></em>.
 <p>
 Gets the crypttab monitor used by <em class="parameter"><code>daemon</code></em>.
 </p>
-<div class="variablelist"><table border="0">
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
 <col align="left" valign="top">
+<col>
+</colgroup>
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>daemon</code></em> :</span></p></td>
@@ -281,8 +299,11 @@ Gets the crypttab monitor used by <em class="parameter"><code>daemon</code></em>
 <p>
 Gets the Linux Provider, if any.
 </p>
-<div class="variablelist"><table border="0">
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
 <col align="left" valign="top">
+<col>
+</colgroup>
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>daemon</code></em> :</span></p></td>
@@ -303,8 +324,11 @@ Gets the Linux Provider, if any.
 <p>
 Gets the object used to store persistent data
 </p>
-<div class="variablelist"><table border="0">
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
 <col align="left" valign="top">
+<col>
+</colgroup>
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>daemon</code></em> :</span></p></td>
@@ -320,12 +344,15 @@ Gets the object used to store persistent data
 <hr>
 <div class="refsect2">
 <a name="udisks-daemon-get-authority"></a><h3>udisks_daemon_get_authority ()</h3>
-<pre class="programlisting"><span class="returnvalue">PolkitAuthority</span> *   udisks_daemon_get_authority         (<em class="parameter"><code><a class="link" href="UDisksDaemon.html" title="UDisksDaemon"><span class="type">UDisksDaemon</span></a> *daemon</code></em>);</pre>
+<pre class="programlisting"><a href="http://www.freedesktop.org/software/polkit/docs/latest/PolkitAuthority.html"><span class="returnvalue">PolkitAuthority</span></a> *   udisks_daemon_get_authority         (<em class="parameter"><code><a class="link" href="UDisksDaemon.html" title="UDisksDaemon"><span class="type">UDisksDaemon</span></a> *daemon</code></em>);</pre>
 <p>
 Gets the PolicyKit authority used by <em class="parameter"><code>daemon</code></em>.
 </p>
-<div class="variablelist"><table border="0">
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
 <col align="left" valign="top">
+<col>
+</colgroup>
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>daemon</code></em> :</span></p></td>
@@ -333,7 +360,7 @@ Gets the PolicyKit authority used by <em class="parameter"><code>daemon</code></
 </tr>
 <tr>
 <td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
-<td>A <span class="type">PolkitAuthority</span> instance or <a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a> if the polkit
+<td>A <a href="http://www.freedesktop.org/software/polkit/docs/latest/PolkitAuthority.html"><span class="type">PolkitAuthority</span></a> instance or <a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a> if the polkit
 authority is not available. Do not free, the object is owned by
 <em class="parameter"><code>daemon</code></em>.</td>
 </tr>
@@ -347,8 +374,11 @@ authority is not available. Do not free, the object is owned by
 <p>
 Gets the cleanup object used by <em class="parameter"><code>daemon</code></em>.
 </p>
-<div class="variablelist"><table border="0">
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
 <col align="left" valign="top">
+<col>
+</colgroup>
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>daemon</code></em> :</span></p></td>
@@ -369,8 +399,11 @@ Gets the cleanup object used by <em class="parameter"><code>daemon</code></em>.
 <p>
 Type for callback function used with <a class="link" href="UDisksDaemon.html#udisks-daemon-wait-for-object-sync" title="udisks_daemon_wait_for_object_sync ()"><code class="function">udisks_daemon_wait_for_object_sync()</code></a>.
 </p>
-<div class="variablelist"><table border="0">
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
 <col align="left" valign="top">
+<col>
+</colgroup>
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>daemon</code></em> :</span></p></td>
@@ -407,8 +440,11 @@ function fails with <a class="link" href="udisks2-UDisksError.html#UDISKS-ERROR-
 Note that <em class="parameter"><code>wait_func</code></em> will be called from time to time - for example
 if there is a device event.
 </p>
-<div class="variablelist"><table border="0">
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
 <col align="left" valign="top">
+<col>
+</colgroup>
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>daemon</code></em> :</span></p></td>
@@ -451,8 +487,11 @@ if there is a device event.
 <p>
 Gets all D-Bus objects exported by <em class="parameter"><code>daemon</code></em>.
 </p>
-<div class="variablelist"><table border="0">
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
 <col align="left" valign="top">
+<col>
+</colgroup>
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>daemon</code></em> :</span></p></td>
@@ -474,8 +513,11 @@ Gets all D-Bus objects exported by <em class="parameter"><code>daemon</code></em
 <p>
 Finds an exported object with the object path given by <em class="parameter"><code>object_path</code></em>.
 </p>
-<div class="variablelist"><table border="0">
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
 <col align="left" valign="top">
+<col>
+</colgroup>
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>daemon</code></em> :</span></p></td>
@@ -501,8 +543,11 @@ Finds an exported object with the object path given by <em class="parameter"><co
 <p>
 Finds a block device with the number given by <em class="parameter"><code>block_device_number</code></em>.
 </p>
-<div class="variablelist"><table border="0">
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
 <col align="left" valign="top">
+<col>
+</colgroup>
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>daemon</code></em> :</span></p></td>
@@ -529,8 +574,11 @@ Finds a block device with the number given by <em class="parameter"><code>block_
 <p>
 Finds a block device with device file given by <em class="parameter"><code>device_file</code></em>.
 </p>
-<div class="variablelist"><table border="0">
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
 <col align="left" valign="top">
+<col>
+</colgroup>
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>daemon</code></em> :</span></p></td>
@@ -557,8 +605,11 @@ Finds a block device with device file given by <em class="parameter"><code>devic
 <p>
 Finds a block device with a sysfs path given by <em class="parameter"><code>sysfs_path</code></em>.
 </p>
-<div class="variablelist"><table border="0">
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
 <col align="left" valign="top">
+<col>
+</colgroup>
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>daemon</code></em> :</span></p></td>
@@ -598,8 +649,11 @@ The returned object will be exported on the bus until the
 <a class="link" href="UDisksJob.html#UDisksJob-completed" title='The "completed" signal'><span class="type">"completed"</span></a> signal is emitted on the object. It is not
 valid to use the returned object after this signal fires.
 </p>
-<div class="variablelist"><table border="0">
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
 <col align="left" valign="top">
+<col>
+</colgroup>
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>daemon</code></em> :</span></p></td>
@@ -609,6 +663,14 @@ valid to use the returned object after this signal fires.
 <td><p><span class="term"><em class="parameter"><code>object</code></em> :</span></p></td>
 <td>A <a class="link" href="UDisksObject.html" title="UDisksObject"><span class="type">UDisksObject</span></a> to add to the job or <a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a>. <span class="annotation">[<a href="http://foldoc.org/allow-none"><span class="acronym">allow-none</span></a>]</span>
 </td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>job_operation</code></em> :</span></p></td>
+<td>The operation for the job.</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>job_started_by_uid</code></em> :</span></p></td>
+<td>The user who started the job.</td>
 </tr>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>cancellable</code></em> :</span></p></td>
@@ -648,8 +710,11 @@ The returned object will be exported on the bus until the
 <a class="link" href="UDisksJob.html#UDisksJob-completed" title='The "completed" signal'><span class="type">"completed"</span></a> signal is emitted on the object. It is not
 valid to use the returned object after this signal fires.
 </p>
-<div class="variablelist"><table border="0">
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
 <col align="left" valign="top">
+<col>
+</colgroup>
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>daemon</code></em> :</span></p></td>
@@ -659,6 +724,14 @@ valid to use the returned object after this signal fires.
 <td><p><span class="term"><em class="parameter"><code>object</code></em> :</span></p></td>
 <td>A <a class="link" href="UDisksObject.html" title="UDisksObject"><span class="type">UDisksObject</span></a> to add to the job or <a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a>. <span class="annotation">[<a href="http://foldoc.org/allow-none"><span class="acronym">allow-none</span></a>]</span>
 </td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>job_operation</code></em> :</span></p></td>
+<td>The operation for the job.</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>job_started_by_uid</code></em> :</span></p></td>
+<td>The user who started the job.</td>
 </tr>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>cancellable</code></em> :</span></p></td>
@@ -712,8 +785,11 @@ belongs to <em class="parameter"><code>manager</code></em>.</td>
 Like <a class="link" href="UDisksDaemon.html#udisks-daemon-launch-spawned-job" title="udisks_daemon_launch_spawned_job ()"><code class="function">udisks_daemon_launch_spawned_job()</code></a> but blocks the calling
 thread until the job completes.
 </p>
-<div class="variablelist"><table border="0">
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
 <col align="left" valign="top">
+<col>
+</colgroup>
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>daemon</code></em> :</span></p></td>
@@ -723,6 +799,14 @@ thread until the job completes.
 <td><p><span class="term"><em class="parameter"><code>object</code></em> :</span></p></td>
 <td>A <a class="link" href="UDisksObject.html" title="UDisksObject"><span class="type">UDisksObject</span></a> to add to the job or <a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a>. <span class="annotation">[<a href="http://foldoc.org/allow-none"><span class="acronym">allow-none</span></a>]</span>
 </td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>job_operation</code></em> :</span></p></td>
+<td>The operation for the job.</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>job_started_by_uid</code></em> :</span></p></td>
+<td>The user who started the job.</td>
 </tr>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>cancellable</code></em> :</span></p></td>
@@ -791,8 +875,11 @@ The returned object will be exported on the bus until the
 <a class="link" href="UDisksJob.html#UDisksJob-completed" title='The "completed" signal'><span class="type">"completed"</span></a> signal is emitted on the object. It is not
 valid to use the returned object after this signal fires.
 </p>
-<div class="variablelist"><table border="0">
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
 <col align="left" valign="top">
+<col>
+</colgroup>
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>daemon</code></em> :</span></p></td>
@@ -802,6 +889,14 @@ valid to use the returned object after this signal fires.
 <td><p><span class="term"><em class="parameter"><code>object</code></em> :</span></p></td>
 <td>A <a class="link" href="UDisksObject.html" title="UDisksObject"><span class="type">UDisksObject</span></a> to add to the job or <a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a>. <span class="annotation">[<a href="http://foldoc.org/allow-none"><span class="acronym">allow-none</span></a>]</span>
 </td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>job_operation</code></em> :</span></p></td>
+<td>The operation for the job.</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>job_started_by_uid</code></em> :</span></p></td>
+<td>The user who started the job.</td>
 </tr>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>job_func</code></em> :</span></p></td>

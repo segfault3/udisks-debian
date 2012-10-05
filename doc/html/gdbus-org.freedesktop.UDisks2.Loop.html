@@ -3,7 +3,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>org.freedesktop.UDisks2.Loop</title>
-<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.77.1">
 <link rel="home" href="index.html" title="UDisks Reference Manual">
 <link rel="up" href="ch02.html" title="D-Bus Interfaces">
 <link rel="prev" href="gdbus-org.freedesktop.UDisks2.Encrypted.html" title="org.freedesktop.UDisks2.Encrypted">
@@ -46,7 +46,7 @@
 </pre>
 </div>
 <div class="refsect1">
-<a name="idp5962640"></a><h2>Properties</h2>
+<a name="idp5902736"></a><h2>Properties</h2>
 <pre class="synopsis">
 <a class="link" href="gdbus-org.freedesktop.UDisks2.Loop.html#gdbus-property-org-freedesktop-UDisks2-Loop.BackingFile" title='The "BackingFile" property'>BackingFile</a>  readable   ay
 <a class="link" href="gdbus-org.freedesktop.UDisks2.Loop.html#gdbus-property-org-freedesktop-UDisks2-Loop.Autoclear" title='The "Autoclear" property'>Autoclear</a>    readable   b
@@ -68,8 +68,11 @@ Delete (IN  a{sv} options);
 </pre>
 <p>        Deletes the loop device.
 </p>
-<div class="variablelist"><table border="0">
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
 <col align="left" valign="top">
+<col>
+</colgroup>
 <tbody><tr>
 <td><p><span class="term"><code class="literal">IN a{sv} <em class="parameter"><code>options</code></em></code>:</span></p></td>
 <td><p>Options (currently unused except for <a class="link" href="udisks-std-options.html" title="The options parameter">standard options</a>).</p></td>
@@ -88,8 +91,11 @@ SetAutoclear (IN  b     value,
         fail, it is a implemented this way instead of the property
         being writable.
 </p>
-<div class="variablelist"><table border="0">
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
 <col align="left" valign="top">
+<col>
+</colgroup>
 <tbody>
 <tr>
 <td><p><span class="term"><code class="literal">IN b <em class="parameter"><code>value</code></em></code>:</span></p></td>

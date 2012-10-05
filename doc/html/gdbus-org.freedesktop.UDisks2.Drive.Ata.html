@@ -3,7 +3,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>org.freedesktop.UDisks2.Drive.Ata</title>
-<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.77.1">
 <link rel="home" href="index.html" title="UDisks Reference Manual">
 <link rel="up" href="ch02.html" title="D-Bus Interfaces">
 <link rel="prev" href="gdbus-org.freedesktop.UDisks2.Drive.html" title="org.freedesktop.UDisks2.Drive">
@@ -54,7 +54,7 @@
 </pre>
 </div>
 <div class="refsect1">
-<a name="idp9166848"></a><h2>Properties</h2>
+<a name="idp7524480"></a><h2>Properties</h2>
 <pre class="synopsis">
 <a class="link" href="gdbus-org.freedesktop.UDisks2.Drive.Ata.html#gdbus-property-org-freedesktop-UDisks2-Drive-Ata.SmartSupported" title='The "SmartSupported" property'>SmartSupported</a>                     readable   b
 <a class="link" href="gdbus-org.freedesktop.UDisks2.Drive.Ata.html#gdbus-property-org-freedesktop-UDisks2-Drive-Ata.SmartEnabled" title='The "SmartEnabled" property'>SmartEnabled</a>                       readable   b
@@ -104,8 +104,11 @@ SmartUpdate (IN  a{sv} options);
         kinds of SMART data. This option may be removed in the future
         with it being considered an ABI break.
 </p>
-<div class="variablelist"><table border="0">
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
 <col align="left" valign="top">
+<col>
+</colgroup>
 <tbody><tr>
 <td><p><span class="term"><code class="literal">IN a{sv} <em class="parameter"><code>options</code></em></code>:</span></p></td>
 <td><p>Options - known options (in addition to <a class="link" href="udisks-std-options.html" title="The options parameter">standard options</a>) includes <em class="parameter"><code>nowakeup</code></em> (of type 'b').</p></td>
@@ -122,8 +125,11 @@ SmartGetAttributes (IN  a{sv}            options,
 <p>        Get the SMART attributes.
         Each attribute is a struct with the following members:
         </p>
-<div class="variablelist"><table border="0">
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
 <col align="left" valign="top">
+<col>
+</colgroup>
 <tbody>
 <tr>
 <td><p><span class="term">id (type 'y')</span></p></td>
@@ -166,8 +172,11 @@ SmartGetAttributes (IN  a{sv}            options,
 <p>
         The <em class="parameter"><code>name</code></em> parameter should be used as the authoritative identifier for the attribute since it is derived from the numerical <em class="parameter"><code>id</code></em> and the disk's <code class="literal">IDENTIFY</code> data and thus handles ID collisions between drives of different make and model.
 </p>
-<div class="variablelist"><table border="0">
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
 <col align="left" valign="top">
+<col>
+</colgroup>
 <tbody>
 <tr>
 <td><p><span class="term"><code class="literal">IN a{sv} <em class="parameter"><code>options</code></em></code>:</span></p></td>
@@ -194,8 +203,11 @@ SmartSelftestStart (IN  s     type,
 <p>        Note that the method returns immediately after the test has
         been started successfully.
 </p>
-<div class="variablelist"><table border="0">
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
 <col align="left" valign="top">
+<col>
+</colgroup>
 <tbody>
 <tr>
 <td><p><span class="term"><code class="literal">IN s <em class="parameter"><code>type</code></em></code>:</span></p></td>
@@ -216,8 +228,11 @@ SmartSelftestAbort (IN  a{sv} options);
 </pre>
 <p>        Aborts a running SMART selftest.
 </p>
-<div class="variablelist"><table border="0">
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
 <col align="left" valign="top">
+<col>
+</colgroup>
 <tbody><tr>
 <td><p><span class="term"><code class="literal">IN a{sv} <em class="parameter"><code>options</code></em></code>:</span></p></td>
 <td><p>Options (currently unused except for <a class="link" href="udisks-std-options.html" title="The options parameter">standard options</a>).</p></td>
@@ -239,8 +254,11 @@ PmGetState (IN  a{sv} options,
         ATA command <span class="quote">“<span class="quote">CHECK POWER MODE</span>”</span> to the drive.
         Known values include
         </p>
-<div class="variablelist"><table border="0">
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
 <col align="left" valign="top">
+<col>
+</colgroup>
 <tbody>
 <tr>
 <td><p><span class="term">0x00</span></p></td>
@@ -260,8 +278,11 @@ PmGetState (IN  a{sv} options,
         Typically user interfaces will report "Drive is spun down" if <em class="parameter"><code>state</code></em> is
         0x00 and "Drive is spun up" otherwise.
 </p>
-<div class="variablelist"><table border="0">
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
 <col align="left" valign="top">
+<col>
+</colgroup>
 <tbody>
 <tr>
 <td><p><span class="term"><code class="literal">IN a{sv} <em class="parameter"><code>options</code></em></code>:</span></p></td>
@@ -285,8 +306,11 @@ PmStandby (IN  a{sv} options);
         down. This is done by sending the ATA command
         <span class="quote">“<span class="quote">STANDBY IMMEDIATE</span>”</span> to the drive.
 </p>
-<div class="variablelist"><table border="0">
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
 <col align="left" valign="top">
+<col>
+</colgroup>
 <tbody><tr>
 <td><p><span class="term"><code class="literal">IN a{sv} <em class="parameter"><code>options</code></em></code>:</span></p></td>
 <td><p>Options (currently unused except for <a class="link" href="udisks-std-options.html" title="The options parameter">standard options</a>).</p></td>
@@ -304,8 +328,11 @@ PmWakeup (IN  a{sv} options);
         causing it to spin up. This is done by reading data from the
         disk.
 </p>
-<div class="variablelist"><table border="0">
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
 <col align="left" valign="top">
+<col>
+</colgroup>
 <tbody><tr>
 <td><p><span class="term"><code class="literal">IN a{sv} <em class="parameter"><code>options</code></em></code>:</span></p></td>
 <td><p>Options (currently unused except for <a class="link" href="udisks-std-options.html" title="The options parameter">standard options</a>).</p></td>
@@ -331,8 +358,11 @@ SecurityEraseUnit (IN  a{sv} options);
         minutes to complete depending on whether the <em class="parameter"><code>enhanced</code></em> option
         is <code class="constant">TRUE</code>.
 </p>
-<div class="variablelist"><table border="0">
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
 <col align="left" valign="top">
+<col>
+</colgroup>
 <tbody><tr>
 <td><p><span class="term"><code class="literal">IN a{sv} <em class="parameter"><code>options</code></em></code>:</span></p></td>
 <td><p>Options - known options (in addition to <a class="link" href="udisks-std-options.html" title="The options parameter">standard options</a>) includes <em class="parameter"><code>enhanced</code></em> (of type 'b').</p></td>
@@ -436,8 +466,11 @@ SmartSelftestStatus  readable   s
 </pre>
 <p>         The status of the last self-test. Known values include
         </p>
-<div class="variablelist"><table border="0">
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
 <col align="left" valign="top">
+<col>
+</colgroup>
 <tbody>
 <tr>
 <td><p><span class="term">success</span></p></td>

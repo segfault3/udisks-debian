@@ -3,7 +3,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>UDisksLinuxDriveAta</title>
-<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.77.1">
 <link rel="home" href="index.html" title="UDisks Reference Manual">
 <link rel="up" href="ref-daemon-drives.html" title="Drives on Linux">
 <link rel="prev" href="UDisksLinuxDrive.html" title="UDisksLinuxDrive">
@@ -58,7 +58,7 @@
                                                          <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Error-Reporting.html#GError"><span class="type">GError</span></a> **error</code></em>);
 <span class="returnvalue">void</span>                <a class="link" href="UDisksLinuxDriveAta.html#udisks-linux-drive-ata-apply-configuration" title="udisks_linux_drive_ata_apply_configuration ()">udisks_linux_drive_ata_apply_configuration</a>
                                                         (<em class="parameter"><code><a class="link" href="UDisksLinuxDriveAta.html" title="UDisksLinuxDriveAta"><span class="type">UDisksLinuxDriveAta</span></a> *drive</code></em>,
-                                                         <em class="parameter"><code><a href="/usr/share/gtk-doc/html/gudev/gudev-GUdevDevice.html#GUdevDevice"><span class="type">GUdevDevice</span></a> *device</code></em>,
+                                                         <em class="parameter"><code><a href="http://www.freedesktop.org/software/systemd/gudev/GUdevDevice.html"><span class="type">GUdevDevice</span></a> *device</code></em>,
                                                          <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-GVariant.html#GVariant"><span class="type">GVariant</span></a> *configuration</code></em>);
 <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>            <a class="link" href="UDisksLinuxDriveAta.html#udisks-linux-drive-ata-secure-erase-sync" title="udisks_linux_drive_ata_secure_erase_sync ()">udisks_linux_drive_ata_secure_erase_sync</a>
                                                         (<em class="parameter"><code><a class="link" href="UDisksLinuxDriveAta.html" title="UDisksLinuxDriveAta"><span class="type">UDisksLinuxDriveAta</span></a> *drive</code></em>,
@@ -106,8 +106,11 @@ only be accessed using the provided API.
 <p>
 Creates a new <a class="link" href="UDisksLinuxDriveAta.html" title="UDisksLinuxDriveAta"><span class="type">UDisksLinuxDriveAta</span></a> instance.
 </p>
-<div class="variablelist"><table border="0">
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
 <col align="left" valign="top">
+<col>
+</colgroup>
 <tbody><tr>
 <td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
 <td>A new <a class="link" href="UDisksLinuxDriveAta.html" title="UDisksLinuxDriveAta"><span class="type">UDisksLinuxDriveAta</span></a>. Free with <a href="http://library.gnome.org/devel/gobject/unstable/gobject-The-Base-Object-Type.html#g-object-unref"><code class="function">g_object_unref()</code></a>.</td>
@@ -122,8 +125,11 @@ Creates a new <a class="link" href="UDisksLinuxDriveAta.html" title="UDisksLinux
 <p>
 Updates the interface.
 </p>
-<div class="variablelist"><table border="0">
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
 <col align="left" valign="top">
+<col>
+</colgroup>
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>drive</code></em> :</span></p></td>
@@ -166,8 +172,11 @@ This may only be called if <em class="parameter"><code>drive</code></em> has bee
 <p>
 This method may be called from any thread.
 </p>
-<div class="variablelist"><table border="0">
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
 <col align="left" valign="top">
+<col>
+</colgroup>
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>drive</code></em> :</span></p></td>
@@ -214,8 +223,11 @@ The calling thread is blocked while sending the command to the
 drive but will return immediately after the drive acknowledges the
 command.
 </p>
-<div class="variablelist"><table border="0">
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
 <col align="left" valign="top">
+<col>
+</colgroup>
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>drive</code></em> :</span></p></td>
@@ -247,10 +259,33 @@ command.
 <a name="udisks-linux-drive-ata-apply-configuration"></a><h3>udisks_linux_drive_ata_apply_configuration ()</h3>
 <pre class="programlisting"><span class="returnvalue">void</span>                udisks_linux_drive_ata_apply_configuration
                                                         (<em class="parameter"><code><a class="link" href="UDisksLinuxDriveAta.html" title="UDisksLinuxDriveAta"><span class="type">UDisksLinuxDriveAta</span></a> *drive</code></em>,
-                                                         <em class="parameter"><code><a href="/usr/share/gtk-doc/html/gudev/gudev-GUdevDevice.html#GUdevDevice"><span class="type">GUdevDevice</span></a> *device</code></em>,
+                                                         <em class="parameter"><code><a href="http://www.freedesktop.org/software/systemd/gudev/GUdevDevice.html"><span class="type">GUdevDevice</span></a> *device</code></em>,
                                                          <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-GVariant.html#GVariant"><span class="type">GVariant</span></a> *configuration</code></em>);</pre>
 <p>
+Spawns a thread to apply <em class="parameter"><code>configuration</code></em> to <em class="parameter"><code>drive</code></em>, if any. Does not
+wait for the thread to terminate.
 </p>
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
+<col align="left" valign="top">
+<col>
+</colgroup>
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>drive</code></em> :</span></p></td>
+<td>A <a class="link" href="UDisksLinuxDriveAta.html" title="UDisksLinuxDriveAta"><span class="type">UDisksLinuxDriveAta</span></a>.</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>device</code></em> :</span></p></td>
+<td>A <a href="http://www.freedesktop.org/software/systemd/gudev/GUdevDevice.html"><span class="type">GUdevDevice</span></a>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>configuration</code></em> :</span></p></td>
+<td>The configuration to apply.</td>
+</tr>
+</tbody>
+</table></div>
 </div>
 <hr>
 <div class="refsect2">
@@ -261,7 +296,41 @@ command.
                                                          <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"><span class="type">gboolean</span></a> enhanced</code></em>,
                                                          <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Error-Reporting.html#GError"><span class="type">GError</span></a> **error</code></em>);</pre>
 <p>
+Performs an ATA Secure Erase opeartion. Blocks the calling thread until the operation completes.
 </p>
+<p>
+This operation may take a very long time (hours) to complete.
+</p>
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
+<col align="left" valign="top">
+<col>
+</colgroup>
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>drive</code></em> :</span></p></td>
+<td>A <a class="link" href="UDisksLinuxDriveAta.html" title="UDisksLinuxDriveAta"><span class="type">UDisksLinuxDriveAta</span></a>.</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>caller_uid</code></em> :</span></p></td>
+<td>The unix user if of the caller requesting the operation.</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>enhanced</code></em> :</span></p></td>
+<td>
+<a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#TRUE:CAPS"><code class="literal">TRUE</code></a> to use the enhanced version of the ATA secure erase command.</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>error</code></em> :</span></p></td>
+<td>Return location for error or <a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a>.</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td>
+<a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#TRUE:CAPS"><code class="literal">TRUE</code></a> if the operation succeeded, <a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#FALSE:CAPS"><code class="literal">FALSE</code></a> if <em class="parameter"><code>error</code></em> is set.</td>
+</tr>
+</tbody>
+</table></div>
 </div>
 </div>
 </div>

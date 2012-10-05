@@ -3,7 +3,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>UDisksBaseJob</title>
-<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.77.1">
 <link rel="home" href="index.html" title="UDisks Reference Manual">
 <link rel="up" href="ref-daemon-jobs.html" title="Jobs">
 <link rel="prev" href="ref-daemon-jobs.html" title="Jobs">
@@ -108,8 +108,11 @@ only be accessed using the provided API.
 <p>
 Class structure for <a class="link" href="UDisksBaseJob.html" title="UDisksBaseJob"><span class="type">UDisksBaseJob</span></a>.
 </p>
-<div class="variablelist"><table border="0">
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
 <col align="left" valign="top">
+<col>
+</colgroup>
 <tbody><tr>
 <td><p><span class="term"><a class="link" href="UDisksJob.html#UDisksJobSkeletonClass" title="struct UDisksJobSkeletonClass"><span class="type">UDisksJobSkeletonClass</span></a> <em class="structfield"><code><a name="UDisksBaseJobClass.parent-class"></a>parent_class</code></em>;</span></p></td>
 <td>Parent class.</td>
@@ -123,8 +126,11 @@ Class structure for <a class="link" href="UDisksBaseJob.html" title="UDisksBaseJ
 <p>
 Gets the <a class="link" href="UDisksDaemon.html" title="UDisksDaemon"><span class="type">UDisksDaemon</span></a> for <em class="parameter"><code>job</code></em>.
 </p>
-<div class="variablelist"><table border="0">
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
 <col align="left" valign="top">
+<col>
+</colgroup>
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>job</code></em> :</span></p></td>
@@ -144,8 +150,11 @@ Gets the <a class="link" href="UDisksDaemon.html" title="UDisksDaemon"><span cla
 <p>
 Gets the <a href="http://library.gnome.org/devel/gio/unstable/GCancellable.html"><span class="type">GCancellable</span></a> for <em class="parameter"><code>job</code></em>.
 </p>
-<div class="variablelist"><table border="0">
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
 <col align="left" valign="top">
+<col>
+</colgroup>
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>job</code></em> :</span></p></td>
@@ -163,7 +172,25 @@ Gets the <a href="http://library.gnome.org/devel/gio/unstable/GCancellable.html"
 <a name="udisks-base-job-get-auto-estimate"></a><h3>udisks_base_job_get_auto_estimate ()</h3>
 <pre class="programlisting"><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>            udisks_base_job_get_auto_estimate   (<em class="parameter"><code><a class="link" href="UDisksBaseJob.html" title="UDisksBaseJob"><span class="type">UDisksBaseJob</span></a> *job</code></em>);</pre>
 <p>
+Gets whether auto-estimation is being used.
 </p>
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
+<col align="left" valign="top">
+<col>
+</colgroup>
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>job</code></em> :</span></p></td>
+<td>A <a class="link" href="UDisksBaseJob.html" title="UDisksBaseJob"><span class="type">UDisksBaseJob</span></a>.</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td>
+<a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#TRUE:CAPS"><code class="literal">TRUE</code></a> if auto-estimation is being used, <a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#FALSE:CAPS"><code class="literal">FALSE</code></a> otherwise.</td>
+</tr>
+</tbody>
+</table></div>
 </div>
 <hr>
 <div class="refsect2">
@@ -171,7 +198,25 @@ Gets the <a href="http://library.gnome.org/devel/gio/unstable/GCancellable.html"
 <pre class="programlisting"><span class="returnvalue">void</span>                udisks_base_job_set_auto_estimate   (<em class="parameter"><code><a class="link" href="UDisksBaseJob.html" title="UDisksBaseJob"><span class="type">UDisksBaseJob</span></a> *job</code></em>,
                                                          <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"><span class="type">gboolean</span></a> value</code></em>);</pre>
 <p>
+Sets whether auto-estimation is being used.
 </p>
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
+<col align="left" valign="top">
+<col>
+</colgroup>
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>job</code></em> :</span></p></td>
+<td>A <a class="link" href="UDisksBaseJob.html" title="UDisksBaseJob"><span class="type">UDisksBaseJob</span></a>.</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>value</code></em> :</span></p></td>
+<td>
+<a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#TRUE:CAPS"><code class="literal">TRUE</code></a> if auto-estimation is to be use, <a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#FALSE:CAPS"><code class="literal">FALSE</code></a> otherwise.</td>
+</tr>
+</tbody>
+</table></div>
 </div>
 <hr>
 <div class="refsect2">
@@ -182,8 +227,11 @@ Gets the <a href="http://library.gnome.org/devel/gio/unstable/GCancellable.html"
 Adds the object path for <em class="parameter"><code>object</code></em> to the <a class="link" href="gdbus-org.freedesktop.UDisks2.Job.html#gdbus-property-org-freedesktop-UDisks2-Job.Objects" title='The "Objects" property'>Objects</a>
 array. If the object path is already in the array, does nothing.
 </p>
-<div class="variablelist"><table border="0">
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
 <col align="left" valign="top">
+<col>
+</colgroup>
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>job</code></em> :</span></p></td>
@@ -205,8 +253,11 @@ array. If the object path is already in the array, does nothing.
 Removes the object path for <em class="parameter"><code>object</code></em> to the <a class="link" href="gdbus-org.freedesktop.UDisks2.Job.html#gdbus-property-org-freedesktop-UDisks2-Job.Objects" title='The "Objects" property'>Objects</a>
 array. If the object path is not in the array, does nothing.
 </p>
-<div class="variablelist"><table border="0">
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
 <col align="left" valign="top">
+<col>
+</colgroup>
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>job</code></em> :</span></p></td>

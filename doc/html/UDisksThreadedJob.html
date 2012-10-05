@@ -3,7 +3,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>UDisksThreadedJob</title>
-<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.77.1">
 <link rel="home" href="index.html" title="UDisks Reference Manual">
 <link rel="up" href="ref-daemon-jobs.html" title="Jobs">
 <link rel="prev" href="UDisksSimpleJob.html" title="UDisksSimpleJob">
@@ -119,8 +119,11 @@ Job function that runs in a separate thread.
 Long-running jobs should periodically check <em class="parameter"><code>cancellable</code></em> to see if
 they have been cancelled.
 </p>
-<div class="variablelist"><table border="0">
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
 <col align="left" valign="top">
+<col>
+</colgroup>
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>job</code></em> :</span></p></td>
@@ -162,8 +165,11 @@ The job is started immediately - connect to the
 <a class="link" href="UDisksThreadedJob.html#UDisksThreadedJob-threaded-job-completed" title='The "threaded-job-completed" signal'><span class="type">"threaded-job-completed"</span></a> or <a class="link" href="UDisksJob.html#UDisksJob-completed" title='The "completed" signal'><span class="type">"completed"</span></a>
 signals to get notified when the job is done.
 </p>
-<div class="variablelist"><table border="0">
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
 <col align="left" valign="top">
+<col>
+</colgroup>
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>job_func</code></em> :</span></p></td>
@@ -199,8 +205,11 @@ signals to get notified when the job is done.
 <p>
 Gets the <em class="parameter"><code>user_data</code></em> parameter that <em class="parameter"><code>job</code></em> was constructed with.
 </p>
-<div class="variablelist"><table border="0">
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
 <col align="left" valign="top">
+<col>
+</colgroup>
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>job</code></em> :</span></p></td>
@@ -263,8 +272,11 @@ This signal is emitted in the
 <a href="http://library.gnome.org/devel/glib/unstable/glib-The-Main-Event-Loop.html#g-main-context-push-thread-default">thread-default main loop</a>
 of the thread that <em class="parameter"><code>job</code></em> was created in.
 </p>
-<div class="variablelist"><table border="0">
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
 <col align="left" valign="top">
+<col>
+</colgroup>
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>job</code></em> :</span></p></td>

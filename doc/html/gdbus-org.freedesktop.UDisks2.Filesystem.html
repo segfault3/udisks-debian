@@ -3,7 +3,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>org.freedesktop.UDisks2.Filesystem</title>
-<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.77.1">
 <link rel="home" href="index.html" title="UDisks Reference Manual">
 <link rel="up" href="ch02.html" title="D-Bus Interfaces">
 <link rel="prev" href="gdbus-org.freedesktop.UDisks2.PartitionTable.html" title="org.freedesktop.UDisks2.PartitionTable">
@@ -48,7 +48,7 @@
 </pre>
 </div>
 <div class="refsect1">
-<a name="idp10456720"></a><h2>Properties</h2>
+<a name="idp8950624"></a><h2>Properties</h2>
 <pre class="synopsis">
 <a class="link" href="gdbus-org.freedesktop.UDisks2.Filesystem.html#gdbus-property-org-freedesktop-UDisks2-Filesystem.MountPoints" title='The "MountPoints" property'>MountPoints</a>  readable   aay
 </pre>
@@ -69,8 +69,11 @@ SetLabel (IN  s     label,
 </pre>
 <p>        Sets the filesystem label.
 </p>
-<div class="variablelist"><table border="0">
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
 <col align="left" valign="top">
+<col>
+</colgroup>
 <tbody>
 <tr>
 <td><p><span class="term"><code class="literal">IN s <em class="parameter"><code>label</code></em></code>:</span></p></td>
@@ -136,8 +139,11 @@ Mount (IN  a{sv} options,
         command directly), the device will be unmounted (if needed)
         and/or the mount point will be cleaned up.
 </p>
-<div class="variablelist"><table border="0">
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
 <col align="left" valign="top">
+<col>
+</colgroup>
 <tbody>
 <tr>
 <td><p><span class="term"><code class="literal">IN a{sv} <em class="parameter"><code>options</code></em></code>:</span></p></td>
@@ -158,7 +164,7 @@ Unmount (IN  a{sv} options);
 </pre>
 <p>        Unmount a mounted device.
 </p>
-<p>        If the device in question was not mounted by the calling user
+<p>        If the device in question was mounted by the calling user
         via the <a class="link" href="gdbus-org.freedesktop.UDisks2.Filesystem.html#gdbus-method-org-freedesktop-UDisks2-Filesystem.Mount" title="The Mount() method">Mount()</a> method the
         filesystem is unmounted without any authorization checks.
         Otherwise, an authorization check is performed (which
@@ -169,8 +175,11 @@ Unmount (IN  a{sv} options);
         <a class="link" href="udisks2-UDisksError.html#UDISKS-ERROR-DEVICE-BUSY:CAPS"><code class="constant">org.freedesktop.UDisks2.Error.DeviceBusy</code></a>
         unless the <em class="parameter"><code>force</code></em> option is used.
 </p>
-<div class="variablelist"><table border="0">
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
 <col align="left" valign="top">
+<col>
+</colgroup>
 <tbody><tr>
 <td><p><span class="term"><code class="literal">IN a{sv} <em class="parameter"><code>options</code></em></code>:</span></p></td>
 <td><p>Options - known options (in addition to <a class="link" href="udisks-std-options.html" title="The options parameter">standard options</a>) includes <em class="parameter"><code>force</code></em> (of type 'b').</p></td>

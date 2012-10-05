@@ -3,7 +3,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>UDisksPartition</title>
-<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.77.1">
 <link rel="home" href="index.html" title="UDisks Reference Manual">
 <link rel="up" href="ref-library-generated.html" title="Generated Code">
 <link rel="prev" href="UDisksBlock.html" title="UDisksBlock">
@@ -100,7 +100,7 @@ struct              <a class="link" href="UDisksPartition.html#UDisksPartitionIf
 <span class="returnvalue">void</span>                <a class="link" href="UDisksPartition.html#udisks-partition-complete-set-name" title="udisks_partition_complete_set_name ()">udisks_partition_complete_set_name</a>  (<em class="parameter"><code><a class="link" href="UDisksPartition.html" title="UDisksPartition"><span class="type">UDisksPartition</span></a> *object</code></em>,
                                                          <em class="parameter"><code><a href="http://library.gnome.org/devel/gio/unstable/GDBusMethodInvocation.html"><span class="type">GDBusMethodInvocation</span></a> *invocation</code></em>);
 <span class="returnvalue">void</span>                <a class="link" href="UDisksPartition.html#udisks-partition-call-set-flags" title="udisks_partition_call_set_flags ()">udisks_partition_call_set_flags</a>     (<em class="parameter"><code><a class="link" href="UDisksPartition.html" title="UDisksPartition"><span class="type">UDisksPartition</span></a> *proxy</code></em>,
-                                                         <em class="parameter"><code><span class="type">guint64</span> arg_flags</code></em>,
+                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#guint64"><span class="type">guint64</span></a> arg_flags</code></em>,
                                                          <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-GVariant.html#GVariant"><span class="type">GVariant</span></a> *arg_options</code></em>,
                                                          <em class="parameter"><code><a href="http://library.gnome.org/devel/gio/unstable/GCancellable.html"><span class="type">GCancellable</span></a> *cancellable</code></em>,
                                                          <em class="parameter"><code><a href="http://library.gnome.org/devel/gio/unstable/GAsyncResult.html#GAsyncReadyCallback"><span class="type">GAsyncReadyCallback</span></a> callback</code></em>,
@@ -111,7 +111,7 @@ struct              <a class="link" href="UDisksPartition.html#UDisksPartitionIf
                                                          <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Error-Reporting.html#GError"><span class="type">GError</span></a> **error</code></em>);
 <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>            <a class="link" href="UDisksPartition.html#udisks-partition-call-set-flags-sync" title="udisks_partition_call_set_flags_sync ()">udisks_partition_call_set_flags_sync</a>
                                                         (<em class="parameter"><code><a class="link" href="UDisksPartition.html" title="UDisksPartition"><span class="type">UDisksPartition</span></a> *proxy</code></em>,
-                                                         <em class="parameter"><code><span class="type">guint64</span> arg_flags</code></em>,
+                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#guint64"><span class="type">guint64</span></a> arg_flags</code></em>,
                                                          <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-GVariant.html#GVariant"><span class="type">GVariant</span></a> *arg_options</code></em>,
                                                          <em class="parameter"><code><a href="http://library.gnome.org/devel/gio/unstable/GCancellable.html"><span class="type">GCancellable</span></a> *cancellable</code></em>,
                                                          <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Error-Reporting.html#GError"><span class="type">GError</span></a> **error</code></em>);
@@ -119,9 +119,9 @@ struct              <a class="link" href="UDisksPartition.html#UDisksPartitionIf
                                                          <em class="parameter"><code><a href="http://library.gnome.org/devel/gio/unstable/GDBusMethodInvocation.html"><span class="type">GDBusMethodInvocation</span></a> *invocation</code></em>);
 <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#guint"><span class="returnvalue">guint</span></a>               <a class="link" href="UDisksPartition.html#udisks-partition-get-number" title="udisks_partition_get_number ()">udisks_partition_get_number</a>         (<em class="parameter"><code><a class="link" href="UDisksPartition.html" title="UDisksPartition"><span class="type">UDisksPartition</span></a> *object</code></em>);
 const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="returnvalue">gchar</span></a> *       <a class="link" href="UDisksPartition.html#udisks-partition-get-type-" title="udisks_partition_get_type_ ()">udisks_partition_get_type_</a>          (<em class="parameter"><code><a class="link" href="UDisksPartition.html" title="UDisksPartition"><span class="type">UDisksPartition</span></a> *object</code></em>);
-<span class="returnvalue">guint64</span>             <a class="link" href="UDisksPartition.html#udisks-partition-get-offset" title="udisks_partition_get_offset ()">udisks_partition_get_offset</a>         (<em class="parameter"><code><a class="link" href="UDisksPartition.html" title="UDisksPartition"><span class="type">UDisksPartition</span></a> *object</code></em>);
-<span class="returnvalue">guint64</span>             <a class="link" href="UDisksPartition.html#udisks-partition-get-size" title="udisks_partition_get_size ()">udisks_partition_get_size</a>           (<em class="parameter"><code><a class="link" href="UDisksPartition.html" title="UDisksPartition"><span class="type">UDisksPartition</span></a> *object</code></em>);
-<span class="returnvalue">guint64</span>             <a class="link" href="UDisksPartition.html#udisks-partition-get-flags" title="udisks_partition_get_flags ()">udisks_partition_get_flags</a>          (<em class="parameter"><code><a class="link" href="UDisksPartition.html" title="UDisksPartition"><span class="type">UDisksPartition</span></a> *object</code></em>);
+<a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#guint64"><span class="returnvalue">guint64</span></a>             <a class="link" href="UDisksPartition.html#udisks-partition-get-offset" title="udisks_partition_get_offset ()">udisks_partition_get_offset</a>         (<em class="parameter"><code><a class="link" href="UDisksPartition.html" title="UDisksPartition"><span class="type">UDisksPartition</span></a> *object</code></em>);
+<a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#guint64"><span class="returnvalue">guint64</span></a>             <a class="link" href="UDisksPartition.html#udisks-partition-get-size" title="udisks_partition_get_size ()">udisks_partition_get_size</a>           (<em class="parameter"><code><a class="link" href="UDisksPartition.html" title="UDisksPartition"><span class="type">UDisksPartition</span></a> *object</code></em>);
+<a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#guint64"><span class="returnvalue">guint64</span></a>             <a class="link" href="UDisksPartition.html#udisks-partition-get-flags" title="udisks_partition_get_flags ()">udisks_partition_get_flags</a>          (<em class="parameter"><code><a class="link" href="UDisksPartition.html" title="UDisksPartition"><span class="type">UDisksPartition</span></a> *object</code></em>);
 const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="returnvalue">gchar</span></a> *       <a class="link" href="UDisksPartition.html#udisks-partition-get-name" title="udisks_partition_get_name ()">udisks_partition_get_name</a>           (<em class="parameter"><code><a class="link" href="UDisksPartition.html" title="UDisksPartition"><span class="type">UDisksPartition</span></a> *object</code></em>);
 const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="returnvalue">gchar</span></a> *       <a class="link" href="UDisksPartition.html#udisks-partition-get-uuid" title="udisks_partition_get_uuid ()">udisks_partition_get_uuid</a>           (<em class="parameter"><code><a class="link" href="UDisksPartition.html" title="UDisksPartition"><span class="type">UDisksPartition</span></a> *object</code></em>);
 const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="returnvalue">gchar</span></a> *       <a class="link" href="UDisksPartition.html#udisks-partition-get-table" title="udisks_partition_get_table ()">udisks_partition_get_table</a>          (<em class="parameter"><code><a class="link" href="UDisksPartition.html" title="UDisksPartition"><span class="type">UDisksPartition</span></a> *object</code></em>);
@@ -136,11 +136,11 @@ const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.htm
 <span class="returnvalue">void</span>                <a class="link" href="UDisksPartition.html#udisks-partition-set-type-" title="udisks_partition_set_type_ ()">udisks_partition_set_type_</a>          (<em class="parameter"><code><a class="link" href="UDisksPartition.html" title="UDisksPartition"><span class="type">UDisksPartition</span></a> *object</code></em>,
                                                          <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *value</code></em>);
 <span class="returnvalue">void</span>                <a class="link" href="UDisksPartition.html#udisks-partition-set-offset" title="udisks_partition_set_offset ()">udisks_partition_set_offset</a>         (<em class="parameter"><code><a class="link" href="UDisksPartition.html" title="UDisksPartition"><span class="type">UDisksPartition</span></a> *object</code></em>,
-                                                         <em class="parameter"><code><span class="type">guint64</span> value</code></em>);
+                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#guint64"><span class="type">guint64</span></a> value</code></em>);
 <span class="returnvalue">void</span>                <a class="link" href="UDisksPartition.html#udisks-partition-set-size" title="udisks_partition_set_size ()">udisks_partition_set_size</a>           (<em class="parameter"><code><a class="link" href="UDisksPartition.html" title="UDisksPartition"><span class="type">UDisksPartition</span></a> *object</code></em>,
-                                                         <em class="parameter"><code><span class="type">guint64</span> value</code></em>);
+                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#guint64"><span class="type">guint64</span></a> value</code></em>);
 <span class="returnvalue">void</span>                <a class="link" href="UDisksPartition.html#udisks-partition-set-flags" title="udisks_partition_set_flags ()">udisks_partition_set_flags</a>          (<em class="parameter"><code><a class="link" href="UDisksPartition.html" title="UDisksPartition"><span class="type">UDisksPartition</span></a> *object</code></em>,
-                                                         <em class="parameter"><code><span class="type">guint64</span> value</code></em>);
+                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#guint64"><span class="type">guint64</span></a> value</code></em>);
 <span class="returnvalue">void</span>                <a class="link" href="UDisksPartition.html#udisks-partition-set-name" title="udisks_partition_set_name ()">udisks_partition_set_name</a>           (<em class="parameter"><code><a class="link" href="UDisksPartition.html" title="UDisksPartition"><span class="type">UDisksPartition</span></a> *object</code></em>,
                                                          <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *value</code></em>);
 <span class="returnvalue">void</span>                <a class="link" href="UDisksPartition.html#udisks-partition-set-uuid" title="udisks_partition_set_uuid ()">udisks_partition_set_uuid</a>           (<em class="parameter"><code><a class="link" href="UDisksPartition.html" title="UDisksPartition"><span class="type">UDisksPartition</span></a> *object</code></em>,
@@ -290,8 +290,11 @@ Abstract interface type for the D-Bus interface <a class="link" href="gdbus-org.
 <p>
 Virtual table for the D-Bus interface <a class="link" href="gdbus-org.freedesktop.UDisks2.Partition.html#gdbus-interface-org-freedesktop-UDisks2-Partition.top_of_page">org.freedesktop.UDisks2.Partition</a>.
 </p>
-<div class="variablelist"><table border="0">
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
 <col align="left" valign="top">
+<col>
+</colgroup>
 <tbody>
 <tr>
 <td><p><span class="term"><a href="http://library.gnome.org/devel/gobject/unstable/gobject-Type-Information.html#GTypeInterface"><span class="type">GTypeInterface</span></a> <em class="structfield"><code><a name="UDisksPartitionIface.parent-iface"></a>parent_iface</code></em>;</span></p></td>
@@ -363,8 +366,11 @@ Virtual table for the D-Bus interface <a class="link" href="gdbus-org.freedeskto
 <p>
 Gets a machine-readable description of the <a class="link" href="gdbus-org.freedesktop.UDisks2.Partition.html#gdbus-interface-org-freedesktop-UDisks2-Partition.top_of_page">org.freedesktop.UDisks2.Partition</a> D-Bus interface.
 </p>
-<div class="variablelist"><table border="0">
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
 <col align="left" valign="top">
+<col>
+</colgroup>
 <tbody><tr>
 <td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
 <td>A <a href="http://library.gnome.org/devel/gio/unstable/gio-D-Bus-Introspection-Data.html#GDBusInterfaceInfo"><span class="type">GDBusInterfaceInfo</span></a>. Do not free. <span class="annotation">[<a href="http://foldoc.org/transfer%20none"><span class="acronym">transfer none</span></a>]</span>
@@ -382,8 +388,11 @@ Gets a machine-readable description of the <a class="link" href="gdbus-org.freed
 Overrides all <a href="http://library.gnome.org/devel/gobject/unstable/gobject-The-Base-Object-Type.html#GObject"><span class="type">GObject</span></a> properties in the <a class="link" href="UDisksPartition.html" title="UDisksPartition"><span class="type">UDisksPartition</span></a> interface for a concrete class.
 The properties are overridden in the order they are defined.
 </p>
-<div class="variablelist"><table border="0">
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
 <col align="left" valign="top">
+<col>
+</colgroup>
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>klass</code></em> :</span></p></td>
@@ -416,8 +425,11 @@ You can then call <a class="link" href="UDisksPartition.html#udisks-partition-ca
 <p>
 See <a class="link" href="UDisksPartition.html#udisks-partition-call-delete-sync" title="udisks_partition_call_delete_sync ()"><code class="function">udisks_partition_call_delete_sync()</code></a> for the synchronous, blocking version of this method.
 </p>
-<div class="variablelist"><table border="0">
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
 <col align="left" valign="top">
+<col>
+</colgroup>
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>proxy</code></em> :</span></p></td>
@@ -452,8 +464,11 @@ See <a class="link" href="UDisksPartition.html#udisks-partition-call-delete-sync
 <p>
 Finishes an operation started with <a class="link" href="UDisksPartition.html#udisks-partition-call-delete" title="udisks_partition_call_delete ()"><code class="function">udisks_partition_call_delete()</code></a>.
 </p>
-<div class="variablelist"><table border="0">
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
 <col align="left" valign="top">
+<col>
+</colgroup>
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>proxy</code></em> :</span></p></td>
@@ -489,8 +504,11 @@ Synchronously invokes the <a class="link" href="gdbus-org.freedesktop.UDisks2.Pa
 <p>
 See <a class="link" href="UDisksPartition.html#udisks-partition-call-delete" title="udisks_partition_call_delete ()"><code class="function">udisks_partition_call_delete()</code></a> for the asynchronous version of this method.
 </p>
-<div class="variablelist"><table border="0">
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
 <col align="left" valign="top">
+<col>
+</colgroup>
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>proxy</code></em> :</span></p></td>
@@ -529,8 +547,11 @@ Helper function used in service implementations to finish handling invocations o
 <p>
 This method will free <em class="parameter"><code>invocation</code></em>, you cannot use it afterwards.
 </p>
-<div class="variablelist"><table border="0">
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
 <col align="left" valign="top">
+<col>
+</colgroup>
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>object</code></em> :</span></p></td>
@@ -561,8 +582,11 @@ You can then call <a class="link" href="UDisksPartition.html#udisks-partition-ca
 <p>
 See <a class="link" href="UDisksPartition.html#udisks-partition-call-set-type-sync" title="udisks_partition_call_set_type_sync ()"><code class="function">udisks_partition_call_set_type_sync()</code></a> for the synchronous, blocking version of this method.
 </p>
-<div class="variablelist"><table border="0">
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
 <col align="left" valign="top">
+<col>
+</colgroup>
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>proxy</code></em> :</span></p></td>
@@ -602,8 +626,11 @@ See <a class="link" href="UDisksPartition.html#udisks-partition-call-set-type-sy
 <p>
 Finishes an operation started with <a class="link" href="UDisksPartition.html#udisks-partition-call-set-type" title="udisks_partition_call_set_type ()"><code class="function">udisks_partition_call_set_type()</code></a>.
 </p>
-<div class="variablelist"><table border="0">
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
 <col align="left" valign="top">
+<col>
+</colgroup>
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>proxy</code></em> :</span></p></td>
@@ -640,8 +667,11 @@ Synchronously invokes the <a class="link" href="gdbus-org.freedesktop.UDisks2.Pa
 <p>
 See <a class="link" href="UDisksPartition.html#udisks-partition-call-set-type" title="udisks_partition_call_set_type ()"><code class="function">udisks_partition_call_set_type()</code></a> for the asynchronous version of this method.
 </p>
-<div class="variablelist"><table border="0">
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
 <col align="left" valign="top">
+<col>
+</colgroup>
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>proxy</code></em> :</span></p></td>
@@ -684,8 +714,11 @@ Helper function used in service implementations to finish handling invocations o
 <p>
 This method will free <em class="parameter"><code>invocation</code></em>, you cannot use it afterwards.
 </p>
-<div class="variablelist"><table border="0">
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
 <col align="left" valign="top">
+<col>
+</colgroup>
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>object</code></em> :</span></p></td>
@@ -716,8 +749,11 @@ You can then call <a class="link" href="UDisksPartition.html#udisks-partition-ca
 <p>
 See <a class="link" href="UDisksPartition.html#udisks-partition-call-set-name-sync" title="udisks_partition_call_set_name_sync ()"><code class="function">udisks_partition_call_set_name_sync()</code></a> for the synchronous, blocking version of this method.
 </p>
-<div class="variablelist"><table border="0">
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
 <col align="left" valign="top">
+<col>
+</colgroup>
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>proxy</code></em> :</span></p></td>
@@ -757,8 +793,11 @@ See <a class="link" href="UDisksPartition.html#udisks-partition-call-set-name-sy
 <p>
 Finishes an operation started with <a class="link" href="UDisksPartition.html#udisks-partition-call-set-name" title="udisks_partition_call_set_name ()"><code class="function">udisks_partition_call_set_name()</code></a>.
 </p>
-<div class="variablelist"><table border="0">
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
 <col align="left" valign="top">
+<col>
+</colgroup>
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>proxy</code></em> :</span></p></td>
@@ -795,8 +834,11 @@ Synchronously invokes the <a class="link" href="gdbus-org.freedesktop.UDisks2.Pa
 <p>
 See <a class="link" href="UDisksPartition.html#udisks-partition-call-set-name" title="udisks_partition_call_set_name ()"><code class="function">udisks_partition_call_set_name()</code></a> for the asynchronous version of this method.
 </p>
-<div class="variablelist"><table border="0">
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
 <col align="left" valign="top">
+<col>
+</colgroup>
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>proxy</code></em> :</span></p></td>
@@ -839,8 +881,11 @@ Helper function used in service implementations to finish handling invocations o
 <p>
 This method will free <em class="parameter"><code>invocation</code></em>, you cannot use it afterwards.
 </p>
-<div class="variablelist"><table border="0">
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
 <col align="left" valign="top">
+<col>
+</colgroup>
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>object</code></em> :</span></p></td>
@@ -858,7 +903,7 @@ This method will free <em class="parameter"><code>invocation</code></em>, you ca
 <div class="refsect2">
 <a name="udisks-partition-call-set-flags"></a><h3>udisks_partition_call_set_flags ()</h3>
 <pre class="programlisting"><span class="returnvalue">void</span>                udisks_partition_call_set_flags     (<em class="parameter"><code><a class="link" href="UDisksPartition.html" title="UDisksPartition"><span class="type">UDisksPartition</span></a> *proxy</code></em>,
-                                                         <em class="parameter"><code><span class="type">guint64</span> arg_flags</code></em>,
+                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#guint64"><span class="type">guint64</span></a> arg_flags</code></em>,
                                                          <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-GVariant.html#GVariant"><span class="type">GVariant</span></a> *arg_options</code></em>,
                                                          <em class="parameter"><code><a href="http://library.gnome.org/devel/gio/unstable/GCancellable.html"><span class="type">GCancellable</span></a> *cancellable</code></em>,
                                                          <em class="parameter"><code><a href="http://library.gnome.org/devel/gio/unstable/GAsyncResult.html#GAsyncReadyCallback"><span class="type">GAsyncReadyCallback</span></a> callback</code></em>,
@@ -871,8 +916,11 @@ You can then call <a class="link" href="UDisksPartition.html#udisks-partition-ca
 <p>
 See <a class="link" href="UDisksPartition.html#udisks-partition-call-set-flags-sync" title="udisks_partition_call_set_flags_sync ()"><code class="function">udisks_partition_call_set_flags_sync()</code></a> for the synchronous, blocking version of this method.
 </p>
-<div class="variablelist"><table border="0">
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
 <col align="left" valign="top">
+<col>
+</colgroup>
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>proxy</code></em> :</span></p></td>
@@ -912,8 +960,11 @@ See <a class="link" href="UDisksPartition.html#udisks-partition-call-set-flags-s
 <p>
 Finishes an operation started with <a class="link" href="UDisksPartition.html#udisks-partition-call-set-flags" title="udisks_partition_call_set_flags ()"><code class="function">udisks_partition_call_set_flags()</code></a>.
 </p>
-<div class="variablelist"><table border="0">
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
 <col align="left" valign="top">
+<col>
+</colgroup>
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>proxy</code></em> :</span></p></td>
@@ -941,7 +992,7 @@ Finishes an operation started with <a class="link" href="UDisksPartition.html#ud
 <a name="udisks-partition-call-set-flags-sync"></a><h3>udisks_partition_call_set_flags_sync ()</h3>
 <pre class="programlisting"><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>            udisks_partition_call_set_flags_sync
                                                         (<em class="parameter"><code><a class="link" href="UDisksPartition.html" title="UDisksPartition"><span class="type">UDisksPartition</span></a> *proxy</code></em>,
-                                                         <em class="parameter"><code><span class="type">guint64</span> arg_flags</code></em>,
+                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#guint64"><span class="type">guint64</span></a> arg_flags</code></em>,
                                                          <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-GVariant.html#GVariant"><span class="type">GVariant</span></a> *arg_options</code></em>,
                                                          <em class="parameter"><code><a href="http://library.gnome.org/devel/gio/unstable/GCancellable.html"><span class="type">GCancellable</span></a> *cancellable</code></em>,
                                                          <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Error-Reporting.html#GError"><span class="type">GError</span></a> **error</code></em>);</pre>
@@ -951,8 +1002,11 @@ Synchronously invokes the <a class="link" href="gdbus-org.freedesktop.UDisks2.Pa
 <p>
 See <a class="link" href="UDisksPartition.html#udisks-partition-call-set-flags" title="udisks_partition_call_set_flags ()"><code class="function">udisks_partition_call_set_flags()</code></a> for the asynchronous version of this method.
 </p>
-<div class="variablelist"><table border="0">
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
 <col align="left" valign="top">
+<col>
+</colgroup>
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>proxy</code></em> :</span></p></td>
@@ -995,8 +1049,11 @@ Helper function used in service implementations to finish handling invocations o
 <p>
 This method will free <em class="parameter"><code>invocation</code></em>, you cannot use it afterwards.
 </p>
-<div class="variablelist"><table border="0">
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
 <col align="left" valign="top">
+<col>
+</colgroup>
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>object</code></em> :</span></p></td>
@@ -1020,8 +1077,11 @@ Gets the value of the <a class="link" href="gdbus-org.freedesktop.UDisks2.Partit
 <p>
 Since this D-Bus property is readable, it is meaningful to use this function on both the client- and service-side.
 </p>
-<div class="variablelist"><table border="0">
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
 <col align="left" valign="top">
+<col>
+</colgroup>
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>object</code></em> :</span></p></td>
@@ -1050,8 +1110,11 @@ Since this D-Bus property is readable, it is meaningful to use this function on 
 <h3 class="title">Warning</h3>The returned value is only valid until the property changes so on the client-side it is only safe to use this function on the thread where <em class="parameter"><code>object</code></em> was constructed. Use <a class="link" href="UDisksPartition.html#udisks-partition-dup-type-" title="udisks_partition_dup_type_ ()"><code class="function">udisks_partition_dup_type_()</code></a> if on another thread.</div>
 <p>
 </p>
-<div class="variablelist"><table border="0">
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
 <col align="left" valign="top">
+<col>
+</colgroup>
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>object</code></em> :</span></p></td>
@@ -1068,15 +1131,18 @@ Since this D-Bus property is readable, it is meaningful to use this function on 
 <hr>
 <div class="refsect2">
 <a name="udisks-partition-get-offset"></a><h3>udisks_partition_get_offset ()</h3>
-<pre class="programlisting"><span class="returnvalue">guint64</span>             udisks_partition_get_offset         (<em class="parameter"><code><a class="link" href="UDisksPartition.html" title="UDisksPartition"><span class="type">UDisksPartition</span></a> *object</code></em>);</pre>
+<pre class="programlisting"><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#guint64"><span class="returnvalue">guint64</span></a>             udisks_partition_get_offset         (<em class="parameter"><code><a class="link" href="UDisksPartition.html" title="UDisksPartition"><span class="type">UDisksPartition</span></a> *object</code></em>);</pre>
 <p>
 Gets the value of the <a class="link" href="gdbus-org.freedesktop.UDisks2.Partition.html#gdbus-property-org-freedesktop-UDisks2-Partition.Offset" title='The "Offset" property'>"Offset"</a> D-Bus property.
 </p>
 <p>
 Since this D-Bus property is readable, it is meaningful to use this function on both the client- and service-side.
 </p>
-<div class="variablelist"><table border="0">
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
 <col align="left" valign="top">
+<col>
+</colgroup>
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>object</code></em> :</span></p></td>
@@ -1092,15 +1158,18 @@ Since this D-Bus property is readable, it is meaningful to use this function on 
 <hr>
 <div class="refsect2">
 <a name="udisks-partition-get-size"></a><h3>udisks_partition_get_size ()</h3>
-<pre class="programlisting"><span class="returnvalue">guint64</span>             udisks_partition_get_size           (<em class="parameter"><code><a class="link" href="UDisksPartition.html" title="UDisksPartition"><span class="type">UDisksPartition</span></a> *object</code></em>);</pre>
+<pre class="programlisting"><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#guint64"><span class="returnvalue">guint64</span></a>             udisks_partition_get_size           (<em class="parameter"><code><a class="link" href="UDisksPartition.html" title="UDisksPartition"><span class="type">UDisksPartition</span></a> *object</code></em>);</pre>
 <p>
 Gets the value of the <a class="link" href="gdbus-org.freedesktop.UDisks2.Partition.html#gdbus-property-org-freedesktop-UDisks2-Partition.Size" title='The "Size" property'>"Size"</a> D-Bus property.
 </p>
 <p>
 Since this D-Bus property is readable, it is meaningful to use this function on both the client- and service-side.
 </p>
-<div class="variablelist"><table border="0">
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
 <col align="left" valign="top">
+<col>
+</colgroup>
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>object</code></em> :</span></p></td>
@@ -1116,15 +1185,18 @@ Since this D-Bus property is readable, it is meaningful to use this function on 
 <hr>
 <div class="refsect2">
 <a name="udisks-partition-get-flags"></a><h3>udisks_partition_get_flags ()</h3>
-<pre class="programlisting"><span class="returnvalue">guint64</span>             udisks_partition_get_flags          (<em class="parameter"><code><a class="link" href="UDisksPartition.html" title="UDisksPartition"><span class="type">UDisksPartition</span></a> *object</code></em>);</pre>
+<pre class="programlisting"><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#guint64"><span class="returnvalue">guint64</span></a>             udisks_partition_get_flags          (<em class="parameter"><code><a class="link" href="UDisksPartition.html" title="UDisksPartition"><span class="type">UDisksPartition</span></a> *object</code></em>);</pre>
 <p>
 Gets the value of the <a class="link" href="gdbus-org.freedesktop.UDisks2.Partition.html#gdbus-property-org-freedesktop-UDisks2-Partition.Flags" title='The "Flags" property'>"Flags"</a> D-Bus property.
 </p>
 <p>
 Since this D-Bus property is readable, it is meaningful to use this function on both the client- and service-side.
 </p>
-<div class="variablelist"><table border="0">
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
 <col align="left" valign="top">
+<col>
+</colgroup>
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>object</code></em> :</span></p></td>
@@ -1153,8 +1225,11 @@ Since this D-Bus property is readable, it is meaningful to use this function on 
 <h3 class="title">Warning</h3>The returned value is only valid until the property changes so on the client-side it is only safe to use this function on the thread where <em class="parameter"><code>object</code></em> was constructed. Use <a class="link" href="UDisksPartition.html#udisks-partition-dup-name" title="udisks_partition_dup_name ()"><code class="function">udisks_partition_dup_name()</code></a> if on another thread.</div>
 <p>
 </p>
-<div class="variablelist"><table border="0">
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
 <col align="left" valign="top">
+<col>
+</colgroup>
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>object</code></em> :</span></p></td>
@@ -1184,8 +1259,11 @@ Since this D-Bus property is readable, it is meaningful to use this function on 
 <h3 class="title">Warning</h3>The returned value is only valid until the property changes so on the client-side it is only safe to use this function on the thread where <em class="parameter"><code>object</code></em> was constructed. Use <a class="link" href="UDisksPartition.html#udisks-partition-dup-uuid" title="udisks_partition_dup_uuid ()"><code class="function">udisks_partition_dup_uuid()</code></a> if on another thread.</div>
 <p>
 </p>
-<div class="variablelist"><table border="0">
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
 <col align="left" valign="top">
+<col>
+</colgroup>
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>object</code></em> :</span></p></td>
@@ -1215,8 +1293,11 @@ Since this D-Bus property is readable, it is meaningful to use this function on 
 <h3 class="title">Warning</h3>The returned value is only valid until the property changes so on the client-side it is only safe to use this function on the thread where <em class="parameter"><code>object</code></em> was constructed. Use <a class="link" href="UDisksPartition.html#udisks-partition-dup-table" title="udisks_partition_dup_table ()"><code class="function">udisks_partition_dup_table()</code></a> if on another thread.</div>
 <p>
 </p>
-<div class="variablelist"><table border="0">
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
 <col align="left" valign="top">
+<col>
+</colgroup>
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>object</code></em> :</span></p></td>
@@ -1240,8 +1321,11 @@ Gets the value of the <a class="link" href="gdbus-org.freedesktop.UDisks2.Partit
 <p>
 Since this D-Bus property is readable, it is meaningful to use this function on both the client- and service-side.
 </p>
-<div class="variablelist"><table border="0">
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
 <col align="left" valign="top">
+<col>
+</colgroup>
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>object</code></em> :</span></p></td>
@@ -1264,8 +1348,11 @@ Gets the value of the <a class="link" href="gdbus-org.freedesktop.UDisks2.Partit
 <p>
 Since this D-Bus property is readable, it is meaningful to use this function on both the client- and service-side.
 </p>
-<div class="variablelist"><table border="0">
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
 <col align="left" valign="top">
+<col>
+</colgroup>
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>object</code></em> :</span></p></td>
@@ -1288,8 +1375,11 @@ Gets a copy of the <a class="link" href="gdbus-org.freedesktop.UDisks2.Partition
 <p>
 Since this D-Bus property is readable, it is meaningful to use this function on both the client- and service-side.
 </p>
-<div class="variablelist"><table border="0">
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
 <col align="left" valign="top">
+<col>
+</colgroup>
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>object</code></em> :</span></p></td>
@@ -1313,8 +1403,11 @@ Gets a copy of the <a class="link" href="gdbus-org.freedesktop.UDisks2.Partition
 <p>
 Since this D-Bus property is readable, it is meaningful to use this function on both the client- and service-side.
 </p>
-<div class="variablelist"><table border="0">
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
 <col align="left" valign="top">
+<col>
+</colgroup>
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>object</code></em> :</span></p></td>
@@ -1338,8 +1431,11 @@ Gets a copy of the <a class="link" href="gdbus-org.freedesktop.UDisks2.Partition
 <p>
 Since this D-Bus property is readable, it is meaningful to use this function on both the client- and service-side.
 </p>
-<div class="variablelist"><table border="0">
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
 <col align="left" valign="top">
+<col>
+</colgroup>
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>object</code></em> :</span></p></td>
@@ -1363,8 +1459,11 @@ Gets a copy of the <a class="link" href="gdbus-org.freedesktop.UDisks2.Partition
 <p>
 Since this D-Bus property is readable, it is meaningful to use this function on both the client- and service-side.
 </p>
-<div class="variablelist"><table border="0">
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
 <col align="left" valign="top">
+<col>
+</colgroup>
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>object</code></em> :</span></p></td>
@@ -1389,8 +1488,11 @@ Sets the <a class="link" href="gdbus-org.freedesktop.UDisks2.Partition.html#gdbu
 <p>
 Since this D-Bus property is not writable, it is only meaningful to use this function on the service-side.
 </p>
-<div class="variablelist"><table border="0">
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
 <col align="left" valign="top">
+<col>
+</colgroup>
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>object</code></em> :</span></p></td>
@@ -1414,8 +1516,11 @@ Sets the <a class="link" href="gdbus-org.freedesktop.UDisks2.Partition.html#gdbu
 <p>
 Since this D-Bus property is not writable, it is only meaningful to use this function on the service-side.
 </p>
-<div class="variablelist"><table border="0">
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
 <col align="left" valign="top">
+<col>
+</colgroup>
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>object</code></em> :</span></p></td>
@@ -1432,15 +1537,18 @@ Since this D-Bus property is not writable, it is only meaningful to use this fun
 <div class="refsect2">
 <a name="udisks-partition-set-offset"></a><h3>udisks_partition_set_offset ()</h3>
 <pre class="programlisting"><span class="returnvalue">void</span>                udisks_partition_set_offset         (<em class="parameter"><code><a class="link" href="UDisksPartition.html" title="UDisksPartition"><span class="type">UDisksPartition</span></a> *object</code></em>,
-                                                         <em class="parameter"><code><span class="type">guint64</span> value</code></em>);</pre>
+                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#guint64"><span class="type">guint64</span></a> value</code></em>);</pre>
 <p>
 Sets the <a class="link" href="gdbus-org.freedesktop.UDisks2.Partition.html#gdbus-property-org-freedesktop-UDisks2-Partition.Offset" title='The "Offset" property'>"Offset"</a> D-Bus property to <em class="parameter"><code>value</code></em>.
 </p>
 <p>
 Since this D-Bus property is not writable, it is only meaningful to use this function on the service-side.
 </p>
-<div class="variablelist"><table border="0">
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
 <col align="left" valign="top">
+<col>
+</colgroup>
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>object</code></em> :</span></p></td>
@@ -1457,15 +1565,18 @@ Since this D-Bus property is not writable, it is only meaningful to use this fun
 <div class="refsect2">
 <a name="udisks-partition-set-size"></a><h3>udisks_partition_set_size ()</h3>
 <pre class="programlisting"><span class="returnvalue">void</span>                udisks_partition_set_size           (<em class="parameter"><code><a class="link" href="UDisksPartition.html" title="UDisksPartition"><span class="type">UDisksPartition</span></a> *object</code></em>,
-                                                         <em class="parameter"><code><span class="type">guint64</span> value</code></em>);</pre>
+                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#guint64"><span class="type">guint64</span></a> value</code></em>);</pre>
 <p>
 Sets the <a class="link" href="gdbus-org.freedesktop.UDisks2.Partition.html#gdbus-property-org-freedesktop-UDisks2-Partition.Size" title='The "Size" property'>"Size"</a> D-Bus property to <em class="parameter"><code>value</code></em>.
 </p>
 <p>
 Since this D-Bus property is not writable, it is only meaningful to use this function on the service-side.
 </p>
-<div class="variablelist"><table border="0">
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
 <col align="left" valign="top">
+<col>
+</colgroup>
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>object</code></em> :</span></p></td>
@@ -1482,15 +1593,18 @@ Since this D-Bus property is not writable, it is only meaningful to use this fun
 <div class="refsect2">
 <a name="udisks-partition-set-flags"></a><h3>udisks_partition_set_flags ()</h3>
 <pre class="programlisting"><span class="returnvalue">void</span>                udisks_partition_set_flags          (<em class="parameter"><code><a class="link" href="UDisksPartition.html" title="UDisksPartition"><span class="type">UDisksPartition</span></a> *object</code></em>,
-                                                         <em class="parameter"><code><span class="type">guint64</span> value</code></em>);</pre>
+                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#guint64"><span class="type">guint64</span></a> value</code></em>);</pre>
 <p>
 Sets the <a class="link" href="gdbus-org.freedesktop.UDisks2.Partition.html#gdbus-property-org-freedesktop-UDisks2-Partition.Flags" title='The "Flags" property'>"Flags"</a> D-Bus property to <em class="parameter"><code>value</code></em>.
 </p>
 <p>
 Since this D-Bus property is not writable, it is only meaningful to use this function on the service-side.
 </p>
-<div class="variablelist"><table border="0">
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
 <col align="left" valign="top">
+<col>
+</colgroup>
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>object</code></em> :</span></p></td>
@@ -1514,8 +1628,11 @@ Sets the <a class="link" href="gdbus-org.freedesktop.UDisks2.Partition.html#gdbu
 <p>
 Since this D-Bus property is not writable, it is only meaningful to use this function on the service-side.
 </p>
-<div class="variablelist"><table border="0">
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
 <col align="left" valign="top">
+<col>
+</colgroup>
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>object</code></em> :</span></p></td>
@@ -1539,8 +1656,11 @@ Sets the <a class="link" href="gdbus-org.freedesktop.UDisks2.Partition.html#gdbu
 <p>
 Since this D-Bus property is not writable, it is only meaningful to use this function on the service-side.
 </p>
-<div class="variablelist"><table border="0">
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
 <col align="left" valign="top">
+<col>
+</colgroup>
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>object</code></em> :</span></p></td>
@@ -1564,8 +1684,11 @@ Sets the <a class="link" href="gdbus-org.freedesktop.UDisks2.Partition.html#gdbu
 <p>
 Since this D-Bus property is not writable, it is only meaningful to use this function on the service-side.
 </p>
-<div class="variablelist"><table border="0">
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
 <col align="left" valign="top">
+<col>
+</colgroup>
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>object</code></em> :</span></p></td>
@@ -1589,8 +1712,11 @@ Sets the <a class="link" href="gdbus-org.freedesktop.UDisks2.Partition.html#gdbu
 <p>
 Since this D-Bus property is not writable, it is only meaningful to use this function on the service-side.
 </p>
-<div class="variablelist"><table border="0">
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
 <col align="left" valign="top">
+<col>
+</colgroup>
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>object</code></em> :</span></p></td>
@@ -1614,8 +1740,11 @@ Sets the <a class="link" href="gdbus-org.freedesktop.UDisks2.Partition.html#gdbu
 <p>
 Since this D-Bus property is not writable, it is only meaningful to use this function on the service-side.
 </p>
-<div class="variablelist"><table border="0">
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
 <col align="left" valign="top">
+<col>
+</colgroup>
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>object</code></em> :</span></p></td>
@@ -1648,8 +1777,11 @@ The <a class="link" href="UDisksPartition.html#UDisksPartitionProxy" title="stru
 <p>
 Class structure for <a class="link" href="UDisksPartition.html#UDisksPartitionProxy" title="struct UDisksPartitionProxy"><span class="type">UDisksPartitionProxy</span></a>.
 </p>
-<div class="variablelist"><table border="0">
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
 <col align="left" valign="top">
+<col>
+</colgroup>
 <tbody><tr>
 <td><p><span class="term"><a href="http://library.gnome.org/devel/gio/unstable/GDBusProxy.html#GDBusProxyClass"><span class="type">GDBusProxyClass</span></a> <em class="structfield"><code><a name="UDisksPartitionProxyClass.parent-class"></a>parent_class</code></em>;</span></p></td>
 <td>The parent class.</td>
@@ -1676,8 +1808,11 @@ You can then call <a class="link" href="UDisksPartition.html#udisks-partition-pr
 <p>
 See <a class="link" href="UDisksPartition.html#udisks-partition-proxy-new-sync" title="udisks_partition_proxy_new_sync ()"><code class="function">udisks_partition_proxy_new_sync()</code></a> for the synchronous, blocking version of this constructor.
 </p>
-<div class="variablelist"><table border="0">
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
 <col align="left" valign="top">
+<col>
+</colgroup>
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>connection</code></em> :</span></p></td>
@@ -1720,8 +1855,11 @@ See <a class="link" href="UDisksPartition.html#udisks-partition-proxy-new-sync" 
 <p>
 Finishes an operation started with <a class="link" href="UDisksPartition.html#udisks-partition-proxy-new" title="udisks_partition_proxy_new ()"><code class="function">udisks_partition_proxy_new()</code></a>.
 </p>
-<div class="variablelist"><table border="0">
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
 <col align="left" valign="top">
+<col>
+</colgroup>
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>res</code></em> :</span></p></td>
@@ -1758,8 +1896,11 @@ The calling thread is blocked until a reply is received.
 <p>
 See <a class="link" href="UDisksPartition.html#udisks-partition-proxy-new" title="udisks_partition_proxy_new ()"><code class="function">udisks_partition_proxy_new()</code></a> for the asynchronous version of this constructor.
 </p>
-<div class="variablelist"><table border="0">
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
 <col align="left" valign="top">
+<col>
+</colgroup>
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>connection</code></em> :</span></p></td>
@@ -1816,8 +1957,11 @@ You can then call <a class="link" href="UDisksPartition.html#udisks-partition-pr
 <p>
 See <a class="link" href="UDisksPartition.html#udisks-partition-proxy-new-for-bus-sync" title="udisks_partition_proxy_new_for_bus_sync ()"><code class="function">udisks_partition_proxy_new_for_bus_sync()</code></a> for the synchronous, blocking version of this constructor.
 </p>
-<div class="variablelist"><table border="0">
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
 <col align="left" valign="top">
+<col>
+</colgroup>
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>bus_type</code></em> :</span></p></td>
@@ -1860,8 +2004,11 @@ See <a class="link" href="UDisksPartition.html#udisks-partition-proxy-new-for-bu
 <p>
 Finishes an operation started with <a class="link" href="UDisksPartition.html#udisks-partition-proxy-new-for-bus" title="udisks_partition_proxy_new_for_bus ()"><code class="function">udisks_partition_proxy_new_for_bus()</code></a>.
 </p>
-<div class="variablelist"><table border="0">
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
 <col align="left" valign="top">
+<col>
+</colgroup>
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>res</code></em> :</span></p></td>
@@ -1899,8 +2046,11 @@ The calling thread is blocked until a reply is received.
 <p>
 See <a class="link" href="UDisksPartition.html#udisks-partition-proxy-new-for-bus" title="udisks_partition_proxy_new_for_bus ()"><code class="function">udisks_partition_proxy_new_for_bus()</code></a> for the asynchronous version of this constructor.
 </p>
-<div class="variablelist"><table border="0">
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
 <col align="left" valign="top">
+<col>
+</colgroup>
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>bus_type</code></em> :</span></p></td>
@@ -1954,8 +2104,11 @@ The <a class="link" href="UDisksPartition.html#UDisksPartitionSkeleton"><span cl
 <p>
 Class structure for <a class="link" href="UDisksPartition.html#UDisksPartitionSkeleton"><span class="type">UDisksPartitionSkeleton</span></a>.
 </p>
-<div class="variablelist"><table border="0">
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
 <col align="left" valign="top">
+<col>
+</colgroup>
 <tbody><tr>
 <td><p><span class="term"><a href="http://library.gnome.org/devel/gio/unstable/GDBusInterfaceSkeleton.html#GDBusInterfaceSkeletonClass"><span class="type">GDBusInterfaceSkeletonClass</span></a> <em class="structfield"><code><a name="UDisksPartitionSkeletonClass.parent-class"></a>parent_class</code></em>;</span></p></td>
 <td>The parent class.</td>
@@ -1969,8 +2122,11 @@ Class structure for <a class="link" href="UDisksPartition.html#UDisksPartitionSk
 <p>
 Creates a skeleton object for the D-Bus interface <a class="link" href="gdbus-org.freedesktop.UDisks2.Partition.html#gdbus-interface-org-freedesktop-UDisks2-Partition.top_of_page">org.freedesktop.UDisks2.Partition</a>.
 </p>
-<div class="variablelist"><table border="0">
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
 <col align="left" valign="top">
+<col>
+</colgroup>
 <tbody><tr>
 <td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
 <td>The skeleton object. <span class="annotation">[<a href="http://foldoc.org/transfer%20full"><span class="acronym">transfer full</span></a>][<a href="http://foldoc.org/type"><span class="acronym">type</span></a> UDisksPartitionSkeleton]</span>

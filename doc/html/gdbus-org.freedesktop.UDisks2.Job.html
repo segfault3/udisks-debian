@@ -3,7 +3,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>org.freedesktop.UDisks2.Job</title>
-<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.77.1">
 <link rel="home" href="index.html" title="UDisks Reference Manual">
 <link rel="up" href="ch02.html" title="D-Bus Interfaces">
 <link rel="prev" href="gdbus-org.freedesktop.UDisks2.Loop.html" title="org.freedesktop.UDisks2.Loop">
@@ -46,14 +46,14 @@
 </pre>
 </div>
 <div class="refsect1">
-<a name="idp5934592"></a><h2>Signals</h2>
+<a name="idp9849968"></a><h2>Signals</h2>
 <pre class="synopsis">
 <a class="link" href="gdbus-org.freedesktop.UDisks2.Job.html#gdbus-signal-org-freedesktop-UDisks2-Job.Completed" title='The "Completed" signal'>Completed</a> (b success,
            s message);
 </pre>
 </div>
 <div class="refsect1">
-<a name="idp7394288"></a><h2>Properties</h2>
+<a name="idp10040976"></a><h2>Properties</h2>
 <pre class="synopsis">
 <a class="link" href="gdbus-org.freedesktop.UDisks2.Job.html#gdbus-property-org-freedesktop-UDisks2-Job.Operation" title='The "Operation" property'>Operation</a>        readable   s
 <a class="link" href="gdbus-org.freedesktop.UDisks2.Job.html#gdbus-property-org-freedesktop-UDisks2-Job.Progress" title='The "Progress" property'>Progress</a>         readable   d
@@ -117,8 +117,11 @@ Cancel (IN  a{sv} options);
         <code class="literal">org.freedesktop.UDisks2.Error.Failed</code> error
         if <a class="link" href="gdbus-org.freedesktop.UDisks2.Job.html#gdbus-property-org-freedesktop-UDisks2-Job.Cancelable" title='The "Cancelable" property'>"Cancelable"</a> is <code class="constant">FALSE</code>.
 </p>
-<div class="variablelist"><table border="0">
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
 <col align="left" valign="top">
+<col>
+</colgroup>
 <tbody><tr>
 <td><p><span class="term"><code class="literal">IN a{sv} <em class="parameter"><code>options</code></em></code>:</span></p></td>
 <td><p>Options (currently unused except for <a class="link" href="udisks-std-options.html" title="The options parameter">standard options</a>).</p></td>
@@ -136,8 +139,11 @@ Completed (b success,
 </pre>
 <p>        Emitted when a job completes.
 </p>
-<div class="variablelist"><table border="0">
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
 <col align="left" valign="top">
+<col>
+</colgroup>
 <tbody>
 <tr>
 <td><p><span class="term"><code class="literal">b <em class="parameter"><code>success</code></em></code>:</span></p></td>
@@ -162,8 +168,11 @@ Operation  readable   s
 </p>
 <p>         Known job operation types include:
          </p>
-<div class="variablelist"><table border="0">
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
 <col align="left" valign="top">
+<col>
+</colgroup>
 <tbody>
 <tr>
 <td><p><span class="term">ata-smart-selftest</span></p></td>
