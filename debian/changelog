@@ -11,6 +11,8 @@ udisks2 (2.0.0-1) UNRELEASED; urgency=low
   * debian/rules: Call dh_install with --fail-missing.
   * debian/udisks2.install: Install bash completion from/to
     usr/share/bash-completion/.
+  * Add debian/udisks2.maintscript: Remove bash completion in /etc/ on
+    upgrade.
 
  -- Martin Pitt <mpitt@debian.org>  Fri, 05 Oct 2012 10:01:29 +0200
 
