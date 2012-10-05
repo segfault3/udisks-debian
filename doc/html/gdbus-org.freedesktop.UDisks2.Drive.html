@@ -3,7 +3,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>org.freedesktop.UDisks2.Drive</title>
-<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.77.1">
 <link rel="home" href="index.html" title="UDisks Reference Manual">
 <link rel="up" href="ch02.html" title="D-Bus Interfaces">
 <link rel="prev" href="gdbus-org.freedesktop.UDisks2.Manager.html" title="org.freedesktop.UDisks2.Manager">
@@ -46,7 +46,7 @@
 </pre>
 </div>
 <div class="refsect1">
-<a name="idp6079568"></a><h2>Properties</h2>
+<a name="idp8640160"></a><h2>Properties</h2>
 <pre class="synopsis">
 <a class="link" href="gdbus-org.freedesktop.UDisks2.Drive.html#gdbus-property-org-freedesktop-UDisks2-Drive.Vendor" title='The "Vendor" property'>Vendor</a>                 readable   s
 <a class="link" href="gdbus-org.freedesktop.UDisks2.Drive.html#gdbus-property-org-freedesktop-UDisks2-Drive.Model" title='The "Model" property'>Model</a>                  readable   s
@@ -110,8 +110,11 @@ Eject (IN  a{sv} options);
         on the hardware to show e.g. <span class="quote">“<span class="quote">It is now safe to remove
         the device</span>”</span>.
 </p>
-<div class="variablelist"><table border="0">
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
 <col align="left" valign="top">
+<col>
+</colgroup>
 <tbody><tr>
 <td><p><span class="term"><code class="literal">IN a{sv} <em class="parameter"><code>options</code></em></code>:</span></p></td>
 <td><p>Options (currently unused except for <a class="link" href="udisks-std-options.html" title="The options parameter">standard options</a>).</p></td>
@@ -133,8 +136,11 @@ SetConfiguration (IN  a{sv} value,
         for details about valid values and the location of the
         configuration file that <em class="parameter"><code>value</code></em> will be written to.
 </p>
-<div class="variablelist"><table border="0">
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
 <col align="left" valign="top">
+<col>
+</colgroup>
 <tbody>
 <tr>
 <td><p><span class="term"><code class="literal">IN a{sv} <em class="parameter"><code>value</code></em></code>:</span></p></td>
@@ -222,8 +228,11 @@ Configuration  readable   a{sv}
 </p>
 <p>         This is an dict of items with the following known keys:
          </p>
-<div class="variablelist"><table border="0">
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
 <col align="left" valign="top">
+<col>
+</colgroup>
 <tbody>
 <tr>
 <td><p><span class="term">ata-pm-standby (type <code class="literal">'i'</code>)</span></p></td>
@@ -274,8 +283,11 @@ MediaCompatibility  readable   as
 <p>      The physical kind of media the drive uses or the type of the drive or blank if unknown.
       Known values include
       </p>
-<div class="variablelist"><table border="0">
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
 <col align="left" valign="top">
+<col>
+</colgroup>
 <tbody>
 <tr>
 <td><p><span class="term">thumb</span></p></td>
@@ -547,7 +559,7 @@ RotationRate  readable   i
 </pre>
 <p>The rotational rate of the drive.</p>
 <p>      </p>
-<div class="itemizedlist"><ul class="itemizedlist" type="disc">
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
 <li class="listitem"><p>-1 if known to be rotating media but rotation rate isn't known</p></li>
 <li class="listitem"><p>0 if known to be non-rotating media</p></li>
 <li class="listitem"><p>the rotation rate in rounds per minute otherwise</p></li>
@@ -572,8 +584,11 @@ ConnectionBus  readable   s
 </p>
 <p>      Known values include:
       </p>
-<div class="variablelist"><table border="0">
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
 <col align="left" valign="top">
+<col>
+</colgroup>
 <tbody>
 <tr>
 <td><p><span class="term">usb</span></p></td>

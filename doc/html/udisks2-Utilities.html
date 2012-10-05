@@ -3,7 +3,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Utilities</title>
-<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.77.1">
 <link rel="home" href="index.html" title="UDisks Reference Manual">
 <link rel="up" href="ref-daemon-core.html" title="Core">
 <link rel="prev" href="ref-daemon-core.html" title="Core">
@@ -40,7 +40,7 @@
 <pre class="synopsis"><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="returnvalue">gchar</span></a> *             <a class="link" href="udisks2-Utilities.html#udisks-decode-udev-string" title="udisks_decode_udev_string ()">udisks_decode_udev_string</a>           (<em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *str</code></em>);
 <span class="returnvalue">void</span>                <a class="link" href="udisks2-Utilities.html#udisks-safe-append-to-object-path" title="udisks_safe_append_to_object_path ()">udisks_safe_append_to_object_path</a>   (<em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Strings.html#GString"><span class="type">GString</span></a> *str</code></em>,
                                                          <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *s</code></em>);
-<span class="returnvalue">guint64</span>             <a class="link" href="udisks2-Utilities.html#udisks-daemon-util-block-get-size" title="udisks_daemon_util_block_get_size ()">udisks_daemon_util_block_get_size</a>   (<em class="parameter"><code><a href="/usr/share/gtk-doc/html/gudev/gudev-GUdevDevice.html#GUdevDevice"><span class="type">GUdevDevice</span></a> *device</code></em>,
+<a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#guint64"><span class="returnvalue">guint64</span></a>             <a class="link" href="udisks2-Utilities.html#udisks-daemon-util-block-get-size" title="udisks_daemon_util_block_get_size ()">udisks_daemon_util_block_get_size</a>   (<em class="parameter"><code><a href="http://www.freedesktop.org/software/systemd/gudev/GUdevDevice.html"><span class="type">GUdevDevice</span></a> *device</code></em>,
                                                          <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"><span class="type">gboolean</span></a> *out_media_available</code></em>,
                                                          <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"><span class="type">gboolean</span></a> *out_media_change_detected</code></em>);
 <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="returnvalue">gchar</span></a> *             <a class="link" href="udisks2-Utilities.html#udisks-daemon-util-resolve-link" title="udisks_daemon_util_resolve_link ()">udisks_daemon_util_resolve_link</a>     (<em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *path</code></em>,
@@ -81,13 +81,13 @@ typedef             <a class="link" href="udisks2-Utilities.html#UDisksInhibitCo
 <span class="returnvalue">void</span>                <a class="link" href="udisks2-Utilities.html#udisks-daemon-util-uninhibit-system-sync" title="udisks_daemon_util_uninhibit_system_sync ()">udisks_daemon_util_uninhibit_system_sync</a>
                                                         (<em class="parameter"><code><a class="link" href="udisks2-Utilities.html#UDisksInhibitCookie" title="UDisksInhibitCookie"><span class="type">UDisksInhibitCookie</span></a> *cookie</code></em>);
 <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="returnvalue">gchar</span></a> *             <a class="link" href="udisks2-Utilities.html#udisks-daemon-util-hexdump" title="udisks_daemon_util_hexdump ()">udisks_daemon_util_hexdump</a>          (<em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gconstpointer"><span class="type">gconstpointer</span></a> data</code></em>,
-                                                         <em class="parameter"><code><span class="type">gsize</span> len</code></em>);
+                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gsize"><span class="type">gsize</span></a> len</code></em>);
 <span class="returnvalue">void</span>                <a class="link" href="udisks2-Utilities.html#udisks-daemon-util-hexdump-debug" title="udisks_daemon_util_hexdump_debug ()">udisks_daemon_util_hexdump_debug</a>    (<em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gconstpointer"><span class="type">gconstpointer</span></a> data</code></em>,
-                                                         <em class="parameter"><code><span class="type">gsize</span> len</code></em>);
+                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gsize"><span class="type">gsize</span></a> len</code></em>);
 <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>            <a class="link" href="udisks2-Utilities.html#udisks-daemon-util-file-set-contents" title="udisks_daemon_util_file_set_contents ()">udisks_daemon_util_file_set_contents</a>
                                                         (<em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *filename</code></em>,
                                                          <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *contents</code></em>,
-                                                         <em class="parameter"><code><span class="type">gssize</span> contents_len</code></em>,
+                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gssize"><span class="type">gssize</span></a> contents_len</code></em>,
                                                          <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gint"><span class="type">gint</span></a> mode_for_new_file</code></em>,
                                                          <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Error-Reporting.html#GError"><span class="type">GError</span></a> **error</code></em>);
 <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>            <a class="link" href="udisks2-Utilities.html#udisks-daemon-util-on-same-seat" title="udisks_daemon_util_on_same_seat ()">udisks_daemon_util_on_same_seat</a>     (<em class="parameter"><code><a class="link" href="UDisksDaemon.html" title="UDisksDaemon"><span class="type">UDisksDaemon</span></a> *daemon</code></em>,
@@ -116,11 +116,14 @@ If the string is not valid UTF-8, try as hard as possible to convert to UTF-8.
 If <a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a> is passed, then <a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a> is returned.
 </p>
 <p>
-See <a href="/usr/share/gtk-doc/html/libudev/libudev-udev-util.html#udev-util-encode-string"><code class="function">udev_util_encode_string()</code></a> in libudev/libudev-util.c in the udev
+See <a href="http://www.freedesktop.org/software/systemd/libudev/libudev-udev-util.html#udev-util-encode-string"><code class="function">udev_util_encode_string()</code></a> in libudev/libudev-util.c in the udev
 tree for what kinds of strings can be used.
 </p>
-<div class="variablelist"><table border="0">
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
 <col align="left" valign="top">
+<col>
+</colgroup>
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>str</code></em> :</span></p></td>
@@ -148,8 +151,11 @@ HEX is a two-digit hexadecimal number.
 Note that his mapping is not bijective - e.g. you cannot go back
 to the original string.
 </p>
-<div class="variablelist"><table border="0">
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
 <col align="left" valign="top">
+<col>
+</colgroup>
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>str</code></em> :</span></p></td>
@@ -165,18 +171,21 @@ to the original string.
 <hr>
 <div class="refsect2">
 <a name="udisks-daemon-util-block-get-size"></a><h3>udisks_daemon_util_block_get_size ()</h3>
-<pre class="programlisting"><span class="returnvalue">guint64</span>             udisks_daemon_util_block_get_size   (<em class="parameter"><code><a href="/usr/share/gtk-doc/html/gudev/gudev-GUdevDevice.html#GUdevDevice"><span class="type">GUdevDevice</span></a> *device</code></em>,
+<pre class="programlisting"><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#guint64"><span class="returnvalue">guint64</span></a>             udisks_daemon_util_block_get_size   (<em class="parameter"><code><a href="http://www.freedesktop.org/software/systemd/gudev/GUdevDevice.html"><span class="type">GUdevDevice</span></a> *device</code></em>,
                                                          <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"><span class="type">gboolean</span></a> *out_media_available</code></em>,
                                                          <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"><span class="type">gboolean</span></a> *out_media_change_detected</code></em>);</pre>
 <p>
 Gets the size of the <em class="parameter"><code>device</code></em> top-level block device, checking for media in the process
 </p>
-<div class="variablelist"><table border="0">
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
 <col align="left" valign="top">
+<col>
+</colgroup>
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>device</code></em> :</span></p></td>
-<td>A <a href="/usr/share/gtk-doc/html/gudev/gudev-GUdevDevice.html#GUdevDevice"><span class="type">GUdevDevice</span></a> for a top-level block device.</td>
+<td>A <a href="http://www.freedesktop.org/software/systemd/gudev/GUdevDevice.html"><span class="type">GUdevDevice</span></a> for a top-level block device.</td>
 </tr>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>out_media_available</code></em> :</span></p></td>
@@ -203,8 +212,11 @@ Gets the size of the <em class="parameter"><code>device</code></em> top-level bl
 <p>
 Resolves the symlink <em class="parameter"><code>path</code></em>/<em class="parameter"><code>name</code></em>.
 </p>
-<div class="variablelist"><table border="0">
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
 <col align="left" valign="top">
+<col>
+</colgroup>
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>path</code></em> :</span></p></td>
@@ -231,8 +243,11 @@ could not be resolved. Free with <a href="http://library.gnome.org/devel/glib/un
 Resolves all symlinks in <em class="parameter"><code>path</code></em>/<em class="parameter"><code>dir_name</code></em>. This can be used to
 easily walk e.g. holders or slaves of block devices.
 </p>
-<div class="variablelist"><table border="0">
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
 <col align="left" valign="top">
+<col>
+</colgroup>
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>path</code></em> :</span></p></td>
@@ -287,8 +302,11 @@ that isn't on a drive or block device, for example calls on the
 <a class="link" href="gdbus-org.freedesktop.UDisks2.Manager.html#gdbus-interface-org-freedesktop-UDisks2-Manager.top_of_page">Manager</a>
 object.
 </p>
-<div class="variablelist"><table border="0">
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
 <col align="left" valign="top">
+<col>
+</colgroup>
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>daemon</code></em> :</span></p></td>
@@ -339,8 +357,11 @@ object.
 Gets the UNIX user id (and possibly group id and user name) of the
 peer represented by <em class="parameter"><code>invocation</code></em>.
 </p>
-<div class="variablelist"><table border="0">
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
 <col align="left" valign="top">
+<col>
+</colgroup>
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>daemon</code></em> :</span></p></td>
@@ -394,8 +415,11 @@ peer represented by <em class="parameter"><code>invocation</code></em>.
 <p>
 Gets the UNIX process id of the peer represented by <em class="parameter"><code>invocation</code></em>.
 </p>
-<div class="variablelist"><table border="0">
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
 <col align="left" valign="top">
+<col>
+</colgroup>
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>daemon</code></em> :</span></p></td>
@@ -437,8 +461,11 @@ Gets the UNIX process id of the peer represented by <em class="parameter"><code>
 Checks whether the device represented by <em class="parameter"><code>object</code></em> (if any) has been
 setup by <em class="parameter"><code>user</code></em>.
 </p>
-<div class="variablelist"><table border="0">
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
 <col align="left" valign="top">
+<col>
+</colgroup>
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>daemon</code></em> :</span></p></td>
@@ -468,8 +495,11 @@ setup by <em class="parameter"><code>user</code></em>.
 <p>
 Gets the enclosing <a class="link" href="UDisksObject.html" title="UDisksObject"><span class="type">UDisksObject</span></a> for <em class="parameter"><code>interface</code></em>, if any.
 </p>
-<div class="variablelist"><table border="0">
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
 <col align="left" valign="top">
+<col>
+</colgroup>
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>interface_</code></em> :</span></p></td>
@@ -499,8 +529,11 @@ Gets the enclosing <a class="link" href="UDisksObject.html" title="UDisksObject"
 Escapes double-quotes (") and back-slashes (\) in a string
 using back-slash (\).
 </p>
-<div class="variablelist"><table border="0">
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
 <col align="left" valign="top">
+<col>
+</colgroup>
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>str</code></em> :</span></p></td>
@@ -521,8 +554,11 @@ using back-slash (\).
 Like <a class="link" href="udisks2-Utilities.html#udisks-daemon-util-escape" title="udisks_daemon_util_escape ()"><code class="function">udisks_daemon_util_escape()</code></a> but also wraps the result in
 double-quotes.
 </p>
-<div class="variablelist"><table border="0">
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
 <col align="left" valign="top">
+<col>
+</colgroup>
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>str</code></em> :</span></p></td>
@@ -558,8 +594,11 @@ Right now only
 <a class="ulink" href="http://www.freedesktop.org/wiki/Software/systemd/inhibit" target="_top">systemd</a>
 inhibitors are supported but other inhibitors can be added in the future.
 </p>
-<div class="variablelist"><table border="0">
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
 <col align="left" valign="top">
+<col>
+</colgroup>
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>reason</code></em> :</span></p></td>
@@ -580,8 +619,11 @@ inhibitors are supported but other inhibitors can be added in the future.
 <p>
 Does nothing if <em class="parameter"><code>cookie</code></em> is <a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a>, otherwise uninhibits.
 </p>
-<div class="variablelist"><table border="0">
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
 <col align="left" valign="top">
+<col>
+</colgroup>
 <tbody><tr>
 <td><p><span class="term"><em class="parameter"><code>cookie</code></em> :</span></p></td>
 <td>
@@ -593,13 +635,16 @@ Does nothing if <em class="parameter"><code>cookie</code></em> is <a href="http:
 <div class="refsect2">
 <a name="udisks-daemon-util-hexdump"></a><h3>udisks_daemon_util_hexdump ()</h3>
 <pre class="programlisting"><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="returnvalue">gchar</span></a> *             udisks_daemon_util_hexdump          (<em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gconstpointer"><span class="type">gconstpointer</span></a> data</code></em>,
-                                                         <em class="parameter"><code><span class="type">gsize</span> len</code></em>);</pre>
+                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gsize"><span class="type">gsize</span></a> len</code></em>);</pre>
 <p>
 Utility function to generate a hexadecimal representation of <em class="parameter"><code>len</code></em>
 bytes of <em class="parameter"><code>data</code></em>.
 </p>
-<div class="variablelist"><table border="0">
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
 <col align="left" valign="top">
+<col>
+</colgroup>
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>data</code></em> :</span></p></td>
@@ -620,14 +665,17 @@ bytes of <em class="parameter"><code>data</code></em>.
 <div class="refsect2">
 <a name="udisks-daemon-util-hexdump-debug"></a><h3>udisks_daemon_util_hexdump_debug ()</h3>
 <pre class="programlisting"><span class="returnvalue">void</span>                udisks_daemon_util_hexdump_debug    (<em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gconstpointer"><span class="type">gconstpointer</span></a> data</code></em>,
-                                                         <em class="parameter"><code><span class="type">gsize</span> len</code></em>);</pre>
+                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gsize"><span class="type">gsize</span></a> len</code></em>);</pre>
 <p>
 Utility function to dumps the hexadecimal representation of <em class="parameter"><code>len</code></em>
 bytes of <em class="parameter"><code>data</code></em> generated with <a class="link" href="udisks2-Utilities.html#udisks-daemon-util-hexdump" title="udisks_daemon_util_hexdump ()"><code class="function">udisks_daemon_util_hexdump()</code></a> using
 <a class="link" href="udisks2-Logging.html#udisks-debug" title="udisks_debug()"><code class="function">udisks_debug()</code></a>.
 </p>
-<div class="variablelist"><table border="0">
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
 <col align="left" valign="top">
+<col>
+</colgroup>
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>data</code></em> :</span></p></td>
@@ -646,11 +694,48 @@ bytes of <em class="parameter"><code>data</code></em> generated with <a class="l
 <pre class="programlisting"><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>            udisks_daemon_util_file_set_contents
                                                         (<em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *filename</code></em>,
                                                          <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *contents</code></em>,
-                                                         <em class="parameter"><code><span class="type">gssize</span> contents_len</code></em>,
+                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gssize"><span class="type">gssize</span></a> contents_len</code></em>,
                                                          <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gint"><span class="type">gint</span></a> mode_for_new_file</code></em>,
                                                          <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Error-Reporting.html#GError"><span class="type">GError</span></a> **error</code></em>);</pre>
 <p>
+Like <a href="http://library.gnome.org/devel/glib/unstable/glib-File-Utilities.html#g-file-set-contents"><code class="function">g_file_set_contents()</code></a> but preserves the mode of the file if it
+already exists and sets it to <em class="parameter"><code>mode_for_new_file</code></em> otherwise.
 </p>
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
+<col align="left" valign="top">
+<col>
+</colgroup>
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>filename</code></em> :</span></p></td>
+<td>Name of a file to write <em class="parameter"><code>contents</code></em> to, in the GLib file name encoding. <span class="annotation">[<a href="http://foldoc.org/type"><span class="acronym">type</span></a> filename]</span>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>contents</code></em> :</span></p></td>
+<td>String to write to the file. <span class="annotation">[<a href="http://foldoc.org/array"><span class="acronym">array</span></a> length=length][<a href="http://foldoc.org/element-type"><span class="acronym">element-type</span></a> guint8]</span>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>contents_len</code></em> :</span></p></td>
+<td>Length of <em class="parameter"><code>contents</code></em>, or -1 if <em class="parameter"><code>contents</code></em> is a NUL-terminated string.</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>mode_for_new_file</code></em> :</span></p></td>
+<td>Mode for new file.</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>error</code></em> :</span></p></td>
+<td>Return location for a <a href="http://library.gnome.org/devel/glib/unstable/glib-Error-Reporting.html#GError"><span class="type">GError</span></a>, or <a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a>.</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td>
+<a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#TRUE:CAPS"><code class="literal">TRUE</code></a> on success, <a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#FALSE:CAPS"><code class="literal">FALSE</code></a> if an error occurred</td>
+</tr>
+</tbody>
+</table></div>
 </div>
 <hr>
 <div class="refsect2">
@@ -659,7 +744,37 @@ bytes of <em class="parameter"><code>data</code></em> generated with <a class="l
                                                          <em class="parameter"><code><a class="link" href="UDisksObject.html" title="UDisksObject"><span class="type">UDisksObject</span></a> *object</code></em>,
                                                          <em class="parameter"><code><span class="type">pid_t</span> process</code></em>);</pre>
 <p>
+Checks whether the device represented by <em class="parameter"><code>object</code></em> (if any) is plugged into
+a seat where the caller represented by <em class="parameter"><code>process</code></em> is logged in.
 </p>
+<p>
+This works if <em class="parameter"><code>object</code></em> is a drive or a block object.
+</p>
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
+<col align="left" valign="top">
+<col>
+</colgroup>
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>daemon</code></em> :</span></p></td>
+<td>A <a class="link" href="UDisksDaemon.html" title="UDisksDaemon"><span class="type">UDisksDaemon</span></a>.</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>object</code></em> :</span></p></td>
+<td>The <a href="http://library.gnome.org/devel/gio/unstable/GDBusObject.html"><span class="type">GDBusObject</span></a> that the call is on or <a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a>.</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>process</code></em> :</span></p></td>
+<td>The process to check for.</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td>
+<a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#TRUE:CAPS"><code class="literal">TRUE</code></a> if <em class="parameter"><code>object</code></em> and <em class="parameter"><code>process</code></em> is on the same seat, <a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#FALSE:CAPS"><code class="literal">FALSE</code></a> otherwise.</td>
+</tr>
+</tbody>
+</table></div>
 </div>
 </div>
 </div>

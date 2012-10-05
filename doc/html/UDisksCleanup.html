@@ -3,7 +3,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>UDisksCleanup</title>
-<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.77.1">
 <link rel="home" href="index.html" title="UDisks Reference Manual">
 <link rel="up" href="ref-daemon-core.html" title="Core">
 <link rel="prev" href="UDisksProvider.html" title="UDisksProvider">
@@ -103,7 +103,7 @@ restarts and OS reboots.
 The following files are used:
 </p>
 <div class="table">
-<a name="idp31102096"></a><p class="title"><b>Table 3. Persistent information used for cleanup</b></p>
+<a name="idp31300800"></a><p class="title"><b>Table 3. Persistent information used for cleanup</b></p>
 <div class="table-contents"><table summary="Persistent information used for cleanup" border="1">
 <colgroup>
 <col>
@@ -200,8 +200,11 @@ only be accessed using the provided API.
 <p>
 Creates a new <a class="link" href="UDisksCleanup.html" title="UDisksCleanup"><span class="type">UDisksCleanup</span></a> object.
 </p>
-<div class="variablelist"><table border="0">
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
 <col align="left" valign="top">
+<col>
+</colgroup>
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>daemon</code></em> :</span></p></td>
@@ -225,8 +228,11 @@ Starts the clean-up thread.
 The clean-up thread will hold a reference to <em class="parameter"><code>cleanup</code></em> for as long
 as it's running - use <a class="link" href="UDisksCleanup.html#udisks-cleanup-stop" title="udisks_cleanup_stop ()"><code class="function">udisks_cleanup_stop()</code></a> to stop it.
 </p>
-<div class="variablelist"><table border="0">
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
 <col align="left" valign="top">
+<col>
+</colgroup>
 <tbody><tr>
 <td><p><span class="term"><em class="parameter"><code>cleanup</code></em> :</span></p></td>
 <td>A <a class="link" href="UDisksCleanup.html" title="UDisksCleanup"><span class="type">UDisksCleanup</span></a>.</td>
@@ -240,8 +246,11 @@ as it's running - use <a class="link" href="UDisksCleanup.html#udisks-cleanup-st
 <p>
 Stops the clean-up thread. Blocks the calling thread until it has stopped.
 </p>
-<div class="variablelist"><table border="0">
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
 <col align="left" valign="top">
+<col>
+</colgroup>
 <tbody><tr>
 <td><p><span class="term"><em class="parameter"><code>cleanup</code></em> :</span></p></td>
 <td>A <a class="link" href="UDisksCleanup.html" title="UDisksCleanup"><span class="type">UDisksCleanup</span></a>.</td>
@@ -258,8 +267,11 @@ Causes the clean-up thread for <em class="parameter"><code>cleanup</code></em> t
 <p>
 This can be called from any thread and will not block the calling thread.
 </p>
-<div class="variablelist"><table border="0">
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
 <col align="left" valign="top">
+<col>
+</colgroup>
 <tbody><tr>
 <td><p><span class="term"><em class="parameter"><code>cleanup</code></em> :</span></p></td>
 <td>A <a class="link" href="UDisksCleanup.html" title="UDisksCleanup"><span class="type">UDisksCleanup</span></a>.</td>
@@ -273,8 +285,11 @@ This can be called from any thread and will not block the calling thread.
 <p>
 Gets the daemon used by <em class="parameter"><code>cleanup</code></em>.
 </p>
-<div class="variablelist"><table border="0">
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
 <col align="left" valign="top">
+<col>
+</colgroup>
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>cleanup</code></em> :</span></p></td>
@@ -299,8 +314,11 @@ Gets the daemon used by <em class="parameter"><code>cleanup</code></em>.
 Adds a new entry to the
 <code class="filename">/run/udisks2/mounted-fs</code> file.
 </p>
-<div class="variablelist"><table border="0">
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
 <col align="left" valign="top">
+<col>
+</colgroup>
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>cleanup</code></em> :</span></p></td>
@@ -337,8 +355,11 @@ Adds a new entry to the
 Gets the mount point for <em class="parameter"><code>block_device</code></em>, if it exists in the
 <code class="filename">/run/udisks2/mounted-fs</code> file.
 </p>
-<div class="variablelist"><table border="0">
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
 <col align="left" valign="top">
+<col>
+</colgroup>
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>cleanup</code></em> :</span></p></td>
@@ -375,8 +396,11 @@ Gets the mount point for <em class="parameter"><code>block_device</code></em>, i
 Adds a new entry to the
 <code class="filename">/run/udisks2/unlocked-luks</code> file.
 </p>
-<div class="variablelist"><table border="0">
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
 <col align="left" valign="top">
+<col>
+</colgroup>
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>cleanup</code></em> :</span></p></td>
@@ -411,8 +435,11 @@ Adds a new entry to the
 Gets the clear-text device for <em class="parameter"><code>crypto_device</code></em>, if it exists in the
 <code class="filename">/run/udisks2/unlocked-luks</code> file.
 </p>
-<div class="variablelist"><table border="0">
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
 <col align="left" valign="top">
+<col>
+</colgroup>
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>cleanup</code></em> :</span></p></td>
@@ -445,8 +472,11 @@ Gets the clear-text device for <em class="parameter"><code>crypto_device</code><
 Adds a new entry to the <code class="filename">/run/udisks2/loop</code>
 file.
 </p>
-<div class="variablelist"><table border="0">
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
 <col align="left" valign="top">
+<col>
+</colgroup>
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>cleanup</code></em> :</span></p></td>
@@ -480,8 +510,11 @@ file.
 <p>
 Checks if <em class="parameter"><code>device_file</code></em> is set up via udisks.
 </p>
-<div class="variablelist"><table border="0">
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
 <col align="left" valign="top">
+<col>
+</colgroup>
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>cleanup</code></em> :</span></p></td>

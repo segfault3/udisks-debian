@@ -1,6 +1,6 @@
 
-m4_define([udisks_major_version], [1])
-m4_define([udisks_minor_version], [100])
+m4_define([udisks_major_version], [2])
+m4_define([udisks_minor_version], [0])
 m4_define([udisks_micro_version], [0])
 
 m4_define([udisks_version], [udisks_major_version.udisks_minor_version.udisks_micro_version])
@@ -145,7 +145,7 @@ AC_SUBST(LIBATASMART_CFLAGS)
 AC_SUBST(LIBATASMART_LIBS)
 
 PKG_CHECK_MODULES(LIBSYSTEMD_LOGIN,
-                  [libsystemd-login >= 44],
+                  [libsystemd-login >= 44 libsystemd-daemon],
                   have_libsystemd_login=yes,
                   have_libsystemd_login=no)
 AM_CONDITIONAL(HAVE_LIBSYSTEMD_LOGIN, test x$have_libsystemd_login = xyes)

@@ -3,7 +3,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>UDisksMountMonitor</title>
-<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.77.1">
 <link rel="home" href="index.html" title="UDisks Reference Manual">
 <link rel="up" href="ref-daemon-monitoring.html" title="State and Configuration">
 <link rel="prev" href="ref-daemon-monitoring.html" title="State and Configuration">
@@ -106,8 +106,11 @@ only be accessed using the provided API.
 <p>
 Types of a mount.
 </p>
-<div class="variablelist"><table border="0">
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
 <col align="left" valign="top">
+<col>
+</colgroup>
 <tbody>
 <tr>
 <td><p><a name="UDISKS-MOUNT-TYPE-FILESYSTEM:CAPS"></a><span class="term"><code class="literal">UDISKS_MOUNT_TYPE_FILESYSTEM</code></span></p></td>
@@ -129,8 +132,11 @@ Types of a mount.
 <p>
 Gets the device number for <em class="parameter"><code>mount</code></em>.
 </p>
-<div class="variablelist"><table border="0">
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
 <col align="left" valign="top">
+<col>
+</colgroup>
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>mount</code></em> :</span></p></td>
@@ -150,8 +156,11 @@ Gets the device number for <em class="parameter"><code>mount</code></em>.
 <p>
 Gets the <a class="link" href="UDisksMountMonitor.html#UDisksMountType" title="enum UDisksMountType"><span class="type">UDisksMountType</span></a> for <em class="parameter"><code>mount</code></em>.
 </p>
-<div class="variablelist"><table border="0">
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
 <col align="left" valign="top">
+<col>
+</colgroup>
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>mount</code></em> :</span></p></td>
@@ -174,8 +183,11 @@ Gets the mount path for a <a class="link" href="UDisksMountMonitor.html#UDISKS-M
 <p>
 It is a programming error to call this on any other type of <a class="link" href="UDisksMountMonitor.html#UDisksMount"><span class="type">UDisksMount</span></a>.
 </p>
-<div class="variablelist"><table border="0">
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
 <col align="left" valign="top">
+<col>
+</colgroup>
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>mount</code></em> :</span></p></td>
@@ -197,8 +209,11 @@ It is a programming error to call this on any other type of <a class="link" href
 <p>
 Comparison function for comparing two <a class="link" href="UDisksMountMonitor.html#UDisksMount"><span class="type">UDisksMount</span></a> objects.
 </p>
-<div class="variablelist"><table border="0">
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
 <col align="left" valign="top">
+<col>
+</colgroup>
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>mount</code></em> :</span></p></td>
@@ -236,8 +251,11 @@ Creates a new <a class="link" href="UDisksMountMonitor.html" title="UDisksMountM
 Signals are emitted in the <GTKDOCLINK HREF="g-main-context-push-thread-default">thread-default main
 loop</GTKDOCLINK> that this function is called from.
 </p>
-<div class="variablelist"><table border="0">
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
 <col align="left" valign="top">
+<col>
+</colgroup>
 <tbody><tr>
 <td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
 <td>A <a class="link" href="UDisksMountMonitor.html" title="UDisksMountMonitor"><span class="type">UDisksMountMonitor</span></a>. Free with <a href="http://library.gnome.org/devel/gobject/unstable/gobject-The-Base-Object-Type.html#g-object-unref"><code class="function">g_object_unref()</code></a>.</td>
@@ -253,8 +271,11 @@ loop</GTKDOCLINK> that this function is called from.
 <p>
 Gets all <a class="link" href="UDisksMountMonitor.html#UDisksMount"><span class="type">UDisksMount</span></a> objects for <em class="parameter"><code>dev</code></em>.
 </p>
-<div class="variablelist"><table border="0">
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
 <col align="left" valign="top">
+<col>
+</colgroup>
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>monitor</code></em> :</span></p></td>
@@ -282,8 +303,11 @@ be freed with <a href="http://library.gnome.org/devel/glib/unstable/glib-Doubly-
 <p>
 Checks if <em class="parameter"><code>dev</code></em> is in use (e.g. mounted or swap-area in-use).
 </p>
-<div class="variablelist"><table border="0">
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
 <col align="left" valign="top">
+<col>
+</colgroup>
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>monitor</code></em> :</span></p></td>
@@ -322,8 +346,11 @@ This signal is emitted in the
 <a href="http://library.gnome.org/devel/glib/unstable/glib-The-Main-Event-Loop.html#g-main-context-push-thread-default">thread-default main loop</a>
 that <em class="parameter"><code>monitor</code></em> was created in.
 </p>
-<div class="variablelist"><table border="0">
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
 <col align="left" valign="top">
+<col>
+</colgroup>
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>monitor</code></em> :</span></p></td>
@@ -354,8 +381,11 @@ This signal is emitted in the
 <a href="http://library.gnome.org/devel/glib/unstable/glib-The-Main-Event-Loop.html#g-main-context-push-thread-default">thread-default main loop</a>
 that <em class="parameter"><code>monitor</code></em> was created in.
 </p>
-<div class="variablelist"><table border="0">
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
 <col align="left" valign="top">
+<col>
+</colgroup>
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>monitor</code></em> :</span></p></td>

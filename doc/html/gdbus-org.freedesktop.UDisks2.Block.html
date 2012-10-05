@@ -3,7 +3,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>org.freedesktop.UDisks2.Block</title>
-<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.77.1">
 <link rel="home" href="index.html" title="UDisks Reference Manual">
 <link rel="up" href="ch02.html" title="D-Bus Interfaces">
 <link rel="prev" href="gdbus-org.freedesktop.UDisks2.Drive.Ata.html" title="org.freedesktop.UDisks2.Drive.Ata">
@@ -61,7 +61,7 @@
 </pre>
 </div>
 <div class="refsect1">
-<a name="idp5059200"></a><h2>Properties</h2>
+<a name="idp9444816"></a><h2>Properties</h2>
 <pre class="synopsis">
 <a class="link" href="gdbus-org.freedesktop.UDisks2.Block.html#gdbus-property-org-freedesktop-UDisks2-Block.Device" title='The "Device" property'>Device</a>               readable   ay
 <a class="link" href="gdbus-org.freedesktop.UDisks2.Block.html#gdbus-property-org-freedesktop-UDisks2-Block.PreferredDevice" title='The "PreferredDevice" property'>PreferredDevice</a>      readable   ay
@@ -110,8 +110,11 @@ AddConfigurationItem (IN  (sa{sv}) item,
 <p>        See the <a class="link" href="gdbus-org.freedesktop.UDisks2.Block.html#gdbus-property-org-freedesktop-UDisks2-Block.Configuration" title='The "Configuration" property'>"Configuration"</a>
         property for details about valid configuration items.
 </p>
-<div class="variablelist"><table border="0">
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
 <col align="left" valign="top">
+<col>
+</colgroup>
 <tbody>
 <tr>
 <td><p><span class="term"><code class="literal">IN (sa{sv}) <em class="parameter"><code>item</code></em></code>:</span></p></td>
@@ -136,8 +139,11 @@ RemoveConfigurationItem (IN  (sa{sv}) item,
 <p>        See the <a class="link" href="gdbus-org.freedesktop.UDisks2.Block.html#gdbus-property-org-freedesktop-UDisks2-Block.Configuration" title='The "Configuration" property'>"Configuration"</a>
         property for details about valid configuration items.
 </p>
-<div class="variablelist"><table border="0">
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
 <col align="left" valign="top">
+<col>
+</colgroup>
 <tbody>
 <tr>
 <td><p><span class="term"><code class="literal">IN (sa{sv}) <em class="parameter"><code>item</code></em></code>:</span></p></td>
@@ -169,8 +175,11 @@ UpdateConfigurationItem (IN  (sa{sv}) old_item,
 <p>        See the <a class="link" href="gdbus-org.freedesktop.UDisks2.Block.html#gdbus-property-org-freedesktop-UDisks2-Block.Configuration" title='The "Configuration" property'>"Configuration"</a>
         property for details about valid configuration items.
 </p>
-<div class="variablelist"><table border="0">
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
 <col align="left" valign="top">
+<col>
+</colgroup>
 <tbody>
 <tr>
 <td><p><span class="term"><code class="literal">IN (sa{sv}) <em class="parameter"><code>old_item</code></em></code>:</span></p></td>
@@ -198,8 +207,11 @@ GetSecretConfiguration (IN  a{sv}     options,
         <a class="link" href="gdbus-org.freedesktop.UDisks2.Block.html#gdbus-property-org-freedesktop-UDisks2-Block.Configuration" title='The "Configuration" property'>"Configuration"</a> property
         but without secret information filtered out.
 </p>
-<div class="variablelist"><table border="0">
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
 <col align="left" valign="top">
+<col>
+</colgroup>
 <tbody>
 <tr>
 <td><p><span class="term"><code class="literal">IN a{sv} <em class="parameter"><code>options</code></em></code>:</span></p></td>
@@ -254,8 +266,11 @@ Format (IN  s     type,
         a secure erase or <span class="quote">“<span class="quote">ata-secure-erase-enhanced</span>”</span> to
         perform an enhanced secure erase.
 </p>
-<div class="variablelist"><table border="0">
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
 <col align="left" valign="top">
+<col>
+</colgroup>
 <tbody>
 <tr>
 <td><p><span class="term"><code class="literal">IN s <em class="parameter"><code>type</code></em></code>:</span></p></td>
@@ -279,8 +294,11 @@ OpenForBackup (IN  a{sv} options,
         byte-by-byte imaging of the device. This can only be done if
         the device is not already in use.
 </p>
-<div class="variablelist"><table border="0">
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
 <col align="left" valign="top">
+<col>
+</colgroup>
 <tbody>
 <tr>
 <td><p><span class="term"><code class="literal">IN a{sv} <em class="parameter"><code>options</code></em></code>:</span></p></td>
@@ -304,8 +322,11 @@ OpenForRestore (IN  a{sv} options,
         byte-by-byte restore of a disk image onto the device. This can
         only be done if the device is not already in use.
 </p>
-<div class="variablelist"><table border="0">
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
 <col align="left" valign="top">
+<col>
+</colgroup>
 <tbody>
 <tr>
 <td><p><span class="term"><code class="literal">IN a{sv} <em class="parameter"><code>options</code></em></code>:</span></p></td>
@@ -335,8 +356,11 @@ OpenForBenchmark (IN  a{sv} options,
         then the returned file descriptor will be writable. This only
         works if the device is not already in use.
 </p>
-<div class="variablelist"><table border="0">
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
 <col align="left" valign="top">
+<col>
+</colgroup>
 <tbody>
 <tr>
 <td><p><span class="term"><code class="literal">IN a{sv} <em class="parameter"><code>options</code></em></code>:</span></p></td>
@@ -365,8 +389,11 @@ Rescan (IN  a{sv} options);
         this when the last process with a writable file descriptor for
         the device closes it.
 </p>
-<div class="variablelist"><table border="0">
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
 <col align="left" valign="top">
+<col>
+</colgroup>
 <tbody><tr>
 <td><p><span class="term"><code class="literal">IN a{sv} <em class="parameter"><code>options</code></em></code>:</span></p></td>
 <td><p>Options (currently unused except for <a class="link" href="udisks-std-options.html" title="The options parameter">standard options</a>).</p></td>
@@ -455,8 +482,11 @@ IdUsage  readable   s
 </pre>
 <p>         A result of probing for signatures on the block device. Known values include:
          </p>
-<div class="variablelist"><table border="0">
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
 <col align="left" valign="top">
+<col>
+</colgroup>
 <tbody>
 <tr>
 <td><p><span class="term">filesystem</span></p></td>
@@ -501,8 +531,11 @@ IdType  readable   s
         probing the block device. Its value depends of the value the
         <a class="link" href="gdbus-org.freedesktop.UDisks2.Block.html#gdbus-property-org-freedesktop-UDisks2-Block.IdUsage" title='The "IdUsage" property'>"IdUsage"</a> property:
         </p>
-<div class="variablelist"><table border="0">
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
 <col align="left" valign="top">
+<col>
+</colgroup>
 <tbody>
 <tr>
 <td><p><span class="term">filesystem</span></p></td>
@@ -594,8 +627,11 @@ Configuration  readable   a(sa{sv})
          <code class="filename">/etc/fstab</code> file. Known configuration
          items for type <code class="literal">fstab</code> are
          </p>
-<div class="variablelist"><table border="0">
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
 <col align="left" valign="top">
+<col>
+</colgroup>
 <tbody>
 <tr>
 <td><p><span class="term">fsname (type <code class="literal">'ay'</code>)</span></p></td>
@@ -630,8 +666,11 @@ Configuration  readable   a(sa{sv})
          <code class="filename">/etc/crypttab</code> file. Known configuration
          items for type <code class="literal">crypttab</code> are
          </p>
-<div class="variablelist"><table border="0">
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
 <col align="left" valign="top">
+<col>
+</colgroup>
 <tbody>
 <tr>
 <td><p><span class="term">name (type <code class="literal">'ay'</code>)</span></p></td>
