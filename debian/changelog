@@ -1,3 +1,16 @@
+udisks2 (2.0.0-1) UNRELEASED; urgency=low
+
+  * Final 2.0.0 release. Changes since our git snapshot:
+    - Only do the isohybrid hack for the first partition
+    - Don't complain about missing /etc/crypttab file
+    - Don't complain about missing /etc/fstab file
+    - Make it work without requiring the kernel to be CONFIG_SWAP=y
+    - Don't require that users define UDISKS_API_IS_SUBJECT_TO_CHANGE
+    - Lots of documentation updates and corrections
+    - Update translations from Transifex
+
+ -- Martin Pitt <mpitt@debian.org>  Fri, 05 Oct 2012 10:01:29 +0200
+
 udisks2 (1.99.0+git20120919-1) experimental; urgency=low
 
   * Update to current upstream git head:
