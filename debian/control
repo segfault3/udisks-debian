@@ -29,7 +29,7 @@ Multi-Arch: foreign
 Depends: ${shlibs:Depends}, ${misc:Depends}, udev, dbus
 Pre-Depends: ${misc:Pre-Depends}
 Recommends: policykit-1, dosfstools, ntfs-3g, eject
-Suggests: xfsprogs, reiserfsprogs, mdadm, cryptsetup-bin
+Suggests: xfsprogs, reiserfsprogs, exfat-utils, mdadm, cryptsetup-bin
 Description: D-BUS service to access and manipulate storage devices
  The udisks daemon serves as an interface to system block devices,
  implemented via D-Bus. It handles operations such as querying, mounting,
