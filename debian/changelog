@@ -1,6 +1,9 @@
 udisks2 (2.0.0-2) UNRELEASED; urgency=low
 
   * Add symbols file for libudisks2-0.
+  * debian/patches/dosfslabel.patch: Switch to dosfslabel to handle VFAT
+    labels since we already require dosfstools for mkfs.vfat and dosfslabel
+    works just as well as mlabel nowadays.
 
  -- Michael Biebl <biebl@debian.org>  Tue, 13 Nov 2012 06:26:31 +0100
 
