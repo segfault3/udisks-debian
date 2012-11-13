@@ -1,3 +1,9 @@
+udisks2 (2.0.0-2) UNRELEASED; urgency=low
+
+  * Add symbols file for libudisks2-0.
+
+ -- Michael Biebl <biebl@debian.org>  Tue, 13 Nov 2012 06:26:31 +0100
+
 udisks2 (2.0.0-1) experimental; urgency=low
 
   * Final 2.0.0 release. Changes since our git snapshot:
