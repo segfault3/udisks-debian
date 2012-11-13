@@ -1,4 +1,4 @@
-udisks2 (2.0.0-2) UNRELEASED; urgency=low
+udisks2 (2.0.0-2) experimental; urgency=low
 
   * Add symbols file for libudisks2-0.
   * debian/patches/dosfslabel.patch: Switch to dosfslabel to handle VFAT
@@ -9,7 +9,7 @@ udisks2 (2.0.0-2) UNRELEASED; urgency=low
   * debian/control: Suggest exfat-utils for exFAT support.
   * debian/control: Suggest btrfs-tools for btrfs support.
 
- -- Michael Biebl <biebl@debian.org>  Tue, 13 Nov 2012 06:54:52 +0100
+ -- Michael Biebl <biebl@debian.org>  Tue, 13 Nov 2012 06:58:57 +0100
 
 udisks2 (2.0.0-1) experimental; urgency=low
 
