@@ -5,6 +5,7 @@ udisks2 (2.0.0-2) UNRELEASED; urgency=low
     labels since we already require dosfstools for mkfs.vfat and dosfslabel
     works just as well as mlabel nowadays.
   * debian/control: Drop recommends on mtools.
+  * debian/tests/control: Switch from mtools to dosfstools.
 
  -- Michael Biebl <biebl@debian.org>  Tue, 13 Nov 2012 06:26:31 +0100
 
