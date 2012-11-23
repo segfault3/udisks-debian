@@ -1,3 +1,12 @@
+udisks2 (2.0.0-3) UNRELEASED; urgency=low
+
+  * Add unsupported_acls.patch: Some file systems, such as ext2/ext3 that were
+    created a few years ago, do not support ACLs. As long as we do not have
+    /media on a tmpfs, ignore failures to set the ACL on /media/<user> and
+    fall back to chowning the directory to the target user. (LP: #1048059)
+
+ -- Martin Pitt <mpitt@debian.org>  Fri, 23 Nov 2012 06:54:40 +0100
+
 udisks2 (2.0.0-2) experimental; urgency=low
 
   * Add symbols file for libudisks2-0.
