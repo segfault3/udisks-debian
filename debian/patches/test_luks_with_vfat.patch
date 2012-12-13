@@ -1,0 +1,25 @@
+Description: Run Luks test with vfat, to work around kernel crash with Linux 3.7 when using ext4 (https://launchpad.net/bugs/1089818)
+Author: Martin Pitt <martin.pitt@ubuntu.com>
+
+Index: udisks2/src/tests/integration-test
+===================================================================
+--- udisks2.orig/src/tests/integration-test	2012-09-20 11:52:11.075687663 +0200
++++ udisks2/src/tests/integration-test	2012-12-13 11:39:06.556963981 +0100
+@@ -1113,7 +1113,7 @@
+     def test_0_create_teardown(self):
+         '''LUKS create/teardown'''
+ 
+-        self.fs_create(None, 'ext4', GLib.Variant('a{sv}', {
++        self.fs_create(None, 'vfat', GLib.Variant('a{sv}', {
+             'encrypt.passphrase': GLib.Variant('s', 's3kr1t'),
+             'label': GLib.Variant('s', 'treasure'),
+             }))
+@@ -1149,7 +1149,7 @@
+             clear_obj = self.client.get_object(clear_path)
+             self.assertEqual(clear_obj.get_property('encrypted'), None)
+             clear_block = clear_obj.get_property('block')
+-            self.assertEqual(clear_block.get_property('id-type'), 'ext4')
++            self.assertEqual(clear_block.get_property('id-type'), 'vfat')
+             self.assertEqual(clear_block.get_property('id-usage'), 'filesystem')
+             self.assertEqual(clear_block.get_property('id-label'), 'treasure')
+             self.assertNotEqual(clear_block.get_property('crypto-backing-device'), None)
