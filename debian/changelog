@@ -1,4 +1,4 @@
-udisks2 (2.0.1-1) UNRELEASED; urgency=low
+udisks2 (2.0.1-1) experimental; urgency=low
 
   [ Martin Pitt ]
   * Add debian/patches/test_luks_with_vfat.patch: Run Luks test with VFAT
@@ -9,7 +9,7 @@ udisks2 (2.0.1-1) UNRELEASED; urgency=low
   * New upstream release.
   * Update email address in debian/copyright.
 
- -- Martin Pitt <mpitt@debian.org>  Thu, 13 Dec 2012 11:44:44 +0100
+ -- Michael Biebl <biebl@debian.org>  Tue, 18 Dec 2012 05:04:33 +0100
 
 udisks2 (2.0.0-3) experimental; urgency=low
 
