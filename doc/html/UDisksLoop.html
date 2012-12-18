@@ -51,83 +51,83 @@
 <a name="UDisksLoop.synopsis"></a><h2>Synopsis</h2>
 <a name="UDisksLoopProxy"></a><a name="UDisksLoopSkeleton"></a><pre class="synopsis">                    <a class="link" href="UDisksLoop.html#UDisksLoop-struct" title="UDisksLoop">UDisksLoop</a>;
 struct              <a class="link" href="UDisksLoop.html#UDisksLoopIface" title="struct UDisksLoopIface">UDisksLoopIface</a>;
-<a href="http://library.gnome.org/devel/gio/unstable/gio-D-Bus-Introspection-Data.html#GDBusInterfaceInfo"><span class="returnvalue">GDBusInterfaceInfo</span></a> * <a class="link" href="UDisksLoop.html#udisks-loop-interface-info" title="udisks_loop_interface_info ()">udisks_loop_interface_info</a>         (<em class="parameter"><code><span class="type">void</span></code></em>);
-<a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#guint"><span class="returnvalue">guint</span></a>               <a class="link" href="UDisksLoop.html#udisks-loop-override-properties" title="udisks_loop_override_properties ()">udisks_loop_override_properties</a>     (<em class="parameter"><code><a href="http://library.gnome.org/devel/gobject/unstable/gobject-The-Base-Object-Type.html#GObjectClass"><span class="type">GObjectClass</span></a> *klass</code></em>,
-                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#guint"><span class="type">guint</span></a> property_id_begin</code></em>);
-const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="returnvalue">gchar</span></a> *       <a class="link" href="UDisksLoop.html#udisks-loop-get-backing-file" title="udisks_loop_get_backing_file ()">udisks_loop_get_backing_file</a>        (<em class="parameter"><code><a class="link" href="UDisksLoop.html" title="UDisksLoop"><span class="type">UDisksLoop</span></a> *object</code></em>);
-<a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>            <a class="link" href="UDisksLoop.html#udisks-loop-get-autoclear" title="udisks_loop_get_autoclear ()">udisks_loop_get_autoclear</a>           (<em class="parameter"><code><a class="link" href="UDisksLoop.html" title="UDisksLoop"><span class="type">UDisksLoop</span></a> *object</code></em>);
-<a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#guint"><span class="returnvalue">guint</span></a>               <a class="link" href="UDisksLoop.html#udisks-loop-get-setup-by-uid" title="udisks_loop_get_setup_by_uid ()">udisks_loop_get_setup_by_uid</a>        (<em class="parameter"><code><a class="link" href="UDisksLoop.html" title="UDisksLoop"><span class="type">UDisksLoop</span></a> *object</code></em>);
-<a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="returnvalue">gchar</span></a> *             <a class="link" href="UDisksLoop.html#udisks-loop-dup-backing-file" title="udisks_loop_dup_backing_file ()">udisks_loop_dup_backing_file</a>        (<em class="parameter"><code><a class="link" href="UDisksLoop.html" title="UDisksLoop"><span class="type">UDisksLoop</span></a> *object</code></em>);
+<span class="returnvalue">GDBusInterfaceInfo</span> * <a class="link" href="UDisksLoop.html#udisks-loop-interface-info" title="udisks_loop_interface_info ()">udisks_loop_interface_info</a>         (<em class="parameter"><code><span class="type">void</span></code></em>);
+<span class="returnvalue">guint</span>               <a class="link" href="UDisksLoop.html#udisks-loop-override-properties" title="udisks_loop_override_properties ()">udisks_loop_override_properties</a>     (<em class="parameter"><code><span class="type">GObjectClass</span> *klass</code></em>,
+                                                         <em class="parameter"><code><span class="type">guint</span> property_id_begin</code></em>);
+const <span class="returnvalue">gchar</span> *       <a class="link" href="UDisksLoop.html#udisks-loop-get-backing-file" title="udisks_loop_get_backing_file ()">udisks_loop_get_backing_file</a>        (<em class="parameter"><code><a class="link" href="UDisksLoop.html" title="UDisksLoop"><span class="type">UDisksLoop</span></a> *object</code></em>);
+<span class="returnvalue">gboolean</span>            <a class="link" href="UDisksLoop.html#udisks-loop-get-autoclear" title="udisks_loop_get_autoclear ()">udisks_loop_get_autoclear</a>           (<em class="parameter"><code><a class="link" href="UDisksLoop.html" title="UDisksLoop"><span class="type">UDisksLoop</span></a> *object</code></em>);
+<span class="returnvalue">guint</span>               <a class="link" href="UDisksLoop.html#udisks-loop-get-setup-by-uid" title="udisks_loop_get_setup_by_uid ()">udisks_loop_get_setup_by_uid</a>        (<em class="parameter"><code><a class="link" href="UDisksLoop.html" title="UDisksLoop"><span class="type">UDisksLoop</span></a> *object</code></em>);
+<span class="returnvalue">gchar</span> *             <a class="link" href="UDisksLoop.html#udisks-loop-dup-backing-file" title="udisks_loop_dup_backing_file ()">udisks_loop_dup_backing_file</a>        (<em class="parameter"><code><a class="link" href="UDisksLoop.html" title="UDisksLoop"><span class="type">UDisksLoop</span></a> *object</code></em>);
 <span class="returnvalue">void</span>                <a class="link" href="UDisksLoop.html#udisks-loop-set-backing-file" title="udisks_loop_set_backing_file ()">udisks_loop_set_backing_file</a>        (<em class="parameter"><code><a class="link" href="UDisksLoop.html" title="UDisksLoop"><span class="type">UDisksLoop</span></a> *object</code></em>,
-                                                         <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *value</code></em>);
+                                                         <em class="parameter"><code>const <span class="type">gchar</span> *value</code></em>);
 <span class="returnvalue">void</span>                <a class="link" href="UDisksLoop.html#udisks-loop-set-autoclear" title="udisks_loop_set_autoclear ()">udisks_loop_set_autoclear</a>           (<em class="parameter"><code><a class="link" href="UDisksLoop.html" title="UDisksLoop"><span class="type">UDisksLoop</span></a> *object</code></em>,
-                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"><span class="type">gboolean</span></a> value</code></em>);
+                                                         <em class="parameter"><code><span class="type">gboolean</span> value</code></em>);
 <span class="returnvalue">void</span>                <a class="link" href="UDisksLoop.html#udisks-loop-set-setup-by-uid" title="udisks_loop_set_setup_by_uid ()">udisks_loop_set_setup_by_uid</a>        (<em class="parameter"><code><a class="link" href="UDisksLoop.html" title="UDisksLoop"><span class="type">UDisksLoop</span></a> *object</code></em>,
-                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#guint"><span class="type">guint</span></a> value</code></em>);
+                                                         <em class="parameter"><code><span class="type">guint</span> value</code></em>);
 <span class="returnvalue">void</span>                <a class="link" href="UDisksLoop.html#udisks-loop-call-delete" title="udisks_loop_call_delete ()">udisks_loop_call_delete</a>             (<em class="parameter"><code><a class="link" href="UDisksLoop.html" title="UDisksLoop"><span class="type">UDisksLoop</span></a> *proxy</code></em>,
-                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-GVariant.html#GVariant"><span class="type">GVariant</span></a> *arg_options</code></em>,
-                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/gio/unstable/GCancellable.html"><span class="type">GCancellable</span></a> *cancellable</code></em>,
-                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/gio/unstable/GAsyncResult.html#GAsyncReadyCallback"><span class="type">GAsyncReadyCallback</span></a> callback</code></em>,
-                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gpointer"><span class="type">gpointer</span></a> user_data</code></em>);
-<a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>            <a class="link" href="UDisksLoop.html#udisks-loop-call-delete-finish" title="udisks_loop_call_delete_finish ()">udisks_loop_call_delete_finish</a>      (<em class="parameter"><code><a class="link" href="UDisksLoop.html" title="UDisksLoop"><span class="type">UDisksLoop</span></a> *proxy</code></em>,
-                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/gio/unstable/GAsyncResult.html"><span class="type">GAsyncResult</span></a> *res</code></em>,
-                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Error-Reporting.html#GError"><span class="type">GError</span></a> **error</code></em>);
-<a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>            <a class="link" href="UDisksLoop.html#udisks-loop-call-delete-sync" title="udisks_loop_call_delete_sync ()">udisks_loop_call_delete_sync</a>        (<em class="parameter"><code><a class="link" href="UDisksLoop.html" title="UDisksLoop"><span class="type">UDisksLoop</span></a> *proxy</code></em>,
-                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-GVariant.html#GVariant"><span class="type">GVariant</span></a> *arg_options</code></em>,
-                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/gio/unstable/GCancellable.html"><span class="type">GCancellable</span></a> *cancellable</code></em>,
-                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Error-Reporting.html#GError"><span class="type">GError</span></a> **error</code></em>);
+                                                         <em class="parameter"><code><span class="type">GVariant</span> *arg_options</code></em>,
+                                                         <em class="parameter"><code><span class="type">GCancellable</span> *cancellable</code></em>,
+                                                         <em class="parameter"><code><span class="type">GAsyncReadyCallback</span> callback</code></em>,
+                                                         <em class="parameter"><code><span class="type">gpointer</span> user_data</code></em>);
+<span class="returnvalue">gboolean</span>            <a class="link" href="UDisksLoop.html#udisks-loop-call-delete-finish" title="udisks_loop_call_delete_finish ()">udisks_loop_call_delete_finish</a>      (<em class="parameter"><code><a class="link" href="UDisksLoop.html" title="UDisksLoop"><span class="type">UDisksLoop</span></a> *proxy</code></em>,
+                                                         <em class="parameter"><code><span class="type">GAsyncResult</span> *res</code></em>,
+                                                         <em class="parameter"><code><span class="type">GError</span> **error</code></em>);
+<span class="returnvalue">gboolean</span>            <a class="link" href="UDisksLoop.html#udisks-loop-call-delete-sync" title="udisks_loop_call_delete_sync ()">udisks_loop_call_delete_sync</a>        (<em class="parameter"><code><a class="link" href="UDisksLoop.html" title="UDisksLoop"><span class="type">UDisksLoop</span></a> *proxy</code></em>,
+                                                         <em class="parameter"><code><span class="type">GVariant</span> *arg_options</code></em>,
+                                                         <em class="parameter"><code><span class="type">GCancellable</span> *cancellable</code></em>,
+                                                         <em class="parameter"><code><span class="type">GError</span> **error</code></em>);
 <span class="returnvalue">void</span>                <a class="link" href="UDisksLoop.html#udisks-loop-complete-delete" title="udisks_loop_complete_delete ()">udisks_loop_complete_delete</a>         (<em class="parameter"><code><a class="link" href="UDisksLoop.html" title="UDisksLoop"><span class="type">UDisksLoop</span></a> *object</code></em>,
-                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/gio/unstable/GDBusMethodInvocation.html"><span class="type">GDBusMethodInvocation</span></a> *invocation</code></em>);
+                                                         <em class="parameter"><code><span class="type">GDBusMethodInvocation</span> *invocation</code></em>);
 <span class="returnvalue">void</span>                <a class="link" href="UDisksLoop.html#udisks-loop-call-set-autoclear" title="udisks_loop_call_set_autoclear ()">udisks_loop_call_set_autoclear</a>      (<em class="parameter"><code><a class="link" href="UDisksLoop.html" title="UDisksLoop"><span class="type">UDisksLoop</span></a> *proxy</code></em>,
-                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"><span class="type">gboolean</span></a> arg_value</code></em>,
-                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-GVariant.html#GVariant"><span class="type">GVariant</span></a> *arg_options</code></em>,
-                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/gio/unstable/GCancellable.html"><span class="type">GCancellable</span></a> *cancellable</code></em>,
-                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/gio/unstable/GAsyncResult.html#GAsyncReadyCallback"><span class="type">GAsyncReadyCallback</span></a> callback</code></em>,
-                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gpointer"><span class="type">gpointer</span></a> user_data</code></em>);
-<a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>            <a class="link" href="UDisksLoop.html#udisks-loop-call-set-autoclear-finish" title="udisks_loop_call_set_autoclear_finish ()">udisks_loop_call_set_autoclear_finish</a>
+                                                         <em class="parameter"><code><span class="type">gboolean</span> arg_value</code></em>,
+                                                         <em class="parameter"><code><span class="type">GVariant</span> *arg_options</code></em>,
+                                                         <em class="parameter"><code><span class="type">GCancellable</span> *cancellable</code></em>,
+                                                         <em class="parameter"><code><span class="type">GAsyncReadyCallback</span> callback</code></em>,
+                                                         <em class="parameter"><code><span class="type">gpointer</span> user_data</code></em>);
+<span class="returnvalue">gboolean</span>            <a class="link" href="UDisksLoop.html#udisks-loop-call-set-autoclear-finish" title="udisks_loop_call_set_autoclear_finish ()">udisks_loop_call_set_autoclear_finish</a>
                                                         (<em class="parameter"><code><a class="link" href="UDisksLoop.html" title="UDisksLoop"><span class="type">UDisksLoop</span></a> *proxy</code></em>,
-                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/gio/unstable/GAsyncResult.html"><span class="type">GAsyncResult</span></a> *res</code></em>,
-                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Error-Reporting.html#GError"><span class="type">GError</span></a> **error</code></em>);
-<a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>            <a class="link" href="UDisksLoop.html#udisks-loop-call-set-autoclear-sync" title="udisks_loop_call_set_autoclear_sync ()">udisks_loop_call_set_autoclear_sync</a> (<em class="parameter"><code><a class="link" href="UDisksLoop.html" title="UDisksLoop"><span class="type">UDisksLoop</span></a> *proxy</code></em>,
-                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"><span class="type">gboolean</span></a> arg_value</code></em>,
-                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-GVariant.html#GVariant"><span class="type">GVariant</span></a> *arg_options</code></em>,
-                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/gio/unstable/GCancellable.html"><span class="type">GCancellable</span></a> *cancellable</code></em>,
-                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Error-Reporting.html#GError"><span class="type">GError</span></a> **error</code></em>);
+                                                         <em class="parameter"><code><span class="type">GAsyncResult</span> *res</code></em>,
+                                                         <em class="parameter"><code><span class="type">GError</span> **error</code></em>);
+<span class="returnvalue">gboolean</span>            <a class="link" href="UDisksLoop.html#udisks-loop-call-set-autoclear-sync" title="udisks_loop_call_set_autoclear_sync ()">udisks_loop_call_set_autoclear_sync</a> (<em class="parameter"><code><a class="link" href="UDisksLoop.html" title="UDisksLoop"><span class="type">UDisksLoop</span></a> *proxy</code></em>,
+                                                         <em class="parameter"><code><span class="type">gboolean</span> arg_value</code></em>,
+                                                         <em class="parameter"><code><span class="type">GVariant</span> *arg_options</code></em>,
+                                                         <em class="parameter"><code><span class="type">GCancellable</span> *cancellable</code></em>,
+                                                         <em class="parameter"><code><span class="type">GError</span> **error</code></em>);
 <span class="returnvalue">void</span>                <a class="link" href="UDisksLoop.html#udisks-loop-complete-set-autoclear" title="udisks_loop_complete_set_autoclear ()">udisks_loop_complete_set_autoclear</a>  (<em class="parameter"><code><a class="link" href="UDisksLoop.html" title="UDisksLoop"><span class="type">UDisksLoop</span></a> *object</code></em>,
-                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/gio/unstable/GDBusMethodInvocation.html"><span class="type">GDBusMethodInvocation</span></a> *invocation</code></em>);
+                                                         <em class="parameter"><code><span class="type">GDBusMethodInvocation</span> *invocation</code></em>);
 struct              <a class="link" href="UDisksLoop.html#UDisksLoopProxy-struct" title="struct UDisksLoopProxy">UDisksLoopProxy</a>;
 struct              <a class="link" href="UDisksLoop.html#UDisksLoopProxyClass" title="struct UDisksLoopProxyClass">UDisksLoopProxyClass</a>;
-<span class="returnvalue">void</span>                <a class="link" href="UDisksLoop.html#udisks-loop-proxy-new" title="udisks_loop_proxy_new ()">udisks_loop_proxy_new</a>               (<em class="parameter"><code><a href="http://library.gnome.org/devel/gio/unstable/GDBusConnection.html"><span class="type">GDBusConnection</span></a> *connection</code></em>,
-                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/gio/unstable/GDBusProxy.html#GDBusProxyFlags"><span class="type">GDBusProxyFlags</span></a> flags</code></em>,
-                                                         <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *name</code></em>,
-                                                         <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *object_path</code></em>,
-                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/gio/unstable/GCancellable.html"><span class="type">GCancellable</span></a> *cancellable</code></em>,
-                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/gio/unstable/GAsyncResult.html#GAsyncReadyCallback"><span class="type">GAsyncReadyCallback</span></a> callback</code></em>,
-                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gpointer"><span class="type">gpointer</span></a> user_data</code></em>);
-<a class="link" href="UDisksLoop.html" title="UDisksLoop"><span class="returnvalue">UDisksLoop</span></a> *        <a class="link" href="UDisksLoop.html#udisks-loop-proxy-new-finish" title="udisks_loop_proxy_new_finish ()">udisks_loop_proxy_new_finish</a>        (<em class="parameter"><code><a href="http://library.gnome.org/devel/gio/unstable/GAsyncResult.html"><span class="type">GAsyncResult</span></a> *res</code></em>,
-                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Error-Reporting.html#GError"><span class="type">GError</span></a> **error</code></em>);
-<a class="link" href="UDisksLoop.html" title="UDisksLoop"><span class="returnvalue">UDisksLoop</span></a> *        <a class="link" href="UDisksLoop.html#udisks-loop-proxy-new-sync" title="udisks_loop_proxy_new_sync ()">udisks_loop_proxy_new_sync</a>          (<em class="parameter"><code><a href="http://library.gnome.org/devel/gio/unstable/GDBusConnection.html"><span class="type">GDBusConnection</span></a> *connection</code></em>,
-                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/gio/unstable/GDBusProxy.html#GDBusProxyFlags"><span class="type">GDBusProxyFlags</span></a> flags</code></em>,
-                                                         <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *name</code></em>,
-                                                         <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *object_path</code></em>,
-                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/gio/unstable/GCancellable.html"><span class="type">GCancellable</span></a> *cancellable</code></em>,
-                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Error-Reporting.html#GError"><span class="type">GError</span></a> **error</code></em>);
-<span class="returnvalue">void</span>                <a class="link" href="UDisksLoop.html#udisks-loop-proxy-new-for-bus" title="udisks_loop_proxy_new_for_bus ()">udisks_loop_proxy_new_for_bus</a>       (<em class="parameter"><code><a href="http://library.gnome.org/devel/gio/unstable/GDBusConnection.html#GBusType"><span class="type">GBusType</span></a> bus_type</code></em>,
-                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/gio/unstable/GDBusProxy.html#GDBusProxyFlags"><span class="type">GDBusProxyFlags</span></a> flags</code></em>,
-                                                         <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *name</code></em>,
-                                                         <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *object_path</code></em>,
-                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/gio/unstable/GCancellable.html"><span class="type">GCancellable</span></a> *cancellable</code></em>,
-                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/gio/unstable/GAsyncResult.html#GAsyncReadyCallback"><span class="type">GAsyncReadyCallback</span></a> callback</code></em>,
-                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gpointer"><span class="type">gpointer</span></a> user_data</code></em>);
+<span class="returnvalue">void</span>                <a class="link" href="UDisksLoop.html#udisks-loop-proxy-new" title="udisks_loop_proxy_new ()">udisks_loop_proxy_new</a>               (<em class="parameter"><code><span class="type">GDBusConnection</span> *connection</code></em>,
+                                                         <em class="parameter"><code><span class="type">GDBusProxyFlags</span> flags</code></em>,
+                                                         <em class="parameter"><code>const <span class="type">gchar</span> *name</code></em>,
+                                                         <em class="parameter"><code>const <span class="type">gchar</span> *object_path</code></em>,
+                                                         <em class="parameter"><code><span class="type">GCancellable</span> *cancellable</code></em>,
+                                                         <em class="parameter"><code><span class="type">GAsyncReadyCallback</span> callback</code></em>,
+                                                         <em class="parameter"><code><span class="type">gpointer</span> user_data</code></em>);
+<a class="link" href="UDisksLoop.html" title="UDisksLoop"><span class="returnvalue">UDisksLoop</span></a> *        <a class="link" href="UDisksLoop.html#udisks-loop-proxy-new-finish" title="udisks_loop_proxy_new_finish ()">udisks_loop_proxy_new_finish</a>        (<em class="parameter"><code><span class="type">GAsyncResult</span> *res</code></em>,
+                                                         <em class="parameter"><code><span class="type">GError</span> **error</code></em>);
+<a class="link" href="UDisksLoop.html" title="UDisksLoop"><span class="returnvalue">UDisksLoop</span></a> *        <a class="link" href="UDisksLoop.html#udisks-loop-proxy-new-sync" title="udisks_loop_proxy_new_sync ()">udisks_loop_proxy_new_sync</a>          (<em class="parameter"><code><span class="type">GDBusConnection</span> *connection</code></em>,
+                                                         <em class="parameter"><code><span class="type">GDBusProxyFlags</span> flags</code></em>,
+                                                         <em class="parameter"><code>const <span class="type">gchar</span> *name</code></em>,
+                                                         <em class="parameter"><code>const <span class="type">gchar</span> *object_path</code></em>,
+                                                         <em class="parameter"><code><span class="type">GCancellable</span> *cancellable</code></em>,
+                                                         <em class="parameter"><code><span class="type">GError</span> **error</code></em>);
+<span class="returnvalue">void</span>                <a class="link" href="UDisksLoop.html#udisks-loop-proxy-new-for-bus" title="udisks_loop_proxy_new_for_bus ()">udisks_loop_proxy_new_for_bus</a>       (<em class="parameter"><code><span class="type">GBusType</span> bus_type</code></em>,
+                                                         <em class="parameter"><code><span class="type">GDBusProxyFlags</span> flags</code></em>,
+                                                         <em class="parameter"><code>const <span class="type">gchar</span> *name</code></em>,
+                                                         <em class="parameter"><code>const <span class="type">gchar</span> *object_path</code></em>,
+                                                         <em class="parameter"><code><span class="type">GCancellable</span> *cancellable</code></em>,
+                                                         <em class="parameter"><code><span class="type">GAsyncReadyCallback</span> callback</code></em>,
+                                                         <em class="parameter"><code><span class="type">gpointer</span> user_data</code></em>);
 <a class="link" href="UDisksLoop.html" title="UDisksLoop"><span class="returnvalue">UDisksLoop</span></a> *        <a class="link" href="UDisksLoop.html#udisks-loop-proxy-new-for-bus-finish" title="udisks_loop_proxy_new_for_bus_finish ()">udisks_loop_proxy_new_for_bus_finish</a>
-                                                        (<em class="parameter"><code><a href="http://library.gnome.org/devel/gio/unstable/GAsyncResult.html"><span class="type">GAsyncResult</span></a> *res</code></em>,
-                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Error-Reporting.html#GError"><span class="type">GError</span></a> **error</code></em>);
-<a class="link" href="UDisksLoop.html" title="UDisksLoop"><span class="returnvalue">UDisksLoop</span></a> *        <a class="link" href="UDisksLoop.html#udisks-loop-proxy-new-for-bus-sync" title="udisks_loop_proxy_new_for_bus_sync ()">udisks_loop_proxy_new_for_bus_sync</a>  (<em class="parameter"><code><a href="http://library.gnome.org/devel/gio/unstable/GDBusConnection.html#GBusType"><span class="type">GBusType</span></a> bus_type</code></em>,
-                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/gio/unstable/GDBusProxy.html#GDBusProxyFlags"><span class="type">GDBusProxyFlags</span></a> flags</code></em>,
-                                                         <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *name</code></em>,
-                                                         <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *object_path</code></em>,
-                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/gio/unstable/GCancellable.html"><span class="type">GCancellable</span></a> *cancellable</code></em>,
-                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Error-Reporting.html#GError"><span class="type">GError</span></a> **error</code></em>);
+                                                        (<em class="parameter"><code><span class="type">GAsyncResult</span> *res</code></em>,
+                                                         <em class="parameter"><code><span class="type">GError</span> **error</code></em>);
+<a class="link" href="UDisksLoop.html" title="UDisksLoop"><span class="returnvalue">UDisksLoop</span></a> *        <a class="link" href="UDisksLoop.html#udisks-loop-proxy-new-for-bus-sync" title="udisks_loop_proxy_new_for_bus_sync ()">udisks_loop_proxy_new_for_bus_sync</a>  (<em class="parameter"><code><span class="type">GBusType</span> bus_type</code></em>,
+                                                         <em class="parameter"><code><span class="type">GDBusProxyFlags</span> flags</code></em>,
+                                                         <em class="parameter"><code>const <span class="type">gchar</span> *name</code></em>,
+                                                         <em class="parameter"><code>const <span class="type">gchar</span> *object_path</code></em>,
+                                                         <em class="parameter"><code><span class="type">GCancellable</span> *cancellable</code></em>,
+                                                         <em class="parameter"><code><span class="type">GError</span> **error</code></em>);
 struct              <a class="link" href="UDisksLoop.html#UDisksLoopSkeleton-struct" title="struct UDisksLoopSkeleton">UDisksLoopSkeleton</a>;
 struct              <a class="link" href="UDisksLoop.html#UDisksLoopSkeletonClass" title="struct UDisksLoopSkeletonClass">UDisksLoopSkeletonClass</a>;
 <a class="link" href="UDisksLoop.html" title="UDisksLoop"><span class="returnvalue">UDisksLoop</span></a> *        <a class="link" href="UDisksLoop.html#udisks-loop-skeleton-new" title="udisks_loop_skeleton_new ()">udisks_loop_skeleton_new</a>            (<em class="parameter"><code><span class="type">void</span></code></em>);
@@ -140,13 +140,13 @@ struct              <a class="link" href="UDisksLoop.html#UDisksLoopSkeletonClas
    +----UDisksLoop
 </pre>
 <pre class="synopsis">
-  <a href="http://library.gnome.org/devel/gobject/unstable/gobject-The-Base-Object-Type.html#GObject">GObject</a>
-   +----<a href="http://library.gnome.org/devel/gio/unstable/GDBusProxy.html">GDBusProxy</a>
+  GObject
+   +----GDBusProxy
          +----UDisksLoopProxy
 </pre>
 <pre class="synopsis">
-  <a href="http://library.gnome.org/devel/gobject/unstable/gobject-The-Base-Object-Type.html#GObject">GObject</a>
-   +----<a href="http://library.gnome.org/devel/gio/unstable/GDBusInterfaceSkeleton.html">GDBusInterfaceSkeleton</a>
+  GObject
+   +----GDBusInterfaceSkeleton
          +----UDisksLoopSkeleton
                +----<a class="link" href="UDisksLinuxLoop.html" title="UDisksLinuxLoop">UDisksLinuxLoop</a>
 </pre>
@@ -155,16 +155,16 @@ struct              <a class="link" href="UDisksLoop.html#UDisksLoopSkeletonClas
 <a name="UDisksLoop.prerequisites"></a><h2>Prerequisites</h2>
 <p>
 UDisksLoop requires
- <a href="http://library.gnome.org/devel/gobject/unstable/gobject-The-Base-Object-Type.html#GObject">GObject</a>.</p>
+ GObject.</p>
 </div>
 <div class="refsect1">
 <a name="UDisksLoop.implemented-interfaces"></a><h2>Implemented Interfaces</h2>
 <p>
 UDisksLoopProxy implements
- <a href="http://library.gnome.org/devel/gio/unstable/GDBusInterface.html">GDBusInterface</a>,  <a href="http://library.gnome.org/devel/gio/unstable/GInitable.html">GInitable</a>,  <a href="http://library.gnome.org/devel/gio/unstable/GAsyncInitable.html">GAsyncInitable</a> and  <a class="link" href="UDisksLoop.html" title="UDisksLoop">UDisksLoop</a>.</p>
+ GDBusInterface,  GInitable,  GAsyncInitable and  <a class="link" href="UDisksLoop.html" title="UDisksLoop">UDisksLoop</a>.</p>
 <p>
 UDisksLoopSkeleton implements
- <a href="http://library.gnome.org/devel/gio/unstable/GDBusInterface.html">GDBusInterface</a> and  <a class="link" href="UDisksLoop.html" title="UDisksLoop">UDisksLoop</a>.</p>
+ GDBusInterface and  <a class="link" href="UDisksLoop.html" title="UDisksLoop">UDisksLoop</a>.</p>
 </div>
 <div class="refsect1">
 <a name="UDisksLoop.implementations"></a><h2>Known Implementations</h2>
@@ -175,16 +175,16 @@ UDisksLoop is implemented by
 <div class="refsect1">
 <a name="UDisksLoop.properties"></a><h2>Properties</h2>
 <pre class="synopsis">
-  "<a class="link" href="UDisksLoop.html#UDisksLoop--autoclear" title='The "autoclear" property'>autoclear</a>"                <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"><span class="type">gboolean</span></a>              : Read / Write
-  "<a class="link" href="UDisksLoop.html#UDisksLoop--backing-file" title='The "backing-file" property'>backing-file</a>"             <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a>*                : Read / Write
-  "<a class="link" href="UDisksLoop.html#UDisksLoop--setup-by-uid" title='The "setup-by-uid" property'>setup-by-uid</a>"             <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#guint"><span class="type">guint</span></a>                 : Read / Write
+  "<a class="link" href="UDisksLoop.html#UDisksLoop--autoclear" title='The "autoclear" property'>autoclear</a>"                <span class="type">gboolean</span>              : Read / Write
+  "<a class="link" href="UDisksLoop.html#UDisksLoop--backing-file" title='The "backing-file" property'>backing-file</a>"             <span class="type">gchar</span>*                : Read / Write
+  "<a class="link" href="UDisksLoop.html#UDisksLoop--setup-by-uid" title='The "setup-by-uid" property'>setup-by-uid</a>"             <span class="type">guint</span>                 : Read / Write
 </pre>
 </div>
 <div class="refsect1">
 <a name="UDisksLoop.signals"></a><h2>Signals</h2>
 <pre class="synopsis">
-  "<a class="link" href="UDisksLoop.html#UDisksLoop-handle-delete" title='The "handle-delete" signal'>handle-delete</a>"                                  : <a href="http://library.gnome.org/devel/gobject/unstable/gobject-Signals.html#G-SIGNAL-RUN-LAST:CAPS"><code class="literal">Run Last</code></a>
-  "<a class="link" href="UDisksLoop.html#UDisksLoop-handle-set-autoclear" title='The "handle-set-autoclear" signal'>handle-set-autoclear</a>"                           : <a href="http://library.gnome.org/devel/gobject/unstable/gobject-Signals.html#G-SIGNAL-RUN-LAST:CAPS"><code class="literal">Run Last</code></a>
+  "<a class="link" href="UDisksLoop.html#UDisksLoop-handle-delete" title='The "handle-delete" signal'>handle-delete</a>"                                  : <code class="literal">Run Last</code>
+  "<a class="link" href="UDisksLoop.html#UDisksLoop-handle-set-autoclear" title='The "handle-set-autoclear" signal'>handle-set-autoclear</a>"                           : <code class="literal">Run Last</code>
 </pre>
 </div>
 <div class="refsect1">
@@ -237,7 +237,7 @@ Virtual table for the D-Bus interface <a class="link" href="gdbus-org.freedeskto
 </colgroup>
 <tbody>
 <tr>
-<td><p><span class="term"><a href="http://library.gnome.org/devel/gobject/unstable/gobject-Type-Information.html#GTypeInterface"><span class="type">GTypeInterface</span></a> <em class="structfield"><code><a name="UDisksLoopIface.parent-iface"></a>parent_iface</code></em>;</span></p></td>
+<td><p><span class="term"><span class="type">GTypeInterface</span> <em class="structfield"><code><a name="UDisksLoopIface.parent-iface"></a>parent_iface</code></em>;</span></p></td>
 <td>The parent interface.</td>
 </tr>
 <tr>
@@ -266,7 +266,7 @@ Virtual table for the D-Bus interface <a class="link" href="gdbus-org.freedeskto
 <hr>
 <div class="refsect2">
 <a name="udisks-loop-interface-info"></a><h3>udisks_loop_interface_info ()</h3>
-<pre class="programlisting"><a href="http://library.gnome.org/devel/gio/unstable/gio-D-Bus-Introspection-Data.html#GDBusInterfaceInfo"><span class="returnvalue">GDBusInterfaceInfo</span></a> * udisks_loop_interface_info         (<em class="parameter"><code><span class="type">void</span></code></em>);</pre>
+<pre class="programlisting"><span class="returnvalue">GDBusInterfaceInfo</span> * udisks_loop_interface_info         (<em class="parameter"><code><span class="type">void</span></code></em>);</pre>
 <p>
 Gets a machine-readable description of the <a class="link" href="gdbus-org.freedesktop.UDisks2.Loop.html#gdbus-interface-org-freedesktop-UDisks2-Loop.top_of_page">org.freedesktop.UDisks2.Loop</a> D-Bus interface.
 </p>
@@ -277,7 +277,7 @@ Gets a machine-readable description of the <a class="link" href="gdbus-org.freed
 </colgroup>
 <tbody><tr>
 <td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
-<td>A <a href="http://library.gnome.org/devel/gio/unstable/gio-D-Bus-Introspection-Data.html#GDBusInterfaceInfo"><span class="type">GDBusInterfaceInfo</span></a>. Do not free. <span class="annotation">[<a href="http://foldoc.org/transfer%20none"><span class="acronym">transfer none</span></a>]</span>
+<td>A <span class="type">GDBusInterfaceInfo</span>. Do not free. <span class="annotation">[<a href="http://foldoc.org/transfer%20none"><span class="acronym">transfer none</span></a>]</span>
 </td>
 </tr></tbody>
 </table></div>
@@ -285,10 +285,10 @@ Gets a machine-readable description of the <a class="link" href="gdbus-org.freed
 <hr>
 <div class="refsect2">
 <a name="udisks-loop-override-properties"></a><h3>udisks_loop_override_properties ()</h3>
-<pre class="programlisting"><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#guint"><span class="returnvalue">guint</span></a>               udisks_loop_override_properties     (<em class="parameter"><code><a href="http://library.gnome.org/devel/gobject/unstable/gobject-The-Base-Object-Type.html#GObjectClass"><span class="type">GObjectClass</span></a> *klass</code></em>,
-                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#guint"><span class="type">guint</span></a> property_id_begin</code></em>);</pre>
+<pre class="programlisting"><span class="returnvalue">guint</span>               udisks_loop_override_properties     (<em class="parameter"><code><span class="type">GObjectClass</span> *klass</code></em>,
+                                                         <em class="parameter"><code><span class="type">guint</span> property_id_begin</code></em>);</pre>
 <p>
-Overrides all <a href="http://library.gnome.org/devel/gobject/unstable/gobject-The-Base-Object-Type.html#GObject"><span class="type">GObject</span></a> properties in the <a class="link" href="UDisksLoop.html" title="UDisksLoop"><span class="type">UDisksLoop</span></a> interface for a concrete class.
+Overrides all <span class="type">GObject</span> properties in the <a class="link" href="UDisksLoop.html" title="UDisksLoop"><span class="type">UDisksLoop</span></a> interface for a concrete class.
 The properties are overridden in the order they are defined.
 </p>
 <div class="variablelist"><table border="0" class="variablelist">
@@ -299,7 +299,7 @@ The properties are overridden in the order they are defined.
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>klass</code></em> :</span></p></td>
-<td>The class structure for a <a href="http://library.gnome.org/devel/gobject/unstable/gobject-The-Base-Object-Type.html#GObject"><span class="type">GObject</span></a>-derived class.</td>
+<td>The class structure for a <span class="type">GObject</span>-derived class.</td>
 </tr>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>property_id_begin</code></em> :</span></p></td>
@@ -315,7 +315,7 @@ The properties are overridden in the order they are defined.
 <hr>
 <div class="refsect2">
 <a name="udisks-loop-get-backing-file"></a><h3>udisks_loop_get_backing_file ()</h3>
-<pre class="programlisting">const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="returnvalue">gchar</span></a> *       udisks_loop_get_backing_file        (<em class="parameter"><code><a class="link" href="UDisksLoop.html" title="UDisksLoop"><span class="type">UDisksLoop</span></a> *object</code></em>);</pre>
+<pre class="programlisting">const <span class="returnvalue">gchar</span> *       udisks_loop_get_backing_file        (<em class="parameter"><code><a class="link" href="UDisksLoop.html" title="UDisksLoop"><span class="type">UDisksLoop</span></a> *object</code></em>);</pre>
 <p>
 Gets the value of the <a class="link" href="gdbus-org.freedesktop.UDisks2.Loop.html#gdbus-property-org-freedesktop-UDisks2-Loop.BackingFile" title='The "BackingFile" property'>"BackingFile"</a> D-Bus property.
 </p>
@@ -340,7 +340,7 @@ Since this D-Bus property is readable, it is meaningful to use this function on 
 </tr>
 <tr>
 <td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
-<td>The property value or <a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a> if the property is not set. Do not free the returned value, it belongs to <em class="parameter"><code>object</code></em>. <span class="annotation">[<a href="http://foldoc.org/transfer%20none"><span class="acronym">transfer none</span></a>]</span>
+<td>The property value or <code class="literal">NULL</code> if the property is not set. Do not free the returned value, it belongs to <em class="parameter"><code>object</code></em>. <span class="annotation">[<a href="http://foldoc.org/transfer%20none"><span class="acronym">transfer none</span></a>]</span>
 </td>
 </tr>
 </tbody>
@@ -349,7 +349,7 @@ Since this D-Bus property is readable, it is meaningful to use this function on 
 <hr>
 <div class="refsect2">
 <a name="udisks-loop-get-autoclear"></a><h3>udisks_loop_get_autoclear ()</h3>
-<pre class="programlisting"><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>            udisks_loop_get_autoclear           (<em class="parameter"><code><a class="link" href="UDisksLoop.html" title="UDisksLoop"><span class="type">UDisksLoop</span></a> *object</code></em>);</pre>
+<pre class="programlisting"><span class="returnvalue">gboolean</span>            udisks_loop_get_autoclear           (<em class="parameter"><code><a class="link" href="UDisksLoop.html" title="UDisksLoop"><span class="type">UDisksLoop</span></a> *object</code></em>);</pre>
 <p>
 Gets the value of the <a class="link" href="gdbus-org.freedesktop.UDisks2.Loop.html#gdbus-property-org-freedesktop-UDisks2-Loop.Autoclear" title='The "Autoclear" property'>"Autoclear"</a> D-Bus property.
 </p>
@@ -376,7 +376,7 @@ Since this D-Bus property is readable, it is meaningful to use this function on 
 <hr>
 <div class="refsect2">
 <a name="udisks-loop-get-setup-by-uid"></a><h3>udisks_loop_get_setup_by_uid ()</h3>
-<pre class="programlisting"><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#guint"><span class="returnvalue">guint</span></a>               udisks_loop_get_setup_by_uid        (<em class="parameter"><code><a class="link" href="UDisksLoop.html" title="UDisksLoop"><span class="type">UDisksLoop</span></a> *object</code></em>);</pre>
+<pre class="programlisting"><span class="returnvalue">guint</span>               udisks_loop_get_setup_by_uid        (<em class="parameter"><code><a class="link" href="UDisksLoop.html" title="UDisksLoop"><span class="type">UDisksLoop</span></a> *object</code></em>);</pre>
 <p>
 Gets the value of the <a class="link" href="gdbus-org.freedesktop.UDisks2.Loop.html#gdbus-property-org-freedesktop-UDisks2-Loop.SetupByUID" title='The "SetupByUID" property'>"SetupByUID"</a> D-Bus property.
 </p>
@@ -403,7 +403,7 @@ Since this D-Bus property is readable, it is meaningful to use this function on 
 <hr>
 <div class="refsect2">
 <a name="udisks-loop-dup-backing-file"></a><h3>udisks_loop_dup_backing_file ()</h3>
-<pre class="programlisting"><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="returnvalue">gchar</span></a> *             udisks_loop_dup_backing_file        (<em class="parameter"><code><a class="link" href="UDisksLoop.html" title="UDisksLoop"><span class="type">UDisksLoop</span></a> *object</code></em>);</pre>
+<pre class="programlisting"><span class="returnvalue">gchar</span> *             udisks_loop_dup_backing_file        (<em class="parameter"><code><a class="link" href="UDisksLoop.html" title="UDisksLoop"><span class="type">UDisksLoop</span></a> *object</code></em>);</pre>
 <p>
 Gets a copy of the <a class="link" href="gdbus-org.freedesktop.UDisks2.Loop.html#gdbus-property-org-freedesktop-UDisks2-Loop.BackingFile" title='The "BackingFile" property'>"BackingFile"</a> D-Bus property.
 </p>
@@ -422,7 +422,7 @@ Since this D-Bus property is readable, it is meaningful to use this function on 
 </tr>
 <tr>
 <td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
-<td>The property value or <a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a> if the property is not set. The returned value should be freed with <a href="http://library.gnome.org/devel/glib/unstable/glib-Memory-Allocation.html#g-free"><code class="function">g_free()</code></a>. <span class="annotation">[<a href="http://foldoc.org/transfer%20full"><span class="acronym">transfer full</span></a>]</span>
+<td>The property value or <code class="literal">NULL</code> if the property is not set. The returned value should be freed with <code class="function">g_free()</code>. <span class="annotation">[<a href="http://foldoc.org/transfer%20full"><span class="acronym">transfer full</span></a>]</span>
 </td>
 </tr>
 </tbody>
@@ -432,7 +432,7 @@ Since this D-Bus property is readable, it is meaningful to use this function on 
 <div class="refsect2">
 <a name="udisks-loop-set-backing-file"></a><h3>udisks_loop_set_backing_file ()</h3>
 <pre class="programlisting"><span class="returnvalue">void</span>                udisks_loop_set_backing_file        (<em class="parameter"><code><a class="link" href="UDisksLoop.html" title="UDisksLoop"><span class="type">UDisksLoop</span></a> *object</code></em>,
-                                                         <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *value</code></em>);</pre>
+                                                         <em class="parameter"><code>const <span class="type">gchar</span> *value</code></em>);</pre>
 <p>
 Sets the <a class="link" href="gdbus-org.freedesktop.UDisks2.Loop.html#gdbus-property-org-freedesktop-UDisks2-Loop.BackingFile" title='The "BackingFile" property'>"BackingFile"</a> D-Bus property to <em class="parameter"><code>value</code></em>.
 </p>
@@ -460,7 +460,7 @@ Since this D-Bus property is not writable, it is only meaningful to use this fun
 <div class="refsect2">
 <a name="udisks-loop-set-autoclear"></a><h3>udisks_loop_set_autoclear ()</h3>
 <pre class="programlisting"><span class="returnvalue">void</span>                udisks_loop_set_autoclear           (<em class="parameter"><code><a class="link" href="UDisksLoop.html" title="UDisksLoop"><span class="type">UDisksLoop</span></a> *object</code></em>,
-                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"><span class="type">gboolean</span></a> value</code></em>);</pre>
+                                                         <em class="parameter"><code><span class="type">gboolean</span> value</code></em>);</pre>
 <p>
 Sets the <a class="link" href="gdbus-org.freedesktop.UDisks2.Loop.html#gdbus-property-org-freedesktop-UDisks2-Loop.Autoclear" title='The "Autoclear" property'>"Autoclear"</a> D-Bus property to <em class="parameter"><code>value</code></em>.
 </p>
@@ -488,7 +488,7 @@ Since this D-Bus property is not writable, it is only meaningful to use this fun
 <div class="refsect2">
 <a name="udisks-loop-set-setup-by-uid"></a><h3>udisks_loop_set_setup_by_uid ()</h3>
 <pre class="programlisting"><span class="returnvalue">void</span>                udisks_loop_set_setup_by_uid        (<em class="parameter"><code><a class="link" href="UDisksLoop.html" title="UDisksLoop"><span class="type">UDisksLoop</span></a> *object</code></em>,
-                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#guint"><span class="type">guint</span></a> value</code></em>);</pre>
+                                                         <em class="parameter"><code><span class="type">guint</span> value</code></em>);</pre>
 <p>
 Sets the <a class="link" href="gdbus-org.freedesktop.UDisks2.Loop.html#gdbus-property-org-freedesktop-UDisks2-Loop.SetupByUID" title='The "SetupByUID" property'>"SetupByUID"</a> D-Bus property to <em class="parameter"><code>value</code></em>.
 </p>
@@ -516,13 +516,13 @@ Since this D-Bus property is not writable, it is only meaningful to use this fun
 <div class="refsect2">
 <a name="udisks-loop-call-delete"></a><h3>udisks_loop_call_delete ()</h3>
 <pre class="programlisting"><span class="returnvalue">void</span>                udisks_loop_call_delete             (<em class="parameter"><code><a class="link" href="UDisksLoop.html" title="UDisksLoop"><span class="type">UDisksLoop</span></a> *proxy</code></em>,
-                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-GVariant.html#GVariant"><span class="type">GVariant</span></a> *arg_options</code></em>,
-                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/gio/unstable/GCancellable.html"><span class="type">GCancellable</span></a> *cancellable</code></em>,
-                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/gio/unstable/GAsyncResult.html#GAsyncReadyCallback"><span class="type">GAsyncReadyCallback</span></a> callback</code></em>,
-                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gpointer"><span class="type">gpointer</span></a> user_data</code></em>);</pre>
+                                                         <em class="parameter"><code><span class="type">GVariant</span> *arg_options</code></em>,
+                                                         <em class="parameter"><code><span class="type">GCancellable</span> *cancellable</code></em>,
+                                                         <em class="parameter"><code><span class="type">GAsyncReadyCallback</span> callback</code></em>,
+                                                         <em class="parameter"><code><span class="type">gpointer</span> user_data</code></em>);</pre>
 <p>
 Asynchronously invokes the <a class="link" href="gdbus-org.freedesktop.UDisks2.Loop.html#gdbus-method-org-freedesktop-UDisks2-Loop.Delete" title="The Delete() method"><code class="function">Delete()</code></a> D-Bus method on <em class="parameter"><code>proxy</code></em>.
-When the operation is finished, <em class="parameter"><code>callback</code></em> will be invoked in the <a href="http://library.gnome.org/devel/glib/unstable/glib-The-Main-Event-Loop.html#g-main-context-push-thread-default">thread-default main loop</a> of the thread you are calling this method from.
+When the operation is finished, <em class="parameter"><code>callback</code></em> will be invoked in the thread-default main loop of the thread you are calling this method from.
 You can then call <a class="link" href="UDisksLoop.html#udisks-loop-call-delete-finish" title="udisks_loop_call_delete_finish ()"><code class="function">udisks_loop_call_delete_finish()</code></a> to get the result of the operation.
 </p>
 <p>
@@ -544,12 +544,12 @@ See <a class="link" href="UDisksLoop.html#udisks-loop-call-delete-sync" title="u
 </tr>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>cancellable</code></em> :</span></p></td>
-<td>A <a href="http://library.gnome.org/devel/gio/unstable/GCancellable.html"><span class="type">GCancellable</span></a> or <a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a>. <span class="annotation">[<a href="http://foldoc.org/allow-none"><span class="acronym">allow-none</span></a>]</span>
+<td>A <span class="type">GCancellable</span> or <code class="literal">NULL</code>. <span class="annotation">[<a href="http://foldoc.org/allow-none"><span class="acronym">allow-none</span></a>]</span>
 </td>
 </tr>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>callback</code></em> :</span></p></td>
-<td>A <a href="http://library.gnome.org/devel/gio/unstable/GAsyncResult.html#GAsyncReadyCallback"><span class="type">GAsyncReadyCallback</span></a> to call when the request is satisfied or <a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a>.</td>
+<td>A <span class="type">GAsyncReadyCallback</span> to call when the request is satisfied or <code class="literal">NULL</code>.</td>
 </tr>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>user_data</code></em> :</span></p></td>
@@ -561,9 +561,9 @@ See <a class="link" href="UDisksLoop.html#udisks-loop-call-delete-sync" title="u
 <hr>
 <div class="refsect2">
 <a name="udisks-loop-call-delete-finish"></a><h3>udisks_loop_call_delete_finish ()</h3>
-<pre class="programlisting"><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>            udisks_loop_call_delete_finish      (<em class="parameter"><code><a class="link" href="UDisksLoop.html" title="UDisksLoop"><span class="type">UDisksLoop</span></a> *proxy</code></em>,
-                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/gio/unstable/GAsyncResult.html"><span class="type">GAsyncResult</span></a> *res</code></em>,
-                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Error-Reporting.html#GError"><span class="type">GError</span></a> **error</code></em>);</pre>
+<pre class="programlisting"><span class="returnvalue">gboolean</span>            udisks_loop_call_delete_finish      (<em class="parameter"><code><a class="link" href="UDisksLoop.html" title="UDisksLoop"><span class="type">UDisksLoop</span></a> *proxy</code></em>,
+                                                         <em class="parameter"><code><span class="type">GAsyncResult</span> *res</code></em>,
+                                                         <em class="parameter"><code><span class="type">GError</span> **error</code></em>);</pre>
 <p>
 Finishes an operation started with <a class="link" href="UDisksLoop.html#udisks-loop-call-delete" title="udisks_loop_call_delete ()"><code class="function">udisks_loop_call_delete()</code></a>.
 </p>
@@ -579,16 +579,16 @@ Finishes an operation started with <a class="link" href="UDisksLoop.html#udisks-
 </tr>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>res</code></em> :</span></p></td>
-<td>The <a href="http://library.gnome.org/devel/gio/unstable/GAsyncResult.html"><span class="type">GAsyncResult</span></a> obtained from the <a href="http://library.gnome.org/devel/gio/unstable/GAsyncResult.html#GAsyncReadyCallback"><span class="type">GAsyncReadyCallback</span></a> passed to <a class="link" href="UDisksLoop.html#udisks-loop-call-delete" title="udisks_loop_call_delete ()"><code class="function">udisks_loop_call_delete()</code></a>.</td>
+<td>The <span class="type">GAsyncResult</span> obtained from the <span class="type">GAsyncReadyCallback</span> passed to <a class="link" href="UDisksLoop.html#udisks-loop-call-delete" title="udisks_loop_call_delete ()"><code class="function">udisks_loop_call_delete()</code></a>.</td>
 </tr>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>error</code></em> :</span></p></td>
-<td>Return location for error or <a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a>.</td>
+<td>Return location for error or <code class="literal">NULL</code>.</td>
 </tr>
 <tr>
 <td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
 <td>
-<a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#TRUE:CAPS"><code class="literal">TRUE</code></a> if the call succeded, <a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#FALSE:CAPS"><code class="literal">FALSE</code></a> if <em class="parameter"><code>error</code></em> is set. <span class="annotation">[skip]</span>
+<code class="literal">TRUE</code> if the call succeded, <code class="literal">FALSE</code> if <em class="parameter"><code>error</code></em> is set. <span class="annotation">[skip]</span>
 </td>
 </tr>
 </tbody>
@@ -597,10 +597,10 @@ Finishes an operation started with <a class="link" href="UDisksLoop.html#udisks-
 <hr>
 <div class="refsect2">
 <a name="udisks-loop-call-delete-sync"></a><h3>udisks_loop_call_delete_sync ()</h3>
-<pre class="programlisting"><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>            udisks_loop_call_delete_sync        (<em class="parameter"><code><a class="link" href="UDisksLoop.html" title="UDisksLoop"><span class="type">UDisksLoop</span></a> *proxy</code></em>,
-                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-GVariant.html#GVariant"><span class="type">GVariant</span></a> *arg_options</code></em>,
-                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/gio/unstable/GCancellable.html"><span class="type">GCancellable</span></a> *cancellable</code></em>,
-                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Error-Reporting.html#GError"><span class="type">GError</span></a> **error</code></em>);</pre>
+<pre class="programlisting"><span class="returnvalue">gboolean</span>            udisks_loop_call_delete_sync        (<em class="parameter"><code><a class="link" href="UDisksLoop.html" title="UDisksLoop"><span class="type">UDisksLoop</span></a> *proxy</code></em>,
+                                                         <em class="parameter"><code><span class="type">GVariant</span> *arg_options</code></em>,
+                                                         <em class="parameter"><code><span class="type">GCancellable</span> *cancellable</code></em>,
+                                                         <em class="parameter"><code><span class="type">GError</span> **error</code></em>);</pre>
 <p>
 Synchronously invokes the <a class="link" href="gdbus-org.freedesktop.UDisks2.Loop.html#gdbus-method-org-freedesktop-UDisks2-Loop.Delete" title="The Delete() method"><code class="function">Delete()</code></a> D-Bus method on <em class="parameter"><code>proxy</code></em>. The calling thread is blocked until a reply is received.
 </p>
@@ -623,17 +623,17 @@ See <a class="link" href="UDisksLoop.html#udisks-loop-call-delete" title="udisks
 </tr>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>cancellable</code></em> :</span></p></td>
-<td>A <a href="http://library.gnome.org/devel/gio/unstable/GCancellable.html"><span class="type">GCancellable</span></a> or <a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a>. <span class="annotation">[<a href="http://foldoc.org/allow-none"><span class="acronym">allow-none</span></a>]</span>
+<td>A <span class="type">GCancellable</span> or <code class="literal">NULL</code>. <span class="annotation">[<a href="http://foldoc.org/allow-none"><span class="acronym">allow-none</span></a>]</span>
 </td>
 </tr>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>error</code></em> :</span></p></td>
-<td>Return location for error or <a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a>.</td>
+<td>Return location for error or <code class="literal">NULL</code>.</td>
 </tr>
 <tr>
 <td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
 <td>
-<a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#TRUE:CAPS"><code class="literal">TRUE</code></a> if the call succeded, <a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#FALSE:CAPS"><code class="literal">FALSE</code></a> if <em class="parameter"><code>error</code></em> is set. <span class="annotation">[skip]</span>
+<code class="literal">TRUE</code> if the call succeded, <code class="literal">FALSE</code> if <em class="parameter"><code>error</code></em> is set. <span class="annotation">[skip]</span>
 </td>
 </tr>
 </tbody>
@@ -643,9 +643,9 @@ See <a class="link" href="UDisksLoop.html#udisks-loop-call-delete" title="udisks
 <div class="refsect2">
 <a name="udisks-loop-complete-delete"></a><h3>udisks_loop_complete_delete ()</h3>
 <pre class="programlisting"><span class="returnvalue">void</span>                udisks_loop_complete_delete         (<em class="parameter"><code><a class="link" href="UDisksLoop.html" title="UDisksLoop"><span class="type">UDisksLoop</span></a> *object</code></em>,
-                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/gio/unstable/GDBusMethodInvocation.html"><span class="type">GDBusMethodInvocation</span></a> *invocation</code></em>);</pre>
+                                                         <em class="parameter"><code><span class="type">GDBusMethodInvocation</span> *invocation</code></em>);</pre>
 <p>
-Helper function used in service implementations to finish handling invocations of the <a class="link" href="gdbus-org.freedesktop.UDisks2.Loop.html#gdbus-method-org-freedesktop-UDisks2-Loop.Delete" title="The Delete() method"><code class="function">Delete()</code></a> D-Bus method. If you instead want to finish handling an invocation by returning an error, use <a href="http://library.gnome.org/devel/gio/unstable/GDBusMethodInvocation.html#g-dbus-method-invocation-return-error"><code class="function">g_dbus_method_invocation_return_error()</code></a> or similar.
+Helper function used in service implementations to finish handling invocations of the <a class="link" href="gdbus-org.freedesktop.UDisks2.Loop.html#gdbus-method-org-freedesktop-UDisks2-Loop.Delete" title="The Delete() method"><code class="function">Delete()</code></a> D-Bus method. If you instead want to finish handling an invocation by returning an error, use <code class="function">g_dbus_method_invocation_return_error()</code> or similar.
 </p>
 <p>
 This method will free <em class="parameter"><code>invocation</code></em>, you cannot use it afterwards.
@@ -662,7 +662,7 @@ This method will free <em class="parameter"><code>invocation</code></em>, you ca
 </tr>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>invocation</code></em> :</span></p></td>
-<td>A <a href="http://library.gnome.org/devel/gio/unstable/GDBusMethodInvocation.html"><span class="type">GDBusMethodInvocation</span></a>. <span class="annotation">[<a href="http://foldoc.org/transfer%20full"><span class="acronym">transfer full</span></a>]</span>
+<td>A <span class="type">GDBusMethodInvocation</span>. <span class="annotation">[<a href="http://foldoc.org/transfer%20full"><span class="acronym">transfer full</span></a>]</span>
 </td>
 </tr>
 </tbody>
@@ -672,14 +672,14 @@ This method will free <em class="parameter"><code>invocation</code></em>, you ca
 <div class="refsect2">
 <a name="udisks-loop-call-set-autoclear"></a><h3>udisks_loop_call_set_autoclear ()</h3>
 <pre class="programlisting"><span class="returnvalue">void</span>                udisks_loop_call_set_autoclear      (<em class="parameter"><code><a class="link" href="UDisksLoop.html" title="UDisksLoop"><span class="type">UDisksLoop</span></a> *proxy</code></em>,
-                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"><span class="type">gboolean</span></a> arg_value</code></em>,
-                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-GVariant.html#GVariant"><span class="type">GVariant</span></a> *arg_options</code></em>,
-                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/gio/unstable/GCancellable.html"><span class="type">GCancellable</span></a> *cancellable</code></em>,
-                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/gio/unstable/GAsyncResult.html#GAsyncReadyCallback"><span class="type">GAsyncReadyCallback</span></a> callback</code></em>,
-                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gpointer"><span class="type">gpointer</span></a> user_data</code></em>);</pre>
+                                                         <em class="parameter"><code><span class="type">gboolean</span> arg_value</code></em>,
+                                                         <em class="parameter"><code><span class="type">GVariant</span> *arg_options</code></em>,
+                                                         <em class="parameter"><code><span class="type">GCancellable</span> *cancellable</code></em>,
+                                                         <em class="parameter"><code><span class="type">GAsyncReadyCallback</span> callback</code></em>,
+                                                         <em class="parameter"><code><span class="type">gpointer</span> user_data</code></em>);</pre>
 <p>
 Asynchronously invokes the <a class="link" href="gdbus-org.freedesktop.UDisks2.Loop.html#gdbus-method-org-freedesktop-UDisks2-Loop.SetAutoclear" title="The SetAutoclear() method"><code class="function">SetAutoclear()</code></a> D-Bus method on <em class="parameter"><code>proxy</code></em>.
-When the operation is finished, <em class="parameter"><code>callback</code></em> will be invoked in the <a href="http://library.gnome.org/devel/glib/unstable/glib-The-Main-Event-Loop.html#g-main-context-push-thread-default">thread-default main loop</a> of the thread you are calling this method from.
+When the operation is finished, <em class="parameter"><code>callback</code></em> will be invoked in the thread-default main loop of the thread you are calling this method from.
 You can then call <a class="link" href="UDisksLoop.html#udisks-loop-call-set-autoclear-finish" title="udisks_loop_call_set_autoclear_finish ()"><code class="function">udisks_loop_call_set_autoclear_finish()</code></a> to get the result of the operation.
 </p>
 <p>
@@ -705,12 +705,12 @@ See <a class="link" href="UDisksLoop.html#udisks-loop-call-set-autoclear-sync" t
 </tr>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>cancellable</code></em> :</span></p></td>
-<td>A <a href="http://library.gnome.org/devel/gio/unstable/GCancellable.html"><span class="type">GCancellable</span></a> or <a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a>. <span class="annotation">[<a href="http://foldoc.org/allow-none"><span class="acronym">allow-none</span></a>]</span>
+<td>A <span class="type">GCancellable</span> or <code class="literal">NULL</code>. <span class="annotation">[<a href="http://foldoc.org/allow-none"><span class="acronym">allow-none</span></a>]</span>
 </td>
 </tr>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>callback</code></em> :</span></p></td>
-<td>A <a href="http://library.gnome.org/devel/gio/unstable/GAsyncResult.html#GAsyncReadyCallback"><span class="type">GAsyncReadyCallback</span></a> to call when the request is satisfied or <a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a>.</td>
+<td>A <span class="type">GAsyncReadyCallback</span> to call when the request is satisfied or <code class="literal">NULL</code>.</td>
 </tr>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>user_data</code></em> :</span></p></td>
@@ -722,10 +722,10 @@ See <a class="link" href="UDisksLoop.html#udisks-loop-call-set-autoclear-sync" t
 <hr>
 <div class="refsect2">
 <a name="udisks-loop-call-set-autoclear-finish"></a><h3>udisks_loop_call_set_autoclear_finish ()</h3>
-<pre class="programlisting"><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>            udisks_loop_call_set_autoclear_finish
+<pre class="programlisting"><span class="returnvalue">gboolean</span>            udisks_loop_call_set_autoclear_finish
                                                         (<em class="parameter"><code><a class="link" href="UDisksLoop.html" title="UDisksLoop"><span class="type">UDisksLoop</span></a> *proxy</code></em>,
-                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/gio/unstable/GAsyncResult.html"><span class="type">GAsyncResult</span></a> *res</code></em>,
-                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Error-Reporting.html#GError"><span class="type">GError</span></a> **error</code></em>);</pre>
+                                                         <em class="parameter"><code><span class="type">GAsyncResult</span> *res</code></em>,
+                                                         <em class="parameter"><code><span class="type">GError</span> **error</code></em>);</pre>
 <p>
 Finishes an operation started with <a class="link" href="UDisksLoop.html#udisks-loop-call-set-autoclear" title="udisks_loop_call_set_autoclear ()"><code class="function">udisks_loop_call_set_autoclear()</code></a>.
 </p>
@@ -741,16 +741,16 @@ Finishes an operation started with <a class="link" href="UDisksLoop.html#udisks-
 </tr>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>res</code></em> :</span></p></td>
-<td>The <a href="http://library.gnome.org/devel/gio/unstable/GAsyncResult.html"><span class="type">GAsyncResult</span></a> obtained from the <a href="http://library.gnome.org/devel/gio/unstable/GAsyncResult.html#GAsyncReadyCallback"><span class="type">GAsyncReadyCallback</span></a> passed to <a class="link" href="UDisksLoop.html#udisks-loop-call-set-autoclear" title="udisks_loop_call_set_autoclear ()"><code class="function">udisks_loop_call_set_autoclear()</code></a>.</td>
+<td>The <span class="type">GAsyncResult</span> obtained from the <span class="type">GAsyncReadyCallback</span> passed to <a class="link" href="UDisksLoop.html#udisks-loop-call-set-autoclear" title="udisks_loop_call_set_autoclear ()"><code class="function">udisks_loop_call_set_autoclear()</code></a>.</td>
 </tr>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>error</code></em> :</span></p></td>
-<td>Return location for error or <a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a>.</td>
+<td>Return location for error or <code class="literal">NULL</code>.</td>
 </tr>
 <tr>
 <td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
 <td>
-<a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#TRUE:CAPS"><code class="literal">TRUE</code></a> if the call succeded, <a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#FALSE:CAPS"><code class="literal">FALSE</code></a> if <em class="parameter"><code>error</code></em> is set. <span class="annotation">[skip]</span>
+<code class="literal">TRUE</code> if the call succeded, <code class="literal">FALSE</code> if <em class="parameter"><code>error</code></em> is set. <span class="annotation">[skip]</span>
 </td>
 </tr>
 </tbody>
@@ -759,11 +759,11 @@ Finishes an operation started with <a class="link" href="UDisksLoop.html#udisks-
 <hr>
 <div class="refsect2">
 <a name="udisks-loop-call-set-autoclear-sync"></a><h3>udisks_loop_call_set_autoclear_sync ()</h3>
-<pre class="programlisting"><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>            udisks_loop_call_set_autoclear_sync (<em class="parameter"><code><a class="link" href="UDisksLoop.html" title="UDisksLoop"><span class="type">UDisksLoop</span></a> *proxy</code></em>,
-                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"><span class="type">gboolean</span></a> arg_value</code></em>,
-                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-GVariant.html#GVariant"><span class="type">GVariant</span></a> *arg_options</code></em>,
-                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/gio/unstable/GCancellable.html"><span class="type">GCancellable</span></a> *cancellable</code></em>,
-                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Error-Reporting.html#GError"><span class="type">GError</span></a> **error</code></em>);</pre>
+<pre class="programlisting"><span class="returnvalue">gboolean</span>            udisks_loop_call_set_autoclear_sync (<em class="parameter"><code><a class="link" href="UDisksLoop.html" title="UDisksLoop"><span class="type">UDisksLoop</span></a> *proxy</code></em>,
+                                                         <em class="parameter"><code><span class="type">gboolean</span> arg_value</code></em>,
+                                                         <em class="parameter"><code><span class="type">GVariant</span> *arg_options</code></em>,
+                                                         <em class="parameter"><code><span class="type">GCancellable</span> *cancellable</code></em>,
+                                                         <em class="parameter"><code><span class="type">GError</span> **error</code></em>);</pre>
 <p>
 Synchronously invokes the <a class="link" href="gdbus-org.freedesktop.UDisks2.Loop.html#gdbus-method-org-freedesktop-UDisks2-Loop.SetAutoclear" title="The SetAutoclear() method"><code class="function">SetAutoclear()</code></a> D-Bus method on <em class="parameter"><code>proxy</code></em>. The calling thread is blocked until a reply is received.
 </p>
@@ -790,17 +790,17 @@ See <a class="link" href="UDisksLoop.html#udisks-loop-call-set-autoclear" title=
 </tr>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>cancellable</code></em> :</span></p></td>
-<td>A <a href="http://library.gnome.org/devel/gio/unstable/GCancellable.html"><span class="type">GCancellable</span></a> or <a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a>. <span class="annotation">[<a href="http://foldoc.org/allow-none"><span class="acronym">allow-none</span></a>]</span>
+<td>A <span class="type">GCancellable</span> or <code class="literal">NULL</code>. <span class="annotation">[<a href="http://foldoc.org/allow-none"><span class="acronym">allow-none</span></a>]</span>
 </td>
 </tr>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>error</code></em> :</span></p></td>
-<td>Return location for error or <a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a>.</td>
+<td>Return location for error or <code class="literal">NULL</code>.</td>
 </tr>
 <tr>
 <td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
 <td>
-<a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#TRUE:CAPS"><code class="literal">TRUE</code></a> if the call succeded, <a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#FALSE:CAPS"><code class="literal">FALSE</code></a> if <em class="parameter"><code>error</code></em> is set. <span class="annotation">[skip]</span>
+<code class="literal">TRUE</code> if the call succeded, <code class="literal">FALSE</code> if <em class="parameter"><code>error</code></em> is set. <span class="annotation">[skip]</span>
 </td>
 </tr>
 </tbody>
@@ -810,9 +810,9 @@ See <a class="link" href="UDisksLoop.html#udisks-loop-call-set-autoclear" title=
 <div class="refsect2">
 <a name="udisks-loop-complete-set-autoclear"></a><h3>udisks_loop_complete_set_autoclear ()</h3>
 <pre class="programlisting"><span class="returnvalue">void</span>                udisks_loop_complete_set_autoclear  (<em class="parameter"><code><a class="link" href="UDisksLoop.html" title="UDisksLoop"><span class="type">UDisksLoop</span></a> *object</code></em>,
-                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/gio/unstable/GDBusMethodInvocation.html"><span class="type">GDBusMethodInvocation</span></a> *invocation</code></em>);</pre>
+                                                         <em class="parameter"><code><span class="type">GDBusMethodInvocation</span> *invocation</code></em>);</pre>
 <p>
-Helper function used in service implementations to finish handling invocations of the <a class="link" href="gdbus-org.freedesktop.UDisks2.Loop.html#gdbus-method-org-freedesktop-UDisks2-Loop.SetAutoclear" title="The SetAutoclear() method"><code class="function">SetAutoclear()</code></a> D-Bus method. If you instead want to finish handling an invocation by returning an error, use <a href="http://library.gnome.org/devel/gio/unstable/GDBusMethodInvocation.html#g-dbus-method-invocation-return-error"><code class="function">g_dbus_method_invocation_return_error()</code></a> or similar.
+Helper function used in service implementations to finish handling invocations of the <a class="link" href="gdbus-org.freedesktop.UDisks2.Loop.html#gdbus-method-org-freedesktop-UDisks2-Loop.SetAutoclear" title="The SetAutoclear() method"><code class="function">SetAutoclear()</code></a> D-Bus method. If you instead want to finish handling an invocation by returning an error, use <code class="function">g_dbus_method_invocation_return_error()</code> or similar.
 </p>
 <p>
 This method will free <em class="parameter"><code>invocation</code></em>, you cannot use it afterwards.
@@ -829,7 +829,7 @@ This method will free <em class="parameter"><code>invocation</code></em>, you ca
 </tr>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>invocation</code></em> :</span></p></td>
-<td>A <a href="http://library.gnome.org/devel/gio/unstable/GDBusMethodInvocation.html"><span class="type">GDBusMethodInvocation</span></a>. <span class="annotation">[<a href="http://foldoc.org/transfer%20full"><span class="acronym">transfer full</span></a>]</span>
+<td>A <span class="type">GDBusMethodInvocation</span>. <span class="annotation">[<a href="http://foldoc.org/transfer%20full"><span class="acronym">transfer full</span></a>]</span>
 </td>
 </tr>
 </tbody>
@@ -859,7 +859,7 @@ Class structure for <a class="link" href="UDisksLoop.html#UDisksLoopProxy"><span
 <col>
 </colgroup>
 <tbody><tr>
-<td><p><span class="term"><a href="http://library.gnome.org/devel/gio/unstable/GDBusProxy.html#GDBusProxyClass"><span class="type">GDBusProxyClass</span></a> <em class="structfield"><code><a name="UDisksLoopProxyClass.parent-class"></a>parent_class</code></em>;</span></p></td>
+<td><p><span class="term"><span class="type">GDBusProxyClass</span> <em class="structfield"><code><a name="UDisksLoopProxyClass.parent-class"></a>parent_class</code></em>;</span></p></td>
 <td>The parent class.</td>
 </tr></tbody>
 </table></div>
@@ -867,18 +867,18 @@ Class structure for <a class="link" href="UDisksLoop.html#UDisksLoopProxy"><span
 <hr>
 <div class="refsect2">
 <a name="udisks-loop-proxy-new"></a><h3>udisks_loop_proxy_new ()</h3>
-<pre class="programlisting"><span class="returnvalue">void</span>                udisks_loop_proxy_new               (<em class="parameter"><code><a href="http://library.gnome.org/devel/gio/unstable/GDBusConnection.html"><span class="type">GDBusConnection</span></a> *connection</code></em>,
-                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/gio/unstable/GDBusProxy.html#GDBusProxyFlags"><span class="type">GDBusProxyFlags</span></a> flags</code></em>,
-                                                         <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *name</code></em>,
-                                                         <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *object_path</code></em>,
-                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/gio/unstable/GCancellable.html"><span class="type">GCancellable</span></a> *cancellable</code></em>,
-                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/gio/unstable/GAsyncResult.html#GAsyncReadyCallback"><span class="type">GAsyncReadyCallback</span></a> callback</code></em>,
-                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gpointer"><span class="type">gpointer</span></a> user_data</code></em>);</pre>
+<pre class="programlisting"><span class="returnvalue">void</span>                udisks_loop_proxy_new               (<em class="parameter"><code><span class="type">GDBusConnection</span> *connection</code></em>,
+                                                         <em class="parameter"><code><span class="type">GDBusProxyFlags</span> flags</code></em>,
+                                                         <em class="parameter"><code>const <span class="type">gchar</span> *name</code></em>,
+                                                         <em class="parameter"><code>const <span class="type">gchar</span> *object_path</code></em>,
+                                                         <em class="parameter"><code><span class="type">GCancellable</span> *cancellable</code></em>,
+                                                         <em class="parameter"><code><span class="type">GAsyncReadyCallback</span> callback</code></em>,
+                                                         <em class="parameter"><code><span class="type">gpointer</span> user_data</code></em>);</pre>
 <p>
-Asynchronously creates a proxy for the D-Bus interface <a class="link" href="gdbus-org.freedesktop.UDisks2.Loop.html#gdbus-interface-org-freedesktop-UDisks2-Loop.top_of_page">org.freedesktop.UDisks2.Loop</a>. See <a href="http://library.gnome.org/devel/gio/unstable/GDBusProxy.html#g-dbus-proxy-new"><code class="function">g_dbus_proxy_new()</code></a> for more details.
+Asynchronously creates a proxy for the D-Bus interface <a class="link" href="gdbus-org.freedesktop.UDisks2.Loop.html#gdbus-interface-org-freedesktop-UDisks2-Loop.top_of_page">org.freedesktop.UDisks2.Loop</a>. See <code class="function">g_dbus_proxy_new()</code> for more details.
 </p>
 <p>
-When the operation is finished, <em class="parameter"><code>callback</code></em> will be invoked in the <a href="http://library.gnome.org/devel/glib/unstable/glib-The-Main-Event-Loop.html#g-main-context-push-thread-default">thread-default main loop</a> of the thread you are calling this method from.
+When the operation is finished, <em class="parameter"><code>callback</code></em> will be invoked in the thread-default main loop of the thread you are calling this method from.
 You can then call <a class="link" href="UDisksLoop.html#udisks-loop-proxy-new-finish" title="udisks_loop_proxy_new_finish ()"><code class="function">udisks_loop_proxy_new_finish()</code></a> to get the result of the operation.
 </p>
 <p>
@@ -892,15 +892,15 @@ See <a class="link" href="UDisksLoop.html#udisks-loop-proxy-new-sync" title="udi
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>connection</code></em> :</span></p></td>
-<td>A <a href="http://library.gnome.org/devel/gio/unstable/GDBusConnection.html"><span class="type">GDBusConnection</span></a>.</td>
+<td>A <span class="type">GDBusConnection</span>.</td>
 </tr>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>flags</code></em> :</span></p></td>
-<td>Flags from the <a href="http://library.gnome.org/devel/gio/unstable/GDBusProxy.html#GDBusProxyFlags"><span class="type">GDBusProxyFlags</span></a> enumeration.</td>
+<td>Flags from the <span class="type">GDBusProxyFlags</span> enumeration.</td>
 </tr>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>name</code></em> :</span></p></td>
-<td>A bus name (well-known or unique) or <a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a> if <em class="parameter"><code>connection</code></em> is not a message bus connection. <span class="annotation">[<a href="http://foldoc.org/allow-none"><span class="acronym">allow-none</span></a>]</span>
+<td>A bus name (well-known or unique) or <code class="literal">NULL</code> if <em class="parameter"><code>connection</code></em> is not a message bus connection. <span class="annotation">[<a href="http://foldoc.org/allow-none"><span class="acronym">allow-none</span></a>]</span>
 </td>
 </tr>
 <tr>
@@ -909,12 +909,12 @@ See <a class="link" href="UDisksLoop.html#udisks-loop-proxy-new-sync" title="udi
 </tr>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>cancellable</code></em> :</span></p></td>
-<td>A <a href="http://library.gnome.org/devel/gio/unstable/GCancellable.html"><span class="type">GCancellable</span></a> or <a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a>. <span class="annotation">[<a href="http://foldoc.org/allow-none"><span class="acronym">allow-none</span></a>]</span>
+<td>A <span class="type">GCancellable</span> or <code class="literal">NULL</code>. <span class="annotation">[<a href="http://foldoc.org/allow-none"><span class="acronym">allow-none</span></a>]</span>
 </td>
 </tr>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>callback</code></em> :</span></p></td>
-<td>A <a href="http://library.gnome.org/devel/gio/unstable/GAsyncResult.html#GAsyncReadyCallback"><span class="type">GAsyncReadyCallback</span></a> to call when the request is satisfied.</td>
+<td>A <span class="type">GAsyncReadyCallback</span> to call when the request is satisfied.</td>
 </tr>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>user_data</code></em> :</span></p></td>
@@ -926,8 +926,8 @@ See <a class="link" href="UDisksLoop.html#udisks-loop-proxy-new-sync" title="udi
 <hr>
 <div class="refsect2">
 <a name="udisks-loop-proxy-new-finish"></a><h3>udisks_loop_proxy_new_finish ()</h3>
-<pre class="programlisting"><a class="link" href="UDisksLoop.html" title="UDisksLoop"><span class="returnvalue">UDisksLoop</span></a> *        udisks_loop_proxy_new_finish        (<em class="parameter"><code><a href="http://library.gnome.org/devel/gio/unstable/GAsyncResult.html"><span class="type">GAsyncResult</span></a> *res</code></em>,
-                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Error-Reporting.html#GError"><span class="type">GError</span></a> **error</code></em>);</pre>
+<pre class="programlisting"><a class="link" href="UDisksLoop.html" title="UDisksLoop"><span class="returnvalue">UDisksLoop</span></a> *        udisks_loop_proxy_new_finish        (<em class="parameter"><code><span class="type">GAsyncResult</span> *res</code></em>,
+                                                         <em class="parameter"><code><span class="type">GError</span> **error</code></em>);</pre>
 <p>
 Finishes an operation started with <a class="link" href="UDisksLoop.html#udisks-loop-proxy-new" title="udisks_loop_proxy_new ()"><code class="function">udisks_loop_proxy_new()</code></a>.
 </p>
@@ -939,16 +939,16 @@ Finishes an operation started with <a class="link" href="UDisksLoop.html#udisks-
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>res</code></em> :</span></p></td>
-<td>The <a href="http://library.gnome.org/devel/gio/unstable/GAsyncResult.html"><span class="type">GAsyncResult</span></a> obtained from the <a href="http://library.gnome.org/devel/gio/unstable/GAsyncResult.html#GAsyncReadyCallback"><span class="type">GAsyncReadyCallback</span></a> passed to <a class="link" href="UDisksLoop.html#udisks-loop-proxy-new" title="udisks_loop_proxy_new ()"><code class="function">udisks_loop_proxy_new()</code></a>.</td>
+<td>The <span class="type">GAsyncResult</span> obtained from the <span class="type">GAsyncReadyCallback</span> passed to <a class="link" href="UDisksLoop.html#udisks-loop-proxy-new" title="udisks_loop_proxy_new ()"><code class="function">udisks_loop_proxy_new()</code></a>.</td>
 </tr>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>error</code></em> :</span></p></td>
-<td>Return location for error or <a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a>
+<td>Return location for error or <code class="literal">NULL</code>
 </td>
 </tr>
 <tr>
 <td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
-<td>The constructed proxy object or <a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a> if <em class="parameter"><code>error</code></em> is set. <span class="annotation">[<a href="http://foldoc.org/transfer%20full"><span class="acronym">transfer full</span></a>][<a href="http://foldoc.org/type"><span class="acronym">type</span></a> UDisksLoopProxy]</span>
+<td>The constructed proxy object or <code class="literal">NULL</code> if <em class="parameter"><code>error</code></em> is set. <span class="annotation">[<a href="http://foldoc.org/transfer%20full"><span class="acronym">transfer full</span></a>][<a href="http://foldoc.org/type"><span class="acronym">type</span></a> UDisksLoopProxy]</span>
 </td>
 </tr>
 </tbody>
@@ -957,14 +957,14 @@ Finishes an operation started with <a class="link" href="UDisksLoop.html#udisks-
 <hr>
 <div class="refsect2">
 <a name="udisks-loop-proxy-new-sync"></a><h3>udisks_loop_proxy_new_sync ()</h3>
-<pre class="programlisting"><a class="link" href="UDisksLoop.html" title="UDisksLoop"><span class="returnvalue">UDisksLoop</span></a> *        udisks_loop_proxy_new_sync          (<em class="parameter"><code><a href="http://library.gnome.org/devel/gio/unstable/GDBusConnection.html"><span class="type">GDBusConnection</span></a> *connection</code></em>,
-                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/gio/unstable/GDBusProxy.html#GDBusProxyFlags"><span class="type">GDBusProxyFlags</span></a> flags</code></em>,
-                                                         <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *name</code></em>,
-                                                         <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *object_path</code></em>,
-                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/gio/unstable/GCancellable.html"><span class="type">GCancellable</span></a> *cancellable</code></em>,
-                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Error-Reporting.html#GError"><span class="type">GError</span></a> **error</code></em>);</pre>
+<pre class="programlisting"><a class="link" href="UDisksLoop.html" title="UDisksLoop"><span class="returnvalue">UDisksLoop</span></a> *        udisks_loop_proxy_new_sync          (<em class="parameter"><code><span class="type">GDBusConnection</span> *connection</code></em>,
+                                                         <em class="parameter"><code><span class="type">GDBusProxyFlags</span> flags</code></em>,
+                                                         <em class="parameter"><code>const <span class="type">gchar</span> *name</code></em>,
+                                                         <em class="parameter"><code>const <span class="type">gchar</span> *object_path</code></em>,
+                                                         <em class="parameter"><code><span class="type">GCancellable</span> *cancellable</code></em>,
+                                                         <em class="parameter"><code><span class="type">GError</span> **error</code></em>);</pre>
 <p>
-Synchronously creates a proxy for the D-Bus interface <a class="link" href="gdbus-org.freedesktop.UDisks2.Loop.html#gdbus-interface-org-freedesktop-UDisks2-Loop.top_of_page">org.freedesktop.UDisks2.Loop</a>. See <a href="http://library.gnome.org/devel/gio/unstable/GDBusProxy.html#g-dbus-proxy-new-sync"><code class="function">g_dbus_proxy_new_sync()</code></a> for more details.
+Synchronously creates a proxy for the D-Bus interface <a class="link" href="gdbus-org.freedesktop.UDisks2.Loop.html#gdbus-interface-org-freedesktop-UDisks2-Loop.top_of_page">org.freedesktop.UDisks2.Loop</a>. See <code class="function">g_dbus_proxy_new_sync()</code> for more details.
 </p>
 <p>
 The calling thread is blocked until a reply is received.
@@ -980,15 +980,15 @@ See <a class="link" href="UDisksLoop.html#udisks-loop-proxy-new" title="udisks_l
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>connection</code></em> :</span></p></td>
-<td>A <a href="http://library.gnome.org/devel/gio/unstable/GDBusConnection.html"><span class="type">GDBusConnection</span></a>.</td>
+<td>A <span class="type">GDBusConnection</span>.</td>
 </tr>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>flags</code></em> :</span></p></td>
-<td>Flags from the <a href="http://library.gnome.org/devel/gio/unstable/GDBusProxy.html#GDBusProxyFlags"><span class="type">GDBusProxyFlags</span></a> enumeration.</td>
+<td>Flags from the <span class="type">GDBusProxyFlags</span> enumeration.</td>
 </tr>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>name</code></em> :</span></p></td>
-<td>A bus name (well-known or unique) or <a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a> if <em class="parameter"><code>connection</code></em> is not a message bus connection. <span class="annotation">[<a href="http://foldoc.org/allow-none"><span class="acronym">allow-none</span></a>]</span>
+<td>A bus name (well-known or unique) or <code class="literal">NULL</code> if <em class="parameter"><code>connection</code></em> is not a message bus connection. <span class="annotation">[<a href="http://foldoc.org/allow-none"><span class="acronym">allow-none</span></a>]</span>
 </td>
 </tr>
 <tr>
@@ -997,17 +997,17 @@ See <a class="link" href="UDisksLoop.html#udisks-loop-proxy-new" title="udisks_l
 </tr>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>cancellable</code></em> :</span></p></td>
-<td>A <a href="http://library.gnome.org/devel/gio/unstable/GCancellable.html"><span class="type">GCancellable</span></a> or <a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a>. <span class="annotation">[<a href="http://foldoc.org/allow-none"><span class="acronym">allow-none</span></a>]</span>
+<td>A <span class="type">GCancellable</span> or <code class="literal">NULL</code>. <span class="annotation">[<a href="http://foldoc.org/allow-none"><span class="acronym">allow-none</span></a>]</span>
 </td>
 </tr>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>error</code></em> :</span></p></td>
-<td>Return location for error or <a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a>
+<td>Return location for error or <code class="literal">NULL</code>
 </td>
 </tr>
 <tr>
 <td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
-<td>The constructed proxy object or <a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a> if <em class="parameter"><code>error</code></em> is set. <span class="annotation">[<a href="http://foldoc.org/transfer%20full"><span class="acronym">transfer full</span></a>][<a href="http://foldoc.org/type"><span class="acronym">type</span></a> UDisksLoopProxy]</span>
+<td>The constructed proxy object or <code class="literal">NULL</code> if <em class="parameter"><code>error</code></em> is set. <span class="annotation">[<a href="http://foldoc.org/transfer%20full"><span class="acronym">transfer full</span></a>][<a href="http://foldoc.org/type"><span class="acronym">type</span></a> UDisksLoopProxy]</span>
 </td>
 </tr>
 </tbody>
@@ -1016,18 +1016,18 @@ See <a class="link" href="UDisksLoop.html#udisks-loop-proxy-new" title="udisks_l
 <hr>
 <div class="refsect2">
 <a name="udisks-loop-proxy-new-for-bus"></a><h3>udisks_loop_proxy_new_for_bus ()</h3>
-<pre class="programlisting"><span class="returnvalue">void</span>                udisks_loop_proxy_new_for_bus       (<em class="parameter"><code><a href="http://library.gnome.org/devel/gio/unstable/GDBusConnection.html#GBusType"><span class="type">GBusType</span></a> bus_type</code></em>,
-                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/gio/unstable/GDBusProxy.html#GDBusProxyFlags"><span class="type">GDBusProxyFlags</span></a> flags</code></em>,
-                                                         <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *name</code></em>,
-                                                         <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *object_path</code></em>,
-                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/gio/unstable/GCancellable.html"><span class="type">GCancellable</span></a> *cancellable</code></em>,
-                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/gio/unstable/GAsyncResult.html#GAsyncReadyCallback"><span class="type">GAsyncReadyCallback</span></a> callback</code></em>,
-                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gpointer"><span class="type">gpointer</span></a> user_data</code></em>);</pre>
+<pre class="programlisting"><span class="returnvalue">void</span>                udisks_loop_proxy_new_for_bus       (<em class="parameter"><code><span class="type">GBusType</span> bus_type</code></em>,
+                                                         <em class="parameter"><code><span class="type">GDBusProxyFlags</span> flags</code></em>,
+                                                         <em class="parameter"><code>const <span class="type">gchar</span> *name</code></em>,
+                                                         <em class="parameter"><code>const <span class="type">gchar</span> *object_path</code></em>,
+                                                         <em class="parameter"><code><span class="type">GCancellable</span> *cancellable</code></em>,
+                                                         <em class="parameter"><code><span class="type">GAsyncReadyCallback</span> callback</code></em>,
+                                                         <em class="parameter"><code><span class="type">gpointer</span> user_data</code></em>);</pre>
 <p>
-Like <a class="link" href="UDisksLoop.html#udisks-loop-proxy-new" title="udisks_loop_proxy_new ()"><code class="function">udisks_loop_proxy_new()</code></a> but takes a <a href="http://library.gnome.org/devel/gio/unstable/GDBusConnection.html#GBusType"><span class="type">GBusType</span></a> instead of a <a href="http://library.gnome.org/devel/gio/unstable/GDBusConnection.html"><span class="type">GDBusConnection</span></a>.
+Like <a class="link" href="UDisksLoop.html#udisks-loop-proxy-new" title="udisks_loop_proxy_new ()"><code class="function">udisks_loop_proxy_new()</code></a> but takes a <span class="type">GBusType</span> instead of a <span class="type">GDBusConnection</span>.
 </p>
 <p>
-When the operation is finished, <em class="parameter"><code>callback</code></em> will be invoked in the <a href="http://library.gnome.org/devel/glib/unstable/glib-The-Main-Event-Loop.html#g-main-context-push-thread-default">thread-default main loop</a> of the thread you are calling this method from.
+When the operation is finished, <em class="parameter"><code>callback</code></em> will be invoked in the thread-default main loop of the thread you are calling this method from.
 You can then call <a class="link" href="UDisksLoop.html#udisks-loop-proxy-new-for-bus-finish" title="udisks_loop_proxy_new_for_bus_finish ()"><code class="function">udisks_loop_proxy_new_for_bus_finish()</code></a> to get the result of the operation.
 </p>
 <p>
@@ -1041,11 +1041,11 @@ See <a class="link" href="UDisksLoop.html#udisks-loop-proxy-new-for-bus-sync" ti
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>bus_type</code></em> :</span></p></td>
-<td>A <a href="http://library.gnome.org/devel/gio/unstable/GDBusConnection.html#GBusType"><span class="type">GBusType</span></a>.</td>
+<td>A <span class="type">GBusType</span>.</td>
 </tr>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>flags</code></em> :</span></p></td>
-<td>Flags from the <a href="http://library.gnome.org/devel/gio/unstable/GDBusProxy.html#GDBusProxyFlags"><span class="type">GDBusProxyFlags</span></a> enumeration.</td>
+<td>Flags from the <span class="type">GDBusProxyFlags</span> enumeration.</td>
 </tr>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>name</code></em> :</span></p></td>
@@ -1057,12 +1057,12 @@ See <a class="link" href="UDisksLoop.html#udisks-loop-proxy-new-for-bus-sync" ti
 </tr>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>cancellable</code></em> :</span></p></td>
-<td>A <a href="http://library.gnome.org/devel/gio/unstable/GCancellable.html"><span class="type">GCancellable</span></a> or <a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a>. <span class="annotation">[<a href="http://foldoc.org/allow-none"><span class="acronym">allow-none</span></a>]</span>
+<td>A <span class="type">GCancellable</span> or <code class="literal">NULL</code>. <span class="annotation">[<a href="http://foldoc.org/allow-none"><span class="acronym">allow-none</span></a>]</span>
 </td>
 </tr>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>callback</code></em> :</span></p></td>
-<td>A <a href="http://library.gnome.org/devel/gio/unstable/GAsyncResult.html#GAsyncReadyCallback"><span class="type">GAsyncReadyCallback</span></a> to call when the request is satisfied.</td>
+<td>A <span class="type">GAsyncReadyCallback</span> to call when the request is satisfied.</td>
 </tr>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>user_data</code></em> :</span></p></td>
@@ -1075,8 +1075,8 @@ See <a class="link" href="UDisksLoop.html#udisks-loop-proxy-new-for-bus-sync" ti
 <div class="refsect2">
 <a name="udisks-loop-proxy-new-for-bus-finish"></a><h3>udisks_loop_proxy_new_for_bus_finish ()</h3>
 <pre class="programlisting"><a class="link" href="UDisksLoop.html" title="UDisksLoop"><span class="returnvalue">UDisksLoop</span></a> *        udisks_loop_proxy_new_for_bus_finish
-                                                        (<em class="parameter"><code><a href="http://library.gnome.org/devel/gio/unstable/GAsyncResult.html"><span class="type">GAsyncResult</span></a> *res</code></em>,
-                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Error-Reporting.html#GError"><span class="type">GError</span></a> **error</code></em>);</pre>
+                                                        (<em class="parameter"><code><span class="type">GAsyncResult</span> *res</code></em>,
+                                                         <em class="parameter"><code><span class="type">GError</span> **error</code></em>);</pre>
 <p>
 Finishes an operation started with <a class="link" href="UDisksLoop.html#udisks-loop-proxy-new-for-bus" title="udisks_loop_proxy_new_for_bus ()"><code class="function">udisks_loop_proxy_new_for_bus()</code></a>.
 </p>
@@ -1088,16 +1088,16 @@ Finishes an operation started with <a class="link" href="UDisksLoop.html#udisks-
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>res</code></em> :</span></p></td>
-<td>The <a href="http://library.gnome.org/devel/gio/unstable/GAsyncResult.html"><span class="type">GAsyncResult</span></a> obtained from the <a href="http://library.gnome.org/devel/gio/unstable/GAsyncResult.html#GAsyncReadyCallback"><span class="type">GAsyncReadyCallback</span></a> passed to <a class="link" href="UDisksLoop.html#udisks-loop-proxy-new-for-bus" title="udisks_loop_proxy_new_for_bus ()"><code class="function">udisks_loop_proxy_new_for_bus()</code></a>.</td>
+<td>The <span class="type">GAsyncResult</span> obtained from the <span class="type">GAsyncReadyCallback</span> passed to <a class="link" href="UDisksLoop.html#udisks-loop-proxy-new-for-bus" title="udisks_loop_proxy_new_for_bus ()"><code class="function">udisks_loop_proxy_new_for_bus()</code></a>.</td>
 </tr>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>error</code></em> :</span></p></td>
-<td>Return location for error or <a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a>
+<td>Return location for error or <code class="literal">NULL</code>
 </td>
 </tr>
 <tr>
 <td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
-<td>The constructed proxy object or <a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a> if <em class="parameter"><code>error</code></em> is set. <span class="annotation">[<a href="http://foldoc.org/transfer%20full"><span class="acronym">transfer full</span></a>][<a href="http://foldoc.org/type"><span class="acronym">type</span></a> UDisksLoopProxy]</span>
+<td>The constructed proxy object or <code class="literal">NULL</code> if <em class="parameter"><code>error</code></em> is set. <span class="annotation">[<a href="http://foldoc.org/transfer%20full"><span class="acronym">transfer full</span></a>][<a href="http://foldoc.org/type"><span class="acronym">type</span></a> UDisksLoopProxy]</span>
 </td>
 </tr>
 </tbody>
@@ -1106,14 +1106,14 @@ Finishes an operation started with <a class="link" href="UDisksLoop.html#udisks-
 <hr>
 <div class="refsect2">
 <a name="udisks-loop-proxy-new-for-bus-sync"></a><h3>udisks_loop_proxy_new_for_bus_sync ()</h3>
-<pre class="programlisting"><a class="link" href="UDisksLoop.html" title="UDisksLoop"><span class="returnvalue">UDisksLoop</span></a> *        udisks_loop_proxy_new_for_bus_sync  (<em class="parameter"><code><a href="http://library.gnome.org/devel/gio/unstable/GDBusConnection.html#GBusType"><span class="type">GBusType</span></a> bus_type</code></em>,
-                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/gio/unstable/GDBusProxy.html#GDBusProxyFlags"><span class="type">GDBusProxyFlags</span></a> flags</code></em>,
-                                                         <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *name</code></em>,
-                                                         <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *object_path</code></em>,
-                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/gio/unstable/GCancellable.html"><span class="type">GCancellable</span></a> *cancellable</code></em>,
-                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Error-Reporting.html#GError"><span class="type">GError</span></a> **error</code></em>);</pre>
+<pre class="programlisting"><a class="link" href="UDisksLoop.html" title="UDisksLoop"><span class="returnvalue">UDisksLoop</span></a> *        udisks_loop_proxy_new_for_bus_sync  (<em class="parameter"><code><span class="type">GBusType</span> bus_type</code></em>,
+                                                         <em class="parameter"><code><span class="type">GDBusProxyFlags</span> flags</code></em>,
+                                                         <em class="parameter"><code>const <span class="type">gchar</span> *name</code></em>,
+                                                         <em class="parameter"><code>const <span class="type">gchar</span> *object_path</code></em>,
+                                                         <em class="parameter"><code><span class="type">GCancellable</span> *cancellable</code></em>,
+                                                         <em class="parameter"><code><span class="type">GError</span> **error</code></em>);</pre>
 <p>
-Like <a class="link" href="UDisksLoop.html#udisks-loop-proxy-new-sync" title="udisks_loop_proxy_new_sync ()"><code class="function">udisks_loop_proxy_new_sync()</code></a> but takes a <a href="http://library.gnome.org/devel/gio/unstable/GDBusConnection.html#GBusType"><span class="type">GBusType</span></a> instead of a <a href="http://library.gnome.org/devel/gio/unstable/GDBusConnection.html"><span class="type">GDBusConnection</span></a>.
+Like <a class="link" href="UDisksLoop.html#udisks-loop-proxy-new-sync" title="udisks_loop_proxy_new_sync ()"><code class="function">udisks_loop_proxy_new_sync()</code></a> but takes a <span class="type">GBusType</span> instead of a <span class="type">GDBusConnection</span>.
 </p>
 <p>
 The calling thread is blocked until a reply is received.
@@ -1129,11 +1129,11 @@ See <a class="link" href="UDisksLoop.html#udisks-loop-proxy-new-for-bus" title="
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>bus_type</code></em> :</span></p></td>
-<td>A <a href="http://library.gnome.org/devel/gio/unstable/GDBusConnection.html#GBusType"><span class="type">GBusType</span></a>.</td>
+<td>A <span class="type">GBusType</span>.</td>
 </tr>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>flags</code></em> :</span></p></td>
-<td>Flags from the <a href="http://library.gnome.org/devel/gio/unstable/GDBusProxy.html#GDBusProxyFlags"><span class="type">GDBusProxyFlags</span></a> enumeration.</td>
+<td>Flags from the <span class="type">GDBusProxyFlags</span> enumeration.</td>
 </tr>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>name</code></em> :</span></p></td>
@@ -1145,17 +1145,17 @@ See <a class="link" href="UDisksLoop.html#udisks-loop-proxy-new-for-bus" title="
 </tr>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>cancellable</code></em> :</span></p></td>
-<td>A <a href="http://library.gnome.org/devel/gio/unstable/GCancellable.html"><span class="type">GCancellable</span></a> or <a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a>. <span class="annotation">[<a href="http://foldoc.org/allow-none"><span class="acronym">allow-none</span></a>]</span>
+<td>A <span class="type">GCancellable</span> or <code class="literal">NULL</code>. <span class="annotation">[<a href="http://foldoc.org/allow-none"><span class="acronym">allow-none</span></a>]</span>
 </td>
 </tr>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>error</code></em> :</span></p></td>
-<td>Return location for error or <a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a>
+<td>Return location for error or <code class="literal">NULL</code>
 </td>
 </tr>
 <tr>
 <td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
-<td>The constructed proxy object or <a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a> if <em class="parameter"><code>error</code></em> is set. <span class="annotation">[<a href="http://foldoc.org/transfer%20full"><span class="acronym">transfer full</span></a>][<a href="http://foldoc.org/type"><span class="acronym">type</span></a> UDisksLoopProxy]</span>
+<td>The constructed proxy object or <code class="literal">NULL</code> if <em class="parameter"><code>error</code></em> is set. <span class="annotation">[<a href="http://foldoc.org/transfer%20full"><span class="acronym">transfer full</span></a>][<a href="http://foldoc.org/type"><span class="acronym">type</span></a> UDisksLoopProxy]</span>
 </td>
 </tr>
 </tbody>
@@ -1185,7 +1185,7 @@ Class structure for <a class="link" href="UDisksLoop.html#UDisksLoopSkeleton"><s
 <col>
 </colgroup>
 <tbody><tr>
-<td><p><span class="term"><a href="http://library.gnome.org/devel/gio/unstable/GDBusInterfaceSkeleton.html#GDBusInterfaceSkeletonClass"><span class="type">GDBusInterfaceSkeletonClass</span></a> <em class="structfield"><code><a name="UDisksLoopSkeletonClass.parent-class"></a>parent_class</code></em>;</span></p></td>
+<td><p><span class="term"><span class="type">GDBusInterfaceSkeletonClass</span> <em class="structfield"><code><a name="UDisksLoopSkeletonClass.parent-class"></a>parent_class</code></em>;</span></p></td>
 <td>The parent class.</td>
 </tr></tbody>
 </table></div>
@@ -1214,36 +1214,36 @@ Creates a skeleton object for the D-Bus interface <a class="link" href="gdbus-or
 <a name="UDisksLoop.property-details"></a><h2>Property Details</h2>
 <div class="refsect2">
 <a name="UDisksLoop--autoclear"></a><h3>The <code class="literal">"autoclear"</code> property</h3>
-<pre class="programlisting">  "autoclear"                <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"><span class="type">gboolean</span></a>              : Read / Write</pre>
+<pre class="programlisting">  "autoclear"                <span class="type">gboolean</span>              : Read / Write</pre>
 <p>
 Represents the D-Bus property <a class="link" href="gdbus-org.freedesktop.UDisks2.Loop.html#gdbus-property-org-freedesktop-UDisks2-Loop.Autoclear" title='The "Autoclear" property'>"Autoclear"</a>.
 </p>
 <p>
-Since the D-Bus property for this <a href="http://library.gnome.org/devel/gobject/unstable/gobject-The-Base-Object-Type.html#GObject"><span class="type">GObject</span></a> property is readable but not writable, it is meaningful to read from it on both the client- and service-side. It is only meaningful, however, to write to it on the service-side.
+Since the D-Bus property for this <span class="type">GObject</span> property is readable but not writable, it is meaningful to read from it on both the client- and service-side. It is only meaningful, however, to write to it on the service-side.
 </p>
 <p>Default value: FALSE</p>
 </div>
 <hr>
 <div class="refsect2">
 <a name="UDisksLoop--backing-file"></a><h3>The <code class="literal">"backing-file"</code> property</h3>
-<pre class="programlisting">  "backing-file"             <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a>*                : Read / Write</pre>
+<pre class="programlisting">  "backing-file"             <span class="type">gchar</span>*                : Read / Write</pre>
 <p>
 Represents the D-Bus property <a class="link" href="gdbus-org.freedesktop.UDisks2.Loop.html#gdbus-property-org-freedesktop-UDisks2-Loop.BackingFile" title='The "BackingFile" property'>"BackingFile"</a>.
 </p>
 <p>
-Since the D-Bus property for this <a href="http://library.gnome.org/devel/gobject/unstable/gobject-The-Base-Object-Type.html#GObject"><span class="type">GObject</span></a> property is readable but not writable, it is meaningful to read from it on both the client- and service-side. It is only meaningful, however, to write to it on the service-side.
+Since the D-Bus property for this <span class="type">GObject</span> property is readable but not writable, it is meaningful to read from it on both the client- and service-side. It is only meaningful, however, to write to it on the service-side.
 </p>
 <p>Default value: NULL</p>
 </div>
 <hr>
 <div class="refsect2">
 <a name="UDisksLoop--setup-by-uid"></a><h3>The <code class="literal">"setup-by-uid"</code> property</h3>
-<pre class="programlisting">  "setup-by-uid"             <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#guint"><span class="type">guint</span></a>                 : Read / Write</pre>
+<pre class="programlisting">  "setup-by-uid"             <span class="type">guint</span>                 : Read / Write</pre>
 <p>
 Represents the D-Bus property <a class="link" href="gdbus-org.freedesktop.UDisks2.Loop.html#gdbus-property-org-freedesktop-UDisks2-Loop.SetupByUID" title='The "SetupByUID" property'>"SetupByUID"</a>.
 </p>
 <p>
-Since the D-Bus property for this <a href="http://library.gnome.org/devel/gobject/unstable/gobject-The-Base-Object-Type.html#GObject"><span class="type">GObject</span></a> property is readable but not writable, it is meaningful to read from it on both the client- and service-side. It is only meaningful, however, to write to it on the service-side.
+Since the D-Bus property for this <span class="type">GObject</span> property is readable but not writable, it is meaningful to read from it on both the client- and service-side. It is only meaningful, however, to write to it on the service-side.
 </p>
 <p>Default value: 0</p>
 </div>
@@ -1252,15 +1252,15 @@ Since the D-Bus property for this <a href="http://library.gnome.org/devel/gobjec
 <a name="UDisksLoop.signal-details"></a><h2>Signal Details</h2>
 <div class="refsect2">
 <a name="UDisksLoop-handle-delete"></a><h3>The <code class="literal">"handle-delete"</code> signal</h3>
-<pre class="programlisting"><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>            user_function                      (<a class="link" href="UDisksLoop.html" title="UDisksLoop"><span class="type">UDisksLoop</span></a>            *object,
-                                                        <a href="http://library.gnome.org/devel/gio/unstable/GDBusMethodInvocation.html"><span class="type">GDBusMethodInvocation</span></a> *invocation,
-                                                        <a href="http://library.gnome.org/devel/glib/unstable/glib-GVariant.html#GVariant"><span class="type">GVariant</span></a>              *arg_options,
-                                                        <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gpointer"><span class="type">gpointer</span></a>               user_data)        : <a href="http://library.gnome.org/devel/gobject/unstable/gobject-Signals.html#G-SIGNAL-RUN-LAST:CAPS"><code class="literal">Run Last</code></a></pre>
+<pre class="programlisting"><span class="returnvalue">gboolean</span>            user_function                      (<a class="link" href="UDisksLoop.html" title="UDisksLoop"><span class="type">UDisksLoop</span></a>            *object,
+                                                        <span class="type">GDBusMethodInvocation</span> *invocation,
+                                                        <span class="type">GVariant</span>              *arg_options,
+                                                        <span class="type">gpointer</span>               user_data)        : <code class="literal">Run Last</code></pre>
 <p>
 Signal emitted when a remote caller is invoking the <a class="link" href="gdbus-org.freedesktop.UDisks2.Loop.html#gdbus-method-org-freedesktop-UDisks2-Loop.Delete" title="The Delete() method"><code class="function">Delete()</code></a> D-Bus method.
 </p>
 <p>
-If a signal handler returns <a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#TRUE:CAPS"><code class="literal">TRUE</code></a>, it means the signal handler will handle the invocation (e.g. take a reference to <em class="parameter"><code>invocation</code></em> and eventually call <a class="link" href="UDisksLoop.html#udisks-loop-complete-delete" title="udisks_loop_complete_delete ()"><code class="function">udisks_loop_complete_delete()</code></a> or e.g. <a href="http://library.gnome.org/devel/gio/unstable/GDBusMethodInvocation.html#g-dbus-method-invocation-return-error"><code class="function">g_dbus_method_invocation_return_error()</code></a> on it) and no order signal handlers will run. If no signal handler handles the invocation, the <a href="http://library.gnome.org/devel/gio/unstable/gio-GDBusError.html#G-DBUS-ERROR-UNKNOWN-METHOD:CAPS"><code class="literal">G_DBUS_ERROR_UNKNOWN_METHOD</code></a> error is returned.
+If a signal handler returns <code class="literal">TRUE</code>, it means the signal handler will handle the invocation (e.g. take a reference to <em class="parameter"><code>invocation</code></em> and eventually call <a class="link" href="UDisksLoop.html#udisks-loop-complete-delete" title="udisks_loop_complete_delete ()"><code class="function">udisks_loop_complete_delete()</code></a> or e.g. <code class="function">g_dbus_method_invocation_return_error()</code> on it) and no order signal handlers will run. If no signal handler handles the invocation, the <code class="literal">G_DBUS_ERROR_UNKNOWN_METHOD</code> error is returned.
 </p>
 <div class="variablelist"><table border="0" class="variablelist">
 <colgroup>
@@ -1274,7 +1274,7 @@ If a signal handler returns <a href="http://library.gnome.org/devel/glib/unstabl
 </tr>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>invocation</code></em> :</span></p></td>
-<td>A <a href="http://library.gnome.org/devel/gio/unstable/GDBusMethodInvocation.html"><span class="type">GDBusMethodInvocation</span></a>.</td>
+<td>A <span class="type">GDBusMethodInvocation</span>.</td>
 </tr>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>arg_options</code></em> :</span></p></td>
@@ -1287,7 +1287,7 @@ If a signal handler returns <a href="http://library.gnome.org/devel/glib/unstabl
 <tr>
 <td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
 <td>
-<a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#TRUE:CAPS"><code class="literal">TRUE</code></a> if the invocation was handled, <a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#FALSE:CAPS"><code class="literal">FALSE</code></a> to let other signal handlers run.</td>
+<code class="literal">TRUE</code> if the invocation was handled, <code class="literal">FALSE</code> to let other signal handlers run.</td>
 </tr>
 </tbody>
 </table></div>
@@ -1295,16 +1295,16 @@ If a signal handler returns <a href="http://library.gnome.org/devel/glib/unstabl
 <hr>
 <div class="refsect2">
 <a name="UDisksLoop-handle-set-autoclear"></a><h3>The <code class="literal">"handle-set-autoclear"</code> signal</h3>
-<pre class="programlisting"><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>            user_function                      (<a class="link" href="UDisksLoop.html" title="UDisksLoop"><span class="type">UDisksLoop</span></a>            *object,
-                                                        <a href="http://library.gnome.org/devel/gio/unstable/GDBusMethodInvocation.html"><span class="type">GDBusMethodInvocation</span></a> *invocation,
-                                                        <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"><span class="type">gboolean</span></a>               arg_value,
-                                                        <a href="http://library.gnome.org/devel/glib/unstable/glib-GVariant.html#GVariant"><span class="type">GVariant</span></a>              *arg_options,
-                                                        <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gpointer"><span class="type">gpointer</span></a>               user_data)        : <a href="http://library.gnome.org/devel/gobject/unstable/gobject-Signals.html#G-SIGNAL-RUN-LAST:CAPS"><code class="literal">Run Last</code></a></pre>
+<pre class="programlisting"><span class="returnvalue">gboolean</span>            user_function                      (<a class="link" href="UDisksLoop.html" title="UDisksLoop"><span class="type">UDisksLoop</span></a>            *object,
+                                                        <span class="type">GDBusMethodInvocation</span> *invocation,
+                                                        <span class="type">gboolean</span>               arg_value,
+                                                        <span class="type">GVariant</span>              *arg_options,
+                                                        <span class="type">gpointer</span>               user_data)        : <code class="literal">Run Last</code></pre>
 <p>
 Signal emitted when a remote caller is invoking the <a class="link" href="gdbus-org.freedesktop.UDisks2.Loop.html#gdbus-method-org-freedesktop-UDisks2-Loop.SetAutoclear" title="The SetAutoclear() method"><code class="function">SetAutoclear()</code></a> D-Bus method.
 </p>
 <p>
-If a signal handler returns <a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#TRUE:CAPS"><code class="literal">TRUE</code></a>, it means the signal handler will handle the invocation (e.g. take a reference to <em class="parameter"><code>invocation</code></em> and eventually call <a class="link" href="UDisksLoop.html#udisks-loop-complete-set-autoclear" title="udisks_loop_complete_set_autoclear ()"><code class="function">udisks_loop_complete_set_autoclear()</code></a> or e.g. <a href="http://library.gnome.org/devel/gio/unstable/GDBusMethodInvocation.html#g-dbus-method-invocation-return-error"><code class="function">g_dbus_method_invocation_return_error()</code></a> on it) and no order signal handlers will run. If no signal handler handles the invocation, the <a href="http://library.gnome.org/devel/gio/unstable/gio-GDBusError.html#G-DBUS-ERROR-UNKNOWN-METHOD:CAPS"><code class="literal">G_DBUS_ERROR_UNKNOWN_METHOD</code></a> error is returned.
+If a signal handler returns <code class="literal">TRUE</code>, it means the signal handler will handle the invocation (e.g. take a reference to <em class="parameter"><code>invocation</code></em> and eventually call <a class="link" href="UDisksLoop.html#udisks-loop-complete-set-autoclear" title="udisks_loop_complete_set_autoclear ()"><code class="function">udisks_loop_complete_set_autoclear()</code></a> or e.g. <code class="function">g_dbus_method_invocation_return_error()</code> on it) and no order signal handlers will run. If no signal handler handles the invocation, the <code class="literal">G_DBUS_ERROR_UNKNOWN_METHOD</code> error is returned.
 </p>
 <div class="variablelist"><table border="0" class="variablelist">
 <colgroup>
@@ -1318,7 +1318,7 @@ If a signal handler returns <a href="http://library.gnome.org/devel/glib/unstabl
 </tr>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>invocation</code></em> :</span></p></td>
-<td>A <a href="http://library.gnome.org/devel/gio/unstable/GDBusMethodInvocation.html"><span class="type">GDBusMethodInvocation</span></a>.</td>
+<td>A <span class="type">GDBusMethodInvocation</span>.</td>
 </tr>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>arg_value</code></em> :</span></p></td>
@@ -1335,7 +1335,7 @@ If a signal handler returns <a href="http://library.gnome.org/devel/glib/unstabl
 <tr>
 <td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
 <td>
-<a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#TRUE:CAPS"><code class="literal">TRUE</code></a> if the invocation was handled, <a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#FALSE:CAPS"><code class="literal">FALSE</code></a> to let other signal handlers run.</td>
+<code class="literal">TRUE</code> if the invocation was handled, <code class="literal">FALSE</code> to let other signal handlers run.</td>
 </tr>
 </tbody>
 </table></div>

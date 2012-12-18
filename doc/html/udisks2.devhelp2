@@ -95,7 +95,7 @@
     <sub name="Object Hierarchy" link="gio-hierarchy.html"/>
   </chapters>
   <functions>
-    <keyword type="" name="ATA group" link="udisks.8.html#idp7143648"/>
+    <keyword type="" name="ATA group" link="udisks.8.html#idp6887008"/>
     <keyword type="method" name="The LoopSetup() method" link="gdbus-org.freedesktop.UDisks2.Manager.html#gdbus-method-org-freedesktop-UDisks2-Manager.LoopSetup"/>
     <keyword type="property" name="The &quot;Version&quot; property" link="gdbus-org.freedesktop.UDisks2.Manager.html#gdbus-property-org-freedesktop-UDisks2-Manager.Version"/>
     <keyword type="method" name="The Eject() method" link="gdbus-org.freedesktop.UDisks2.Drive.html#gdbus-method-org-freedesktop-UDisks2-Drive.Eject"/>

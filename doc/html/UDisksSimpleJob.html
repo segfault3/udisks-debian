@@ -43,17 +43,17 @@
 <a name="UDisksSimpleJob.synopsis"></a><h2>Synopsis</h2>
 <pre class="synopsis">                    <a class="link" href="UDisksSimpleJob.html#UDisksSimpleJob-struct" title="UDisksSimpleJob">UDisksSimpleJob</a>;
 <a class="link" href="UDisksSimpleJob.html" title="UDisksSimpleJob"><span class="returnvalue">UDisksSimpleJob</span></a> *   <a class="link" href="UDisksSimpleJob.html#udisks-simple-job-new" title="udisks_simple_job_new ()">udisks_simple_job_new</a>               (<em class="parameter"><code><a class="link" href="UDisksDaemon.html" title="UDisksDaemon"><span class="type">UDisksDaemon</span></a> *daemon</code></em>,
-                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/gio/unstable/GCancellable.html"><span class="type">GCancellable</span></a> *cancellable</code></em>);
+                                                         <em class="parameter"><code><span class="type">GCancellable</span> *cancellable</code></em>);
 <span class="returnvalue">void</span>                <a class="link" href="UDisksSimpleJob.html#udisks-simple-job-complete" title="udisks_simple_job_complete ()">udisks_simple_job_complete</a>          (<em class="parameter"><code><a class="link" href="UDisksSimpleJob.html" title="UDisksSimpleJob"><span class="type">UDisksSimpleJob</span></a> *job</code></em>,
-                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"><span class="type">gboolean</span></a> succeess</code></em>,
-                                                         <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *message</code></em>);
+                                                         <em class="parameter"><code><span class="type">gboolean</span> succeess</code></em>,
+                                                         <em class="parameter"><code>const <span class="type">gchar</span> *message</code></em>);
 </pre>
 </div>
 <div class="refsect1">
 <a name="UDisksSimpleJob.object-hierarchy"></a><h2>Object Hierarchy</h2>
 <pre class="synopsis">
-  <a href="http://library.gnome.org/devel/gobject/unstable/gobject-The-Base-Object-Type.html#GObject">GObject</a>
-   +----<a href="http://library.gnome.org/devel/gio/unstable/GDBusInterfaceSkeleton.html">GDBusInterfaceSkeleton</a>
+  GObject
+   +----GDBusInterfaceSkeleton
          +----<a class="link" href="UDisksJob.html#UDisksJobSkeleton">UDisksJobSkeleton</a>
                +----<a class="link" href="UDisksBaseJob.html" title="UDisksBaseJob">UDisksBaseJob</a>
                      +----UDisksSimpleJob
@@ -63,7 +63,7 @@
 <a name="UDisksSimpleJob.implemented-interfaces"></a><h2>Implemented Interfaces</h2>
 <p>
 UDisksSimpleJob implements
- <a href="http://library.gnome.org/devel/gio/unstable/GDBusInterface.html">GDBusInterface</a> and  <a class="link" href="UDisksJob.html" title="UDisksJob">UDisksJob</a>.</p>
+ GDBusInterface and  <a class="link" href="UDisksJob.html" title="UDisksJob">UDisksJob</a>.</p>
 </div>
 <div class="refsect1">
 <a name="UDisksSimpleJob.description"></a><h2>Description</h2>
@@ -86,7 +86,7 @@ only be accessed using the provided API.
 <div class="refsect2">
 <a name="udisks-simple-job-new"></a><h3>udisks_simple_job_new ()</h3>
 <pre class="programlisting"><a class="link" href="UDisksSimpleJob.html" title="UDisksSimpleJob"><span class="returnvalue">UDisksSimpleJob</span></a> *   udisks_simple_job_new               (<em class="parameter"><code><a class="link" href="UDisksDaemon.html" title="UDisksDaemon"><span class="type">UDisksDaemon</span></a> *daemon</code></em>,
-                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/gio/unstable/GCancellable.html"><span class="type">GCancellable</span></a> *cancellable</code></em>);</pre>
+                                                         <em class="parameter"><code><span class="type">GCancellable</span> *cancellable</code></em>);</pre>
 <p>
 Creates a new <a class="link" href="UDisksSimpleJob.html" title="UDisksSimpleJob"><span class="type">UDisksSimpleJob</span></a> instance.
 </p>
@@ -105,11 +105,11 @@ Call <a class="link" href="UDisksSimpleJob.html#udisks-simple-job-complete" titl
 </tr>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>cancellable</code></em> :</span></p></td>
-<td>A <a href="http://library.gnome.org/devel/gio/unstable/GCancellable.html"><span class="type">GCancellable</span></a> or <a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a>.</td>
+<td>A <span class="type">GCancellable</span> or <code class="literal">NULL</code>.</td>
 </tr>
 <tr>
 <td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
-<td>A new <a class="link" href="UDisksSimpleJob.html" title="UDisksSimpleJob"><span class="type">UDisksSimpleJob</span></a>. Free with <a href="http://library.gnome.org/devel/gobject/unstable/gobject-The-Base-Object-Type.html#g-object-unref"><code class="function">g_object_unref()</code></a>.</td>
+<td>A new <a class="link" href="UDisksSimpleJob.html" title="UDisksSimpleJob"><span class="type">UDisksSimpleJob</span></a>. Free with <code class="function">g_object_unref()</code>.</td>
 </tr>
 </tbody>
 </table></div>
@@ -118,8 +118,8 @@ Call <a class="link" href="UDisksSimpleJob.html#udisks-simple-job-complete" titl
 <div class="refsect2">
 <a name="udisks-simple-job-complete"></a><h3>udisks_simple_job_complete ()</h3>
 <pre class="programlisting"><span class="returnvalue">void</span>                udisks_simple_job_complete          (<em class="parameter"><code><a class="link" href="UDisksSimpleJob.html" title="UDisksSimpleJob"><span class="type">UDisksSimpleJob</span></a> *job</code></em>,
-                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"><span class="type">gboolean</span></a> succeess</code></em>,
-                                                         <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *message</code></em>);</pre>
+                                                         <em class="parameter"><code><span class="type">gboolean</span> succeess</code></em>,
+                                                         <em class="parameter"><code>const <span class="type">gchar</span> *message</code></em>);</pre>
 <p>
 Completes <em class="parameter"><code>job</code></em>.
 </p>
@@ -139,7 +139,7 @@ Completes <em class="parameter"><code>job</code></em>.
 </tr>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>message</code></em> :</span></p></td>
-<td>An error message or <a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a>.</td>
+<td>An error message or <code class="literal">NULL</code>.</td>
 </tr>
 </tbody>
 </table></div>
