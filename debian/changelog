@@ -7,6 +7,7 @@ udisks2 (2.0.1-1) UNRELEASED; urgency=low
 
   [ Michael Biebl ]
   * New upstream release.
+  * Update email address in debian/copyright.
 
  -- Martin Pitt <mpitt@debian.org>  Thu, 13 Dec 2012 11:44:44 +0100
 
