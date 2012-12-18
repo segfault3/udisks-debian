@@ -46,23 +46,23 @@
 <div class="refsynopsisdiv">
 <a name="UDisksThreadedJob.synopsis"></a><h2>Synopsis</h2>
 <pre class="synopsis">                    <a class="link" href="UDisksThreadedJob.html#UDisksThreadedJob-struct" title="UDisksThreadedJob">UDisksThreadedJob</a>;
-<a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>            (<a class="link" href="UDisksThreadedJob.html#UDisksThreadedJobFunc" title="UDisksThreadedJobFunc ()">*UDisksThreadedJobFunc</a>)            (<em class="parameter"><code><a class="link" href="UDisksThreadedJob.html" title="UDisksThreadedJob"><span class="type">UDisksThreadedJob</span></a> *job</code></em>,
-                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/gio/unstable/GCancellable.html"><span class="type">GCancellable</span></a> *cancellable</code></em>,
-                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gpointer"><span class="type">gpointer</span></a> user_data</code></em>,
-                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Error-Reporting.html#GError"><span class="type">GError</span></a> **error</code></em>);
+<span class="returnvalue">gboolean</span>            (<a class="link" href="UDisksThreadedJob.html#UDisksThreadedJobFunc" title="UDisksThreadedJobFunc ()">*UDisksThreadedJobFunc</a>)            (<em class="parameter"><code><a class="link" href="UDisksThreadedJob.html" title="UDisksThreadedJob"><span class="type">UDisksThreadedJob</span></a> *job</code></em>,
+                                                         <em class="parameter"><code><span class="type">GCancellable</span> *cancellable</code></em>,
+                                                         <em class="parameter"><code><span class="type">gpointer</span> user_data</code></em>,
+                                                         <em class="parameter"><code><span class="type">GError</span> **error</code></em>);
 <a class="link" href="UDisksThreadedJob.html" title="UDisksThreadedJob"><span class="returnvalue">UDisksThreadedJob</span></a> * <a class="link" href="UDisksThreadedJob.html#udisks-threaded-job-new" title="udisks_threaded_job_new ()">udisks_threaded_job_new</a>             (<em class="parameter"><code><a class="link" href="UDisksThreadedJob.html#UDisksThreadedJobFunc" title="UDisksThreadedJobFunc ()"><span class="type">UDisksThreadedJobFunc</span></a> job_func</code></em>,
-                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gpointer"><span class="type">gpointer</span></a> user_data</code></em>,
-                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Datasets.html#GDestroyNotify"><span class="type">GDestroyNotify</span></a> user_data_free_func</code></em>,
+                                                         <em class="parameter"><code><span class="type">gpointer</span> user_data</code></em>,
+                                                         <em class="parameter"><code><span class="type">GDestroyNotify</span> user_data_free_func</code></em>,
                                                          <em class="parameter"><code><a class="link" href="UDisksDaemon.html" title="UDisksDaemon"><span class="type">UDisksDaemon</span></a> *daemon</code></em>,
-                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/gio/unstable/GCancellable.html"><span class="type">GCancellable</span></a> *cancellable</code></em>);
-<a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gpointer"><span class="returnvalue">gpointer</span></a>            <a class="link" href="UDisksThreadedJob.html#udisks-threaded-job-get-user-data" title="udisks_threaded_job_get_user_data ()">udisks_threaded_job_get_user_data</a>   (<em class="parameter"><code><a class="link" href="UDisksThreadedJob.html" title="UDisksThreadedJob"><span class="type">UDisksThreadedJob</span></a> *job</code></em>);
+                                                         <em class="parameter"><code><span class="type">GCancellable</span> *cancellable</code></em>);
+<span class="returnvalue">gpointer</span>            <a class="link" href="UDisksThreadedJob.html#udisks-threaded-job-get-user-data" title="udisks_threaded_job_get_user_data ()">udisks_threaded_job_get_user_data</a>   (<em class="parameter"><code><a class="link" href="UDisksThreadedJob.html" title="UDisksThreadedJob"><span class="type">UDisksThreadedJob</span></a> *job</code></em>);
 </pre>
 </div>
 <div class="refsect1">
 <a name="UDisksThreadedJob.object-hierarchy"></a><h2>Object Hierarchy</h2>
 <pre class="synopsis">
-  <a href="http://library.gnome.org/devel/gobject/unstable/gobject-The-Base-Object-Type.html#GObject">GObject</a>
-   +----<a href="http://library.gnome.org/devel/gio/unstable/GDBusInterfaceSkeleton.html">GDBusInterfaceSkeleton</a>
+  GObject
+   +----GDBusInterfaceSkeleton
          +----<a class="link" href="UDisksJob.html#UDisksJobSkeleton">UDisksJobSkeleton</a>
                +----<a class="link" href="UDisksBaseJob.html" title="UDisksBaseJob">UDisksBaseJob</a>
                      +----UDisksThreadedJob
@@ -72,20 +72,20 @@
 <a name="UDisksThreadedJob.implemented-interfaces"></a><h2>Implemented Interfaces</h2>
 <p>
 UDisksThreadedJob implements
- <a href="http://library.gnome.org/devel/gio/unstable/GDBusInterface.html">GDBusInterface</a> and  <a class="link" href="UDisksJob.html" title="UDisksJob">UDisksJob</a>.</p>
+ GDBusInterface and  <a class="link" href="UDisksJob.html" title="UDisksJob">UDisksJob</a>.</p>
 </div>
 <div class="refsect1">
 <a name="UDisksThreadedJob.properties"></a><h2>Properties</h2>
 <pre class="synopsis">
-  "<a class="link" href="UDisksThreadedJob.html#UDisksThreadedJob--job-func" title='The "job-func" property'>job-func</a>"                 <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gpointer"><span class="type">gpointer</span></a>              : Read / Write / Construct Only
-  "<a class="link" href="UDisksThreadedJob.html#UDisksThreadedJob--user-data" title='The "user-data" property'>user-data</a>"                <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gpointer"><span class="type">gpointer</span></a>              : Read / Write / Construct Only
-  "<a class="link" href="UDisksThreadedJob.html#UDisksThreadedJob--user-data-free-func" title='The "user-data-free-func" property'>user-data-free-func</a>"      <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gpointer"><span class="type">gpointer</span></a>              : Read / Write / Construct Only
+  "<a class="link" href="UDisksThreadedJob.html#UDisksThreadedJob--job-func" title='The "job-func" property'>job-func</a>"                 <span class="type">gpointer</span>              : Read / Write / Construct Only
+  "<a class="link" href="UDisksThreadedJob.html#UDisksThreadedJob--user-data" title='The "user-data" property'>user-data</a>"                <span class="type">gpointer</span>              : Read / Write / Construct Only
+  "<a class="link" href="UDisksThreadedJob.html#UDisksThreadedJob--user-data-free-func" title='The "user-data-free-func" property'>user-data-free-func</a>"      <span class="type">gpointer</span>              : Read / Write / Construct Only
 </pre>
 </div>
 <div class="refsect1">
 <a name="UDisksThreadedJob.signals"></a><h2>Signals</h2>
 <pre class="synopsis">
-  "<a class="link" href="UDisksThreadedJob.html#UDisksThreadedJob-threaded-job-completed" title='The "threaded-job-completed" signal'>threaded-job-completed</a>"                         : <a href="http://library.gnome.org/devel/gobject/unstable/gobject-Signals.html#G-SIGNAL-RUN-LAST:CAPS"><code class="literal">Run Last</code></a>
+  "<a class="link" href="UDisksThreadedJob.html#UDisksThreadedJob-threaded-job-completed" title='The "threaded-job-completed" signal'>threaded-job-completed</a>"                         : <code class="literal">Run Last</code>
 </pre>
 </div>
 <div class="refsect1">
@@ -108,10 +108,10 @@ only be accessed using the provided API.
 <hr>
 <div class="refsect2">
 <a name="UDisksThreadedJobFunc"></a><h3>UDisksThreadedJobFunc ()</h3>
-<pre class="programlisting"><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>            (*UDisksThreadedJobFunc)            (<em class="parameter"><code><a class="link" href="UDisksThreadedJob.html" title="UDisksThreadedJob"><span class="type">UDisksThreadedJob</span></a> *job</code></em>,
-                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/gio/unstable/GCancellable.html"><span class="type">GCancellable</span></a> *cancellable</code></em>,
-                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gpointer"><span class="type">gpointer</span></a> user_data</code></em>,
-                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Error-Reporting.html#GError"><span class="type">GError</span></a> **error</code></em>);</pre>
+<pre class="programlisting"><span class="returnvalue">gboolean</span>            (*UDisksThreadedJobFunc)            (<em class="parameter"><code><a class="link" href="UDisksThreadedJob.html" title="UDisksThreadedJob"><span class="type">UDisksThreadedJob</span></a> *job</code></em>,
+                                                         <em class="parameter"><code><span class="type">GCancellable</span> *cancellable</code></em>,
+                                                         <em class="parameter"><code><span class="type">gpointer</span> user_data</code></em>,
+                                                         <em class="parameter"><code><span class="type">GError</span> **error</code></em>);</pre>
 <p>
 Job function that runs in a separate thread.
 </p>
@@ -131,7 +131,7 @@ they have been cancelled.
 </tr>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>cancellable</code></em> :</span></p></td>
-<td>A <a href="http://library.gnome.org/devel/gio/unstable/GCancellable.html"><span class="type">GCancellable</span></a> (never <a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a>).</td>
+<td>A <span class="type">GCancellable</span> (never <code class="literal">NULL</code>).</td>
 </tr>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>user_data</code></em> :</span></p></td>
@@ -139,12 +139,12 @@ they have been cancelled.
 </tr>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>error</code></em> :</span></p></td>
-<td>Return location for error (never <a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a>).</td>
+<td>Return location for error (never <code class="literal">NULL</code>).</td>
 </tr>
 <tr>
 <td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
 <td>
-<a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#TRUE:CAPS"><code class="literal">TRUE</code></a> if the job succeeded, <a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#FALSE:CAPS"><code class="literal">FALSE</code></a> if <em class="parameter"><code>error</code></em> is set.</td>
+<code class="literal">TRUE</code> if the job succeeded, <code class="literal">FALSE</code> if <em class="parameter"><code>error</code></em> is set.</td>
 </tr>
 </tbody>
 </table></div>
@@ -153,10 +153,10 @@ they have been cancelled.
 <div class="refsect2">
 <a name="udisks-threaded-job-new"></a><h3>udisks_threaded_job_new ()</h3>
 <pre class="programlisting"><a class="link" href="UDisksThreadedJob.html" title="UDisksThreadedJob"><span class="returnvalue">UDisksThreadedJob</span></a> * udisks_threaded_job_new             (<em class="parameter"><code><a class="link" href="UDisksThreadedJob.html#UDisksThreadedJobFunc" title="UDisksThreadedJobFunc ()"><span class="type">UDisksThreadedJobFunc</span></a> job_func</code></em>,
-                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gpointer"><span class="type">gpointer</span></a> user_data</code></em>,
-                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Datasets.html#GDestroyNotify"><span class="type">GDestroyNotify</span></a> user_data_free_func</code></em>,
+                                                         <em class="parameter"><code><span class="type">gpointer</span> user_data</code></em>,
+                                                         <em class="parameter"><code><span class="type">GDestroyNotify</span> user_data_free_func</code></em>,
                                                          <em class="parameter"><code><a class="link" href="UDisksDaemon.html" title="UDisksDaemon"><span class="type">UDisksDaemon</span></a> *daemon</code></em>,
-                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/gio/unstable/GCancellable.html"><span class="type">GCancellable</span></a> *cancellable</code></em>);</pre>
+                                                         <em class="parameter"><code><span class="type">GCancellable</span> *cancellable</code></em>);</pre>
 <p>
 Creates a new <a class="link" href="UDisksThreadedJob.html" title="UDisksThreadedJob"><span class="type">UDisksThreadedJob</span></a> instance.
 </p>
@@ -181,7 +181,7 @@ signals to get notified when the job is done.
 </tr>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>user_data_free_func</code></em> :</span></p></td>
-<td>Function to free <em class="parameter"><code>user_data</code></em> with or <a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a>.</td>
+<td>Function to free <em class="parameter"><code>user_data</code></em> with or <code class="literal">NULL</code>.</td>
 </tr>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>daemon</code></em> :</span></p></td>
@@ -189,11 +189,11 @@ signals to get notified when the job is done.
 </tr>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>cancellable</code></em> :</span></p></td>
-<td>A <a href="http://library.gnome.org/devel/gio/unstable/GCancellable.html"><span class="type">GCancellable</span></a> or <a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a>.</td>
+<td>A <span class="type">GCancellable</span> or <code class="literal">NULL</code>.</td>
 </tr>
 <tr>
 <td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
-<td>A new <a class="link" href="UDisksThreadedJob.html" title="UDisksThreadedJob"><span class="type">UDisksThreadedJob</span></a>. Free with <a href="http://library.gnome.org/devel/gobject/unstable/gobject-The-Base-Object-Type.html#g-object-unref"><code class="function">g_object_unref()</code></a>.</td>
+<td>A new <a class="link" href="UDisksThreadedJob.html" title="UDisksThreadedJob"><span class="type">UDisksThreadedJob</span></a>. Free with <code class="function">g_object_unref()</code>.</td>
 </tr>
 </tbody>
 </table></div>
@@ -201,7 +201,7 @@ signals to get notified when the job is done.
 <hr>
 <div class="refsect2">
 <a name="udisks-threaded-job-get-user-data"></a><h3>udisks_threaded_job_get_user_data ()</h3>
-<pre class="programlisting"><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gpointer"><span class="returnvalue">gpointer</span></a>            udisks_threaded_job_get_user_data   (<em class="parameter"><code><a class="link" href="UDisksThreadedJob.html" title="UDisksThreadedJob"><span class="type">UDisksThreadedJob</span></a> *job</code></em>);</pre>
+<pre class="programlisting"><span class="returnvalue">gpointer</span>            udisks_threaded_job_get_user_data   (<em class="parameter"><code><a class="link" href="UDisksThreadedJob.html" title="UDisksThreadedJob"><span class="type">UDisksThreadedJob</span></a> *job</code></em>);</pre>
 <p>
 Gets the <em class="parameter"><code>user_data</code></em> parameter that <em class="parameter"><code>job</code></em> was constructed with.
 </p>
@@ -217,7 +217,7 @@ Gets the <em class="parameter"><code>user_data</code></em> parameter that <em cl
 </tr>
 <tr>
 <td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
-<td>A <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gpointer"><span class="type">gpointer</span></a> owned by <em class="parameter"><code>job</code></em>.</td>
+<td>A <span class="type">gpointer</span> owned by <em class="parameter"><code>job</code></em>.</td>
 </tr>
 </tbody>
 </table></div>
@@ -227,7 +227,7 @@ Gets the <em class="parameter"><code>user_data</code></em> parameter that <em cl
 <a name="UDisksThreadedJob.property-details"></a><h2>Property Details</h2>
 <div class="refsect2">
 <a name="UDisksThreadedJob--job-func"></a><h3>The <code class="literal">"job-func"</code> property</h3>
-<pre class="programlisting">  "job-func"                 <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gpointer"><span class="type">gpointer</span></a>              : Read / Write / Construct Only</pre>
+<pre class="programlisting">  "job-func"                 <span class="type">gpointer</span>              : Read / Write / Construct Only</pre>
 <p>
 The <a class="link" href="UDisksThreadedJob.html#UDisksThreadedJobFunc" title="UDisksThreadedJobFunc ()"><span class="type">UDisksThreadedJobFunc</span></a> to use.
 </p>
@@ -235,7 +235,7 @@ The <a class="link" href="UDisksThreadedJob.html#UDisksThreadedJobFunc" title="U
 <hr>
 <div class="refsect2">
 <a name="UDisksThreadedJob--user-data"></a><h3>The <code class="literal">"user-data"</code> property</h3>
-<pre class="programlisting">  "user-data"                <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gpointer"><span class="type">gpointer</span></a>              : Read / Write / Construct Only</pre>
+<pre class="programlisting">  "user-data"                <span class="type">gpointer</span>              : Read / Write / Construct Only</pre>
 <p>
 User data for the <a class="link" href="UDisksThreadedJob.html#UDisksThreadedJobFunc" title="UDisksThreadedJobFunc ()"><span class="type">UDisksThreadedJobFunc</span></a>.
 </p>
@@ -243,7 +243,7 @@ User data for the <a class="link" href="UDisksThreadedJob.html#UDisksThreadedJob
 <hr>
 <div class="refsect2">
 <a name="UDisksThreadedJob--user-data-free-func"></a><h3>The <code class="literal">"user-data-free-func"</code> property</h3>
-<pre class="programlisting">  "user-data-free-func"      <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gpointer"><span class="type">gpointer</span></a>              : Read / Write / Construct Only</pre>
+<pre class="programlisting">  "user-data-free-func"      <span class="type">gpointer</span>              : Read / Write / Construct Only</pre>
 <p>
 Free function for user data for the <a class="link" href="UDisksThreadedJob.html#UDisksThreadedJobFunc" title="UDisksThreadedJobFunc ()"><span class="type">UDisksThreadedJobFunc</span></a>.
 </p>
@@ -253,23 +253,23 @@ Free function for user data for the <a class="link" href="UDisksThreadedJob.html
 <a name="UDisksThreadedJob.signal-details"></a><h2>Signal Details</h2>
 <div class="refsect2">
 <a name="UDisksThreadedJob-threaded-job-completed"></a><h3>The <code class="literal">"threaded-job-completed"</code> signal</h3>
-<pre class="programlisting"><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>            user_function                      (<a class="link" href="UDisksThreadedJob.html" title="UDisksThreadedJob"><span class="type">UDisksThreadedJob</span></a> *job,
-                                                        <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"><span class="type">gboolean</span></a>           result,
-                                                        <a href="http://library.gnome.org/devel/glib/unstable/glib-Error-Reporting.html#GError"><span class="type">GError</span></a>            *error,
-                                                        <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gpointer"><span class="type">gpointer</span></a>           user_data)      : <a href="http://library.gnome.org/devel/gobject/unstable/gobject-Signals.html#G-SIGNAL-RUN-LAST:CAPS"><code class="literal">Run Last</code></a></pre>
+<pre class="programlisting"><span class="returnvalue">gboolean</span>            user_function                      (<a class="link" href="UDisksThreadedJob.html" title="UDisksThreadedJob"><span class="type">UDisksThreadedJob</span></a> *job,
+                                                        <span class="type">gboolean</span>           result,
+                                                        <span class="type">GError</span>            *error,
+                                                        <span class="type">gpointer</span>           user_data)      : <code class="literal">Run Last</code></pre>
 <p>
 Emitted when the threaded job is complete.
 </p>
 <p>
 The default implementation simply emits the <a class="link" href="UDisksJob.html#UDisksJob-completed" title='The "completed" signal'><span class="type">"completed"</span></a>
-signal with <em class="parameter"><code>success</code></em> set to <a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#TRUE:CAPS"><code class="literal">TRUE</code></a> if, and only if, <em class="parameter"><code>error</code></em> is
-<a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a>. Otherwise, <em class="parameter"><code>message</code></em> on that signal is set to a string
+signal with <em class="parameter"><code>success</code></em> set to <code class="literal">TRUE</code> if, and only if, <em class="parameter"><code>error</code></em> is
+<code class="literal">NULL</code>. Otherwise, <em class="parameter"><code>message</code></em> on that signal is set to a string
 describing <em class="parameter"><code>error</code></em>. You can avoid the default implementation by
-returning <a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#TRUE:CAPS"><code class="literal">TRUE</code></a> from your signal handler.
+returning <code class="literal">TRUE</code> from your signal handler.
 </p>
 <p>
 This signal is emitted in the
-<a href="http://library.gnome.org/devel/glib/unstable/glib-The-Main-Event-Loop.html#g-main-context-push-thread-default">thread-default main loop</a>
+thread-default main loop
 of the thread that <em class="parameter"><code>job</code></em> was created in.
 </p>
 <div class="variablelist"><table border="0" class="variablelist">
@@ -284,11 +284,11 @@ of the thread that <em class="parameter"><code>job</code></em> was created in.
 </tr>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>result</code></em> :</span></p></td>
-<td>The <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"><span class="type">gboolean</span></a> returned by the <a class="link" href="UDisksThreadedJob.html#UDisksThreadedJobFunc" title="UDisksThreadedJobFunc ()"><span class="type">UDisksThreadedJobFunc</span></a>.</td>
+<td>The <span class="type">gboolean</span> returned by the <a class="link" href="UDisksThreadedJob.html#UDisksThreadedJobFunc" title="UDisksThreadedJobFunc ()"><span class="type">UDisksThreadedJobFunc</span></a>.</td>
 </tr>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>error</code></em> :</span></p></td>
-<td>The <a href="http://library.gnome.org/devel/glib/unstable/glib-Error-Reporting.html#GError"><span class="type">GError</span></a> set by the <a class="link" href="UDisksThreadedJob.html#UDisksThreadedJobFunc" title="UDisksThreadedJobFunc ()"><span class="type">UDisksThreadedJobFunc</span></a>.</td>
+<td>The <span class="type">GError</span> set by the <a class="link" href="UDisksThreadedJob.html#UDisksThreadedJobFunc" title="UDisksThreadedJobFunc ()"><span class="type">UDisksThreadedJobFunc</span></a>.</td>
 </tr>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>user_data</code></em> :</span></p></td>
@@ -297,7 +297,7 @@ of the thread that <em class="parameter"><code>job</code></em> was created in.
 <tr>
 <td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
 <td>
-<a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#TRUE:CAPS"><code class="literal">TRUE</code></a> if the signal was handled, <a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#FALSE:CAPS"><code class="literal">FALSE</code></a> to let other
+<code class="literal">TRUE</code> if the signal was handled, <code class="literal">FALSE</code> to let other
 handlers run.</td>
 </tr>
 </tbody>

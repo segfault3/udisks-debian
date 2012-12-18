@@ -51,84 +51,84 @@
 <a name="UDisksJob.synopsis"></a><h2>Synopsis</h2>
 <a name="UDisksJobProxy"></a><a name="UDisksJobSkeleton"></a><pre class="synopsis">                    <a class="link" href="UDisksJob.html#UDisksJob-struct" title="UDisksJob">UDisksJob</a>;
 struct              <a class="link" href="UDisksJob.html#UDisksJobIface" title="struct UDisksJobIface">UDisksJobIface</a>;
-<a href="http://library.gnome.org/devel/gio/unstable/gio-D-Bus-Introspection-Data.html#GDBusInterfaceInfo"><span class="returnvalue">GDBusInterfaceInfo</span></a> * <a class="link" href="UDisksJob.html#udisks-job-interface-info" title="udisks_job_interface_info ()">udisks_job_interface_info</a>          (<em class="parameter"><code><span class="type">void</span></code></em>);
-<a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#guint"><span class="returnvalue">guint</span></a>               <a class="link" href="UDisksJob.html#udisks-job-override-properties" title="udisks_job_override_properties ()">udisks_job_override_properties</a>      (<em class="parameter"><code><a href="http://library.gnome.org/devel/gobject/unstable/gobject-The-Base-Object-Type.html#GObjectClass"><span class="type">GObjectClass</span></a> *klass</code></em>,
-                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#guint"><span class="type">guint</span></a> property_id_begin</code></em>);
+<span class="returnvalue">GDBusInterfaceInfo</span> * <a class="link" href="UDisksJob.html#udisks-job-interface-info" title="udisks_job_interface_info ()">udisks_job_interface_info</a>          (<em class="parameter"><code><span class="type">void</span></code></em>);
+<span class="returnvalue">guint</span>               <a class="link" href="UDisksJob.html#udisks-job-override-properties" title="udisks_job_override_properties ()">udisks_job_override_properties</a>      (<em class="parameter"><code><span class="type">GObjectClass</span> *klass</code></em>,
+                                                         <em class="parameter"><code><span class="type">guint</span> property_id_begin</code></em>);
 <span class="returnvalue">void</span>                <a class="link" href="UDisksJob.html#udisks-job-call-cancel" title="udisks_job_call_cancel ()">udisks_job_call_cancel</a>              (<em class="parameter"><code><a class="link" href="UDisksJob.html" title="UDisksJob"><span class="type">UDisksJob</span></a> *proxy</code></em>,
-                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-GVariant.html#GVariant"><span class="type">GVariant</span></a> *arg_options</code></em>,
-                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/gio/unstable/GCancellable.html"><span class="type">GCancellable</span></a> *cancellable</code></em>,
-                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/gio/unstable/GAsyncResult.html#GAsyncReadyCallback"><span class="type">GAsyncReadyCallback</span></a> callback</code></em>,
-                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gpointer"><span class="type">gpointer</span></a> user_data</code></em>);
-<a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>            <a class="link" href="UDisksJob.html#udisks-job-call-cancel-finish" title="udisks_job_call_cancel_finish ()">udisks_job_call_cancel_finish</a>       (<em class="parameter"><code><a class="link" href="UDisksJob.html" title="UDisksJob"><span class="type">UDisksJob</span></a> *proxy</code></em>,
-                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/gio/unstable/GAsyncResult.html"><span class="type">GAsyncResult</span></a> *res</code></em>,
-                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Error-Reporting.html#GError"><span class="type">GError</span></a> **error</code></em>);
-<a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>            <a class="link" href="UDisksJob.html#udisks-job-call-cancel-sync" title="udisks_job_call_cancel_sync ()">udisks_job_call_cancel_sync</a>         (<em class="parameter"><code><a class="link" href="UDisksJob.html" title="UDisksJob"><span class="type">UDisksJob</span></a> *proxy</code></em>,
-                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-GVariant.html#GVariant"><span class="type">GVariant</span></a> *arg_options</code></em>,
-                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/gio/unstable/GCancellable.html"><span class="type">GCancellable</span></a> *cancellable</code></em>,
-                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Error-Reporting.html#GError"><span class="type">GError</span></a> **error</code></em>);
+                                                         <em class="parameter"><code><span class="type">GVariant</span> *arg_options</code></em>,
+                                                         <em class="parameter"><code><span class="type">GCancellable</span> *cancellable</code></em>,
+                                                         <em class="parameter"><code><span class="type">GAsyncReadyCallback</span> callback</code></em>,
+                                                         <em class="parameter"><code><span class="type">gpointer</span> user_data</code></em>);
+<span class="returnvalue">gboolean</span>            <a class="link" href="UDisksJob.html#udisks-job-call-cancel-finish" title="udisks_job_call_cancel_finish ()">udisks_job_call_cancel_finish</a>       (<em class="parameter"><code><a class="link" href="UDisksJob.html" title="UDisksJob"><span class="type">UDisksJob</span></a> *proxy</code></em>,
+                                                         <em class="parameter"><code><span class="type">GAsyncResult</span> *res</code></em>,
+                                                         <em class="parameter"><code><span class="type">GError</span> **error</code></em>);
+<span class="returnvalue">gboolean</span>            <a class="link" href="UDisksJob.html#udisks-job-call-cancel-sync" title="udisks_job_call_cancel_sync ()">udisks_job_call_cancel_sync</a>         (<em class="parameter"><code><a class="link" href="UDisksJob.html" title="UDisksJob"><span class="type">UDisksJob</span></a> *proxy</code></em>,
+                                                         <em class="parameter"><code><span class="type">GVariant</span> *arg_options</code></em>,
+                                                         <em class="parameter"><code><span class="type">GCancellable</span> *cancellable</code></em>,
+                                                         <em class="parameter"><code><span class="type">GError</span> **error</code></em>);
 <span class="returnvalue">void</span>                <a class="link" href="UDisksJob.html#udisks-job-complete-cancel" title="udisks_job_complete_cancel ()">udisks_job_complete_cancel</a>          (<em class="parameter"><code><a class="link" href="UDisksJob.html" title="UDisksJob"><span class="type">UDisksJob</span></a> *object</code></em>,
-                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/gio/unstable/GDBusMethodInvocation.html"><span class="type">GDBusMethodInvocation</span></a> *invocation</code></em>);
+                                                         <em class="parameter"><code><span class="type">GDBusMethodInvocation</span> *invocation</code></em>);
 <span class="returnvalue">void</span>                <a class="link" href="UDisksJob.html#udisks-job-emit-completed" title="udisks_job_emit_completed ()">udisks_job_emit_completed</a>           (<em class="parameter"><code><a class="link" href="UDisksJob.html" title="UDisksJob"><span class="type">UDisksJob</span></a> *object</code></em>,
-                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"><span class="type">gboolean</span></a> arg_success</code></em>,
-                                                         <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *arg_message</code></em>);
-<a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#guint64"><span class="returnvalue">guint64</span></a>             <a class="link" href="UDisksJob.html#udisks-job-get-expected-end-time" title="udisks_job_get_expected_end_time ()">udisks_job_get_expected_end_time</a>    (<em class="parameter"><code><a class="link" href="UDisksJob.html" title="UDisksJob"><span class="type">UDisksJob</span></a> *object</code></em>);
-<a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gdouble"><span class="returnvalue">gdouble</span></a>             <a class="link" href="UDisksJob.html#udisks-job-get-progress" title="udisks_job_get_progress ()">udisks_job_get_progress</a>             (<em class="parameter"><code><a class="link" href="UDisksJob.html" title="UDisksJob"><span class="type">UDisksJob</span></a> *object</code></em>);
-<a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#guint64"><span class="returnvalue">guint64</span></a>             <a class="link" href="UDisksJob.html#udisks-job-get-start-time" title="udisks_job_get_start_time ()">udisks_job_get_start_time</a>           (<em class="parameter"><code><a class="link" href="UDisksJob.html" title="UDisksJob"><span class="type">UDisksJob</span></a> *object</code></em>);
-const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="returnvalue">gchar</span></a> *const * <a class="link" href="UDisksJob.html#udisks-job-get-objects" title="udisks_job_get_objects ()">udisks_job_get_objects</a>             (<em class="parameter"><code><a class="link" href="UDisksJob.html" title="UDisksJob"><span class="type">UDisksJob</span></a> *object</code></em>);
-<a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>            <a class="link" href="UDisksJob.html#udisks-job-get-cancelable" title="udisks_job_get_cancelable ()">udisks_job_get_cancelable</a>           (<em class="parameter"><code><a class="link" href="UDisksJob.html" title="UDisksJob"><span class="type">UDisksJob</span></a> *object</code></em>);
-const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="returnvalue">gchar</span></a> *       <a class="link" href="UDisksJob.html#udisks-job-get-operation" title="udisks_job_get_operation ()">udisks_job_get_operation</a>            (<em class="parameter"><code><a class="link" href="UDisksJob.html" title="UDisksJob"><span class="type">UDisksJob</span></a> *object</code></em>);
-<a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>            <a class="link" href="UDisksJob.html#udisks-job-get-progress-valid" title="udisks_job_get_progress_valid ()">udisks_job_get_progress_valid</a>       (<em class="parameter"><code><a class="link" href="UDisksJob.html" title="UDisksJob"><span class="type">UDisksJob</span></a> *object</code></em>);
-<a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#guint"><span class="returnvalue">guint</span></a>               <a class="link" href="UDisksJob.html#udisks-job-get-started-by-uid" title="udisks_job_get_started_by_uid ()">udisks_job_get_started_by_uid</a>       (<em class="parameter"><code><a class="link" href="UDisksJob.html" title="UDisksJob"><span class="type">UDisksJob</span></a> *object</code></em>);
-<a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="returnvalue">gchar</span></a> **            <a class="link" href="UDisksJob.html#udisks-job-dup-objects" title="udisks_job_dup_objects ()">udisks_job_dup_objects</a>              (<em class="parameter"><code><a class="link" href="UDisksJob.html" title="UDisksJob"><span class="type">UDisksJob</span></a> *object</code></em>);
-<a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="returnvalue">gchar</span></a> *             <a class="link" href="UDisksJob.html#udisks-job-dup-operation" title="udisks_job_dup_operation ()">udisks_job_dup_operation</a>            (<em class="parameter"><code><a class="link" href="UDisksJob.html" title="UDisksJob"><span class="type">UDisksJob</span></a> *object</code></em>);
+                                                         <em class="parameter"><code><span class="type">gboolean</span> arg_success</code></em>,
+                                                         <em class="parameter"><code>const <span class="type">gchar</span> *arg_message</code></em>);
+<span class="returnvalue">guint64</span>             <a class="link" href="UDisksJob.html#udisks-job-get-expected-end-time" title="udisks_job_get_expected_end_time ()">udisks_job_get_expected_end_time</a>    (<em class="parameter"><code><a class="link" href="UDisksJob.html" title="UDisksJob"><span class="type">UDisksJob</span></a> *object</code></em>);
+<span class="returnvalue">gdouble</span>             <a class="link" href="UDisksJob.html#udisks-job-get-progress" title="udisks_job_get_progress ()">udisks_job_get_progress</a>             (<em class="parameter"><code><a class="link" href="UDisksJob.html" title="UDisksJob"><span class="type">UDisksJob</span></a> *object</code></em>);
+<span class="returnvalue">guint64</span>             <a class="link" href="UDisksJob.html#udisks-job-get-start-time" title="udisks_job_get_start_time ()">udisks_job_get_start_time</a>           (<em class="parameter"><code><a class="link" href="UDisksJob.html" title="UDisksJob"><span class="type">UDisksJob</span></a> *object</code></em>);
+const <span class="returnvalue">gchar</span> *const * <a class="link" href="UDisksJob.html#udisks-job-get-objects" title="udisks_job_get_objects ()">udisks_job_get_objects</a>             (<em class="parameter"><code><a class="link" href="UDisksJob.html" title="UDisksJob"><span class="type">UDisksJob</span></a> *object</code></em>);
+<span class="returnvalue">gboolean</span>            <a class="link" href="UDisksJob.html#udisks-job-get-cancelable" title="udisks_job_get_cancelable ()">udisks_job_get_cancelable</a>           (<em class="parameter"><code><a class="link" href="UDisksJob.html" title="UDisksJob"><span class="type">UDisksJob</span></a> *object</code></em>);
+const <span class="returnvalue">gchar</span> *       <a class="link" href="UDisksJob.html#udisks-job-get-operation" title="udisks_job_get_operation ()">udisks_job_get_operation</a>            (<em class="parameter"><code><a class="link" href="UDisksJob.html" title="UDisksJob"><span class="type">UDisksJob</span></a> *object</code></em>);
+<span class="returnvalue">gboolean</span>            <a class="link" href="UDisksJob.html#udisks-job-get-progress-valid" title="udisks_job_get_progress_valid ()">udisks_job_get_progress_valid</a>       (<em class="parameter"><code><a class="link" href="UDisksJob.html" title="UDisksJob"><span class="type">UDisksJob</span></a> *object</code></em>);
+<span class="returnvalue">guint</span>               <a class="link" href="UDisksJob.html#udisks-job-get-started-by-uid" title="udisks_job_get_started_by_uid ()">udisks_job_get_started_by_uid</a>       (<em class="parameter"><code><a class="link" href="UDisksJob.html" title="UDisksJob"><span class="type">UDisksJob</span></a> *object</code></em>);
+<span class="returnvalue">gchar</span> **            <a class="link" href="UDisksJob.html#udisks-job-dup-objects" title="udisks_job_dup_objects ()">udisks_job_dup_objects</a>              (<em class="parameter"><code><a class="link" href="UDisksJob.html" title="UDisksJob"><span class="type">UDisksJob</span></a> *object</code></em>);
+<span class="returnvalue">gchar</span> *             <a class="link" href="UDisksJob.html#udisks-job-dup-operation" title="udisks_job_dup_operation ()">udisks_job_dup_operation</a>            (<em class="parameter"><code><a class="link" href="UDisksJob.html" title="UDisksJob"><span class="type">UDisksJob</span></a> *object</code></em>);
 <span class="returnvalue">void</span>                <a class="link" href="UDisksJob.html#udisks-job-set-expected-end-time" title="udisks_job_set_expected_end_time ()">udisks_job_set_expected_end_time</a>    (<em class="parameter"><code><a class="link" href="UDisksJob.html" title="UDisksJob"><span class="type">UDisksJob</span></a> *object</code></em>,
-                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#guint64"><span class="type">guint64</span></a> value</code></em>);
+                                                         <em class="parameter"><code><span class="type">guint64</span> value</code></em>);
 <span class="returnvalue">void</span>                <a class="link" href="UDisksJob.html#udisks-job-set-progress" title="udisks_job_set_progress ()">udisks_job_set_progress</a>             (<em class="parameter"><code><a class="link" href="UDisksJob.html" title="UDisksJob"><span class="type">UDisksJob</span></a> *object</code></em>,
-                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gdouble"><span class="type">gdouble</span></a> value</code></em>);
+                                                         <em class="parameter"><code><span class="type">gdouble</span> value</code></em>);
 <span class="returnvalue">void</span>                <a class="link" href="UDisksJob.html#udisks-job-set-start-time" title="udisks_job_set_start_time ()">udisks_job_set_start_time</a>           (<em class="parameter"><code><a class="link" href="UDisksJob.html" title="UDisksJob"><span class="type">UDisksJob</span></a> *object</code></em>,
-                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#guint64"><span class="type">guint64</span></a> value</code></em>);
+                                                         <em class="parameter"><code><span class="type">guint64</span> value</code></em>);
 <span class="returnvalue">void</span>                <a class="link" href="UDisksJob.html#udisks-job-set-objects" title="udisks_job_set_objects ()">udisks_job_set_objects</a>              (<em class="parameter"><code><a class="link" href="UDisksJob.html" title="UDisksJob"><span class="type">UDisksJob</span></a> *object</code></em>,
-                                                         <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *const *value</code></em>);
+                                                         <em class="parameter"><code>const <span class="type">gchar</span> *const *value</code></em>);
 <span class="returnvalue">void</span>                <a class="link" href="UDisksJob.html#udisks-job-set-cancelable" title="udisks_job_set_cancelable ()">udisks_job_set_cancelable</a>           (<em class="parameter"><code><a class="link" href="UDisksJob.html" title="UDisksJob"><span class="type">UDisksJob</span></a> *object</code></em>,
-                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"><span class="type">gboolean</span></a> value</code></em>);
+                                                         <em class="parameter"><code><span class="type">gboolean</span> value</code></em>);
 <span class="returnvalue">void</span>                <a class="link" href="UDisksJob.html#udisks-job-set-operation" title="udisks_job_set_operation ()">udisks_job_set_operation</a>            (<em class="parameter"><code><a class="link" href="UDisksJob.html" title="UDisksJob"><span class="type">UDisksJob</span></a> *object</code></em>,
-                                                         <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *value</code></em>);
+                                                         <em class="parameter"><code>const <span class="type">gchar</span> *value</code></em>);
 <span class="returnvalue">void</span>                <a class="link" href="UDisksJob.html#udisks-job-set-progress-valid" title="udisks_job_set_progress_valid ()">udisks_job_set_progress_valid</a>       (<em class="parameter"><code><a class="link" href="UDisksJob.html" title="UDisksJob"><span class="type">UDisksJob</span></a> *object</code></em>,
-                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"><span class="type">gboolean</span></a> value</code></em>);
+                                                         <em class="parameter"><code><span class="type">gboolean</span> value</code></em>);
 <span class="returnvalue">void</span>                <a class="link" href="UDisksJob.html#udisks-job-set-started-by-uid" title="udisks_job_set_started_by_uid ()">udisks_job_set_started_by_uid</a>       (<em class="parameter"><code><a class="link" href="UDisksJob.html" title="UDisksJob"><span class="type">UDisksJob</span></a> *object</code></em>,
-                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#guint"><span class="type">guint</span></a> value</code></em>);
+                                                         <em class="parameter"><code><span class="type">guint</span> value</code></em>);
 struct              <a class="link" href="UDisksJob.html#UDisksJobProxy-struct" title="struct UDisksJobProxy">UDisksJobProxy</a>;
 struct              <a class="link" href="UDisksJob.html#UDisksJobProxyClass" title="struct UDisksJobProxyClass">UDisksJobProxyClass</a>;
-<span class="returnvalue">void</span>                <a class="link" href="UDisksJob.html#udisks-job-proxy-new" title="udisks_job_proxy_new ()">udisks_job_proxy_new</a>                (<em class="parameter"><code><a href="http://library.gnome.org/devel/gio/unstable/GDBusConnection.html"><span class="type">GDBusConnection</span></a> *connection</code></em>,
-                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/gio/unstable/GDBusProxy.html#GDBusProxyFlags"><span class="type">GDBusProxyFlags</span></a> flags</code></em>,
-                                                         <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *name</code></em>,
-                                                         <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *object_path</code></em>,
-                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/gio/unstable/GCancellable.html"><span class="type">GCancellable</span></a> *cancellable</code></em>,
-                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/gio/unstable/GAsyncResult.html#GAsyncReadyCallback"><span class="type">GAsyncReadyCallback</span></a> callback</code></em>,
-                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gpointer"><span class="type">gpointer</span></a> user_data</code></em>);
-<a class="link" href="UDisksJob.html" title="UDisksJob"><span class="returnvalue">UDisksJob</span></a> *         <a class="link" href="UDisksJob.html#udisks-job-proxy-new-finish" title="udisks_job_proxy_new_finish ()">udisks_job_proxy_new_finish</a>         (<em class="parameter"><code><a href="http://library.gnome.org/devel/gio/unstable/GAsyncResult.html"><span class="type">GAsyncResult</span></a> *res</code></em>,
-                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Error-Reporting.html#GError"><span class="type">GError</span></a> **error</code></em>);
-<a class="link" href="UDisksJob.html" title="UDisksJob"><span class="returnvalue">UDisksJob</span></a> *         <a class="link" href="UDisksJob.html#udisks-job-proxy-new-sync" title="udisks_job_proxy_new_sync ()">udisks_job_proxy_new_sync</a>           (<em class="parameter"><code><a href="http://library.gnome.org/devel/gio/unstable/GDBusConnection.html"><span class="type">GDBusConnection</span></a> *connection</code></em>,
-                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/gio/unstable/GDBusProxy.html#GDBusProxyFlags"><span class="type">GDBusProxyFlags</span></a> flags</code></em>,
-                                                         <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *name</code></em>,
-                                                         <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *object_path</code></em>,
-                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/gio/unstable/GCancellable.html"><span class="type">GCancellable</span></a> *cancellable</code></em>,
-                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Error-Reporting.html#GError"><span class="type">GError</span></a> **error</code></em>);
-<span class="returnvalue">void</span>                <a class="link" href="UDisksJob.html#udisks-job-proxy-new-for-bus" title="udisks_job_proxy_new_for_bus ()">udisks_job_proxy_new_for_bus</a>        (<em class="parameter"><code><a href="http://library.gnome.org/devel/gio/unstable/GDBusConnection.html#GBusType"><span class="type">GBusType</span></a> bus_type</code></em>,
-                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/gio/unstable/GDBusProxy.html#GDBusProxyFlags"><span class="type">GDBusProxyFlags</span></a> flags</code></em>,
-                                                         <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *name</code></em>,
-                                                         <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *object_path</code></em>,
-                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/gio/unstable/GCancellable.html"><span class="type">GCancellable</span></a> *cancellable</code></em>,
-                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/gio/unstable/GAsyncResult.html#GAsyncReadyCallback"><span class="type">GAsyncReadyCallback</span></a> callback</code></em>,
-                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gpointer"><span class="type">gpointer</span></a> user_data</code></em>);
-<a class="link" href="UDisksJob.html" title="UDisksJob"><span class="returnvalue">UDisksJob</span></a> *         <a class="link" href="UDisksJob.html#udisks-job-proxy-new-for-bus-finish" title="udisks_job_proxy_new_for_bus_finish ()">udisks_job_proxy_new_for_bus_finish</a> (<em class="parameter"><code><a href="http://library.gnome.org/devel/gio/unstable/GAsyncResult.html"><span class="type">GAsyncResult</span></a> *res</code></em>,
-                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Error-Reporting.html#GError"><span class="type">GError</span></a> **error</code></em>);
-<a class="link" href="UDisksJob.html" title="UDisksJob"><span class="returnvalue">UDisksJob</span></a> *         <a class="link" href="UDisksJob.html#udisks-job-proxy-new-for-bus-sync" title="udisks_job_proxy_new_for_bus_sync ()">udisks_job_proxy_new_for_bus_sync</a>   (<em class="parameter"><code><a href="http://library.gnome.org/devel/gio/unstable/GDBusConnection.html#GBusType"><span class="type">GBusType</span></a> bus_type</code></em>,
-                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/gio/unstable/GDBusProxy.html#GDBusProxyFlags"><span class="type">GDBusProxyFlags</span></a> flags</code></em>,
-                                                         <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *name</code></em>,
-                                                         <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *object_path</code></em>,
-                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/gio/unstable/GCancellable.html"><span class="type">GCancellable</span></a> *cancellable</code></em>,
-                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Error-Reporting.html#GError"><span class="type">GError</span></a> **error</code></em>);
+<span class="returnvalue">void</span>                <a class="link" href="UDisksJob.html#udisks-job-proxy-new" title="udisks_job_proxy_new ()">udisks_job_proxy_new</a>                (<em class="parameter"><code><span class="type">GDBusConnection</span> *connection</code></em>,
+                                                         <em class="parameter"><code><span class="type">GDBusProxyFlags</span> flags</code></em>,
+                                                         <em class="parameter"><code>const <span class="type">gchar</span> *name</code></em>,
+                                                         <em class="parameter"><code>const <span class="type">gchar</span> *object_path</code></em>,
+                                                         <em class="parameter"><code><span class="type">GCancellable</span> *cancellable</code></em>,
+                                                         <em class="parameter"><code><span class="type">GAsyncReadyCallback</span> callback</code></em>,
+                                                         <em class="parameter"><code><span class="type">gpointer</span> user_data</code></em>);
+<a class="link" href="UDisksJob.html" title="UDisksJob"><span class="returnvalue">UDisksJob</span></a> *         <a class="link" href="UDisksJob.html#udisks-job-proxy-new-finish" title="udisks_job_proxy_new_finish ()">udisks_job_proxy_new_finish</a>         (<em class="parameter"><code><span class="type">GAsyncResult</span> *res</code></em>,
+                                                         <em class="parameter"><code><span class="type">GError</span> **error</code></em>);
+<a class="link" href="UDisksJob.html" title="UDisksJob"><span class="returnvalue">UDisksJob</span></a> *         <a class="link" href="UDisksJob.html#udisks-job-proxy-new-sync" title="udisks_job_proxy_new_sync ()">udisks_job_proxy_new_sync</a>           (<em class="parameter"><code><span class="type">GDBusConnection</span> *connection</code></em>,
+                                                         <em class="parameter"><code><span class="type">GDBusProxyFlags</span> flags</code></em>,
+                                                         <em class="parameter"><code>const <span class="type">gchar</span> *name</code></em>,
+                                                         <em class="parameter"><code>const <span class="type">gchar</span> *object_path</code></em>,
+                                                         <em class="parameter"><code><span class="type">GCancellable</span> *cancellable</code></em>,
+                                                         <em class="parameter"><code><span class="type">GError</span> **error</code></em>);
+<span class="returnvalue">void</span>                <a class="link" href="UDisksJob.html#udisks-job-proxy-new-for-bus" title="udisks_job_proxy_new_for_bus ()">udisks_job_proxy_new_for_bus</a>        (<em class="parameter"><code><span class="type">GBusType</span> bus_type</code></em>,
+                                                         <em class="parameter"><code><span class="type">GDBusProxyFlags</span> flags</code></em>,
+                                                         <em class="parameter"><code>const <span class="type">gchar</span> *name</code></em>,
+                                                         <em class="parameter"><code>const <span class="type">gchar</span> *object_path</code></em>,
+                                                         <em class="parameter"><code><span class="type">GCancellable</span> *cancellable</code></em>,
+                                                         <em class="parameter"><code><span class="type">GAsyncReadyCallback</span> callback</code></em>,
+                                                         <em class="parameter"><code><span class="type">gpointer</span> user_data</code></em>);
+<a class="link" href="UDisksJob.html" title="UDisksJob"><span class="returnvalue">UDisksJob</span></a> *         <a class="link" href="UDisksJob.html#udisks-job-proxy-new-for-bus-finish" title="udisks_job_proxy_new_for_bus_finish ()">udisks_job_proxy_new_for_bus_finish</a> (<em class="parameter"><code><span class="type">GAsyncResult</span> *res</code></em>,
+                                                         <em class="parameter"><code><span class="type">GError</span> **error</code></em>);
+<a class="link" href="UDisksJob.html" title="UDisksJob"><span class="returnvalue">UDisksJob</span></a> *         <a class="link" href="UDisksJob.html#udisks-job-proxy-new-for-bus-sync" title="udisks_job_proxy_new_for_bus_sync ()">udisks_job_proxy_new_for_bus_sync</a>   (<em class="parameter"><code><span class="type">GBusType</span> bus_type</code></em>,
+                                                         <em class="parameter"><code><span class="type">GDBusProxyFlags</span> flags</code></em>,
+                                                         <em class="parameter"><code>const <span class="type">gchar</span> *name</code></em>,
+                                                         <em class="parameter"><code>const <span class="type">gchar</span> *object_path</code></em>,
+                                                         <em class="parameter"><code><span class="type">GCancellable</span> *cancellable</code></em>,
+                                                         <em class="parameter"><code><span class="type">GError</span> **error</code></em>);
 struct              <a class="link" href="UDisksJob.html#UDisksJobSkeleton-struct" title="struct UDisksJobSkeleton">UDisksJobSkeleton</a>;
 struct              <a class="link" href="UDisksJob.html#UDisksJobSkeletonClass" title="struct UDisksJobSkeletonClass">UDisksJobSkeletonClass</a>;
 <a class="link" href="UDisksJob.html" title="UDisksJob"><span class="returnvalue">UDisksJob</span></a> *         <a class="link" href="UDisksJob.html#udisks-job-skeleton-new" title="udisks_job_skeleton_new ()">udisks_job_skeleton_new</a>             (<em class="parameter"><code><span class="type">void</span></code></em>);
@@ -141,13 +141,13 @@ struct              <a class="link" href="UDisksJob.html#UDisksJobSkeletonClass"
    +----UDisksJob
 </pre>
 <pre class="synopsis">
-  <a href="http://library.gnome.org/devel/gobject/unstable/gobject-The-Base-Object-Type.html#GObject">GObject</a>
-   +----<a href="http://library.gnome.org/devel/gio/unstable/GDBusProxy.html">GDBusProxy</a>
+  GObject
+   +----GDBusProxy
          +----UDisksJobProxy
 </pre>
 <pre class="synopsis">
-  <a href="http://library.gnome.org/devel/gobject/unstable/gobject-The-Base-Object-Type.html#GObject">GObject</a>
-   +----<a href="http://library.gnome.org/devel/gio/unstable/GDBusInterfaceSkeleton.html">GDBusInterfaceSkeleton</a>
+  GObject
+   +----GDBusInterfaceSkeleton
          +----UDisksJobSkeleton
                +----<a class="link" href="UDisksBaseJob.html" title="UDisksBaseJob">UDisksBaseJob</a>
 </pre>
@@ -156,16 +156,16 @@ struct              <a class="link" href="UDisksJob.html#UDisksJobSkeletonClass"
 <a name="UDisksJob.prerequisites"></a><h2>Prerequisites</h2>
 <p>
 UDisksJob requires
- <a href="http://library.gnome.org/devel/gobject/unstable/gobject-The-Base-Object-Type.html#GObject">GObject</a>.</p>
+ GObject.</p>
 </div>
 <div class="refsect1">
 <a name="UDisksJob.implemented-interfaces"></a><h2>Implemented Interfaces</h2>
 <p>
 UDisksJobProxy implements
- <a href="http://library.gnome.org/devel/gio/unstable/GDBusInterface.html">GDBusInterface</a>,  <a href="http://library.gnome.org/devel/gio/unstable/GInitable.html">GInitable</a>,  <a href="http://library.gnome.org/devel/gio/unstable/GAsyncInitable.html">GAsyncInitable</a> and  <a class="link" href="UDisksJob.html" title="UDisksJob">UDisksJob</a>.</p>
+ GDBusInterface,  GInitable,  GAsyncInitable and  <a class="link" href="UDisksJob.html" title="UDisksJob">UDisksJob</a>.</p>
 <p>
 UDisksJobSkeleton implements
- <a href="http://library.gnome.org/devel/gio/unstable/GDBusInterface.html">GDBusInterface</a> and  <a class="link" href="UDisksJob.html" title="UDisksJob">UDisksJob</a>.</p>
+ GDBusInterface and  <a class="link" href="UDisksJob.html" title="UDisksJob">UDisksJob</a>.</p>
 </div>
 <div class="refsect1">
 <a name="UDisksJob.implementations"></a><h2>Known Implementations</h2>
@@ -176,21 +176,21 @@ UDisksJob is implemented by
 <div class="refsect1">
 <a name="UDisksJob.properties"></a><h2>Properties</h2>
 <pre class="synopsis">
-  "<a class="link" href="UDisksJob.html#UDisksJob--cancelable" title='The "cancelable" property'>cancelable</a>"               <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"><span class="type">gboolean</span></a>              : Read / Write
-  "<a class="link" href="UDisksJob.html#UDisksJob--expected-end-time" title='The "expected-end-time" property'>expected-end-time</a>"        <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#guint64"><span class="type">guint64</span></a>               : Read / Write
-  "<a class="link" href="UDisksJob.html#UDisksJob--objects" title='The "objects" property'>objects</a>"                  <a href="http://library.gnome.org/devel/gobject/unstable/gobject-Boxed-Types.html#GStrv"><span class="type">GStrv</span></a>                 : Read / Write
-  "<a class="link" href="UDisksJob.html#UDisksJob--operation" title='The "operation" property'>operation</a>"                <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a>*                : Read / Write
-  "<a class="link" href="UDisksJob.html#UDisksJob--progress" title='The "progress" property'>progress</a>"                 <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gdouble"><span class="type">gdouble</span></a>               : Read / Write
-  "<a class="link" href="UDisksJob.html#UDisksJob--progress-valid" title='The "progress-valid" property'>progress-valid</a>"           <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"><span class="type">gboolean</span></a>              : Read / Write
-  "<a class="link" href="UDisksJob.html#UDisksJob--start-time" title='The "start-time" property'>start-time</a>"               <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#guint64"><span class="type">guint64</span></a>               : Read / Write
-  "<a class="link" href="UDisksJob.html#UDisksJob--started-by-uid" title='The "started-by-uid" property'>started-by-uid</a>"           <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#guint"><span class="type">guint</span></a>                 : Read / Write
+  "<a class="link" href="UDisksJob.html#UDisksJob--cancelable" title='The "cancelable" property'>cancelable</a>"               <span class="type">gboolean</span>              : Read / Write
+  "<a class="link" href="UDisksJob.html#UDisksJob--expected-end-time" title='The "expected-end-time" property'>expected-end-time</a>"        <span class="type">guint64</span>               : Read / Write
+  "<a class="link" href="UDisksJob.html#UDisksJob--objects" title='The "objects" property'>objects</a>"                  <span class="type">GStrv</span>                 : Read / Write
+  "<a class="link" href="UDisksJob.html#UDisksJob--operation" title='The "operation" property'>operation</a>"                <span class="type">gchar</span>*                : Read / Write
+  "<a class="link" href="UDisksJob.html#UDisksJob--progress" title='The "progress" property'>progress</a>"                 <span class="type">gdouble</span>               : Read / Write
+  "<a class="link" href="UDisksJob.html#UDisksJob--progress-valid" title='The "progress-valid" property'>progress-valid</a>"           <span class="type">gboolean</span>              : Read / Write
+  "<a class="link" href="UDisksJob.html#UDisksJob--start-time" title='The "start-time" property'>start-time</a>"               <span class="type">guint64</span>               : Read / Write
+  "<a class="link" href="UDisksJob.html#UDisksJob--started-by-uid" title='The "started-by-uid" property'>started-by-uid</a>"           <span class="type">guint</span>                 : Read / Write
 </pre>
 </div>
 <div class="refsect1">
 <a name="UDisksJob.signals"></a><h2>Signals</h2>
 <pre class="synopsis">
-  "<a class="link" href="UDisksJob.html#UDisksJob-completed" title='The "completed" signal'>completed</a>"                                      : <a href="http://library.gnome.org/devel/gobject/unstable/gobject-Signals.html#G-SIGNAL-RUN-LAST:CAPS"><code class="literal">Run Last</code></a>
-  "<a class="link" href="UDisksJob.html#UDisksJob-handle-cancel" title='The "handle-cancel" signal'>handle-cancel</a>"                                  : <a href="http://library.gnome.org/devel/gobject/unstable/gobject-Signals.html#G-SIGNAL-RUN-LAST:CAPS"><code class="literal">Run Last</code></a>
+  "<a class="link" href="UDisksJob.html#UDisksJob-completed" title='The "completed" signal'>completed</a>"                                      : <code class="literal">Run Last</code>
+  "<a class="link" href="UDisksJob.html#UDisksJob-handle-cancel" title='The "handle-cancel" signal'>handle-cancel</a>"                                  : <code class="literal">Run Last</code>
 </pre>
 </div>
 <div class="refsect1">
@@ -253,7 +253,7 @@ Virtual table for the D-Bus interface <a class="link" href="gdbus-org.freedeskto
 </colgroup>
 <tbody>
 <tr>
-<td><p><span class="term"><a href="http://library.gnome.org/devel/gobject/unstable/gobject-Type-Information.html#GTypeInterface"><span class="type">GTypeInterface</span></a> <em class="structfield"><code><a name="UDisksJobIface.parent-iface"></a>parent_iface</code></em>;</span></p></td>
+<td><p><span class="term"><span class="type">GTypeInterface</span> <em class="structfield"><code><a name="UDisksJobIface.parent-iface"></a>parent_iface</code></em>;</span></p></td>
 <td>The parent interface.</td>
 </tr>
 <tr>
@@ -302,7 +302,7 @@ Virtual table for the D-Bus interface <a class="link" href="gdbus-org.freedeskto
 <hr>
 <div class="refsect2">
 <a name="udisks-job-interface-info"></a><h3>udisks_job_interface_info ()</h3>
-<pre class="programlisting"><a href="http://library.gnome.org/devel/gio/unstable/gio-D-Bus-Introspection-Data.html#GDBusInterfaceInfo"><span class="returnvalue">GDBusInterfaceInfo</span></a> * udisks_job_interface_info          (<em class="parameter"><code><span class="type">void</span></code></em>);</pre>
+<pre class="programlisting"><span class="returnvalue">GDBusInterfaceInfo</span> * udisks_job_interface_info          (<em class="parameter"><code><span class="type">void</span></code></em>);</pre>
 <p>
 Gets a machine-readable description of the <a class="link" href="gdbus-org.freedesktop.UDisks2.Job.html#gdbus-interface-org-freedesktop-UDisks2-Job.top_of_page">org.freedesktop.UDisks2.Job</a> D-Bus interface.
 </p>
@@ -313,7 +313,7 @@ Gets a machine-readable description of the <a class="link" href="gdbus-org.freed
 </colgroup>
 <tbody><tr>
 <td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
-<td>A <a href="http://library.gnome.org/devel/gio/unstable/gio-D-Bus-Introspection-Data.html#GDBusInterfaceInfo"><span class="type">GDBusInterfaceInfo</span></a>. Do not free. <span class="annotation">[<a href="http://foldoc.org/transfer%20none"><span class="acronym">transfer none</span></a>]</span>
+<td>A <span class="type">GDBusInterfaceInfo</span>. Do not free. <span class="annotation">[<a href="http://foldoc.org/transfer%20none"><span class="acronym">transfer none</span></a>]</span>
 </td>
 </tr></tbody>
 </table></div>
@@ -321,10 +321,10 @@ Gets a machine-readable description of the <a class="link" href="gdbus-org.freed
 <hr>
 <div class="refsect2">
 <a name="udisks-job-override-properties"></a><h3>udisks_job_override_properties ()</h3>
-<pre class="programlisting"><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#guint"><span class="returnvalue">guint</span></a>               udisks_job_override_properties      (<em class="parameter"><code><a href="http://library.gnome.org/devel/gobject/unstable/gobject-The-Base-Object-Type.html#GObjectClass"><span class="type">GObjectClass</span></a> *klass</code></em>,
-                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#guint"><span class="type">guint</span></a> property_id_begin</code></em>);</pre>
+<pre class="programlisting"><span class="returnvalue">guint</span>               udisks_job_override_properties      (<em class="parameter"><code><span class="type">GObjectClass</span> *klass</code></em>,
+                                                         <em class="parameter"><code><span class="type">guint</span> property_id_begin</code></em>);</pre>
 <p>
-Overrides all <a href="http://library.gnome.org/devel/gobject/unstable/gobject-The-Base-Object-Type.html#GObject"><span class="type">GObject</span></a> properties in the <a class="link" href="UDisksJob.html" title="UDisksJob"><span class="type">UDisksJob</span></a> interface for a concrete class.
+Overrides all <span class="type">GObject</span> properties in the <a class="link" href="UDisksJob.html" title="UDisksJob"><span class="type">UDisksJob</span></a> interface for a concrete class.
 The properties are overridden in the order they are defined.
 </p>
 <div class="variablelist"><table border="0" class="variablelist">
@@ -335,7 +335,7 @@ The properties are overridden in the order they are defined.
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>klass</code></em> :</span></p></td>
-<td>The class structure for a <a href="http://library.gnome.org/devel/gobject/unstable/gobject-The-Base-Object-Type.html#GObject"><span class="type">GObject</span></a>-derived class.</td>
+<td>The class structure for a <span class="type">GObject</span>-derived class.</td>
 </tr>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>property_id_begin</code></em> :</span></p></td>
@@ -352,13 +352,13 @@ The properties are overridden in the order they are defined.
 <div class="refsect2">
 <a name="udisks-job-call-cancel"></a><h3>udisks_job_call_cancel ()</h3>
 <pre class="programlisting"><span class="returnvalue">void</span>                udisks_job_call_cancel              (<em class="parameter"><code><a class="link" href="UDisksJob.html" title="UDisksJob"><span class="type">UDisksJob</span></a> *proxy</code></em>,
-                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-GVariant.html#GVariant"><span class="type">GVariant</span></a> *arg_options</code></em>,
-                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/gio/unstable/GCancellable.html"><span class="type">GCancellable</span></a> *cancellable</code></em>,
-                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/gio/unstable/GAsyncResult.html#GAsyncReadyCallback"><span class="type">GAsyncReadyCallback</span></a> callback</code></em>,
-                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gpointer"><span class="type">gpointer</span></a> user_data</code></em>);</pre>
+                                                         <em class="parameter"><code><span class="type">GVariant</span> *arg_options</code></em>,
+                                                         <em class="parameter"><code><span class="type">GCancellable</span> *cancellable</code></em>,
+                                                         <em class="parameter"><code><span class="type">GAsyncReadyCallback</span> callback</code></em>,
+                                                         <em class="parameter"><code><span class="type">gpointer</span> user_data</code></em>);</pre>
 <p>
 Asynchronously invokes the <a class="link" href="gdbus-org.freedesktop.UDisks2.Job.html#gdbus-method-org-freedesktop-UDisks2-Job.Cancel" title="The Cancel() method"><code class="function">Cancel()</code></a> D-Bus method on <em class="parameter"><code>proxy</code></em>.
-When the operation is finished, <em class="parameter"><code>callback</code></em> will be invoked in the <a href="http://library.gnome.org/devel/glib/unstable/glib-The-Main-Event-Loop.html#g-main-context-push-thread-default">thread-default main loop</a> of the thread you are calling this method from.
+When the operation is finished, <em class="parameter"><code>callback</code></em> will be invoked in the thread-default main loop of the thread you are calling this method from.
 You can then call <a class="link" href="UDisksJob.html#udisks-job-call-cancel-finish" title="udisks_job_call_cancel_finish ()"><code class="function">udisks_job_call_cancel_finish()</code></a> to get the result of the operation.
 </p>
 <p>
@@ -380,12 +380,12 @@ See <a class="link" href="UDisksJob.html#udisks-job-call-cancel-sync" title="udi
 </tr>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>cancellable</code></em> :</span></p></td>
-<td>A <a href="http://library.gnome.org/devel/gio/unstable/GCancellable.html"><span class="type">GCancellable</span></a> or <a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a>. <span class="annotation">[<a href="http://foldoc.org/allow-none"><span class="acronym">allow-none</span></a>]</span>
+<td>A <span class="type">GCancellable</span> or <code class="literal">NULL</code>. <span class="annotation">[<a href="http://foldoc.org/allow-none"><span class="acronym">allow-none</span></a>]</span>
 </td>
 </tr>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>callback</code></em> :</span></p></td>
-<td>A <a href="http://library.gnome.org/devel/gio/unstable/GAsyncResult.html#GAsyncReadyCallback"><span class="type">GAsyncReadyCallback</span></a> to call when the request is satisfied or <a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a>.</td>
+<td>A <span class="type">GAsyncReadyCallback</span> to call when the request is satisfied or <code class="literal">NULL</code>.</td>
 </tr>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>user_data</code></em> :</span></p></td>
@@ -397,9 +397,9 @@ See <a class="link" href="UDisksJob.html#udisks-job-call-cancel-sync" title="udi
 <hr>
 <div class="refsect2">
 <a name="udisks-job-call-cancel-finish"></a><h3>udisks_job_call_cancel_finish ()</h3>
-<pre class="programlisting"><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>            udisks_job_call_cancel_finish       (<em class="parameter"><code><a class="link" href="UDisksJob.html" title="UDisksJob"><span class="type">UDisksJob</span></a> *proxy</code></em>,
-                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/gio/unstable/GAsyncResult.html"><span class="type">GAsyncResult</span></a> *res</code></em>,
-                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Error-Reporting.html#GError"><span class="type">GError</span></a> **error</code></em>);</pre>
+<pre class="programlisting"><span class="returnvalue">gboolean</span>            udisks_job_call_cancel_finish       (<em class="parameter"><code><a class="link" href="UDisksJob.html" title="UDisksJob"><span class="type">UDisksJob</span></a> *proxy</code></em>,
+                                                         <em class="parameter"><code><span class="type">GAsyncResult</span> *res</code></em>,
+                                                         <em class="parameter"><code><span class="type">GError</span> **error</code></em>);</pre>
 <p>
 Finishes an operation started with <a class="link" href="UDisksJob.html#udisks-job-call-cancel" title="udisks_job_call_cancel ()"><code class="function">udisks_job_call_cancel()</code></a>.
 </p>
@@ -415,16 +415,16 @@ Finishes an operation started with <a class="link" href="UDisksJob.html#udisks-j
 </tr>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>res</code></em> :</span></p></td>
-<td>The <a href="http://library.gnome.org/devel/gio/unstable/GAsyncResult.html"><span class="type">GAsyncResult</span></a> obtained from the <a href="http://library.gnome.org/devel/gio/unstable/GAsyncResult.html#GAsyncReadyCallback"><span class="type">GAsyncReadyCallback</span></a> passed to <a class="link" href="UDisksJob.html#udisks-job-call-cancel" title="udisks_job_call_cancel ()"><code class="function">udisks_job_call_cancel()</code></a>.</td>
+<td>The <span class="type">GAsyncResult</span> obtained from the <span class="type">GAsyncReadyCallback</span> passed to <a class="link" href="UDisksJob.html#udisks-job-call-cancel" title="udisks_job_call_cancel ()"><code class="function">udisks_job_call_cancel()</code></a>.</td>
 </tr>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>error</code></em> :</span></p></td>
-<td>Return location for error or <a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a>.</td>
+<td>Return location for error or <code class="literal">NULL</code>.</td>
 </tr>
 <tr>
 <td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
 <td>
-<a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#TRUE:CAPS"><code class="literal">TRUE</code></a> if the call succeded, <a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#FALSE:CAPS"><code class="literal">FALSE</code></a> if <em class="parameter"><code>error</code></em> is set. <span class="annotation">[skip]</span>
+<code class="literal">TRUE</code> if the call succeded, <code class="literal">FALSE</code> if <em class="parameter"><code>error</code></em> is set. <span class="annotation">[skip]</span>
 </td>
 </tr>
 </tbody>
@@ -433,10 +433,10 @@ Finishes an operation started with <a class="link" href="UDisksJob.html#udisks-j
 <hr>
 <div class="refsect2">
 <a name="udisks-job-call-cancel-sync"></a><h3>udisks_job_call_cancel_sync ()</h3>
-<pre class="programlisting"><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>            udisks_job_call_cancel_sync         (<em class="parameter"><code><a class="link" href="UDisksJob.html" title="UDisksJob"><span class="type">UDisksJob</span></a> *proxy</code></em>,
-                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-GVariant.html#GVariant"><span class="type">GVariant</span></a> *arg_options</code></em>,
-                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/gio/unstable/GCancellable.html"><span class="type">GCancellable</span></a> *cancellable</code></em>,
-                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Error-Reporting.html#GError"><span class="type">GError</span></a> **error</code></em>);</pre>
+<pre class="programlisting"><span class="returnvalue">gboolean</span>            udisks_job_call_cancel_sync         (<em class="parameter"><code><a class="link" href="UDisksJob.html" title="UDisksJob"><span class="type">UDisksJob</span></a> *proxy</code></em>,
+                                                         <em class="parameter"><code><span class="type">GVariant</span> *arg_options</code></em>,
+                                                         <em class="parameter"><code><span class="type">GCancellable</span> *cancellable</code></em>,
+                                                         <em class="parameter"><code><span class="type">GError</span> **error</code></em>);</pre>
 <p>
 Synchronously invokes the <a class="link" href="gdbus-org.freedesktop.UDisks2.Job.html#gdbus-method-org-freedesktop-UDisks2-Job.Cancel" title="The Cancel() method"><code class="function">Cancel()</code></a> D-Bus method on <em class="parameter"><code>proxy</code></em>. The calling thread is blocked until a reply is received.
 </p>
@@ -459,17 +459,17 @@ See <a class="link" href="UDisksJob.html#udisks-job-call-cancel" title="udisks_j
 </tr>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>cancellable</code></em> :</span></p></td>
-<td>A <a href="http://library.gnome.org/devel/gio/unstable/GCancellable.html"><span class="type">GCancellable</span></a> or <a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a>. <span class="annotation">[<a href="http://foldoc.org/allow-none"><span class="acronym">allow-none</span></a>]</span>
+<td>A <span class="type">GCancellable</span> or <code class="literal">NULL</code>. <span class="annotation">[<a href="http://foldoc.org/allow-none"><span class="acronym">allow-none</span></a>]</span>
 </td>
 </tr>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>error</code></em> :</span></p></td>
-<td>Return location for error or <a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a>.</td>
+<td>Return location for error or <code class="literal">NULL</code>.</td>
 </tr>
 <tr>
 <td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
 <td>
-<a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#TRUE:CAPS"><code class="literal">TRUE</code></a> if the call succeded, <a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#FALSE:CAPS"><code class="literal">FALSE</code></a> if <em class="parameter"><code>error</code></em> is set. <span class="annotation">[skip]</span>
+<code class="literal">TRUE</code> if the call succeded, <code class="literal">FALSE</code> if <em class="parameter"><code>error</code></em> is set. <span class="annotation">[skip]</span>
 </td>
 </tr>
 </tbody>
@@ -479,9 +479,9 @@ See <a class="link" href="UDisksJob.html#udisks-job-call-cancel" title="udisks_j
 <div class="refsect2">
 <a name="udisks-job-complete-cancel"></a><h3>udisks_job_complete_cancel ()</h3>
 <pre class="programlisting"><span class="returnvalue">void</span>                udisks_job_complete_cancel          (<em class="parameter"><code><a class="link" href="UDisksJob.html" title="UDisksJob"><span class="type">UDisksJob</span></a> *object</code></em>,
-                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/gio/unstable/GDBusMethodInvocation.html"><span class="type">GDBusMethodInvocation</span></a> *invocation</code></em>);</pre>
+                                                         <em class="parameter"><code><span class="type">GDBusMethodInvocation</span> *invocation</code></em>);</pre>
 <p>
-Helper function used in service implementations to finish handling invocations of the <a class="link" href="gdbus-org.freedesktop.UDisks2.Job.html#gdbus-method-org-freedesktop-UDisks2-Job.Cancel" title="The Cancel() method"><code class="function">Cancel()</code></a> D-Bus method. If you instead want to finish handling an invocation by returning an error, use <a href="http://library.gnome.org/devel/gio/unstable/GDBusMethodInvocation.html#g-dbus-method-invocation-return-error"><code class="function">g_dbus_method_invocation_return_error()</code></a> or similar.
+Helper function used in service implementations to finish handling invocations of the <a class="link" href="gdbus-org.freedesktop.UDisks2.Job.html#gdbus-method-org-freedesktop-UDisks2-Job.Cancel" title="The Cancel() method"><code class="function">Cancel()</code></a> D-Bus method. If you instead want to finish handling an invocation by returning an error, use <code class="function">g_dbus_method_invocation_return_error()</code> or similar.
 </p>
 <p>
 This method will free <em class="parameter"><code>invocation</code></em>, you cannot use it afterwards.
@@ -498,7 +498,7 @@ This method will free <em class="parameter"><code>invocation</code></em>, you ca
 </tr>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>invocation</code></em> :</span></p></td>
-<td>A <a href="http://library.gnome.org/devel/gio/unstable/GDBusMethodInvocation.html"><span class="type">GDBusMethodInvocation</span></a>. <span class="annotation">[<a href="http://foldoc.org/transfer%20full"><span class="acronym">transfer full</span></a>]</span>
+<td>A <span class="type">GDBusMethodInvocation</span>. <span class="annotation">[<a href="http://foldoc.org/transfer%20full"><span class="acronym">transfer full</span></a>]</span>
 </td>
 </tr>
 </tbody>
@@ -508,8 +508,8 @@ This method will free <em class="parameter"><code>invocation</code></em>, you ca
 <div class="refsect2">
 <a name="udisks-job-emit-completed"></a><h3>udisks_job_emit_completed ()</h3>
 <pre class="programlisting"><span class="returnvalue">void</span>                udisks_job_emit_completed           (<em class="parameter"><code><a class="link" href="UDisksJob.html" title="UDisksJob"><span class="type">UDisksJob</span></a> *object</code></em>,
-                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"><span class="type">gboolean</span></a> arg_success</code></em>,
-                                                         <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *arg_message</code></em>);</pre>
+                                                         <em class="parameter"><code><span class="type">gboolean</span> arg_success</code></em>,
+                                                         <em class="parameter"><code>const <span class="type">gchar</span> *arg_message</code></em>);</pre>
 <p>
 Emits the <a class="link" href="gdbus-org.freedesktop.UDisks2.Job.html#gdbus-signal-org-freedesktop-UDisks2-Job.Completed" title='The "Completed" signal'>"Completed"</a> D-Bus signal.
 </p>
@@ -537,7 +537,7 @@ Emits the <a class="link" href="gdbus-org.freedesktop.UDisks2.Job.html#gdbus-sig
 <hr>
 <div class="refsect2">
 <a name="udisks-job-get-expected-end-time"></a><h3>udisks_job_get_expected_end_time ()</h3>
-<pre class="programlisting"><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#guint64"><span class="returnvalue">guint64</span></a>             udisks_job_get_expected_end_time    (<em class="parameter"><code><a class="link" href="UDisksJob.html" title="UDisksJob"><span class="type">UDisksJob</span></a> *object</code></em>);</pre>
+<pre class="programlisting"><span class="returnvalue">guint64</span>             udisks_job_get_expected_end_time    (<em class="parameter"><code><a class="link" href="UDisksJob.html" title="UDisksJob"><span class="type">UDisksJob</span></a> *object</code></em>);</pre>
 <p>
 Gets the value of the <a class="link" href="gdbus-org.freedesktop.UDisks2.Job.html#gdbus-property-org-freedesktop-UDisks2-Job.ExpectedEndTime" title='The "ExpectedEndTime" property'>"ExpectedEndTime"</a> D-Bus property.
 </p>
@@ -564,7 +564,7 @@ Since this D-Bus property is readable, it is meaningful to use this function on 
 <hr>
 <div class="refsect2">
 <a name="udisks-job-get-progress"></a><h3>udisks_job_get_progress ()</h3>
-<pre class="programlisting"><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gdouble"><span class="returnvalue">gdouble</span></a>             udisks_job_get_progress             (<em class="parameter"><code><a class="link" href="UDisksJob.html" title="UDisksJob"><span class="type">UDisksJob</span></a> *object</code></em>);</pre>
+<pre class="programlisting"><span class="returnvalue">gdouble</span>             udisks_job_get_progress             (<em class="parameter"><code><a class="link" href="UDisksJob.html" title="UDisksJob"><span class="type">UDisksJob</span></a> *object</code></em>);</pre>
 <p>
 Gets the value of the <a class="link" href="gdbus-org.freedesktop.UDisks2.Job.html#gdbus-property-org-freedesktop-UDisks2-Job.Progress" title='The "Progress" property'>"Progress"</a> D-Bus property.
 </p>
@@ -591,7 +591,7 @@ Since this D-Bus property is readable, it is meaningful to use this function on 
 <hr>
 <div class="refsect2">
 <a name="udisks-job-get-start-time"></a><h3>udisks_job_get_start_time ()</h3>
-<pre class="programlisting"><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#guint64"><span class="returnvalue">guint64</span></a>             udisks_job_get_start_time           (<em class="parameter"><code><a class="link" href="UDisksJob.html" title="UDisksJob"><span class="type">UDisksJob</span></a> *object</code></em>);</pre>
+<pre class="programlisting"><span class="returnvalue">guint64</span>             udisks_job_get_start_time           (<em class="parameter"><code><a class="link" href="UDisksJob.html" title="UDisksJob"><span class="type">UDisksJob</span></a> *object</code></em>);</pre>
 <p>
 Gets the value of the <a class="link" href="gdbus-org.freedesktop.UDisks2.Job.html#gdbus-property-org-freedesktop-UDisks2-Job.StartTime" title='The "StartTime" property'>"StartTime"</a> D-Bus property.
 </p>
@@ -618,7 +618,7 @@ Since this D-Bus property is readable, it is meaningful to use this function on 
 <hr>
 <div class="refsect2">
 <a name="udisks-job-get-objects"></a><h3>udisks_job_get_objects ()</h3>
-<pre class="programlisting">const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="returnvalue">gchar</span></a> *const * udisks_job_get_objects             (<em class="parameter"><code><a class="link" href="UDisksJob.html" title="UDisksJob"><span class="type">UDisksJob</span></a> *object</code></em>);</pre>
+<pre class="programlisting">const <span class="returnvalue">gchar</span> *const * udisks_job_get_objects             (<em class="parameter"><code><a class="link" href="UDisksJob.html" title="UDisksJob"><span class="type">UDisksJob</span></a> *object</code></em>);</pre>
 <p>
 Gets the value of the <a class="link" href="gdbus-org.freedesktop.UDisks2.Job.html#gdbus-property-org-freedesktop-UDisks2-Job.Objects" title='The "Objects" property'>"Objects"</a> D-Bus property.
 </p>
@@ -643,7 +643,7 @@ Since this D-Bus property is readable, it is meaningful to use this function on 
 </tr>
 <tr>
 <td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
-<td>The property value or <a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a> if the property is not set. Do not free the returned value, it belongs to <em class="parameter"><code>object</code></em>. <span class="annotation">[<a href="http://foldoc.org/transfer%20none"><span class="acronym">transfer none</span></a>]</span>
+<td>The property value or <code class="literal">NULL</code> if the property is not set. Do not free the returned value, it belongs to <em class="parameter"><code>object</code></em>. <span class="annotation">[<a href="http://foldoc.org/transfer%20none"><span class="acronym">transfer none</span></a>]</span>
 </td>
 </tr>
 </tbody>
@@ -652,7 +652,7 @@ Since this D-Bus property is readable, it is meaningful to use this function on 
 <hr>
 <div class="refsect2">
 <a name="udisks-job-get-cancelable"></a><h3>udisks_job_get_cancelable ()</h3>
-<pre class="programlisting"><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>            udisks_job_get_cancelable           (<em class="parameter"><code><a class="link" href="UDisksJob.html" title="UDisksJob"><span class="type">UDisksJob</span></a> *object</code></em>);</pre>
+<pre class="programlisting"><span class="returnvalue">gboolean</span>            udisks_job_get_cancelable           (<em class="parameter"><code><a class="link" href="UDisksJob.html" title="UDisksJob"><span class="type">UDisksJob</span></a> *object</code></em>);</pre>
 <p>
 Gets the value of the <a class="link" href="gdbus-org.freedesktop.UDisks2.Job.html#gdbus-property-org-freedesktop-UDisks2-Job.Cancelable" title='The "Cancelable" property'>"Cancelable"</a> D-Bus property.
 </p>
@@ -679,7 +679,7 @@ Since this D-Bus property is readable, it is meaningful to use this function on 
 <hr>
 <div class="refsect2">
 <a name="udisks-job-get-operation"></a><h3>udisks_job_get_operation ()</h3>
-<pre class="programlisting">const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="returnvalue">gchar</span></a> *       udisks_job_get_operation            (<em class="parameter"><code><a class="link" href="UDisksJob.html" title="UDisksJob"><span class="type">UDisksJob</span></a> *object</code></em>);</pre>
+<pre class="programlisting">const <span class="returnvalue">gchar</span> *       udisks_job_get_operation            (<em class="parameter"><code><a class="link" href="UDisksJob.html" title="UDisksJob"><span class="type">UDisksJob</span></a> *object</code></em>);</pre>
 <p>
 Gets the value of the <a class="link" href="gdbus-org.freedesktop.UDisks2.Job.html#gdbus-property-org-freedesktop-UDisks2-Job.Operation" title='The "Operation" property'>"Operation"</a> D-Bus property.
 </p>
@@ -704,7 +704,7 @@ Since this D-Bus property is readable, it is meaningful to use this function on 
 </tr>
 <tr>
 <td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
-<td>The property value or <a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a> if the property is not set. Do not free the returned value, it belongs to <em class="parameter"><code>object</code></em>. <span class="annotation">[<a href="http://foldoc.org/transfer%20none"><span class="acronym">transfer none</span></a>]</span>
+<td>The property value or <code class="literal">NULL</code> if the property is not set. Do not free the returned value, it belongs to <em class="parameter"><code>object</code></em>. <span class="annotation">[<a href="http://foldoc.org/transfer%20none"><span class="acronym">transfer none</span></a>]</span>
 </td>
 </tr>
 </tbody>
@@ -713,7 +713,7 @@ Since this D-Bus property is readable, it is meaningful to use this function on 
 <hr>
 <div class="refsect2">
 <a name="udisks-job-get-progress-valid"></a><h3>udisks_job_get_progress_valid ()</h3>
-<pre class="programlisting"><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>            udisks_job_get_progress_valid       (<em class="parameter"><code><a class="link" href="UDisksJob.html" title="UDisksJob"><span class="type">UDisksJob</span></a> *object</code></em>);</pre>
+<pre class="programlisting"><span class="returnvalue">gboolean</span>            udisks_job_get_progress_valid       (<em class="parameter"><code><a class="link" href="UDisksJob.html" title="UDisksJob"><span class="type">UDisksJob</span></a> *object</code></em>);</pre>
 <p>
 Gets the value of the <a class="link" href="gdbus-org.freedesktop.UDisks2.Job.html#gdbus-property-org-freedesktop-UDisks2-Job.ProgressValid" title='The "ProgressValid" property'>"ProgressValid"</a> D-Bus property.
 </p>
@@ -740,7 +740,7 @@ Since this D-Bus property is readable, it is meaningful to use this function on 
 <hr>
 <div class="refsect2">
 <a name="udisks-job-get-started-by-uid"></a><h3>udisks_job_get_started_by_uid ()</h3>
-<pre class="programlisting"><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#guint"><span class="returnvalue">guint</span></a>               udisks_job_get_started_by_uid       (<em class="parameter"><code><a class="link" href="UDisksJob.html" title="UDisksJob"><span class="type">UDisksJob</span></a> *object</code></em>);</pre>
+<pre class="programlisting"><span class="returnvalue">guint</span>               udisks_job_get_started_by_uid       (<em class="parameter"><code><a class="link" href="UDisksJob.html" title="UDisksJob"><span class="type">UDisksJob</span></a> *object</code></em>);</pre>
 <p>
 Gets the value of the <a class="link" href="gdbus-org.freedesktop.UDisks2.Job.html#gdbus-property-org-freedesktop-UDisks2-Job.StartedByUID" title='The "StartedByUID" property'>"StartedByUID"</a> D-Bus property.
 </p>
@@ -767,7 +767,7 @@ Since this D-Bus property is readable, it is meaningful to use this function on 
 <hr>
 <div class="refsect2">
 <a name="udisks-job-dup-objects"></a><h3>udisks_job_dup_objects ()</h3>
-<pre class="programlisting"><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="returnvalue">gchar</span></a> **            udisks_job_dup_objects              (<em class="parameter"><code><a class="link" href="UDisksJob.html" title="UDisksJob"><span class="type">UDisksJob</span></a> *object</code></em>);</pre>
+<pre class="programlisting"><span class="returnvalue">gchar</span> **            udisks_job_dup_objects              (<em class="parameter"><code><a class="link" href="UDisksJob.html" title="UDisksJob"><span class="type">UDisksJob</span></a> *object</code></em>);</pre>
 <p>
 Gets a copy of the <a class="link" href="gdbus-org.freedesktop.UDisks2.Job.html#gdbus-property-org-freedesktop-UDisks2-Job.Objects" title='The "Objects" property'>"Objects"</a> D-Bus property.
 </p>
@@ -786,7 +786,7 @@ Since this D-Bus property is readable, it is meaningful to use this function on 
 </tr>
 <tr>
 <td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
-<td>The property value or <a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a> if the property is not set. The returned value should be freed with <a href="http://library.gnome.org/devel/glib/unstable/glib-String-Utility-Functions.html#g-strfreev"><code class="function">g_strfreev()</code></a>. <span class="annotation">[<a href="http://foldoc.org/transfer%20full"><span class="acronym">transfer full</span></a>]</span>
+<td>The property value or <code class="literal">NULL</code> if the property is not set. The returned value should be freed with <code class="function">g_strfreev()</code>. <span class="annotation">[<a href="http://foldoc.org/transfer%20full"><span class="acronym">transfer full</span></a>]</span>
 </td>
 </tr>
 </tbody>
@@ -795,7 +795,7 @@ Since this D-Bus property is readable, it is meaningful to use this function on 
 <hr>
 <div class="refsect2">
 <a name="udisks-job-dup-operation"></a><h3>udisks_job_dup_operation ()</h3>
-<pre class="programlisting"><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="returnvalue">gchar</span></a> *             udisks_job_dup_operation            (<em class="parameter"><code><a class="link" href="UDisksJob.html" title="UDisksJob"><span class="type">UDisksJob</span></a> *object</code></em>);</pre>
+<pre class="programlisting"><span class="returnvalue">gchar</span> *             udisks_job_dup_operation            (<em class="parameter"><code><a class="link" href="UDisksJob.html" title="UDisksJob"><span class="type">UDisksJob</span></a> *object</code></em>);</pre>
 <p>
 Gets a copy of the <a class="link" href="gdbus-org.freedesktop.UDisks2.Job.html#gdbus-property-org-freedesktop-UDisks2-Job.Operation" title='The "Operation" property'>"Operation"</a> D-Bus property.
 </p>
@@ -814,7 +814,7 @@ Since this D-Bus property is readable, it is meaningful to use this function on 
 </tr>
 <tr>
 <td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
-<td>The property value or <a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a> if the property is not set. The returned value should be freed with <a href="http://library.gnome.org/devel/glib/unstable/glib-Memory-Allocation.html#g-free"><code class="function">g_free()</code></a>. <span class="annotation">[<a href="http://foldoc.org/transfer%20full"><span class="acronym">transfer full</span></a>]</span>
+<td>The property value or <code class="literal">NULL</code> if the property is not set. The returned value should be freed with <code class="function">g_free()</code>. <span class="annotation">[<a href="http://foldoc.org/transfer%20full"><span class="acronym">transfer full</span></a>]</span>
 </td>
 </tr>
 </tbody>
@@ -824,7 +824,7 @@ Since this D-Bus property is readable, it is meaningful to use this function on 
 <div class="refsect2">
 <a name="udisks-job-set-expected-end-time"></a><h3>udisks_job_set_expected_end_time ()</h3>
 <pre class="programlisting"><span class="returnvalue">void</span>                udisks_job_set_expected_end_time    (<em class="parameter"><code><a class="link" href="UDisksJob.html" title="UDisksJob"><span class="type">UDisksJob</span></a> *object</code></em>,
-                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#guint64"><span class="type">guint64</span></a> value</code></em>);</pre>
+                                                         <em class="parameter"><code><span class="type">guint64</span> value</code></em>);</pre>
 <p>
 Sets the <a class="link" href="gdbus-org.freedesktop.UDisks2.Job.html#gdbus-property-org-freedesktop-UDisks2-Job.ExpectedEndTime" title='The "ExpectedEndTime" property'>"ExpectedEndTime"</a> D-Bus property to <em class="parameter"><code>value</code></em>.
 </p>
@@ -852,7 +852,7 @@ Since this D-Bus property is not writable, it is only meaningful to use this fun
 <div class="refsect2">
 <a name="udisks-job-set-progress"></a><h3>udisks_job_set_progress ()</h3>
 <pre class="programlisting"><span class="returnvalue">void</span>                udisks_job_set_progress             (<em class="parameter"><code><a class="link" href="UDisksJob.html" title="UDisksJob"><span class="type">UDisksJob</span></a> *object</code></em>,
-                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gdouble"><span class="type">gdouble</span></a> value</code></em>);</pre>
+                                                         <em class="parameter"><code><span class="type">gdouble</span> value</code></em>);</pre>
 <p>
 Sets the <a class="link" href="gdbus-org.freedesktop.UDisks2.Job.html#gdbus-property-org-freedesktop-UDisks2-Job.Progress" title='The "Progress" property'>"Progress"</a> D-Bus property to <em class="parameter"><code>value</code></em>.
 </p>
@@ -880,7 +880,7 @@ Since this D-Bus property is not writable, it is only meaningful to use this fun
 <div class="refsect2">
 <a name="udisks-job-set-start-time"></a><h3>udisks_job_set_start_time ()</h3>
 <pre class="programlisting"><span class="returnvalue">void</span>                udisks_job_set_start_time           (<em class="parameter"><code><a class="link" href="UDisksJob.html" title="UDisksJob"><span class="type">UDisksJob</span></a> *object</code></em>,
-                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#guint64"><span class="type">guint64</span></a> value</code></em>);</pre>
+                                                         <em class="parameter"><code><span class="type">guint64</span> value</code></em>);</pre>
 <p>
 Sets the <a class="link" href="gdbus-org.freedesktop.UDisks2.Job.html#gdbus-property-org-freedesktop-UDisks2-Job.StartTime" title='The "StartTime" property'>"StartTime"</a> D-Bus property to <em class="parameter"><code>value</code></em>.
 </p>
@@ -908,7 +908,7 @@ Since this D-Bus property is not writable, it is only meaningful to use this fun
 <div class="refsect2">
 <a name="udisks-job-set-objects"></a><h3>udisks_job_set_objects ()</h3>
 <pre class="programlisting"><span class="returnvalue">void</span>                udisks_job_set_objects              (<em class="parameter"><code><a class="link" href="UDisksJob.html" title="UDisksJob"><span class="type">UDisksJob</span></a> *object</code></em>,
-                                                         <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *const *value</code></em>);</pre>
+                                                         <em class="parameter"><code>const <span class="type">gchar</span> *const *value</code></em>);</pre>
 <p>
 Sets the <a class="link" href="gdbus-org.freedesktop.UDisks2.Job.html#gdbus-property-org-freedesktop-UDisks2-Job.Objects" title='The "Objects" property'>"Objects"</a> D-Bus property to <em class="parameter"><code>value</code></em>.
 </p>
@@ -936,7 +936,7 @@ Since this D-Bus property is not writable, it is only meaningful to use this fun
 <div class="refsect2">
 <a name="udisks-job-set-cancelable"></a><h3>udisks_job_set_cancelable ()</h3>
 <pre class="programlisting"><span class="returnvalue">void</span>                udisks_job_set_cancelable           (<em class="parameter"><code><a class="link" href="UDisksJob.html" title="UDisksJob"><span class="type">UDisksJob</span></a> *object</code></em>,
-                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"><span class="type">gboolean</span></a> value</code></em>);</pre>
+                                                         <em class="parameter"><code><span class="type">gboolean</span> value</code></em>);</pre>
 <p>
 Sets the <a class="link" href="gdbus-org.freedesktop.UDisks2.Job.html#gdbus-property-org-freedesktop-UDisks2-Job.Cancelable" title='The "Cancelable" property'>"Cancelable"</a> D-Bus property to <em class="parameter"><code>value</code></em>.
 </p>
@@ -964,7 +964,7 @@ Since this D-Bus property is not writable, it is only meaningful to use this fun
 <div class="refsect2">
 <a name="udisks-job-set-operation"></a><h3>udisks_job_set_operation ()</h3>
 <pre class="programlisting"><span class="returnvalue">void</span>                udisks_job_set_operation            (<em class="parameter"><code><a class="link" href="UDisksJob.html" title="UDisksJob"><span class="type">UDisksJob</span></a> *object</code></em>,
-                                                         <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *value</code></em>);</pre>
+                                                         <em class="parameter"><code>const <span class="type">gchar</span> *value</code></em>);</pre>
 <p>
 Sets the <a class="link" href="gdbus-org.freedesktop.UDisks2.Job.html#gdbus-property-org-freedesktop-UDisks2-Job.Operation" title='The "Operation" property'>"Operation"</a> D-Bus property to <em class="parameter"><code>value</code></em>.
 </p>
@@ -992,7 +992,7 @@ Since this D-Bus property is not writable, it is only meaningful to use this fun
 <div class="refsect2">
 <a name="udisks-job-set-progress-valid"></a><h3>udisks_job_set_progress_valid ()</h3>
 <pre class="programlisting"><span class="returnvalue">void</span>                udisks_job_set_progress_valid       (<em class="parameter"><code><a class="link" href="UDisksJob.html" title="UDisksJob"><span class="type">UDisksJob</span></a> *object</code></em>,
-                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"><span class="type">gboolean</span></a> value</code></em>);</pre>
+                                                         <em class="parameter"><code><span class="type">gboolean</span> value</code></em>);</pre>
 <p>
 Sets the <a class="link" href="gdbus-org.freedesktop.UDisks2.Job.html#gdbus-property-org-freedesktop-UDisks2-Job.ProgressValid" title='The "ProgressValid" property'>"ProgressValid"</a> D-Bus property to <em class="parameter"><code>value</code></em>.
 </p>
@@ -1020,7 +1020,7 @@ Since this D-Bus property is not writable, it is only meaningful to use this fun
 <div class="refsect2">
 <a name="udisks-job-set-started-by-uid"></a><h3>udisks_job_set_started_by_uid ()</h3>
 <pre class="programlisting"><span class="returnvalue">void</span>                udisks_job_set_started_by_uid       (<em class="parameter"><code><a class="link" href="UDisksJob.html" title="UDisksJob"><span class="type">UDisksJob</span></a> *object</code></em>,
-                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#guint"><span class="type">guint</span></a> value</code></em>);</pre>
+                                                         <em class="parameter"><code><span class="type">guint</span> value</code></em>);</pre>
 <p>
 Sets the <a class="link" href="gdbus-org.freedesktop.UDisks2.Job.html#gdbus-property-org-freedesktop-UDisks2-Job.StartedByUID" title='The "StartedByUID" property'>"StartedByUID"</a> D-Bus property to <em class="parameter"><code>value</code></em>.
 </p>
@@ -1068,7 +1068,7 @@ Class structure for <a class="link" href="UDisksJob.html#UDisksJobProxy"><span c
 <col>
 </colgroup>
 <tbody><tr>
-<td><p><span class="term"><a href="http://library.gnome.org/devel/gio/unstable/GDBusProxy.html#GDBusProxyClass"><span class="type">GDBusProxyClass</span></a> <em class="structfield"><code><a name="UDisksJobProxyClass.parent-class"></a>parent_class</code></em>;</span></p></td>
+<td><p><span class="term"><span class="type">GDBusProxyClass</span> <em class="structfield"><code><a name="UDisksJobProxyClass.parent-class"></a>parent_class</code></em>;</span></p></td>
 <td>The parent class.</td>
 </tr></tbody>
 </table></div>
@@ -1076,18 +1076,18 @@ Class structure for <a class="link" href="UDisksJob.html#UDisksJobProxy"><span c
 <hr>
 <div class="refsect2">
 <a name="udisks-job-proxy-new"></a><h3>udisks_job_proxy_new ()</h3>
-<pre class="programlisting"><span class="returnvalue">void</span>                udisks_job_proxy_new                (<em class="parameter"><code><a href="http://library.gnome.org/devel/gio/unstable/GDBusConnection.html"><span class="type">GDBusConnection</span></a> *connection</code></em>,
-                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/gio/unstable/GDBusProxy.html#GDBusProxyFlags"><span class="type">GDBusProxyFlags</span></a> flags</code></em>,
-                                                         <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *name</code></em>,
-                                                         <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *object_path</code></em>,
-                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/gio/unstable/GCancellable.html"><span class="type">GCancellable</span></a> *cancellable</code></em>,
-                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/gio/unstable/GAsyncResult.html#GAsyncReadyCallback"><span class="type">GAsyncReadyCallback</span></a> callback</code></em>,
-                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gpointer"><span class="type">gpointer</span></a> user_data</code></em>);</pre>
+<pre class="programlisting"><span class="returnvalue">void</span>                udisks_job_proxy_new                (<em class="parameter"><code><span class="type">GDBusConnection</span> *connection</code></em>,
+                                                         <em class="parameter"><code><span class="type">GDBusProxyFlags</span> flags</code></em>,
+                                                         <em class="parameter"><code>const <span class="type">gchar</span> *name</code></em>,
+                                                         <em class="parameter"><code>const <span class="type">gchar</span> *object_path</code></em>,
+                                                         <em class="parameter"><code><span class="type">GCancellable</span> *cancellable</code></em>,
+                                                         <em class="parameter"><code><span class="type">GAsyncReadyCallback</span> callback</code></em>,
+                                                         <em class="parameter"><code><span class="type">gpointer</span> user_data</code></em>);</pre>
 <p>
-Asynchronously creates a proxy for the D-Bus interface <a class="link" href="gdbus-org.freedesktop.UDisks2.Job.html#gdbus-interface-org-freedesktop-UDisks2-Job.top_of_page">org.freedesktop.UDisks2.Job</a>. See <a href="http://library.gnome.org/devel/gio/unstable/GDBusProxy.html#g-dbus-proxy-new"><code class="function">g_dbus_proxy_new()</code></a> for more details.
+Asynchronously creates a proxy for the D-Bus interface <a class="link" href="gdbus-org.freedesktop.UDisks2.Job.html#gdbus-interface-org-freedesktop-UDisks2-Job.top_of_page">org.freedesktop.UDisks2.Job</a>. See <code class="function">g_dbus_proxy_new()</code> for more details.
 </p>
 <p>
-When the operation is finished, <em class="parameter"><code>callback</code></em> will be invoked in the <a href="http://library.gnome.org/devel/glib/unstable/glib-The-Main-Event-Loop.html#g-main-context-push-thread-default">thread-default main loop</a> of the thread you are calling this method from.
+When the operation is finished, <em class="parameter"><code>callback</code></em> will be invoked in the thread-default main loop of the thread you are calling this method from.
 You can then call <a class="link" href="UDisksJob.html#udisks-job-proxy-new-finish" title="udisks_job_proxy_new_finish ()"><code class="function">udisks_job_proxy_new_finish()</code></a> to get the result of the operation.
 </p>
 <p>
@@ -1101,15 +1101,15 @@ See <a class="link" href="UDisksJob.html#udisks-job-proxy-new-sync" title="udisk
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>connection</code></em> :</span></p></td>
-<td>A <a href="http://library.gnome.org/devel/gio/unstable/GDBusConnection.html"><span class="type">GDBusConnection</span></a>.</td>
+<td>A <span class="type">GDBusConnection</span>.</td>
 </tr>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>flags</code></em> :</span></p></td>
-<td>Flags from the <a href="http://library.gnome.org/devel/gio/unstable/GDBusProxy.html#GDBusProxyFlags"><span class="type">GDBusProxyFlags</span></a> enumeration.</td>
+<td>Flags from the <span class="type">GDBusProxyFlags</span> enumeration.</td>
 </tr>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>name</code></em> :</span></p></td>
-<td>A bus name (well-known or unique) or <a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a> if <em class="parameter"><code>connection</code></em> is not a message bus connection. <span class="annotation">[<a href="http://foldoc.org/allow-none"><span class="acronym">allow-none</span></a>]</span>
+<td>A bus name (well-known or unique) or <code class="literal">NULL</code> if <em class="parameter"><code>connection</code></em> is not a message bus connection. <span class="annotation">[<a href="http://foldoc.org/allow-none"><span class="acronym">allow-none</span></a>]</span>
 </td>
 </tr>
 <tr>
@@ -1118,12 +1118,12 @@ See <a class="link" href="UDisksJob.html#udisks-job-proxy-new-sync" title="udisk
 </tr>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>cancellable</code></em> :</span></p></td>
-<td>A <a href="http://library.gnome.org/devel/gio/unstable/GCancellable.html"><span class="type">GCancellable</span></a> or <a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a>. <span class="annotation">[<a href="http://foldoc.org/allow-none"><span class="acronym">allow-none</span></a>]</span>
+<td>A <span class="type">GCancellable</span> or <code class="literal">NULL</code>. <span class="annotation">[<a href="http://foldoc.org/allow-none"><span class="acronym">allow-none</span></a>]</span>
 </td>
 </tr>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>callback</code></em> :</span></p></td>
-<td>A <a href="http://library.gnome.org/devel/gio/unstable/GAsyncResult.html#GAsyncReadyCallback"><span class="type">GAsyncReadyCallback</span></a> to call when the request is satisfied.</td>
+<td>A <span class="type">GAsyncReadyCallback</span> to call when the request is satisfied.</td>
 </tr>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>user_data</code></em> :</span></p></td>
@@ -1135,8 +1135,8 @@ See <a class="link" href="UDisksJob.html#udisks-job-proxy-new-sync" title="udisk
 <hr>
 <div class="refsect2">
 <a name="udisks-job-proxy-new-finish"></a><h3>udisks_job_proxy_new_finish ()</h3>
-<pre class="programlisting"><a class="link" href="UDisksJob.html" title="UDisksJob"><span class="returnvalue">UDisksJob</span></a> *         udisks_job_proxy_new_finish         (<em class="parameter"><code><a href="http://library.gnome.org/devel/gio/unstable/GAsyncResult.html"><span class="type">GAsyncResult</span></a> *res</code></em>,
-                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Error-Reporting.html#GError"><span class="type">GError</span></a> **error</code></em>);</pre>
+<pre class="programlisting"><a class="link" href="UDisksJob.html" title="UDisksJob"><span class="returnvalue">UDisksJob</span></a> *         udisks_job_proxy_new_finish         (<em class="parameter"><code><span class="type">GAsyncResult</span> *res</code></em>,
+                                                         <em class="parameter"><code><span class="type">GError</span> **error</code></em>);</pre>
 <p>
 Finishes an operation started with <a class="link" href="UDisksJob.html#udisks-job-proxy-new" title="udisks_job_proxy_new ()"><code class="function">udisks_job_proxy_new()</code></a>.
 </p>
@@ -1148,16 +1148,16 @@ Finishes an operation started with <a class="link" href="UDisksJob.html#udisks-j
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>res</code></em> :</span></p></td>
-<td>The <a href="http://library.gnome.org/devel/gio/unstable/GAsyncResult.html"><span class="type">GAsyncResult</span></a> obtained from the <a href="http://library.gnome.org/devel/gio/unstable/GAsyncResult.html#GAsyncReadyCallback"><span class="type">GAsyncReadyCallback</span></a> passed to <a class="link" href="UDisksJob.html#udisks-job-proxy-new" title="udisks_job_proxy_new ()"><code class="function">udisks_job_proxy_new()</code></a>.</td>
+<td>The <span class="type">GAsyncResult</span> obtained from the <span class="type">GAsyncReadyCallback</span> passed to <a class="link" href="UDisksJob.html#udisks-job-proxy-new" title="udisks_job_proxy_new ()"><code class="function">udisks_job_proxy_new()</code></a>.</td>
 </tr>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>error</code></em> :</span></p></td>
-<td>Return location for error or <a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a>
+<td>Return location for error or <code class="literal">NULL</code>
 </td>
 </tr>
 <tr>
 <td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
-<td>The constructed proxy object or <a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a> if <em class="parameter"><code>error</code></em> is set. <span class="annotation">[<a href="http://foldoc.org/transfer%20full"><span class="acronym">transfer full</span></a>][<a href="http://foldoc.org/type"><span class="acronym">type</span></a> UDisksJobProxy]</span>
+<td>The constructed proxy object or <code class="literal">NULL</code> if <em class="parameter"><code>error</code></em> is set. <span class="annotation">[<a href="http://foldoc.org/transfer%20full"><span class="acronym">transfer full</span></a>][<a href="http://foldoc.org/type"><span class="acronym">type</span></a> UDisksJobProxy]</span>
 </td>
 </tr>
 </tbody>
@@ -1166,14 +1166,14 @@ Finishes an operation started with <a class="link" href="UDisksJob.html#udisks-j
 <hr>
 <div class="refsect2">
 <a name="udisks-job-proxy-new-sync"></a><h3>udisks_job_proxy_new_sync ()</h3>
-<pre class="programlisting"><a class="link" href="UDisksJob.html" title="UDisksJob"><span class="returnvalue">UDisksJob</span></a> *         udisks_job_proxy_new_sync           (<em class="parameter"><code><a href="http://library.gnome.org/devel/gio/unstable/GDBusConnection.html"><span class="type">GDBusConnection</span></a> *connection</code></em>,
-                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/gio/unstable/GDBusProxy.html#GDBusProxyFlags"><span class="type">GDBusProxyFlags</span></a> flags</code></em>,
-                                                         <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *name</code></em>,
-                                                         <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *object_path</code></em>,
-                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/gio/unstable/GCancellable.html"><span class="type">GCancellable</span></a> *cancellable</code></em>,
-                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Error-Reporting.html#GError"><span class="type">GError</span></a> **error</code></em>);</pre>
+<pre class="programlisting"><a class="link" href="UDisksJob.html" title="UDisksJob"><span class="returnvalue">UDisksJob</span></a> *         udisks_job_proxy_new_sync           (<em class="parameter"><code><span class="type">GDBusConnection</span> *connection</code></em>,
+                                                         <em class="parameter"><code><span class="type">GDBusProxyFlags</span> flags</code></em>,
+                                                         <em class="parameter"><code>const <span class="type">gchar</span> *name</code></em>,
+                                                         <em class="parameter"><code>const <span class="type">gchar</span> *object_path</code></em>,
+                                                         <em class="parameter"><code><span class="type">GCancellable</span> *cancellable</code></em>,
+                                                         <em class="parameter"><code><span class="type">GError</span> **error</code></em>);</pre>
 <p>
-Synchronously creates a proxy for the D-Bus interface <a class="link" href="gdbus-org.freedesktop.UDisks2.Job.html#gdbus-interface-org-freedesktop-UDisks2-Job.top_of_page">org.freedesktop.UDisks2.Job</a>. See <a href="http://library.gnome.org/devel/gio/unstable/GDBusProxy.html#g-dbus-proxy-new-sync"><code class="function">g_dbus_proxy_new_sync()</code></a> for more details.
+Synchronously creates a proxy for the D-Bus interface <a class="link" href="gdbus-org.freedesktop.UDisks2.Job.html#gdbus-interface-org-freedesktop-UDisks2-Job.top_of_page">org.freedesktop.UDisks2.Job</a>. See <code class="function">g_dbus_proxy_new_sync()</code> for more details.
 </p>
 <p>
 The calling thread is blocked until a reply is received.
@@ -1189,15 +1189,15 @@ See <a class="link" href="UDisksJob.html#udisks-job-proxy-new" title="udisks_job
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>connection</code></em> :</span></p></td>
-<td>A <a href="http://library.gnome.org/devel/gio/unstable/GDBusConnection.html"><span class="type">GDBusConnection</span></a>.</td>
+<td>A <span class="type">GDBusConnection</span>.</td>
 </tr>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>flags</code></em> :</span></p></td>
-<td>Flags from the <a href="http://library.gnome.org/devel/gio/unstable/GDBusProxy.html#GDBusProxyFlags"><span class="type">GDBusProxyFlags</span></a> enumeration.</td>
+<td>Flags from the <span class="type">GDBusProxyFlags</span> enumeration.</td>
 </tr>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>name</code></em> :</span></p></td>
-<td>A bus name (well-known or unique) or <a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a> if <em class="parameter"><code>connection</code></em> is not a message bus connection. <span class="annotation">[<a href="http://foldoc.org/allow-none"><span class="acronym">allow-none</span></a>]</span>
+<td>A bus name (well-known or unique) or <code class="literal">NULL</code> if <em class="parameter"><code>connection</code></em> is not a message bus connection. <span class="annotation">[<a href="http://foldoc.org/allow-none"><span class="acronym">allow-none</span></a>]</span>
 </td>
 </tr>
 <tr>
@@ -1206,17 +1206,17 @@ See <a class="link" href="UDisksJob.html#udisks-job-proxy-new" title="udisks_job
 </tr>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>cancellable</code></em> :</span></p></td>
-<td>A <a href="http://library.gnome.org/devel/gio/unstable/GCancellable.html"><span class="type">GCancellable</span></a> or <a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a>. <span class="annotation">[<a href="http://foldoc.org/allow-none"><span class="acronym">allow-none</span></a>]</span>
+<td>A <span class="type">GCancellable</span> or <code class="literal">NULL</code>. <span class="annotation">[<a href="http://foldoc.org/allow-none"><span class="acronym">allow-none</span></a>]</span>
 </td>
 </tr>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>error</code></em> :</span></p></td>
-<td>Return location for error or <a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a>
+<td>Return location for error or <code class="literal">NULL</code>
 </td>
 </tr>
 <tr>
 <td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
-<td>The constructed proxy object or <a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a> if <em class="parameter"><code>error</code></em> is set. <span class="annotation">[<a href="http://foldoc.org/transfer%20full"><span class="acronym">transfer full</span></a>][<a href="http://foldoc.org/type"><span class="acronym">type</span></a> UDisksJobProxy]</span>
+<td>The constructed proxy object or <code class="literal">NULL</code> if <em class="parameter"><code>error</code></em> is set. <span class="annotation">[<a href="http://foldoc.org/transfer%20full"><span class="acronym">transfer full</span></a>][<a href="http://foldoc.org/type"><span class="acronym">type</span></a> UDisksJobProxy]</span>
 </td>
 </tr>
 </tbody>
@@ -1225,18 +1225,18 @@ See <a class="link" href="UDisksJob.html#udisks-job-proxy-new" title="udisks_job
 <hr>
 <div class="refsect2">
 <a name="udisks-job-proxy-new-for-bus"></a><h3>udisks_job_proxy_new_for_bus ()</h3>
-<pre class="programlisting"><span class="returnvalue">void</span>                udisks_job_proxy_new_for_bus        (<em class="parameter"><code><a href="http://library.gnome.org/devel/gio/unstable/GDBusConnection.html#GBusType"><span class="type">GBusType</span></a> bus_type</code></em>,
-                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/gio/unstable/GDBusProxy.html#GDBusProxyFlags"><span class="type">GDBusProxyFlags</span></a> flags</code></em>,
-                                                         <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *name</code></em>,
-                                                         <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *object_path</code></em>,
-                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/gio/unstable/GCancellable.html"><span class="type">GCancellable</span></a> *cancellable</code></em>,
-                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/gio/unstable/GAsyncResult.html#GAsyncReadyCallback"><span class="type">GAsyncReadyCallback</span></a> callback</code></em>,
-                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gpointer"><span class="type">gpointer</span></a> user_data</code></em>);</pre>
+<pre class="programlisting"><span class="returnvalue">void</span>                udisks_job_proxy_new_for_bus        (<em class="parameter"><code><span class="type">GBusType</span> bus_type</code></em>,
+                                                         <em class="parameter"><code><span class="type">GDBusProxyFlags</span> flags</code></em>,
+                                                         <em class="parameter"><code>const <span class="type">gchar</span> *name</code></em>,
+                                                         <em class="parameter"><code>const <span class="type">gchar</span> *object_path</code></em>,
+                                                         <em class="parameter"><code><span class="type">GCancellable</span> *cancellable</code></em>,
+                                                         <em class="parameter"><code><span class="type">GAsyncReadyCallback</span> callback</code></em>,
+                                                         <em class="parameter"><code><span class="type">gpointer</span> user_data</code></em>);</pre>
 <p>
-Like <a class="link" href="UDisksJob.html#udisks-job-proxy-new" title="udisks_job_proxy_new ()"><code class="function">udisks_job_proxy_new()</code></a> but takes a <a href="http://library.gnome.org/devel/gio/unstable/GDBusConnection.html#GBusType"><span class="type">GBusType</span></a> instead of a <a href="http://library.gnome.org/devel/gio/unstable/GDBusConnection.html"><span class="type">GDBusConnection</span></a>.
+Like <a class="link" href="UDisksJob.html#udisks-job-proxy-new" title="udisks_job_proxy_new ()"><code class="function">udisks_job_proxy_new()</code></a> but takes a <span class="type">GBusType</span> instead of a <span class="type">GDBusConnection</span>.
 </p>
 <p>
-When the operation is finished, <em class="parameter"><code>callback</code></em> will be invoked in the <a href="http://library.gnome.org/devel/glib/unstable/glib-The-Main-Event-Loop.html#g-main-context-push-thread-default">thread-default main loop</a> of the thread you are calling this method from.
+When the operation is finished, <em class="parameter"><code>callback</code></em> will be invoked in the thread-default main loop of the thread you are calling this method from.
 You can then call <a class="link" href="UDisksJob.html#udisks-job-proxy-new-for-bus-finish" title="udisks_job_proxy_new_for_bus_finish ()"><code class="function">udisks_job_proxy_new_for_bus_finish()</code></a> to get the result of the operation.
 </p>
 <p>
@@ -1250,11 +1250,11 @@ See <a class="link" href="UDisksJob.html#udisks-job-proxy-new-for-bus-sync" titl
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>bus_type</code></em> :</span></p></td>
-<td>A <a href="http://library.gnome.org/devel/gio/unstable/GDBusConnection.html#GBusType"><span class="type">GBusType</span></a>.</td>
+<td>A <span class="type">GBusType</span>.</td>
 </tr>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>flags</code></em> :</span></p></td>
-<td>Flags from the <a href="http://library.gnome.org/devel/gio/unstable/GDBusProxy.html#GDBusProxyFlags"><span class="type">GDBusProxyFlags</span></a> enumeration.</td>
+<td>Flags from the <span class="type">GDBusProxyFlags</span> enumeration.</td>
 </tr>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>name</code></em> :</span></p></td>
@@ -1266,12 +1266,12 @@ See <a class="link" href="UDisksJob.html#udisks-job-proxy-new-for-bus-sync" titl
 </tr>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>cancellable</code></em> :</span></p></td>
-<td>A <a href="http://library.gnome.org/devel/gio/unstable/GCancellable.html"><span class="type">GCancellable</span></a> or <a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a>. <span class="annotation">[<a href="http://foldoc.org/allow-none"><span class="acronym">allow-none</span></a>]</span>
+<td>A <span class="type">GCancellable</span> or <code class="literal">NULL</code>. <span class="annotation">[<a href="http://foldoc.org/allow-none"><span class="acronym">allow-none</span></a>]</span>
 </td>
 </tr>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>callback</code></em> :</span></p></td>
-<td>A <a href="http://library.gnome.org/devel/gio/unstable/GAsyncResult.html#GAsyncReadyCallback"><span class="type">GAsyncReadyCallback</span></a> to call when the request is satisfied.</td>
+<td>A <span class="type">GAsyncReadyCallback</span> to call when the request is satisfied.</td>
 </tr>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>user_data</code></em> :</span></p></td>
@@ -1283,8 +1283,8 @@ See <a class="link" href="UDisksJob.html#udisks-job-proxy-new-for-bus-sync" titl
 <hr>
 <div class="refsect2">
 <a name="udisks-job-proxy-new-for-bus-finish"></a><h3>udisks_job_proxy_new_for_bus_finish ()</h3>
-<pre class="programlisting"><a class="link" href="UDisksJob.html" title="UDisksJob"><span class="returnvalue">UDisksJob</span></a> *         udisks_job_proxy_new_for_bus_finish (<em class="parameter"><code><a href="http://library.gnome.org/devel/gio/unstable/GAsyncResult.html"><span class="type">GAsyncResult</span></a> *res</code></em>,
-                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Error-Reporting.html#GError"><span class="type">GError</span></a> **error</code></em>);</pre>
+<pre class="programlisting"><a class="link" href="UDisksJob.html" title="UDisksJob"><span class="returnvalue">UDisksJob</span></a> *         udisks_job_proxy_new_for_bus_finish (<em class="parameter"><code><span class="type">GAsyncResult</span> *res</code></em>,
+                                                         <em class="parameter"><code><span class="type">GError</span> **error</code></em>);</pre>
 <p>
 Finishes an operation started with <a class="link" href="UDisksJob.html#udisks-job-proxy-new-for-bus" title="udisks_job_proxy_new_for_bus ()"><code class="function">udisks_job_proxy_new_for_bus()</code></a>.
 </p>
@@ -1296,16 +1296,16 @@ Finishes an operation started with <a class="link" href="UDisksJob.html#udisks-j
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>res</code></em> :</span></p></td>
-<td>The <a href="http://library.gnome.org/devel/gio/unstable/GAsyncResult.html"><span class="type">GAsyncResult</span></a> obtained from the <a href="http://library.gnome.org/devel/gio/unstable/GAsyncResult.html#GAsyncReadyCallback"><span class="type">GAsyncReadyCallback</span></a> passed to <a class="link" href="UDisksJob.html#udisks-job-proxy-new-for-bus" title="udisks_job_proxy_new_for_bus ()"><code class="function">udisks_job_proxy_new_for_bus()</code></a>.</td>
+<td>The <span class="type">GAsyncResult</span> obtained from the <span class="type">GAsyncReadyCallback</span> passed to <a class="link" href="UDisksJob.html#udisks-job-proxy-new-for-bus" title="udisks_job_proxy_new_for_bus ()"><code class="function">udisks_job_proxy_new_for_bus()</code></a>.</td>
 </tr>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>error</code></em> :</span></p></td>
-<td>Return location for error or <a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a>
+<td>Return location for error or <code class="literal">NULL</code>
 </td>
 </tr>
 <tr>
 <td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
-<td>The constructed proxy object or <a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a> if <em class="parameter"><code>error</code></em> is set. <span class="annotation">[<a href="http://foldoc.org/transfer%20full"><span class="acronym">transfer full</span></a>][<a href="http://foldoc.org/type"><span class="acronym">type</span></a> UDisksJobProxy]</span>
+<td>The constructed proxy object or <code class="literal">NULL</code> if <em class="parameter"><code>error</code></em> is set. <span class="annotation">[<a href="http://foldoc.org/transfer%20full"><span class="acronym">transfer full</span></a>][<a href="http://foldoc.org/type"><span class="acronym">type</span></a> UDisksJobProxy]</span>
 </td>
 </tr>
 </tbody>
@@ -1314,14 +1314,14 @@ Finishes an operation started with <a class="link" href="UDisksJob.html#udisks-j
 <hr>
 <div class="refsect2">
 <a name="udisks-job-proxy-new-for-bus-sync"></a><h3>udisks_job_proxy_new_for_bus_sync ()</h3>
-<pre class="programlisting"><a class="link" href="UDisksJob.html" title="UDisksJob"><span class="returnvalue">UDisksJob</span></a> *         udisks_job_proxy_new_for_bus_sync   (<em class="parameter"><code><a href="http://library.gnome.org/devel/gio/unstable/GDBusConnection.html#GBusType"><span class="type">GBusType</span></a> bus_type</code></em>,
-                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/gio/unstable/GDBusProxy.html#GDBusProxyFlags"><span class="type">GDBusProxyFlags</span></a> flags</code></em>,
-                                                         <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *name</code></em>,
-                                                         <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *object_path</code></em>,
-                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/gio/unstable/GCancellable.html"><span class="type">GCancellable</span></a> *cancellable</code></em>,
-                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Error-Reporting.html#GError"><span class="type">GError</span></a> **error</code></em>);</pre>
+<pre class="programlisting"><a class="link" href="UDisksJob.html" title="UDisksJob"><span class="returnvalue">UDisksJob</span></a> *         udisks_job_proxy_new_for_bus_sync   (<em class="parameter"><code><span class="type">GBusType</span> bus_type</code></em>,
+                                                         <em class="parameter"><code><span class="type">GDBusProxyFlags</span> flags</code></em>,
+                                                         <em class="parameter"><code>const <span class="type">gchar</span> *name</code></em>,
+                                                         <em class="parameter"><code>const <span class="type">gchar</span> *object_path</code></em>,
+                                                         <em class="parameter"><code><span class="type">GCancellable</span> *cancellable</code></em>,
+                                                         <em class="parameter"><code><span class="type">GError</span> **error</code></em>);</pre>
 <p>
-Like <a class="link" href="UDisksJob.html#udisks-job-proxy-new-sync" title="udisks_job_proxy_new_sync ()"><code class="function">udisks_job_proxy_new_sync()</code></a> but takes a <a href="http://library.gnome.org/devel/gio/unstable/GDBusConnection.html#GBusType"><span class="type">GBusType</span></a> instead of a <a href="http://library.gnome.org/devel/gio/unstable/GDBusConnection.html"><span class="type">GDBusConnection</span></a>.
+Like <a class="link" href="UDisksJob.html#udisks-job-proxy-new-sync" title="udisks_job_proxy_new_sync ()"><code class="function">udisks_job_proxy_new_sync()</code></a> but takes a <span class="type">GBusType</span> instead of a <span class="type">GDBusConnection</span>.
 </p>
 <p>
 The calling thread is blocked until a reply is received.
@@ -1337,11 +1337,11 @@ See <a class="link" href="UDisksJob.html#udisks-job-proxy-new-for-bus" title="ud
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>bus_type</code></em> :</span></p></td>
-<td>A <a href="http://library.gnome.org/devel/gio/unstable/GDBusConnection.html#GBusType"><span class="type">GBusType</span></a>.</td>
+<td>A <span class="type">GBusType</span>.</td>
 </tr>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>flags</code></em> :</span></p></td>
-<td>Flags from the <a href="http://library.gnome.org/devel/gio/unstable/GDBusProxy.html#GDBusProxyFlags"><span class="type">GDBusProxyFlags</span></a> enumeration.</td>
+<td>Flags from the <span class="type">GDBusProxyFlags</span> enumeration.</td>
 </tr>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>name</code></em> :</span></p></td>
@@ -1353,17 +1353,17 @@ See <a class="link" href="UDisksJob.html#udisks-job-proxy-new-for-bus" title="ud
 </tr>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>cancellable</code></em> :</span></p></td>
-<td>A <a href="http://library.gnome.org/devel/gio/unstable/GCancellable.html"><span class="type">GCancellable</span></a> or <a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a>. <span class="annotation">[<a href="http://foldoc.org/allow-none"><span class="acronym">allow-none</span></a>]</span>
+<td>A <span class="type">GCancellable</span> or <code class="literal">NULL</code>. <span class="annotation">[<a href="http://foldoc.org/allow-none"><span class="acronym">allow-none</span></a>]</span>
 </td>
 </tr>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>error</code></em> :</span></p></td>
-<td>Return location for error or <a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a>
+<td>Return location for error or <code class="literal">NULL</code>
 </td>
 </tr>
 <tr>
 <td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
-<td>The constructed proxy object or <a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a> if <em class="parameter"><code>error</code></em> is set. <span class="annotation">[<a href="http://foldoc.org/transfer%20full"><span class="acronym">transfer full</span></a>][<a href="http://foldoc.org/type"><span class="acronym">type</span></a> UDisksJobProxy]</span>
+<td>The constructed proxy object or <code class="literal">NULL</code> if <em class="parameter"><code>error</code></em> is set. <span class="annotation">[<a href="http://foldoc.org/transfer%20full"><span class="acronym">transfer full</span></a>][<a href="http://foldoc.org/type"><span class="acronym">type</span></a> UDisksJobProxy]</span>
 </td>
 </tr>
 </tbody>
@@ -1393,7 +1393,7 @@ Class structure for <a class="link" href="UDisksJob.html#UDisksJobSkeleton"><spa
 <col>
 </colgroup>
 <tbody><tr>
-<td><p><span class="term"><a href="http://library.gnome.org/devel/gio/unstable/GDBusInterfaceSkeleton.html#GDBusInterfaceSkeletonClass"><span class="type">GDBusInterfaceSkeletonClass</span></a> <em class="structfield"><code><a name="UDisksJobSkeletonClass.parent-class"></a>parent_class</code></em>;</span></p></td>
+<td><p><span class="term"><span class="type">GDBusInterfaceSkeletonClass</span> <em class="structfield"><code><a name="UDisksJobSkeletonClass.parent-class"></a>parent_class</code></em>;</span></p></td>
 <td>The parent class.</td>
 </tr></tbody>
 </table></div>
@@ -1422,95 +1422,95 @@ Creates a skeleton object for the D-Bus interface <a class="link" href="gdbus-or
 <a name="UDisksJob.property-details"></a><h2>Property Details</h2>
 <div class="refsect2">
 <a name="UDisksJob--cancelable"></a><h3>The <code class="literal">"cancelable"</code> property</h3>
-<pre class="programlisting">  "cancelable"               <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"><span class="type">gboolean</span></a>              : Read / Write</pre>
+<pre class="programlisting">  "cancelable"               <span class="type">gboolean</span>              : Read / Write</pre>
 <p>
 Represents the D-Bus property <a class="link" href="gdbus-org.freedesktop.UDisks2.Job.html#gdbus-property-org-freedesktop-UDisks2-Job.Cancelable" title='The "Cancelable" property'>"Cancelable"</a>.
 </p>
 <p>
-Since the D-Bus property for this <a href="http://library.gnome.org/devel/gobject/unstable/gobject-The-Base-Object-Type.html#GObject"><span class="type">GObject</span></a> property is readable but not writable, it is meaningful to read from it on both the client- and service-side. It is only meaningful, however, to write to it on the service-side.
+Since the D-Bus property for this <span class="type">GObject</span> property is readable but not writable, it is meaningful to read from it on both the client- and service-side. It is only meaningful, however, to write to it on the service-side.
 </p>
 <p>Default value: FALSE</p>
 </div>
 <hr>
 <div class="refsect2">
 <a name="UDisksJob--expected-end-time"></a><h3>The <code class="literal">"expected-end-time"</code> property</h3>
-<pre class="programlisting">  "expected-end-time"        <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#guint64"><span class="type">guint64</span></a>               : Read / Write</pre>
+<pre class="programlisting">  "expected-end-time"        <span class="type">guint64</span>               : Read / Write</pre>
 <p>
 Represents the D-Bus property <a class="link" href="gdbus-org.freedesktop.UDisks2.Job.html#gdbus-property-org-freedesktop-UDisks2-Job.ExpectedEndTime" title='The "ExpectedEndTime" property'>"ExpectedEndTime"</a>.
 </p>
 <p>
-Since the D-Bus property for this <a href="http://library.gnome.org/devel/gobject/unstable/gobject-The-Base-Object-Type.html#GObject"><span class="type">GObject</span></a> property is readable but not writable, it is meaningful to read from it on both the client- and service-side. It is only meaningful, however, to write to it on the service-side.
+Since the D-Bus property for this <span class="type">GObject</span> property is readable but not writable, it is meaningful to read from it on both the client- and service-side. It is only meaningful, however, to write to it on the service-side.
 </p>
 <p>Default value: 0</p>
 </div>
 <hr>
 <div class="refsect2">
 <a name="UDisksJob--objects"></a><h3>The <code class="literal">"objects"</code> property</h3>
-<pre class="programlisting">  "objects"                  <a href="http://library.gnome.org/devel/gobject/unstable/gobject-Boxed-Types.html#GStrv"><span class="type">GStrv</span></a>                 : Read / Write</pre>
+<pre class="programlisting">  "objects"                  <span class="type">GStrv</span>                 : Read / Write</pre>
 <p>
 Represents the D-Bus property <a class="link" href="gdbus-org.freedesktop.UDisks2.Job.html#gdbus-property-org-freedesktop-UDisks2-Job.Objects" title='The "Objects" property'>"Objects"</a>.
 </p>
 <p>
-Since the D-Bus property for this <a href="http://library.gnome.org/devel/gobject/unstable/gobject-The-Base-Object-Type.html#GObject"><span class="type">GObject</span></a> property is readable but not writable, it is meaningful to read from it on both the client- and service-side. It is only meaningful, however, to write to it on the service-side.
+Since the D-Bus property for this <span class="type">GObject</span> property is readable but not writable, it is meaningful to read from it on both the client- and service-side. It is only meaningful, however, to write to it on the service-side.
 </p>
 </div>
 <hr>
 <div class="refsect2">
 <a name="UDisksJob--operation"></a><h3>The <code class="literal">"operation"</code> property</h3>
-<pre class="programlisting">  "operation"                <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a>*                : Read / Write</pre>
+<pre class="programlisting">  "operation"                <span class="type">gchar</span>*                : Read / Write</pre>
 <p>
 Represents the D-Bus property <a class="link" href="gdbus-org.freedesktop.UDisks2.Job.html#gdbus-property-org-freedesktop-UDisks2-Job.Operation" title='The "Operation" property'>"Operation"</a>.
 </p>
 <p>
-Since the D-Bus property for this <a href="http://library.gnome.org/devel/gobject/unstable/gobject-The-Base-Object-Type.html#GObject"><span class="type">GObject</span></a> property is readable but not writable, it is meaningful to read from it on both the client- and service-side. It is only meaningful, however, to write to it on the service-side.
+Since the D-Bus property for this <span class="type">GObject</span> property is readable but not writable, it is meaningful to read from it on both the client- and service-side. It is only meaningful, however, to write to it on the service-side.
 </p>
 <p>Default value: NULL</p>
 </div>
 <hr>
 <div class="refsect2">
 <a name="UDisksJob--progress"></a><h3>The <code class="literal">"progress"</code> property</h3>
-<pre class="programlisting">  "progress"                 <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gdouble"><span class="type">gdouble</span></a>               : Read / Write</pre>
+<pre class="programlisting">  "progress"                 <span class="type">gdouble</span>               : Read / Write</pre>
 <p>
 Represents the D-Bus property <a class="link" href="gdbus-org.freedesktop.UDisks2.Job.html#gdbus-property-org-freedesktop-UDisks2-Job.Progress" title='The "Progress" property'>"Progress"</a>.
 </p>
 <p>
-Since the D-Bus property for this <a href="http://library.gnome.org/devel/gobject/unstable/gobject-The-Base-Object-Type.html#GObject"><span class="type">GObject</span></a> property is readable but not writable, it is meaningful to read from it on both the client- and service-side. It is only meaningful, however, to write to it on the service-side.
+Since the D-Bus property for this <span class="type">GObject</span> property is readable but not writable, it is meaningful to read from it on both the client- and service-side. It is only meaningful, however, to write to it on the service-side.
 </p>
 <p>Default value: 0</p>
 </div>
 <hr>
 <div class="refsect2">
 <a name="UDisksJob--progress-valid"></a><h3>The <code class="literal">"progress-valid"</code> property</h3>
-<pre class="programlisting">  "progress-valid"           <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"><span class="type">gboolean</span></a>              : Read / Write</pre>
+<pre class="programlisting">  "progress-valid"           <span class="type">gboolean</span>              : Read / Write</pre>
 <p>
 Represents the D-Bus property <a class="link" href="gdbus-org.freedesktop.UDisks2.Job.html#gdbus-property-org-freedesktop-UDisks2-Job.ProgressValid" title='The "ProgressValid" property'>"ProgressValid"</a>.
 </p>
 <p>
-Since the D-Bus property for this <a href="http://library.gnome.org/devel/gobject/unstable/gobject-The-Base-Object-Type.html#GObject"><span class="type">GObject</span></a> property is readable but not writable, it is meaningful to read from it on both the client- and service-side. It is only meaningful, however, to write to it on the service-side.
+Since the D-Bus property for this <span class="type">GObject</span> property is readable but not writable, it is meaningful to read from it on both the client- and service-side. It is only meaningful, however, to write to it on the service-side.
 </p>
 <p>Default value: FALSE</p>
 </div>
 <hr>
 <div class="refsect2">
 <a name="UDisksJob--start-time"></a><h3>The <code class="literal">"start-time"</code> property</h3>
-<pre class="programlisting">  "start-time"               <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#guint64"><span class="type">guint64</span></a>               : Read / Write</pre>
+<pre class="programlisting">  "start-time"               <span class="type">guint64</span>               : Read / Write</pre>
 <p>
 Represents the D-Bus property <a class="link" href="gdbus-org.freedesktop.UDisks2.Job.html#gdbus-property-org-freedesktop-UDisks2-Job.StartTime" title='The "StartTime" property'>"StartTime"</a>.
 </p>
 <p>
-Since the D-Bus property for this <a href="http://library.gnome.org/devel/gobject/unstable/gobject-The-Base-Object-Type.html#GObject"><span class="type">GObject</span></a> property is readable but not writable, it is meaningful to read from it on both the client- and service-side. It is only meaningful, however, to write to it on the service-side.
+Since the D-Bus property for this <span class="type">GObject</span> property is readable but not writable, it is meaningful to read from it on both the client- and service-side. It is only meaningful, however, to write to it on the service-side.
 </p>
 <p>Default value: 0</p>
 </div>
 <hr>
 <div class="refsect2">
 <a name="UDisksJob--started-by-uid"></a><h3>The <code class="literal">"started-by-uid"</code> property</h3>
-<pre class="programlisting">  "started-by-uid"           <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#guint"><span class="type">guint</span></a>                 : Read / Write</pre>
+<pre class="programlisting">  "started-by-uid"           <span class="type">guint</span>                 : Read / Write</pre>
 <p>
 Represents the D-Bus property <a class="link" href="gdbus-org.freedesktop.UDisks2.Job.html#gdbus-property-org-freedesktop-UDisks2-Job.StartedByUID" title='The "StartedByUID" property'>"StartedByUID"</a>.
 </p>
 <p>
-Since the D-Bus property for this <a href="http://library.gnome.org/devel/gobject/unstable/gobject-The-Base-Object-Type.html#GObject"><span class="type">GObject</span></a> property is readable but not writable, it is meaningful to read from it on both the client- and service-side. It is only meaningful, however, to write to it on the service-side.
+Since the D-Bus property for this <span class="type">GObject</span> property is readable but not writable, it is meaningful to read from it on both the client- and service-side. It is only meaningful, however, to write to it on the service-side.
 </p>
 <p>Default value: 0</p>
 </div>
@@ -1520,14 +1520,14 @@ Since the D-Bus property for this <a href="http://library.gnome.org/devel/gobjec
 <div class="refsect2">
 <a name="UDisksJob-completed"></a><h3>The <code class="literal">"completed"</code> signal</h3>
 <pre class="programlisting"><span class="returnvalue">void</span>                user_function                      (<a class="link" href="UDisksJob.html" title="UDisksJob"><span class="type">UDisksJob</span></a> *object,
-                                                        <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"><span class="type">gboolean</span></a>   arg_success,
-                                                        <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a>     *arg_message,
-                                                        <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gpointer"><span class="type">gpointer</span></a>   user_data)        : <a href="http://library.gnome.org/devel/gobject/unstable/gobject-Signals.html#G-SIGNAL-RUN-LAST:CAPS"><code class="literal">Run Last</code></a></pre>
+                                                        <span class="type">gboolean</span>   arg_success,
+                                                        <span class="type">gchar</span>     *arg_message,
+                                                        <span class="type">gpointer</span>   user_data)        : <code class="literal">Run Last</code></pre>
 <p>
 On the client-side, this signal is emitted whenever the D-Bus signal <a class="link" href="gdbus-org.freedesktop.UDisks2.Job.html#gdbus-signal-org-freedesktop-UDisks2-Job.Completed" title='The "Completed" signal'>"Completed"</a> is received.
 </p>
 <p>
-On the service-side, this signal can be used with e.g. <a href="http://library.gnome.org/devel/gobject/unstable/gobject-Signals.html#g-signal-emit-by-name"><code class="function">g_signal_emit_by_name()</code></a> to make the object emit the D-Bus signal.
+On the service-side, this signal can be used with e.g. <code class="function">g_signal_emit_by_name()</code> to make the object emit the D-Bus signal.
 </p>
 <div class="variablelist"><table border="0" class="variablelist">
 <colgroup>
@@ -1557,15 +1557,15 @@ On the service-side, this signal can be used with e.g. <a href="http://library.g
 <hr>
 <div class="refsect2">
 <a name="UDisksJob-handle-cancel"></a><h3>The <code class="literal">"handle-cancel"</code> signal</h3>
-<pre class="programlisting"><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>            user_function                      (<a class="link" href="UDisksJob.html" title="UDisksJob"><span class="type">UDisksJob</span></a>             *object,
-                                                        <a href="http://library.gnome.org/devel/gio/unstable/GDBusMethodInvocation.html"><span class="type">GDBusMethodInvocation</span></a> *invocation,
-                                                        <a href="http://library.gnome.org/devel/glib/unstable/glib-GVariant.html#GVariant"><span class="type">GVariant</span></a>              *arg_options,
-                                                        <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gpointer"><span class="type">gpointer</span></a>               user_data)        : <a href="http://library.gnome.org/devel/gobject/unstable/gobject-Signals.html#G-SIGNAL-RUN-LAST:CAPS"><code class="literal">Run Last</code></a></pre>
+<pre class="programlisting"><span class="returnvalue">gboolean</span>            user_function                      (<a class="link" href="UDisksJob.html" title="UDisksJob"><span class="type">UDisksJob</span></a>             *object,
+                                                        <span class="type">GDBusMethodInvocation</span> *invocation,
+                                                        <span class="type">GVariant</span>              *arg_options,
+                                                        <span class="type">gpointer</span>               user_data)        : <code class="literal">Run Last</code></pre>
 <p>
 Signal emitted when a remote caller is invoking the <a class="link" href="gdbus-org.freedesktop.UDisks2.Job.html#gdbus-method-org-freedesktop-UDisks2-Job.Cancel" title="The Cancel() method"><code class="function">Cancel()</code></a> D-Bus method.
 </p>
 <p>
-If a signal handler returns <a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#TRUE:CAPS"><code class="literal">TRUE</code></a>, it means the signal handler will handle the invocation (e.g. take a reference to <em class="parameter"><code>invocation</code></em> and eventually call <a class="link" href="UDisksJob.html#udisks-job-complete-cancel" title="udisks_job_complete_cancel ()"><code class="function">udisks_job_complete_cancel()</code></a> or e.g. <a href="http://library.gnome.org/devel/gio/unstable/GDBusMethodInvocation.html#g-dbus-method-invocation-return-error"><code class="function">g_dbus_method_invocation_return_error()</code></a> on it) and no order signal handlers will run. If no signal handler handles the invocation, the <a href="http://library.gnome.org/devel/gio/unstable/gio-GDBusError.html#G-DBUS-ERROR-UNKNOWN-METHOD:CAPS"><code class="literal">G_DBUS_ERROR_UNKNOWN_METHOD</code></a> error is returned.
+If a signal handler returns <code class="literal">TRUE</code>, it means the signal handler will handle the invocation (e.g. take a reference to <em class="parameter"><code>invocation</code></em> and eventually call <a class="link" href="UDisksJob.html#udisks-job-complete-cancel" title="udisks_job_complete_cancel ()"><code class="function">udisks_job_complete_cancel()</code></a> or e.g. <code class="function">g_dbus_method_invocation_return_error()</code> on it) and no order signal handlers will run. If no signal handler handles the invocation, the <code class="literal">G_DBUS_ERROR_UNKNOWN_METHOD</code> error is returned.
 </p>
 <div class="variablelist"><table border="0" class="variablelist">
 <colgroup>
@@ -1579,7 +1579,7 @@ If a signal handler returns <a href="http://library.gnome.org/devel/glib/unstabl
 </tr>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>invocation</code></em> :</span></p></td>
-<td>A <a href="http://library.gnome.org/devel/gio/unstable/GDBusMethodInvocation.html"><span class="type">GDBusMethodInvocation</span></a>.</td>
+<td>A <span class="type">GDBusMethodInvocation</span>.</td>
 </tr>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>arg_options</code></em> :</span></p></td>
@@ -1592,7 +1592,7 @@ If a signal handler returns <a href="http://library.gnome.org/devel/glib/unstabl
 <tr>
 <td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
 <td>
-<a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#TRUE:CAPS"><code class="literal">TRUE</code></a> if the invocation was handled, <a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#FALSE:CAPS"><code class="literal">FALSE</code></a> to let other signal handlers run.</td>
+<code class="literal">TRUE</code> if the invocation was handled, <code class="literal">FALSE</code> to let other signal handlers run.</td>
 </tr>
 </tbody>
 </table></div>
