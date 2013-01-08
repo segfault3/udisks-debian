@@ -2,4 +2,3 @@
 mount_in_media.patch
 unsupported_acls.patch
 dosfslabel.patch
-test_luks_with_vfat.patch
