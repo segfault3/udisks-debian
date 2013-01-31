@@ -1,3 +1,9 @@
+Description: Use dosfstools instead of mtools
+ We already require dosfstools for mkfs.vfat, so just also use it for
+ changing the fs label.
+Author: Michael Biebl <biebl@debian.org>
+Bug: https://bugs.freedesktop.org/show_bug.cgi?id=52332
+Bug-Debian: http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=680683
 diff --git a/src/udiskslinuxfsinfo.c b/src/udiskslinuxfsinfo.c
 index 28b1ae5..97b414d 100644
 --- a/src/udiskslinuxfsinfo.c
