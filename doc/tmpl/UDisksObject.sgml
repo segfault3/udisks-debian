@@ -68,6 +68,11 @@ UDisksObject
 
 </para>
 
+<!-- ##### ARG UDisksObject:mdraid ##### -->
+<para>
+
+</para>
+
 <!-- ##### ARG UDisksObject:partition ##### -->
 <para>
 
@@ -189,6 +194,15 @@ UDisksObject
 @Returns: 
 
 
+<!-- ##### FUNCTION udisks_object_get_mdraid ##### -->
+<para>
+
+</para>
+
+@object: 
+@Returns: 
+
+
 <!-- ##### FUNCTION udisks_object_peek_block ##### -->
 <para>
 
@@ -280,6 +294,15 @@ UDisksObject
 
 
 <!-- ##### FUNCTION udisks_object_peek_partition_table ##### -->
+<para>
+
+</para>
+
+@object: 
+@Returns: 
+
+
+<!-- ##### FUNCTION udisks_object_peek_mdraid ##### -->
 <para>
 
 </para>
@@ -424,6 +447,15 @@ UDisksObject
 
 
 <!-- ##### FUNCTION udisks_object_skeleton_set_partition_table ##### -->
+<para>
+
+</para>
+
+@object: 
+@interface_: 
+
+
+<!-- ##### FUNCTION udisks_object_skeleton_set_mdraid ##### -->
 <para>
 
 </para>

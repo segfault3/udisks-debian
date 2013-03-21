@@ -7,7 +7,7 @@
 <link rel="home" href="index.html" title="UDisks Reference Manual">
 <link rel="up" href="ch02.html" title="D-Bus Interfaces">
 <link rel="prev" href="gdbus-org.freedesktop.UDisks2.Drive.html" title="org.freedesktop.UDisks2.Drive">
-<link rel="next" href="gdbus-org.freedesktop.UDisks2.Block.html" title="org.freedesktop.UDisks2.Block">
+<link rel="next" href="gdbus-org.freedesktop.UDisks2.MDRaid.html" title="org.freedesktop.UDisks2.MDRaid">
 <meta name="generator" content="GTK-Doc V1.18 (XML mode)">
 <link rel="stylesheet" href="style.css" type="text/css">
 </head>
@@ -18,7 +18,7 @@
 <td><a accesskey="u" href="ch02.html"><img src="up.png" width="24" height="24" border="0" alt="Up"></a></td>
 <td><a accesskey="h" href="index.html"><img src="home.png" width="24" height="24" border="0" alt="Home"></a></td>
 <th width="100%" align="center">UDisks Reference Manual</th>
-<td><a accesskey="n" href="gdbus-org.freedesktop.UDisks2.Block.html"><img src="right.png" width="24" height="24" border="0" alt="Next"></a></td>
+<td><a accesskey="n" href="gdbus-org.freedesktop.UDisks2.MDRaid.html"><img src="right.png" width="24" height="24" border="0" alt="Next"></a></td>
 </tr>
 <tr><td colspan="5" class="shortcuts">
 <a href="#gdbus-org.freedesktop.UDisks2.Drive.Ata.synopsis" class="shortcut">Top</a>
@@ -46,6 +46,8 @@
 <a class="link" href="gdbus-org.freedesktop.UDisks2.Drive.Ata.html#gdbus-method-org-freedesktop-UDisks2-Drive-Ata.SmartSelftestStart" title="The SmartSelftestStart() method">SmartSelftestStart</a> (IN  s                type,
                     IN  a{sv}            options);
 <a class="link" href="gdbus-org.freedesktop.UDisks2.Drive.Ata.html#gdbus-method-org-freedesktop-UDisks2-Drive-Ata.SmartSelftestAbort" title="The SmartSelftestAbort() method">SmartSelftestAbort</a> (IN  a{sv}            options);
+<a class="link" href="gdbus-org.freedesktop.UDisks2.Drive.Ata.html#gdbus-method-org-freedesktop-UDisks2-Drive-Ata.SmartSetEnabled" title="The SmartSetEnabled() method">SmartSetEnabled</a>    (IN  b                value,
+                    IN  a{sv}            options);
 <a class="link" href="gdbus-org.freedesktop.UDisks2.Drive.Ata.html#gdbus-method-org-freedesktop-UDisks2-Drive-Ata.PmGetState" title="The PmGetState() method">PmGetState</a>         (IN  a{sv}            options,
                     OUT y                state);
 <a class="link" href="gdbus-org.freedesktop.UDisks2.Drive.Ata.html#gdbus-method-org-freedesktop-UDisks2-Drive-Ata.PmStandby" title="The PmStandby() method">PmStandby</a>          (IN  a{sv}            options);
@@ -54,7 +56,7 @@
 </pre>
 </div>
 <div class="refsect1">
-<a name="idp5440880"></a><h2>Properties</h2>
+<a name="idp6393776"></a><h2>Properties</h2>
 <pre class="synopsis">
 <a class="link" href="gdbus-org.freedesktop.UDisks2.Drive.Ata.html#gdbus-property-org-freedesktop-UDisks2-Drive-Ata.SmartSupported" title='The "SmartSupported" property'>SmartSupported</a>                     readable   b
 <a class="link" href="gdbus-org.freedesktop.UDisks2.Drive.Ata.html#gdbus-property-org-freedesktop-UDisks2-Drive-Ata.SmartEnabled" title='The "SmartEnabled" property'>SmartEnabled</a>                       readable   b
@@ -74,6 +76,8 @@
 <a class="link" href="gdbus-org.freedesktop.UDisks2.Drive.Ata.html#gdbus-property-org-freedesktop-UDisks2-Drive-Ata.AamSupported" title='The "AamSupported" property'>AamSupported</a>                       readable   b
 <a class="link" href="gdbus-org.freedesktop.UDisks2.Drive.Ata.html#gdbus-property-org-freedesktop-UDisks2-Drive-Ata.AamEnabled" title='The "AamEnabled" property'>AamEnabled</a>                         readable   b
 <a class="link" href="gdbus-org.freedesktop.UDisks2.Drive.Ata.html#gdbus-property-org-freedesktop-UDisks2-Drive-Ata.AamVendorRecommendedValue" title='The "AamVendorRecommendedValue" property'>AamVendorRecommendedValue</a>          readable   i
+<a class="link" href="gdbus-org.freedesktop.UDisks2.Drive.Ata.html#gdbus-property-org-freedesktop-UDisks2-Drive-Ata.WriteCacheSupported" title='The "WriteCacheSupported" property'>WriteCacheSupported</a>                readable   b
+<a class="link" href="gdbus-org.freedesktop.UDisks2.Drive.Ata.html#gdbus-property-org-freedesktop-UDisks2-Drive-Ata.WriteCacheEnabled" title='The "WriteCacheEnabled" property'>WriteCacheEnabled</a>                  readable   b
 <a class="link" href="gdbus-org.freedesktop.UDisks2.Drive.Ata.html#gdbus-property-org-freedesktop-UDisks2-Drive-Ata.SecurityEraseUnitMinutes" title='The "SecurityEraseUnitMinutes" property'>SecurityEraseUnitMinutes</a>           readable   i
 <a class="link" href="gdbus-org.freedesktop.UDisks2.Drive.Ata.html#gdbus-property-org-freedesktop-UDisks2-Drive-Ata.SecurityEnhancedEraseUnitMinutes" title='The "SecurityEnhancedEraseUnitMinutes" property'>SecurityEnhancedEraseUnitMinutes</a>   readable   i
 <a class="link" href="gdbus-org.freedesktop.UDisks2.Drive.Ata.html#gdbus-property-org-freedesktop-UDisks2-Drive-Ata.SecurityFrozen" title='The "SecurityFrozen" property'>SecurityFrozen</a>                     readable   b
@@ -238,6 +242,41 @@ SmartSelftestAbort (IN  a{sv} options);
 <td><p>Options (currently unused except for <a class="link" href="udisks-std-options.html" title="The options parameter">standard options</a>).</p></td>
 </tr></tbody>
 </table></div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="gdbus-method-org-freedesktop-UDisks2-Drive-Ata.SmartSetEnabled"></a><h3>The SmartSetEnabled() method</h3>
+<pre class="programlisting">
+SmartSetEnabled (IN  b     value,
+                 IN  a{sv} options);
+</pre>
+<p>        Sets whether SMART is enabled for the drive. This setting is
+        stored in the non-volatile memory in the drive itself and does
+        not need to be refreshed every time the drive is powered on or
+        connected.
+</p>
+<p>        Since this may require authentication and thus may fail, it is
+        implemented this way instead of the
+        <a class="link" href="gdbus-org.freedesktop.UDisks2.Drive.Ata.html#gdbus-property-org-freedesktop-UDisks2-Drive-Ata.SmartEnabled" title='The "SmartEnabled" property'>"SmartEnabled"</a> property being
+        writable.
+</p>
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
+<col align="left" valign="top">
+<col>
+</colgroup>
+<tbody>
+<tr>
+<td><p><span class="term"><code class="literal">IN b <em class="parameter"><code>value</code></em></code>:</span></p></td>
+<td><p><code class="constant">TRUE</code> to enable SMART, <code class="constant">FALSE</code> to disable SMART.</p></td>
+</tr>
+<tr>
+<td><p><span class="term"><code class="literal">IN a{sv} <em class="parameter"><code>options</code></em></code>:</span></p></td>
+<td><p>Options (currently unused except for <a class="link" href="udisks-std-options.html" title="The options parameter">standard options</a>).</p></td>
+</tr>
+</tbody>
+</table></div>
+<p class="since">Since 2.1</p>
 </div>
 <hr>
 <div class="refsect2">
@@ -581,6 +620,26 @@ AamEnabled  readable   b
 AamVendorRecommendedValue  readable   i
 </pre>
 <p>The vendor-recommended AAM value (or 0 if AAM is not supported).</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="gdbus-property-org-freedesktop-UDisks2-Drive-Ata.WriteCacheSupported"></a><h3>The "WriteCacheSupported" property</h3>
+<pre class="programlisting">
+WriteCacheSupported  readable   b
+</pre>
+<p>         Whether the drive supports configuring the write cache.
+</p>
+<p class="since">Since 2.1</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="gdbus-property-org-freedesktop-UDisks2-Drive-Ata.WriteCacheEnabled"></a><h3>The "WriteCacheEnabled" property</h3>
+<pre class="programlisting">
+WriteCacheEnabled  readable   b
+</pre>
+<p>         Whether the write-cache is enabled (or <code class="constant">FALSE</code> if not supported).
+</p>
+<p class="since">Since 2.1</p>
 </div>
 <hr>
 <div class="refsect2">

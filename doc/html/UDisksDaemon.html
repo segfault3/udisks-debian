@@ -51,10 +51,8 @@
 <a class="link" href="UDisksCrypttabMonitor.html" title="UDisksCrypttabMonitor"><span class="returnvalue">UDisksCrypttabMonitor</span></a> * <a class="link" href="UDisksDaemon.html#udisks-daemon-get-crypttab-monitor" title="udisks_daemon_get_crypttab_monitor ()">udisks_daemon_get_crypttab_monitor</a>
                                                         (<em class="parameter"><code><a class="link" href="UDisksDaemon.html" title="UDisksDaemon"><span class="type">UDisksDaemon</span></a> *daemon</code></em>);
 <a class="link" href="UDisksLinuxProvider.html" title="UDisksLinuxProvider"><span class="returnvalue">UDisksLinuxProvider</span></a> * <a class="link" href="UDisksDaemon.html#udisks-daemon-get-linux-provider" title="udisks_daemon_get_linux_provider ()">udisks_daemon_get_linux_provider</a>  (<em class="parameter"><code><a class="link" href="UDisksDaemon.html" title="UDisksDaemon"><span class="type">UDisksDaemon</span></a> *daemon</code></em>);
-<a class="link" href="UDisksPersistentStore.html" title="UDisksPersistentStore"><span class="returnvalue">UDisksPersistentStore</span></a> * <a class="link" href="UDisksDaemon.html#udisks-daemon-get-persistent-store" title="udisks_daemon_get_persistent_store ()">udisks_daemon_get_persistent_store</a>
-                                                        (<em class="parameter"><code><a class="link" href="UDisksDaemon.html" title="UDisksDaemon"><span class="type">UDisksDaemon</span></a> *daemon</code></em>);
 <a href="http://www.freedesktop.org/software/polkit/docs/latest/PolkitAuthority.html"><span class="returnvalue">PolkitAuthority</span></a> *   <a class="link" href="UDisksDaemon.html#udisks-daemon-get-authority" title="udisks_daemon_get_authority ()">udisks_daemon_get_authority</a>         (<em class="parameter"><code><a class="link" href="UDisksDaemon.html" title="UDisksDaemon"><span class="type">UDisksDaemon</span></a> *daemon</code></em>);
-<a class="link" href="UDisksCleanup.html" title="UDisksCleanup"><span class="returnvalue">UDisksCleanup</span></a> *     <a class="link" href="UDisksDaemon.html#udisks-daemon-get-cleanup" title="udisks_daemon_get_cleanup ()">udisks_daemon_get_cleanup</a>           (<em class="parameter"><code><a class="link" href="UDisksDaemon.html" title="UDisksDaemon"><span class="type">UDisksDaemon</span></a> *daemon</code></em>);
+<a class="link" href="UDisksState.html" title="UDisksState"><span class="returnvalue">UDisksState</span></a> *       <a class="link" href="UDisksDaemon.html#udisks-daemon-get-state" title="udisks_daemon_get_state ()">udisks_daemon_get_state</a>             (<em class="parameter"><code><a class="link" href="UDisksDaemon.html" title="UDisksDaemon"><span class="type">UDisksDaemon</span></a> *daemon</code></em>);
 <a class="link" href="UDisksObject.html" title="UDisksObject"><span class="returnvalue">UDisksObject</span></a> *      (<a class="link" href="UDisksDaemon.html#UDisksDaemonWaitFunc" title="UDisksDaemonWaitFunc ()">*UDisksDaemonWaitFunc</a>)             (<em class="parameter"><code><a class="link" href="UDisksDaemon.html" title="UDisksDaemon"><span class="type">UDisksDaemon</span></a> *daemon</code></em>,
                                                          <em class="parameter"><code><span class="type">gpointer</span> user_data</code></em>);
 <a class="link" href="UDisksObject.html" title="UDisksObject"><span class="returnvalue">UDisksObject</span></a> *      <a class="link" href="UDisksDaemon.html#udisks-daemon-wait-for-object-sync" title="udisks_daemon_wait_for_object_sync ()">udisks_daemon_wait_for_object_sync</a>  (<em class="parameter"><code><a class="link" href="UDisksDaemon.html" title="UDisksDaemon"><span class="type">UDisksDaemon</span></a> *daemon</code></em>,
@@ -318,31 +316,6 @@ Gets the Linux Provider, if any.
 </div>
 <hr>
 <div class="refsect2">
-<a name="udisks-daemon-get-persistent-store"></a><h3>udisks_daemon_get_persistent_store ()</h3>
-<pre class="programlisting"><a class="link" href="UDisksPersistentStore.html" title="UDisksPersistentStore"><span class="returnvalue">UDisksPersistentStore</span></a> * udisks_daemon_get_persistent_store
-                                                        (<em class="parameter"><code><a class="link" href="UDisksDaemon.html" title="UDisksDaemon"><span class="type">UDisksDaemon</span></a> *daemon</code></em>);</pre>
-<p>
-Gets the object used to store persistent data
-</p>
-<div class="variablelist"><table border="0" class="variablelist">
-<colgroup>
-<col align="left" valign="top">
-<col>
-</colgroup>
-<tbody>
-<tr>
-<td><p><span class="term"><em class="parameter"><code>daemon</code></em> :</span></p></td>
-<td>A <a class="link" href="UDisksDaemon.html" title="UDisksDaemon"><span class="type">UDisksDaemon</span></a>.</td>
-</tr>
-<tr>
-<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
-<td>A <a class="link" href="UDisksPersistentStore.html" title="UDisksPersistentStore"><span class="type">UDisksPersistentStore</span></a>. Do not free, the object is owned by <em class="parameter"><code>daemon</code></em>.</td>
-</tr>
-</tbody>
-</table></div>
-</div>
-<hr>
-<div class="refsect2">
 <a name="udisks-daemon-get-authority"></a><h3>udisks_daemon_get_authority ()</h3>
 <pre class="programlisting"><a href="http://www.freedesktop.org/software/polkit/docs/latest/PolkitAuthority.html"><span class="returnvalue">PolkitAuthority</span></a> *   udisks_daemon_get_authority         (<em class="parameter"><code><a class="link" href="UDisksDaemon.html" title="UDisksDaemon"><span class="type">UDisksDaemon</span></a> *daemon</code></em>);</pre>
 <p>
@@ -369,10 +342,10 @@ authority is not available. Do not free, the object is owned by
 </div>
 <hr>
 <div class="refsect2">
-<a name="udisks-daemon-get-cleanup"></a><h3>udisks_daemon_get_cleanup ()</h3>
-<pre class="programlisting"><a class="link" href="UDisksCleanup.html" title="UDisksCleanup"><span class="returnvalue">UDisksCleanup</span></a> *     udisks_daemon_get_cleanup           (<em class="parameter"><code><a class="link" href="UDisksDaemon.html" title="UDisksDaemon"><span class="type">UDisksDaemon</span></a> *daemon</code></em>);</pre>
+<a name="udisks-daemon-get-state"></a><h3>udisks_daemon_get_state ()</h3>
+<pre class="programlisting"><a class="link" href="UDisksState.html" title="UDisksState"><span class="returnvalue">UDisksState</span></a> *       udisks_daemon_get_state             (<em class="parameter"><code><a class="link" href="UDisksDaemon.html" title="UDisksDaemon"><span class="type">UDisksDaemon</span></a> *daemon</code></em>);</pre>
 <p>
-Gets the cleanup object used by <em class="parameter"><code>daemon</code></em>.
+Gets the state object used by <em class="parameter"><code>daemon</code></em>.
 </p>
 <div class="variablelist"><table border="0" class="variablelist">
 <colgroup>
@@ -386,7 +359,7 @@ Gets the cleanup object used by <em class="parameter"><code>daemon</code></em>.
 </tr>
 <tr>
 <td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
-<td>A <a class="link" href="UDisksCleanup.html" title="UDisksCleanup"><span class="type">UDisksCleanup</span></a> instance. Do not free, the object is owned by <em class="parameter"><code>daemon</code></em>.</td>
+<td>A <a class="link" href="UDisksState.html" title="UDisksState"><span class="type">UDisksState</span></a> instance. Do not free, the object is owned by <em class="parameter"><code>daemon</code></em>.</td>
 </tr>
 </tbody>
 </table></div>
@@ -945,7 +918,7 @@ The <a class="link" href="UDisksMountMonitor.html" title="UDisksMountMonitor"><s
 <a name="UDisksDaemon--object-manager"></a><h3>The <code class="literal">"object-manager"</code> property</h3>
 <pre class="programlisting">  "object-manager"           <span class="type">GDBusObjectManagerServer</span>*  : Read</pre>
 <p>
-The <span class="type">GDBusObjectManager</span> used by the daemon
+The <a href="/usr/share/gtk-doc/html/gen/GDBusObjectManager.html"><span class="type">GDBusObjectManager</span></a> used by the daemon
 </p>
 </div>
 </div>

@@ -49,6 +49,12 @@ typedef struct _UDisksLinuxDrive UDisksLinuxDrive;
 struct _UDisksLinuxDriveAta;
 typedef struct _UDisksLinuxDriveAta UDisksLinuxDriveAta;
 
+struct _UDisksLinuxMDRaidObject;
+typedef struct _UDisksLinuxMDRaidObject UDisksLinuxMDRaidObject;
+
+struct _UDisksLinuxMDRaid;
+typedef struct _UDisksLinuxMDRaid UDisksLinuxMDRaid;
+
 struct _UDisksBaseJob;
 typedef struct _UDisksBaseJob UDisksBaseJob;
 
@@ -125,11 +131,8 @@ typedef gboolean (*UDisksThreadedJobFunc) (UDisksThreadedJob   *job,
                                            gpointer             user_data,
                                            GError             **error);
 
-struct _UDisksPersistentStore;
-typedef struct _UDisksPersistentStore UDisksPersistentStore;
-
-struct _UDisksCleanup;
-typedef struct _UDisksCleanup UDisksCleanup;
+struct _UDisksState;
+typedef struct _UDisksState UDisksState;
 
 /**
  * UDisksMountType:
@@ -165,5 +168,29 @@ typedef enum
   UDISKS_LOG_LEVEL_WARNING,
   UDISKS_LOG_LEVEL_ERROR
 } UDisksLogLevel;
+
+struct _UDisksAtaCommandOutput;
+typedef struct _UDisksAtaCommandOutput UDisksAtaCommandOutput;
+
+struct _UDisksAtaCommandInput;
+typedef struct _UDisksAtaCommandInput UDisksAtaCommandInput;
+
+/**
+ * UDisksAtaCommandProtocol:
+ * @UDISKS_ATA_COMMAND_PROTOCOL_NONE: Non-data
+ * @UDISKS_ATA_COMMAND_PROTOCOL_DRIVE_TO_HOST: PIO Data-In
+ * @UDISKS_ATA_COMMAND_PROTOCOL_HOST_TO_DRIVE: PIO Data-Out
+ *
+ * Enumeration used to specify the protocol of an ATA command
+ */
+typedef enum
+{
+  UDISKS_ATA_COMMAND_PROTOCOL_NONE,
+  UDISKS_ATA_COMMAND_PROTOCOL_DRIVE_TO_HOST,
+  UDISKS_ATA_COMMAND_PROTOCOL_HOST_TO_DRIVE
+} UDisksAtaCommandProtocol;
+
+struct _UDisksLinuxDevice;
+typedef struct _UDisksLinuxDevice UDisksLinuxDevice;
 
 #endif /* __UDISKS_DAEMON_TYPES_H__ */

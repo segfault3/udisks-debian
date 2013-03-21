@@ -15,7 +15,7 @@
 <div>
 <div><table class="navigation" id="top" width="100%" cellpadding="2" cellspacing="0"><tr><th valign="middle"><p class="title">UDisks Reference Manual</p></th></tr></table></div>
 <div><p class="releaseinfo">
-      For version 2.0.1
+      For version 2.1.0
  — the latest version of this
       documentation can be found at <a class="ulink" href="http://udisks.freedesktop.org/docs/latest/" target="_top">http://udisks.freedesktop.org/docs/latest/</a>.
     </p></div>
@@ -44,6 +44,7 @@
 <dt><span class="sect1"><a href="ref-dbus-manager-well-known-object.html">The /org/freedesktop/UDisks2/Manager object</a></span></dt>
 <dt><span class="sect1"><a href="ref-dbus-block-devices.html">The /org/freedesktop/UDisks2/block_devices/* objects</a></span></dt>
 <dt><span class="sect1"><a href="ref-dbus-drives.html">The /org/freedesktop/UDisks2/drives/* objects</a></span></dt>
+<dt><span class="sect1"><a href="ref-dbus-md-raid.html">The /org/freedesktop/UDisks2/mdraid/* objects</a></span></dt>
 <dt><span class="sect1"><a href="ref-dbus-jobs.html">The /org/freedesktop/UDisks2/jobs/* objects</a></span></dt>
 <dt><span class="sect1"><a href="udisks-polkit-actions.html">Authorization Checks</a></span></dt>
 <dt><span class="sect1"><a href="udisks-std-options.html">The <em class="parameter"><code>options</code></em> parameter</a></span></dt>
@@ -58,6 +59,9 @@
 </dt>
 <dt>
 <span class="refentrytitle"><a href="gdbus-org.freedesktop.UDisks2.Drive.Ata.html">org.freedesktop.UDisks2.Drive.Ata</a></span><span class="refpurpose"> — Disk drives using the ATA command-set</span>
+</dt>
+<dt>
+<span class="refentrytitle"><a href="gdbus-org.freedesktop.UDisks2.MDRaid.html">org.freedesktop.UDisks2.MDRaid</a></span><span class="refpurpose"> — Linux Software RAID</span>
 </dt>
 <dt>
 <span class="refentrytitle"><a href="gdbus-org.freedesktop.UDisks2.Block.html">org.freedesktop.UDisks2.Block</a></span><span class="refpurpose"> — Block device</span>
@@ -91,6 +95,9 @@
 <span class="refentrytitle"><a href="UDisksClient.html">UDisksClient</a></span><span class="refpurpose"> — Utility routines for accessing the UDisks service</span>
 </dt>
 <dt>
+<span class="refentrytitle"><a href="UDisksObjectInfo.html">UDisksObjectInfo</a></span><span class="refpurpose"> — Detailed information about objects</span>
+</dt>
+<dt>
 <span class="refentrytitle"><a href="udisks2-UDisksError.html">UDisksError</a></span><span class="refpurpose"> — Possible errors that can be returned</span>
 </dt>
 <dt><span class="chapter"><a href="ref-library-generated.html">Generated Code</a></span></dt>
@@ -109,6 +116,9 @@
 </dt>
 <dt>
 <span class="refentrytitle"><a href="UDisksDriveAta.html">UDisksDriveAta</a></span><span class="refpurpose"> — Generated C code for the org.freedesktop.UDisks2.Drive.Ata D-Bus interface</span>
+</dt>
+<dt>
+<span class="refentrytitle"><a href="UDisksMDRaid.html">UDisksMDRaid</a></span><span class="refpurpose"> — Generated C code for the org.freedesktop.UDisks2.MDRaid D-Bus interface</span>
 </dt>
 <dt>
 <span class="refentrytitle"><a href="UDisksJob.html">UDisksJob</a></span><span class="refpurpose"> — Generated C code for the org.freedesktop.UDisks2.Job D-Bus interface</span>
@@ -153,10 +163,10 @@
 <span class="refentrytitle"><a href="UDisksProvider.html">UDisksProvider</a></span><span class="refpurpose"> — Abstract base class for all data providers</span>
 </dt>
 <dt>
-<span class="refentrytitle"><a href="UDisksCleanup.html">UDisksCleanup</a></span><span class="refpurpose"> — Object used for cleaning up after device removal</span>
+<span class="refentrytitle"><a href="UDisksState.html">UDisksState</a></span><span class="refpurpose"> — Object used for recording state and cleaning up</span>
 </dt>
 <dt>
-<span class="refentrytitle"><a href="UDisksPersistentStore.html">UDisksPersistentStore</a></span><span class="refpurpose"> — Stores information that persists across reboots</span>
+<span class="refentrytitle"><a href="udisks2-ATA-commands.html">ATA commands</a></span><span class="refpurpose"> — Helper routines for ATA commands</span>
 </dt>
 </dl></dd>
 <dt><span class="chapter"><a href="ref-daemon-monitoring.html">State and Configuration</a></span></dt>
@@ -194,6 +204,9 @@
 <dt>
 <span class="refentrytitle"><a href="UDisksLinuxProvider.html">UDisksLinuxProvider</a></span><span class="refpurpose"> — Provides Linux-specific objects</span>
 </dt>
+<dt>
+<span class="refentrytitle"><a href="UDisksLinuxDevice.html">UDisksLinuxDevice</a></span><span class="refpurpose"> — Low-level devices on Linux</span>
+</dt>
 </dl></dd>
 <dt><span class="chapter"><a href="ref-daemon-drives.html">Drives on Linux</a></span></dt>
 <dd><dl>
@@ -205,6 +218,15 @@
 </dt>
 <dt>
 <span class="refentrytitle"><a href="UDisksLinuxDriveObject.html">UDisksLinuxDriveObject</a></span><span class="refpurpose"> — Object representing a drive on Linux</span>
+</dt>
+</dl></dd>
+<dt><span class="chapter"><a href="ref-daemon-mdraid.html">Linux RAID</a></span></dt>
+<dd><dl>
+<dt>
+<span class="refentrytitle"><a href="UDisksLinuxMDRaid.html">UDisksLinuxMDRaid</a></span><span class="refpurpose">Linux implementation of <span class="type">UDisksMDRaid</span></span>
+</dt>
+<dt>
+<span class="refentrytitle"><a href="UDisksLinuxMDRaidObject.html">UDisksLinuxMDRaidObject</a></span><span class="refpurpose"> — Object representing a Linux Software RAID array</span>
 </dt>
 </dl></dd>
 <dt><span class="chapter"><a href="ref-daemon-block-devices.html">Block devices on Linux</a></span></dt>
@@ -235,7 +257,9 @@
 </dt>
 </dl></dd>
 </dl></dd>
-<dt><span class="index"><a href="ix01.html">Index</a></span></dt>
+<dt><span class="index"><a href="api-index.html">Index</a></span></dt>
+<dt><span class="index"><a href="api-index-deprecated.html">Index of deprecated symbols</a></span></dt>
+<dt><span class="index"><a href="api-index-2.1.html">Index of new symbols in 2.1</a></span></dt>
 <dt><span class="chapter"><a href="gio-hierarchy.html">Object Hierarchy</a></span></dt>
 </dl></div>
 </div>

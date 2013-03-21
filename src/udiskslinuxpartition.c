@@ -34,8 +34,8 @@
 #include "udiskslinuxpartition.h"
 #include "udiskslinuxblockobject.h"
 #include "udisksdaemon.h"
-#include "udiskscleanup.h"
 #include "udisksdaemonutil.h"
+#include "udiskslinuxdevice.h"
 
 /**
  * SECTION:udiskslinuxpartition
@@ -111,7 +111,7 @@ udisks_linux_partition_update (UDisksLinuxPartition  *partition,
                                UDisksLinuxBlockObject     *object)
 {
   UDisksObject *disk_block_object = NULL;
-  GUdevDevice *device = NULL;
+  UDisksLinuxDevice *device = NULL;
   guint number = 0;
   const gchar *type = NULL;
   gchar type_buf[16];
@@ -125,18 +125,18 @@ udisks_linux_partition_update (UDisksLinuxPartition  *partition,
   gboolean is_contained = FALSE;
 
   device = udisks_linux_block_object_get_device (object);
-  if (g_udev_device_has_property (device, "ID_PART_ENTRY_TYPE"))
+  if (g_udev_device_has_property (device->udev_device, "ID_PART_ENTRY_TYPE"))
     {
       const gchar *disk_string;
-      number = g_udev_device_get_property_as_int (device, "ID_PART_ENTRY_NUMBER");
-      type = g_udev_device_get_property (device, "ID_PART_ENTRY_TYPE");
-      offset = g_udev_device_get_property_as_uint64 (device, "ID_PART_ENTRY_OFFSET") * G_GUINT64_CONSTANT (512);
-      size = g_udev_device_get_property_as_uint64 (device, "ID_PART_ENTRY_SIZE") * G_GUINT64_CONSTANT (512);
-      name = udisks_decode_udev_string (g_udev_device_get_property (device, "ID_PART_ENTRY_NAME"));
-      uuid = g_udev_device_get_property (device, "ID_PART_ENTRY_UUID");
-      flags = g_udev_device_get_property_as_uint64 (device, "ID_PART_ENTRY_FLAGS");
+      number = g_udev_device_get_property_as_int (device->udev_device, "ID_PART_ENTRY_NUMBER");
+      type = g_udev_device_get_property (device->udev_device, "ID_PART_ENTRY_TYPE");
+      offset = g_udev_device_get_property_as_uint64 (device->udev_device, "ID_PART_ENTRY_OFFSET") * G_GUINT64_CONSTANT (512);
+      size = g_udev_device_get_property_as_uint64 (device->udev_device, "ID_PART_ENTRY_SIZE") * G_GUINT64_CONSTANT (512);
+      name = udisks_decode_udev_string (g_udev_device_get_property (device->udev_device, "ID_PART_ENTRY_NAME"));
+      uuid = g_udev_device_get_property (device->udev_device, "ID_PART_ENTRY_UUID");
+      flags = g_udev_device_get_property_as_uint64 (device->udev_device, "ID_PART_ENTRY_FLAGS");
 
-      disk_string = g_udev_device_get_property (device, "ID_PART_ENTRY_DISK");
+      disk_string = g_udev_device_get_property (device->udev_device, "ID_PART_ENTRY_DISK");
       if (disk_string != NULL)
         {
           gint disk_major, disk_minor;
@@ -147,7 +147,7 @@ udisks_linux_partition_update (UDisksLinuxPartition  *partition,
             }
         }
 
-      if (g_strcmp0 (g_udev_device_get_property (device, "ID_PART_ENTRY_SCHEME"), "dos") == 0)
+      if (g_strcmp0 (g_udev_device_get_property (device->udev_device, "ID_PART_ENTRY_SCHEME"), "dos") == 0)
         {
           char *endp;
           gint type_as_int = strtol (type, &endp, 0);
@@ -173,10 +173,10 @@ udisks_linux_partition_update (UDisksLinuxPartition  *partition,
   else
     {
       GUdevDevice *parent_device;
-      number = g_udev_device_get_sysfs_attr_as_int (device, "partition");
-      offset = g_udev_device_get_sysfs_attr_as_uint64 (device, "start") * G_GUINT64_CONSTANT (512);
-      size = g_udev_device_get_sysfs_attr_as_uint64 (device, "size") * G_GUINT64_CONSTANT (512);
-      parent_device = g_udev_device_get_parent_with_subsystem (device, "block", "disk");
+      number = g_udev_device_get_sysfs_attr_as_int (device->udev_device, "partition");
+      offset = g_udev_device_get_sysfs_attr_as_uint64 (device->udev_device, "start") * G_GUINT64_CONSTANT (512);
+      size = g_udev_device_get_sysfs_attr_as_uint64 (device->udev_device, "size") * G_GUINT64_CONSTANT (512);
+      parent_device = g_udev_device_get_parent_with_subsystem (device->udev_device, "block", "disk");
       if (parent_device != NULL)
         {
           disk_block_object = udisks_daemon_find_block (udisks_linux_block_object_get_daemon (object),
@@ -279,13 +279,16 @@ handle_set_flags (UDisksPartition        *partition,
    * will be replaced by the name of the drive/device in question
    */
   message = N_("Authentication is required to modify the partition on device $(drive)");
-  if (udisks_block_get_hint_system (block))
+  if (!udisks_daemon_util_setup_by_user (daemon, object, caller_uid))
     {
-      action_id = "org.freedesktop.udisks2.modify-device-system";
-    }
-  else if (!udisks_daemon_util_on_same_seat (daemon, object, caller_pid))
-    {
-      action_id = "org.freedesktop.udisks2.modify-device-system-other-seat";
+      if (udisks_block_get_hint_system (block))
+        {
+          action_id = "org.freedesktop.udisks2.modify-device-system";
+        }
+      else if (!udisks_daemon_util_on_same_seat (daemon, object, caller_pid))
+        {
+          action_id = "org.freedesktop.udisks2.modify-device-other-seat";
+        }
     }
 
   if (!udisks_daemon_util_check_authorization_sync (daemon,
@@ -441,15 +444,17 @@ handle_set_name (UDisksPartition        *partition,
    * will be replaced by the name of the drive/device in question
    */
   message = N_("Authentication is required to modify the partition on device $(drive)");
-  if (udisks_block_get_hint_system (block))
+  if (!udisks_daemon_util_setup_by_user (daemon, object, caller_uid))
     {
-      action_id = "org.freedesktop.udisks2.modify-device-system";
+      if (udisks_block_get_hint_system (block))
+        {
+          action_id = "org.freedesktop.udisks2.modify-device-system";
+        }
+      else if (!udisks_daemon_util_on_same_seat (daemon, object, caller_pid))
+        {
+          action_id = "org.freedesktop.udisks2.modify-device-other-seat";
+        }
     }
-  else if (!udisks_daemon_util_on_same_seat (daemon, object, caller_pid))
-    {
-      action_id = "org.freedesktop.udisks2.modify-device-system-other-seat";
-    }
-
   if (!udisks_daemon_util_check_authorization_sync (daemon,
                                                     object,
                                                     action_id,
@@ -566,6 +571,152 @@ is_valid_uuid (const gchar *str)
   return ret;
 }
 
+/**
+ * udisks_linux_partition_set_type_sync:
+ * @partition: A #UDisksLinuxPartition.
+ * @type: The partition type to set.
+ * @caller_uid: The uid of the process requesting this change or 0.
+ * @cancellable: A #GCancellable or %NULL.
+ * @error: Return location for error or %NULL.
+ *
+ * Sets the partition type. The calling thread is blocked while the
+ * operation is pending.
+ *
+ * Returns: %TRUE if the operation succeeded, %FALSE if error is set.
+ */
+gboolean
+udisks_linux_partition_set_type_sync (UDisksLinuxPartition  *partition,
+                                      const gchar           *type,
+                                      uid_t                  caller_uid,
+                                      GCancellable          *cancellable,
+                                      GError               **error)
+{
+  gboolean ret = FALSE;
+  UDisksBlock *block = NULL;
+  UDisksObject *object = NULL;
+  UDisksDaemon *daemon = NULL;
+  gchar *error_message = NULL;
+  gchar *escaped_device = NULL;
+  gchar *escaped_type = NULL;
+  UDisksObject *partition_table_object = NULL;
+  UDisksPartitionTable *partition_table = NULL;
+  UDisksBlock *partition_table_block = NULL;
+  gchar *command_line = NULL;
+  gint fd = -1;
+
+  object = udisks_daemon_util_dup_object (partition, error);
+  if (object == NULL)
+    goto out;
+
+  daemon = udisks_linux_block_object_get_daemon (UDISKS_LINUX_BLOCK_OBJECT (object));
+  block = udisks_object_get_block (object);
+
+  partition_table_object = udisks_daemon_find_object (daemon, udisks_partition_get_table (UDISKS_PARTITION (partition)));
+  partition_table = udisks_object_get_partition_table (partition_table_object);
+  partition_table_block = udisks_object_get_block (partition_table_object);
+
+  escaped_device = udisks_daemon_util_escape_and_quote (udisks_block_get_device (partition_table_block));
+  escaped_type = udisks_daemon_util_escape_and_quote (type);
+  if (g_strcmp0 (udisks_partition_table_get_type_ (partition_table), "gpt") == 0)
+    {
+      /* check that it's a valid GUID */
+      if (!is_valid_uuid (type))
+        {
+          g_set_error (error,
+                       UDISKS_ERROR,
+                       UDISKS_ERROR_FAILED,
+                       "Given type `%s' is not a valid UUID",
+                       type);
+          goto out;
+        }
+      command_line = g_strdup_printf ("sgdisk --typecode %d:%s %s",
+                                      udisks_partition_get_number (UDISKS_PARTITION (partition)),
+                                      escaped_type,
+                                      escaped_device);
+    }
+  else if (g_strcmp0 (udisks_partition_table_get_type_ (partition_table), "dos") == 0)
+    {
+      gchar *endp;
+      gint type_as_int = strtol (type, &endp, 0);
+      if (strlen (type) == 0 || *endp != '\0')
+        {
+          g_set_error (error,
+                       UDISKS_ERROR,
+                       UDISKS_ERROR_FAILED,
+                       "Given type `%s' is not a valid",
+                       type);
+          goto out;
+        }
+      if (type_as_int == 0x05 || type_as_int == 0x0f || type_as_int == 0x85)
+        {
+          g_set_error (error,
+                       UDISKS_ERROR,
+                       UDISKS_ERROR_FAILED,
+                       "Refusing to change partition type to that of an extended partition. "
+                       "Delete the partition and create a new extended partition instead.");
+          goto out;
+        }
+      command_line = g_strdup_printf ("sfdisk --change-id %s %d 0x%02x",
+                                      escaped_device,
+                                      udisks_partition_get_number (UDISKS_PARTITION (partition)),
+                                      type_as_int);
+    }
+  else
+    {
+      g_set_error (error,
+                   UDISKS_ERROR,
+                   UDISKS_ERROR_NOT_SUPPORTED,
+                   "No support for modifying a partition a table of type `%s'",
+                   udisks_partition_table_get_type_ (partition_table));
+      goto out;
+    }
+
+  /* hold a file descriptor open to suppress BLKRRPART generated by the tools */
+  fd = open (udisks_block_get_device (block), O_RDONLY);
+
+  if (!udisks_daemon_launch_spawned_job_sync (daemon,
+                                              object,
+                                              "partition-modify", caller_uid,
+                                              NULL, /* GCancellable */
+                                              0,    /* uid_t run_as_uid */
+                                              0,    /* uid_t run_as_euid */
+                                              NULL, /* gint *out_status */
+                                              &error_message,
+                                              NULL,  /* input_string */
+                                              "%s",
+                                              command_line))
+    {
+      g_set_error (error,
+                   UDISKS_ERROR,
+                   UDISKS_ERROR_FAILED,
+                   "Error setting partition flags on %s: %s",
+                   udisks_block_get_device (block),
+                   error_message);
+      goto out;
+    }
+  udisks_linux_block_object_trigger_uevent (UDISKS_LINUX_BLOCK_OBJECT (object));
+
+  ret = TRUE;
+
+ out:
+  if (fd != -1)
+    close (fd);
+  g_free (command_line);
+  g_free (escaped_type);
+  g_free (escaped_device);
+  g_free (error_message);
+  g_clear_object (&object);
+  g_clear_object (&block);
+  g_clear_object (&partition_table_object);
+  g_clear_object (&partition_table);
+  g_clear_object (&partition_table_block);
+  g_clear_object (&object);
+
+  return ret;
+}
+
+/* ---------------------------------------------------------------------------------------------------- */
+
 /* runs in thread dedicated to handling @invocation */
 static gboolean
 handle_set_type (UDisksPartition        *partition,
@@ -578,14 +729,9 @@ handle_set_type (UDisksPartition        *partition,
   UDisksBlock *block = NULL;
   UDisksObject *object = NULL;
   UDisksDaemon *daemon = NULL;
-  gchar *error_message = NULL;
-  gchar *escaped_device = NULL;
-  gchar *escaped_type = NULL;
   UDisksObject *partition_table_object = NULL;
   UDisksPartitionTable *partition_table = NULL;
   UDisksBlock *partition_table_block = NULL;
-  gchar *command_line = NULL;
-  gint fd = -1;
   uid_t caller_uid;
   gid_t caller_gid;
   pid_t caller_pid;
@@ -640,15 +786,17 @@ handle_set_type (UDisksPartition        *partition,
    * will be replaced by the name of the drive/device in question
    */
   message = N_("Authentication is required to modify the partition on device $(drive)");
-  if (udisks_block_get_hint_system (block))
+  if (!udisks_daemon_util_setup_by_user (daemon, object, caller_uid))
     {
-      action_id = "org.freedesktop.udisks2.modify-device-system";
+      if (udisks_block_get_hint_system (block))
+        {
+          action_id = "org.freedesktop.udisks2.modify-device-system";
+        }
+      else if (!udisks_daemon_util_on_same_seat (daemon, object, caller_pid))
+        {
+          action_id = "org.freedesktop.udisks2.modify-device-other-seat";
+        }
     }
-  else if (!udisks_daemon_util_on_same_seat (daemon, object, caller_pid))
-    {
-      action_id = "org.freedesktop.udisks2.modify-device-system-other-seat";
-    }
-
   if (!udisks_daemon_util_check_authorization_sync (daemon,
                                                     object,
                                                     action_id,
@@ -657,96 +805,15 @@ handle_set_type (UDisksPartition        *partition,
                                                     invocation))
     goto out;
 
-  escaped_device = udisks_daemon_util_escape_and_quote (udisks_block_get_device (partition_table_block));
-  escaped_type = udisks_daemon_util_escape_and_quote (type);
-  if (g_strcmp0 (udisks_partition_table_get_type_ (partition_table), "gpt") == 0)
+  if (!udisks_linux_partition_set_type_sync (UDISKS_LINUX_PARTITION (partition), type, caller_uid, NULL, &error))
     {
-      /* check that it's a valid GUID */
-      if (!is_valid_uuid (type))
-        {
-          g_dbus_method_invocation_return_error (invocation,
-                                                 UDISKS_ERROR,
-                                                 UDISKS_ERROR_FAILED,
-                                                 "Given type `%s' is not a valid UUID",
-                                                 type);
-          goto out;
-        }
-      command_line = g_strdup_printf ("sgdisk --typecode %d:%s %s",
-                                      udisks_partition_get_number (partition),
-                                      escaped_type,
-                                      escaped_device);
-    }
-  else if (g_strcmp0 (udisks_partition_table_get_type_ (partition_table), "dos") == 0)
-    {
-      gchar *endp;
-      gint type_as_int = strtol (type, &endp, 0);
-      if (strlen (type) == 0 || *endp != '\0')
-        {
-          g_dbus_method_invocation_return_error (invocation,
-                                                 UDISKS_ERROR,
-                                                 UDISKS_ERROR_FAILED,
-                                                 "Given type `%s' is not a valid",
-                                                 type);
-          goto out;
-        }
-      if (type_as_int == 0x05 || type_as_int == 0x0f || type_as_int == 0x85)
-        {
-          g_dbus_method_invocation_return_error (invocation,
-                                                 UDISKS_ERROR,
-                                                 UDISKS_ERROR_FAILED,
-                                                 "Refusing to change partition type to that of an extended partition. "
-                                                 "Delete the partition and create a new extended partition instead.");
-          goto out;
-        }
-      command_line = g_strdup_printf ("sfdisk --change-id %s %d 0x%02x",
-                                      escaped_device,
-                                      udisks_partition_get_number (partition),
-                                      type_as_int);
-    }
-  else
-    {
-      g_dbus_method_invocation_return_error (invocation,
-                                             UDISKS_ERROR,
-                                             UDISKS_ERROR_NOT_SUPPORTED,
-                                             "No support for modifying a partition a table of type `%s'",
-                                             udisks_partition_table_get_type_ (partition_table));
+      g_dbus_method_invocation_take_error (invocation, error);
       goto out;
     }
-
-  /* hold a file descriptor open to suppress BLKRRPART generated by the tools */
-  fd = open (udisks_block_get_device (block), O_RDONLY);
-
-  if (!udisks_daemon_launch_spawned_job_sync (daemon,
-                                              object,
-                                              "partition-modify", caller_uid,
-                                              NULL, /* GCancellable */
-                                              0,    /* uid_t run_as_uid */
-                                              0,    /* uid_t run_as_euid */
-                                              NULL, /* gint *out_status */
-                                              &error_message,
-                                              NULL,  /* input_string */
-                                              "%s",
-                                              command_line))
-    {
-      g_dbus_method_invocation_return_error (invocation,
-                                             UDISKS_ERROR,
-                                             UDISKS_ERROR_FAILED,
-                                             "Error setting partition flags on %s: %s",
-                                             udisks_block_get_device (block),
-                                             error_message);
-      goto out;
-    }
-  udisks_linux_block_object_trigger_uevent (UDISKS_LINUX_BLOCK_OBJECT (object));
 
   udisks_partition_complete_set_type (partition, invocation);
 
  out:
-  if (fd != -1)
-    close (fd);
-  g_free (command_line);
-  g_free (escaped_type);
-  g_free (escaped_device);
-  g_free (error_message);
   g_clear_object (&object);
   g_clear_object (&block);
   g_clear_object (&partition_table_object);
@@ -830,15 +897,17 @@ handle_delete (UDisksPartition        *partition,
    * will be replaced by the name of the drive/device in question
    */
   message = N_("Authentication is required to delete the partition $(drive)");
-  if (udisks_block_get_hint_system (block))
+  if (!udisks_daemon_util_setup_by_user (daemon, object, caller_uid))
     {
-      action_id = "org.freedesktop.udisks2.modify-device-system";
+      if (udisks_block_get_hint_system (block))
+        {
+          action_id = "org.freedesktop.udisks2.modify-device-system";
+        }
+      else if (!udisks_daemon_util_on_same_seat (daemon, object, caller_pid))
+        {
+          action_id = "org.freedesktop.udisks2.modify-device-other-seat";
+        }
     }
-  else if (!udisks_daemon_util_on_same_seat (daemon, object, caller_pid))
-    {
-      action_id = "org.freedesktop.udisks2.modify-device-system-other-seat";
-    }
-
   if (!udisks_daemon_util_check_authorization_sync (daemon,
                                                     object,
                                                     action_id,

@@ -7,7 +7,7 @@
 <link rel="home" href="index.html" title="UDisks Reference Manual">
 <link rel="up" href="ref-daemon-block-devices.html" title="Block devices on Linux">
 <link rel="prev" href="UDisksLinuxLoop.html" title="UDisksLinuxLoop">
-<link rel="next" href="ix01.html" title="Index">
+<link rel="next" href="api-index.html" title="Index">
 <meta name="generator" content="GTK-Doc V1.18 (XML mode)">
 <link rel="stylesheet" href="style.css" type="text/css">
 </head>
@@ -18,7 +18,7 @@
 <td><a accesskey="u" href="ref-daemon-block-devices.html"><img src="up.png" width="24" height="24" border="0" alt="Up"></a></td>
 <td><a accesskey="h" href="index.html"><img src="home.png" width="24" height="24" border="0" alt="Home"></a></td>
 <th width="100%" align="center">UDisks Reference Manual</th>
-<td><a accesskey="n" href="ix01.html"><img src="right.png" width="24" height="24" border="0" alt="Next"></a></td>
+<td><a accesskey="n" href="api-index.html"><img src="right.png" width="24" height="24" border="0" alt="Next"></a></td>
 </tr>
 <tr><td colspan="5" class="shortcuts">
 <a href="#UDisksLinuxBlockObject.synopsis" class="shortcut">Top</a>
@@ -45,13 +45,13 @@
 <a name="UDisksLinuxBlockObject.synopsis"></a><h2>Synopsis</h2>
 <pre class="synopsis">                    <a class="link" href="UDisksLinuxBlockObject.html#UDisksLinuxBlockObject-struct" title="UDisksLinuxBlockObject">UDisksLinuxBlockObject</a>;
 <a class="link" href="UDisksLinuxBlockObject.html" title="UDisksLinuxBlockObject"><span class="returnvalue">UDisksLinuxBlockObject</span></a> * <a class="link" href="UDisksLinuxBlockObject.html#udisks-linux-block-object-new" title="udisks_linux_block_object_new ()">udisks_linux_block_object_new</a>  (<em class="parameter"><code><a class="link" href="UDisksDaemon.html" title="UDisksDaemon"><span class="type">UDisksDaemon</span></a> *daemon</code></em>,
-                                                         <em class="parameter"><code><a href="http://www.freedesktop.org/software/systemd/gudev/GUdevDevice.html"><span class="type">GUdevDevice</span></a> *device</code></em>);
+                                                         <em class="parameter"><code><a class="link" href="UDisksLinuxDevice.html" title="UDisksLinuxDevice"><span class="type">UDisksLinuxDevice</span></a> *device</code></em>);
 <span class="returnvalue">void</span>                <a class="link" href="UDisksLinuxBlockObject.html#udisks-linux-block-object-uevent" title="udisks_linux_block_object_uevent ()">udisks_linux_block_object_uevent</a>    (<em class="parameter"><code><a class="link" href="UDisksLinuxBlockObject.html" title="UDisksLinuxBlockObject"><span class="type">UDisksLinuxBlockObject</span></a> *object</code></em>,
                                                          <em class="parameter"><code>const <span class="type">gchar</span> *action</code></em>,
-                                                         <em class="parameter"><code><a href="http://www.freedesktop.org/software/systemd/gudev/GUdevDevice.html"><span class="type">GUdevDevice</span></a> *device</code></em>);
+                                                         <em class="parameter"><code><a class="link" href="UDisksLinuxDevice.html" title="UDisksLinuxDevice"><span class="type">UDisksLinuxDevice</span></a> *device</code></em>);
 <a class="link" href="UDisksDaemon.html" title="UDisksDaemon"><span class="returnvalue">UDisksDaemon</span></a> *      <a class="link" href="UDisksLinuxBlockObject.html#udisks-linux-block-object-get-daemon" title="udisks_linux_block_object_get_daemon ()">udisks_linux_block_object_get_daemon</a>
                                                         (<em class="parameter"><code><a class="link" href="UDisksLinuxBlockObject.html" title="UDisksLinuxBlockObject"><span class="type">UDisksLinuxBlockObject</span></a> *object</code></em>);
-<a href="http://www.freedesktop.org/software/systemd/gudev/GUdevDevice.html"><span class="returnvalue">GUdevDevice</span></a> *       <a class="link" href="UDisksLinuxBlockObject.html#udisks-linux-block-object-get-device" title="udisks_linux_block_object_get_device ()">udisks_linux_block_object_get_device</a>
+<a class="link" href="UDisksLinuxDevice.html" title="UDisksLinuxDevice"><span class="returnvalue">UDisksLinuxDevice</span></a> * <a class="link" href="UDisksLinuxBlockObject.html#udisks-linux-block-object-get-device" title="udisks_linux_block_object_get_device ()">udisks_linux_block_object_get_device</a>
                                                         (<em class="parameter"><code><a class="link" href="UDisksLinuxBlockObject.html" title="UDisksLinuxBlockObject"><span class="type">UDisksLinuxBlockObject</span></a> *object</code></em>);
 <span class="returnvalue">void</span>                <a class="link" href="UDisksLinuxBlockObject.html#udisks-linux-block-object-trigger-uevent" title="udisks_linux_block_object_trigger_uevent ()">udisks_linux_block_object_trigger_uevent</a>
                                                         (<em class="parameter"><code><a class="link" href="UDisksLinuxBlockObject.html" title="UDisksLinuxBlockObject"><span class="type">UDisksLinuxBlockObject</span></a> *object</code></em>);
@@ -72,13 +72,13 @@
 <a name="UDisksLinuxBlockObject.implemented-interfaces"></a><h2>Implemented Interfaces</h2>
 <p>
 UDisksLinuxBlockObject implements
- GDBusObject and  <a class="link" href="UDisksObject.html" title="UDisksObject">UDisksObject</a>.</p>
+ <a href="/usr/share/gtk-doc/html/gen/GDBusObject.html">GDBusObject</a> and  <a class="link" href="UDisksObject.html" title="UDisksObject">UDisksObject</a>.</p>
 </div>
 <div class="refsect1">
 <a name="UDisksLinuxBlockObject.properties"></a><h2>Properties</h2>
 <pre class="synopsis">
   "<a class="link" href="UDisksLinuxBlockObject.html#UDisksLinuxBlockObject--daemon" title='The "daemon" property'>daemon</a>"                   <a class="link" href="UDisksDaemon.html" title="UDisksDaemon"><span class="type">UDisksDaemon</span></a>*         : Read / Write / Construct Only
-  "<a class="link" href="UDisksLinuxBlockObject.html#UDisksLinuxBlockObject--device" title='The "device" property'>device</a>"                   <a href="http://www.freedesktop.org/software/systemd/gudev/GUdevDevice.html"><span class="type">GUdevDevice</span></a>*          : Read / Write / Construct Only
+  "<a class="link" href="UDisksLinuxBlockObject.html#UDisksLinuxBlockObject--device" title='The "device" property'>device</a>"                   <a class="link" href="UDisksLinuxDevice.html" title="UDisksLinuxDevice"><span class="type">UDisksLinuxDevice</span></a>*    : Read / Write / Construct Only
 </pre>
 </div>
 <div class="refsect1">
@@ -101,7 +101,7 @@ should only be accessed using the provided API.
 <div class="refsect2">
 <a name="udisks-linux-block-object-new"></a><h3>udisks_linux_block_object_new ()</h3>
 <pre class="programlisting"><a class="link" href="UDisksLinuxBlockObject.html" title="UDisksLinuxBlockObject"><span class="returnvalue">UDisksLinuxBlockObject</span></a> * udisks_linux_block_object_new  (<em class="parameter"><code><a class="link" href="UDisksDaemon.html" title="UDisksDaemon"><span class="type">UDisksDaemon</span></a> *daemon</code></em>,
-                                                         <em class="parameter"><code><a href="http://www.freedesktop.org/software/systemd/gudev/GUdevDevice.html"><span class="type">GUdevDevice</span></a> *device</code></em>);</pre>
+                                                         <em class="parameter"><code><a class="link" href="UDisksLinuxDevice.html" title="UDisksLinuxDevice"><span class="type">UDisksLinuxDevice</span></a> *device</code></em>);</pre>
 <p>
 Create a new block object.
 </p>
@@ -117,7 +117,7 @@ Create a new block object.
 </tr>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>device</code></em> :</span></p></td>
-<td>The <a href="http://www.freedesktop.org/software/systemd/gudev/GUdevDevice.html"><span class="type">GUdevDevice</span></a> for the sysfs block device.</td>
+<td>The <a class="link" href="UDisksLinuxDevice.html" title="UDisksLinuxDevice"><span class="type">UDisksLinuxDevice</span></a> for the device.</td>
 </tr>
 <tr>
 <td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
@@ -131,7 +131,7 @@ Create a new block object.
 <a name="udisks-linux-block-object-uevent"></a><h3>udisks_linux_block_object_uevent ()</h3>
 <pre class="programlisting"><span class="returnvalue">void</span>                udisks_linux_block_object_uevent    (<em class="parameter"><code><a class="link" href="UDisksLinuxBlockObject.html" title="UDisksLinuxBlockObject"><span class="type">UDisksLinuxBlockObject</span></a> *object</code></em>,
                                                          <em class="parameter"><code>const <span class="type">gchar</span> *action</code></em>,
-                                                         <em class="parameter"><code><a href="http://www.freedesktop.org/software/systemd/gudev/GUdevDevice.html"><span class="type">GUdevDevice</span></a> *device</code></em>);</pre>
+                                                         <em class="parameter"><code><a class="link" href="UDisksLinuxDevice.html" title="UDisksLinuxDevice"><span class="type">UDisksLinuxDevice</span></a> *device</code></em>);</pre>
 <p>
 Updates all information on interfaces on <em class="parameter"><code>object</code></em>.
 </p>
@@ -152,7 +152,7 @@ Updates all information on interfaces on <em class="parameter"><code>object</cod
 </tr>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>device</code></em> :</span></p></td>
-<td>A new <a href="http://www.freedesktop.org/software/systemd/gudev/GUdevDevice.html"><span class="type">GUdevDevice</span></a> device object or <code class="literal">NULL</code> if the device hasn't changed.</td>
+<td>A new <a class="link" href="UDisksLinuxDevice.html" title="UDisksLinuxDevice"><span class="type">UDisksLinuxDevice</span></a> device object or <code class="literal">NULL</code> if the device hasn't changed.</td>
 </tr>
 </tbody>
 </table></div>
@@ -185,10 +185,10 @@ Gets the daemon used by <em class="parameter"><code>object</code></em>.
 <hr>
 <div class="refsect2">
 <a name="udisks-linux-block-object-get-device"></a><h3>udisks_linux_block_object_get_device ()</h3>
-<pre class="programlisting"><a href="http://www.freedesktop.org/software/systemd/gudev/GUdevDevice.html"><span class="returnvalue">GUdevDevice</span></a> *       udisks_linux_block_object_get_device
+<pre class="programlisting"><a class="link" href="UDisksLinuxDevice.html" title="UDisksLinuxDevice"><span class="returnvalue">UDisksLinuxDevice</span></a> * udisks_linux_block_object_get_device
                                                         (<em class="parameter"><code><a class="link" href="UDisksLinuxBlockObject.html" title="UDisksLinuxBlockObject"><span class="type">UDisksLinuxBlockObject</span></a> *object</code></em>);</pre>
 <p>
-Gets the current <a href="http://www.freedesktop.org/software/systemd/gudev/GUdevDevice.html"><span class="type">GUdevDevice</span></a> for <em class="parameter"><code>object</code></em>. Connect to
+Gets the current <a class="link" href="UDisksLinuxDevice.html" title="UDisksLinuxDevice"><span class="type">UDisksLinuxDevice</span></a> for <em class="parameter"><code>object</code></em>. Connect to
 <span class="type">"notify"</span> to track changes to the <a class="link" href="UDisksLinuxBlockObject.html#UDisksLinuxBlockObject--device" title='The "device" property'><span class="type">"device"</span></a>
 property.
 </p>
@@ -204,7 +204,7 @@ property.
 </tr>
 <tr>
 <td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
-<td>A <a href="http://www.freedesktop.org/software/systemd/gudev/GUdevDevice.html"><span class="type">GUdevDevice</span></a>. Free with <code class="function">g_object_unref()</code>.</td>
+<td>A <a class="link" href="UDisksLinuxDevice.html" title="UDisksLinuxDevice"><span class="type">UDisksLinuxDevice</span></a>. Free with <code class="function">g_object_unref()</code>.</td>
 </tr>
 </tbody>
 </table></div>
@@ -271,9 +271,9 @@ The <a class="link" href="UDisksDaemon.html" title="UDisksDaemon"><span class="t
 <hr>
 <div class="refsect2">
 <a name="UDisksLinuxBlockObject--device"></a><h3>The <code class="literal">"device"</code> property</h3>
-<pre class="programlisting">  "device"                   <a href="http://www.freedesktop.org/software/systemd/gudev/GUdevDevice.html"><span class="type">GUdevDevice</span></a>*          : Read / Write / Construct Only</pre>
+<pre class="programlisting">  "device"                   <a class="link" href="UDisksLinuxDevice.html" title="UDisksLinuxDevice"><span class="type">UDisksLinuxDevice</span></a>*    : Read / Write / Construct Only</pre>
 <p>
-The <a href="http://www.freedesktop.org/software/systemd/gudev/GUdevDevice.html"><span class="type">GUdevDevice</span></a> for the object. Connect to the <span class="type">"notify"</span>
+The <a class="link" href="UDisksLinuxDevice.html" title="UDisksLinuxDevice"><span class="type">UDisksLinuxDevice</span></a> for the object. Connect to the <span class="type">"notify"</span>
 signal to get notified whenever this is updated.
 </p>
 </div>

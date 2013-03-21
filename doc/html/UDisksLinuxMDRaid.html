@@ -1,0 +1,136 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>UDisksLinuxMDRaid</title>
+<meta name="generator" content="DocBook XSL Stylesheets V1.77.1">
+<link rel="home" href="index.html" title="UDisks Reference Manual">
+<link rel="up" href="ref-daemon-mdraid.html" title="Linux RAID">
+<link rel="prev" href="ref-daemon-mdraid.html" title="Linux RAID">
+<link rel="next" href="UDisksLinuxMDRaidObject.html" title="UDisksLinuxMDRaidObject">
+<meta name="generator" content="GTK-Doc V1.18 (XML mode)">
+<link rel="stylesheet" href="style.css" type="text/css">
+</head>
+<body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
+<table class="navigation" id="top" width="100%" summary="Navigation header" cellpadding="2" cellspacing="2">
+<tr valign="middle">
+<td><a accesskey="p" href="ref-daemon-mdraid.html"><img src="left.png" width="24" height="24" border="0" alt="Prev"></a></td>
+<td><a accesskey="u" href="ref-daemon-mdraid.html"><img src="up.png" width="24" height="24" border="0" alt="Up"></a></td>
+<td><a accesskey="h" href="index.html"><img src="home.png" width="24" height="24" border="0" alt="Home"></a></td>
+<th width="100%" align="center">UDisks Reference Manual</th>
+<td><a accesskey="n" href="UDisksLinuxMDRaidObject.html"><img src="right.png" width="24" height="24" border="0" alt="Next"></a></td>
+</tr>
+<tr><td colspan="5" class="shortcuts">
+<a href="#UDisksLinuxMDRaid.synopsis" class="shortcut">Top</a>
+                   | 
+                  <a href="#UDisksLinuxMDRaid.description" class="shortcut">Description</a>
+                   | 
+                  <a href="#UDisksLinuxMDRaid.object-hierarchy" class="shortcut">Object Hierarchy</a>
+                   | 
+                  <a href="#UDisksLinuxMDRaid.implemented-interfaces" class="shortcut">Implemented Interfaces</a>
+</td></tr>
+</table>
+<div class="refentry">
+<a name="UDisksLinuxMDRaid"></a><div class="titlepage"></div>
+<div class="refnamediv"><table width="100%"><tr>
+<td valign="top">
+<h2><span class="refentrytitle"><a name="UDisksLinuxMDRaid.top_of_page"></a>UDisksLinuxMDRaid</span></h2>
+<p>UDisksLinuxMDRaid — Linux implementation of <a class="link" href="UDisksMDRaid.html" title="UDisksMDRaid"><span class="type">UDisksMDRaid</span></a></p>
+</td>
+<td valign="top" align="right"></td>
+</tr></table></div>
+<div class="refsynopsisdiv">
+<a name="UDisksLinuxMDRaid.synopsis"></a><h2>Synopsis</h2>
+<pre class="synopsis">                    <a class="link" href="UDisksLinuxMDRaid.html#UDisksLinuxMDRaid-struct" title="UDisksLinuxMDRaid">UDisksLinuxMDRaid</a>;
+<a class="link" href="UDisksMDRaid.html" title="UDisksMDRaid"><span class="returnvalue">UDisksMDRaid</span></a> *      <a class="link" href="UDisksLinuxMDRaid.html#udisks-linux-mdraid-new" title="udisks_linux_mdraid_new ()">udisks_linux_mdraid_new</a>             (<em class="parameter"><code><span class="type">void</span></code></em>);
+<span class="returnvalue">gboolean</span>            <a class="link" href="UDisksLinuxMDRaid.html#udisks-linux-mdraid-update" title="udisks_linux_mdraid_update ()">udisks_linux_mdraid_update</a>          (<em class="parameter"><code><a class="link" href="UDisksLinuxMDRaid.html" title="UDisksLinuxMDRaid"><span class="type">UDisksLinuxMDRaid</span></a> *mdraid</code></em>,
+                                                         <em class="parameter"><code><a class="link" href="UDisksLinuxMDRaidObject.html" title="UDisksLinuxMDRaidObject"><span class="type">UDisksLinuxMDRaidObject</span></a> *object</code></em>);
+</pre>
+</div>
+<div class="refsect1">
+<a name="UDisksLinuxMDRaid.object-hierarchy"></a><h2>Object Hierarchy</h2>
+<pre class="synopsis">
+  GObject
+   +----GDBusInterfaceSkeleton
+         +----<a class="link" href="UDisksMDRaid.html#UDisksMDRaidSkeleton">UDisksMDRaidSkeleton</a>
+               +----UDisksLinuxMDRaid
+</pre>
+</div>
+<div class="refsect1">
+<a name="UDisksLinuxMDRaid.implemented-interfaces"></a><h2>Implemented Interfaces</h2>
+<p>
+UDisksLinuxMDRaid implements
+ GDBusInterface and  <a class="link" href="UDisksMDRaid.html" title="UDisksMDRaid">UDisksMDRaid</a>.</p>
+</div>
+<div class="refsect1">
+<a name="UDisksLinuxMDRaid.description"></a><h2>Description</h2>
+<p>
+This type provides an implementation of the <a class="link" href="UDisksMDRaid.html" title="UDisksMDRaid"><span class="type">UDisksMDRaid</span></a> interface
+on Linux.
+</p>
+</div>
+<div class="refsect1">
+<a name="UDisksLinuxMDRaid.details"></a><h2>Details</h2>
+<div class="refsect2">
+<a name="UDisksLinuxMDRaid-struct"></a><h3>UDisksLinuxMDRaid</h3>
+<pre class="programlisting">typedef struct _UDisksLinuxMDRaid UDisksLinuxMDRaid;</pre>
+<p>
+The <a class="link" href="UDisksLinuxMDRaid.html" title="UDisksLinuxMDRaid"><span class="type">UDisksLinuxMDRaid</span></a> structure contains only private data and should
+only be accessed using the provided API.
+</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="udisks-linux-mdraid-new"></a><h3>udisks_linux_mdraid_new ()</h3>
+<pre class="programlisting"><a class="link" href="UDisksMDRaid.html" title="UDisksMDRaid"><span class="returnvalue">UDisksMDRaid</span></a> *      udisks_linux_mdraid_new             (<em class="parameter"><code><span class="type">void</span></code></em>);</pre>
+<p>
+Creates a new <a class="link" href="UDisksLinuxMDRaid.html" title="UDisksLinuxMDRaid"><span class="type">UDisksLinuxMDRaid</span></a> instance.
+</p>
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
+<col align="left" valign="top">
+<col>
+</colgroup>
+<tbody><tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td>A new <a class="link" href="UDisksLinuxMDRaid.html" title="UDisksLinuxMDRaid"><span class="type">UDisksLinuxMDRaid</span></a>. Free with <code class="function">g_object_unref()</code>.</td>
+</tr></tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="udisks-linux-mdraid-update"></a><h3>udisks_linux_mdraid_update ()</h3>
+<pre class="programlisting"><span class="returnvalue">gboolean</span>            udisks_linux_mdraid_update          (<em class="parameter"><code><a class="link" href="UDisksLinuxMDRaid.html" title="UDisksLinuxMDRaid"><span class="type">UDisksLinuxMDRaid</span></a> *mdraid</code></em>,
+                                                         <em class="parameter"><code><a class="link" href="UDisksLinuxMDRaidObject.html" title="UDisksLinuxMDRaidObject"><span class="type">UDisksLinuxMDRaidObject</span></a> *object</code></em>);</pre>
+<p>
+Updates the interface.
+</p>
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
+<col align="left" valign="top">
+<col>
+</colgroup>
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>mdraid</code></em> :</span></p></td>
+<td>A <a class="link" href="UDisksLinuxMDRaid.html" title="UDisksLinuxMDRaid"><span class="type">UDisksLinuxMDRaid</span></a>.</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>object</code></em> :</span></p></td>
+<td>The enclosing <a class="link" href="UDisksLinuxMDRaidObject.html" title="UDisksLinuxMDRaidObject"><span class="type">UDisksLinuxMDRaidObject</span></a> instance.</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td>
+<code class="literal">TRUE</code> if configuration has changed, <code class="literal">FALSE</code> otherwise.</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+</div>
+</div>
+<div class="footer">
+<hr>
+          Generated by GTK-Doc V1.18</div>
+</body>
+</html>

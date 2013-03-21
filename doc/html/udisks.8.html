@@ -29,7 +29,7 @@
 <td valign="top" align="right"></td>
 </tr></table></div>
 <div class="refsect1">
-<a name="idp6868688"></a><h2>DESCRIPTION</h2>
+<a name="idp7536368"></a><h2>DESCRIPTION</h2>
 <p>
       udisks provides interfaces to enumerate and perform operations
       on disks and storage devices. Any application (including
@@ -49,7 +49,7 @@
     </p>
 </div>
 <div class="refsect1">
-<a name="idp6874672"></a><h2>ACCESS CONTROL</h2>
+<a name="idp7542240"></a><h2>ACCESS CONTROL</h2>
 <p>
       By default, logged-in users in active log-in sessions are
       permitted to perform operations (for example, mounting,
@@ -68,7 +68,7 @@
     </p>
 </div>
 <div class="refsect1">
-<a name="idp6880144"></a><h2>DRIVE CONFIGURATION</h2>
+<a name="idp7547664"></a><h2>DRIVE CONFIGURATION</h2>
 <p>
       At start-up and when a drive is connected,
       <a class="link" href="udisksd.8.html" title="udisksd"><span class="citerefentry"><span class="refentrytitle">udisksd</span>(8)</span></a>
@@ -90,7 +90,7 @@
       be added in the future.
     </p>
 <div class="refsect2">
-<a name="idp6887008"></a><h3>ATA group</h3>
+<a name="idp7554528"></a><h3>ATA group</h3>
 <p>
         The <code class="literal">ATA</code> group is for settings that apply to
         drives using the ATA command-set. The following keys are
@@ -157,12 +157,23 @@
               <span class="citerefentry"><span class="refentrytitle">hdparm</span>(8)</span>.
             </p></td>
 </tr>
+<tr>
+<td><p><span class="term"><code class="option">WriteCacheEnabled</code></span></p></td>
+<td><p>
+              A boolean specifying whether to enable or disable the
+              Write Cache. Valid values for this key are
+              <span class="quote">“<span class="quote">true</span>”</span> and <span class="quote">“<span class="quote">false</span>”</span>. This is
+              similar to the <code class="option">-W</code> option in
+              <span class="citerefentry"><span class="refentrytitle">hdparm</span>(8)</span>.
+              This key was added in 2.1.
+            </p></td>
+</tr>
 </tbody>
 </table></div>
 </div>
 </div>
 <div class="refsect1">
-<a name="idp6901856"></a><h2>DEVICE INFORMATION</h2>
+<a name="idp7573632"></a><h2>DEVICE INFORMATION</h2>
 <p>
       udisks relies on recent versions of
       <span class="citerefentry"><span class="refentrytitle">udev</span>(7)</span>
@@ -197,6 +208,13 @@
           </p></td>
 </tr>
 <tr>
+<td><p><span class="term"><code class="option">UDISKS_CAN_POWER_OFF</code></span></p></td>
+<td><p>
+            If set, this overrides the value of the
+            <a class="link" href="gdbus-org.freedesktop.UDisks2.Drive.html#gdbus-property-org-freedesktop-UDisks2-Drive.CanPowerOff" title='The "CanPowerOff" property'>CanPowerOff</a> property.
+          </p></td>
+</tr>
+<tr>
 <td><p><span class="term"><code class="option">UDISKS_NAME</code></span></p></td>
 <td><p>
             The name to use for the device when presenting it in an user interface.
@@ -215,6 +233,22 @@
           </p></td>
 </tr>
 <tr>
+<td><p><span class="term"><code class="option">UDISKS_SYMBOLIC_ICON_NAME</code></span></p></td>
+<td><p>
+            The icon to use for the device when presenting it in an user interface using a symbolic icon. If
+            set, the name must adhere to the
+            <a class="ulink" href="http://www.freedesktop.org/wiki/Specifications/icon-theme-spec" target="_top">freedesktop.org icon theme specification</a>.
+            This corresponds to the
+            <a class="link" href="gdbus-org.freedesktop.UDisks2.Block.html#gdbus-property-org-freedesktop-UDisks2-Block.HintIconName" title='The "HintIconName" property'>HintSymbolicIconName</a> property.
+          </p></td>
+</tr>
+<tr>
+<td><p><span class="term"><code class="option">UDISKS_FILESYSTEM_SHARED</code></span></p></td>
+<td><p>
+            If set to 1, the filesystem on the device will be mounted in a shared directory (e.g. <code class="filename">/media/VolumeName</code>) instead of a private directory (e.g. <code class="filename">/run/media/$USER/VolumeName</code>) when the <a class="link" href="gdbus-org.freedesktop.UDisks2.Filesystem.html#gdbus-method-org-freedesktop-UDisks2-Filesystem.Mount" title="The Mount() method">Filesystem.Mount()</a> method is handled.
+          </p></td>
+</tr>
+<tr>
 <td><p><span class="term"><code class="option">ID_SEAT</code></span></p></td>
 <td><p>
             The physical seat the device is attached to. If unset or
@@ -226,7 +260,7 @@
 </table></div>
 </div>
 <div class="refsect1">
-<a name="idp6920800"></a><h2>API STABILITY</h2>
+<a name="idp7603360"></a><h2>API STABILITY</h2>
 <p>
       udisks guarantees a stable D-Bus API within the same major
       version and this guarantee also extends to the client-side
@@ -262,7 +296,7 @@
     </p>
 </div>
 <div class="refsect1">
-<a name="idp6930720"></a><h2>AUDIENCE</h2>
+<a name="idp7613360"></a><h2>AUDIENCE</h2>
 <p>
       The intended audience of udisks include operating system
       developers working on the higher-level parts of the operating
@@ -311,7 +345,7 @@
     </p>
 </div>
 <div class="refsect1">
-<a name="idp6941488"></a><h2>AUTHOR</h2>
+<a name="idp10130192"></a><h2>AUTHOR</h2>
 <p>
       Written by David Zeuthen
       <code class="email">&lt;<a class="email" href="mailto:zeuthen@gmail.com">zeuthen@gmail.com</a>&gt;</code> with a lot of help
@@ -319,7 +353,7 @@
     </p>
 </div>
 <div class="refsect1">
-<a name="idp6943104"></a><h2>BUGS</h2>
+<a name="idp10131600"></a><h2>BUGS</h2>
 <p>
       Please send bug reports to either the distribution bug tracker
       or the upstream bug tracker at
@@ -327,7 +361,7 @@
     </p>
 </div>
 <div class="refsect1">
-<a name="idp6945072"></a><h2>SEE ALSO</h2>
+<a name="idp10133376"></a><h2>SEE ALSO</h2>
 <p>
       <span class="citerefentry"><span class="refentrytitle">udev</span>(7)</span>,
       <span class="citerefentry"><span class="refentrytitle">polkit</span>(8)</span>,

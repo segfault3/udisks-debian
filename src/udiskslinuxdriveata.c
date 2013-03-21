@@ -25,11 +25,6 @@
 #include <sys/stat.h>
 #include <sys/ioctl.h>
 #include <fcntl.h>
-#include <linux/bsg.h>
-#include <scsi/scsi.h>
-#include <scsi/sg.h>
-#include <scsi/scsi_ioctl.h>
-#include <linux/cdrom.h>
 
 #include <pwd.h>
 #include <grp.h>
@@ -49,11 +44,12 @@
 #include "udiskslinuxdriveata.h"
 #include "udiskslinuxblockobject.h"
 #include "udisksdaemon.h"
-#include "udiskscleanup.h"
 #include "udisksdaemonutil.h"
 #include "udisksbasejob.h"
 #include "udiskssimplejob.h"
 #include "udisksthreadedjob.h"
+#include "udisksata.h"
+#include "udiskslinuxdevice.h"
 
 /**
  * SECTION:udiskslinuxdriveata
@@ -156,7 +152,7 @@ udisks_linux_drive_ata_new (void)
 /* may be called from *any* thread when the SMART data has been updated */
 static void
 update_smart (UDisksLinuxDriveAta *drive,
-              GUdevDevice         *device)
+              UDisksLinuxDevice   *device)
 {
   gboolean supported = FALSE;
   gboolean enabled = FALSE;
@@ -169,12 +165,17 @@ update_smart (UDisksLinuxDriveAta *drive,
   gint num_attributes_failing = -1;
   gint num_attributes_failed_in_the_past = -1;
   gint64 num_bad_sectors = 1;
+  guint16 word_82 = 0;
+  guint16 word_85 = 0;
 
-  supported = g_udev_device_get_property_as_boolean (device, "ID_ATA_FEATURE_SET_SMART");
-  enabled = g_udev_device_get_property_as_boolean (device, "ID_ATA_FEATURE_SET_SMART_ENABLED");
+  /* ATA8: 7.16 IDENTIFY DEVICE - ECh, PIO Data-In - Table 29 IDENTIFY DEVICE data */
+  word_82 = udisks_ata_identify_get_word (device->ata_identify_device_data, 82);
+  word_85 = udisks_ata_identify_get_word (device->ata_identify_device_data, 85);
+  supported = word_82 & (1<<0);
+  enabled = word_85 & (1<<0);
 
   G_LOCK (object_lock);
-  if (drive->smart_updated > 0)
+  if ((drive->smart_is_from_blob || enabled) && drive->smart_updated > 0)
     {
       if (drive->smart_is_from_blob)
         supported = enabled = TRUE;
@@ -212,32 +213,51 @@ update_smart (UDisksLinuxDriveAta *drive,
 
 static void
 update_pm (UDisksLinuxDriveAta *drive,
-           GUdevDevice         *device)
+           UDisksLinuxDevice   *device)
 {
-  gboolean supported = FALSE;
-  gboolean enabled = FALSE;
+  gboolean pm_supported = FALSE;
+  gboolean pm_enabled = FALSE;
   gboolean apm_supported = FALSE;
   gboolean apm_enabled = FALSE;
   gboolean aam_supported = FALSE;
   gboolean aam_enabled = FALSE;
+  gboolean write_cache_supported = FALSE;
+  gboolean write_cache_enabled = FALSE;
   gint aam_vendor_recommended_value = 0;
+  guint16 word_82 = 0;
+  guint16 word_83 = 0;
+  guint16 word_85 = 0;
+  guint16 word_86 = 0;
+  guint16 word_94 = 0;
 
-  supported = g_udev_device_get_property_as_boolean (device, "ID_ATA_FEATURE_SET_PM");
-  enabled = g_udev_device_get_property_as_boolean (device, "ID_ATA_FEATURE_SET_PM_ENABLED");
-  apm_supported = g_udev_device_get_property_as_boolean (device, "ID_ATA_FEATURE_SET_APM");
-  apm_enabled = g_udev_device_get_property_as_boolean (device, "ID_ATA_FEATURE_SET_APM_ENABLED");
-  aam_supported = g_udev_device_get_property_as_boolean (device, "ID_ATA_FEATURE_SET_AAM");
-  aam_enabled = g_udev_device_get_property_as_boolean (device, "ID_ATA_FEATURE_SET_AAM_ENABLED");
-  aam_vendor_recommended_value = g_udev_device_get_property_as_int (device, "ID_ATA_FEATURE_SET_AAM_VENDOR_RECOMMENDED_VALUE");
+  /* ATA8: 7.16 IDENTIFY DEVICE - ECh, PIO Data-In - Table 29 IDENTIFY DEVICE data */
+  word_82 = udisks_ata_identify_get_word (device->ata_identify_device_data, 82);
+  word_83 = udisks_ata_identify_get_word (device->ata_identify_device_data, 83);
+  word_85 = udisks_ata_identify_get_word (device->ata_identify_device_data, 85);
+  word_86 = udisks_ata_identify_get_word (device->ata_identify_device_data, 86);
+  word_94 = udisks_ata_identify_get_word (device->ata_identify_device_data, 94);
+
+  pm_supported  = word_82 & (1<<3);
+  pm_enabled    = word_85 & (1<<3);
+  apm_supported = word_83 & (1<<3);
+  apm_enabled   = word_86 & (1<<3);
+  aam_supported = word_83 & (1<<9);
+  aam_enabled   = word_86 & (1<<9);
+  if (aam_supported)
+    aam_vendor_recommended_value = (word_94 >> 8);
+  write_cache_supported  = word_82 & (1<<5);
+  write_cache_enabled    = word_85 & (1<<5);
 
   g_object_freeze_notify (G_OBJECT (drive));
-  udisks_drive_ata_set_pm_supported (UDISKS_DRIVE_ATA (drive), supported);
-  udisks_drive_ata_set_pm_enabled (UDISKS_DRIVE_ATA (drive), enabled);
-  udisks_drive_ata_set_apm_supported (UDISKS_DRIVE_ATA (drive), apm_supported);
-  udisks_drive_ata_set_apm_enabled (UDISKS_DRIVE_ATA (drive), apm_enabled);
-  udisks_drive_ata_set_aam_supported (UDISKS_DRIVE_ATA (drive), aam_supported);
-  udisks_drive_ata_set_aam_enabled (UDISKS_DRIVE_ATA (drive), aam_enabled);
+  udisks_drive_ata_set_pm_supported (UDISKS_DRIVE_ATA (drive), !!pm_supported);
+  udisks_drive_ata_set_pm_enabled (UDISKS_DRIVE_ATA (drive), !!pm_enabled);
+  udisks_drive_ata_set_apm_supported (UDISKS_DRIVE_ATA (drive), !!apm_supported);
+  udisks_drive_ata_set_apm_enabled (UDISKS_DRIVE_ATA (drive), !!apm_enabled);
+  udisks_drive_ata_set_aam_supported (UDISKS_DRIVE_ATA (drive), !!aam_supported);
+  udisks_drive_ata_set_aam_enabled (UDISKS_DRIVE_ATA (drive), !!aam_enabled);
   udisks_drive_ata_set_aam_vendor_recommended_value (UDISKS_DRIVE_ATA (drive), aam_vendor_recommended_value);
+  udisks_drive_ata_set_write_cache_supported (UDISKS_DRIVE_ATA (drive), !!write_cache_supported);
+  udisks_drive_ata_set_write_cache_enabled (UDISKS_DRIVE_ATA (drive), !!write_cache_enabled);
   g_object_thaw_notify (G_OBJECT (drive));
 }
 
@@ -245,20 +265,43 @@ update_pm (UDisksLinuxDriveAta *drive,
 
 static void
 update_security (UDisksLinuxDriveAta *drive,
-                 GUdevDevice         *device)
+                 UDisksLinuxDevice   *device)
 {
   gint erase_unit = 0;
   gint enhanced_erase_unit = 0;
   gboolean frozen = FALSE;
+  gboolean security_supported = FALSE;
+  G_GNUC_UNUSED gboolean security_enabled = FALSE;
+  guint16 word_82 = 0;
+  guint16 word_85 = 0;
+  guint16 word_89 = 0;
+  guint16 word_90 = 0;
+  guint16 word_128 = 0;
 
-  erase_unit = g_udev_device_get_property_as_int (device, "ID_ATA_FEATURE_SET_SECURITY_ERASE_UNIT_MIN");
-  enhanced_erase_unit = g_udev_device_get_property_as_int (device, "ID_ATA_FEATURE_SET_SECURITY_ENHANCED_ERASE_UNIT_MIN");
-  frozen = g_udev_device_get_property_as_boolean (device, "ID_ATA_FEATURE_SET_SECURITY_FROZEN");
+  /* ATA8: 7.16 IDENTIFY DEVICE - ECh, PIO Data-In - Table 29 IDENTIFY DEVICE data */
+  word_82  = udisks_ata_identify_get_word (device->ata_identify_device_data, 82);
+  word_85  = udisks_ata_identify_get_word (device->ata_identify_device_data, 85);
+  word_89  = udisks_ata_identify_get_word (device->ata_identify_device_data, 89);
+  word_90  = udisks_ata_identify_get_word (device->ata_identify_device_data, 90);
+  word_128 = udisks_ata_identify_get_word (device->ata_identify_device_data, 128);
+
+  security_supported  = word_82 & (1<<1);
+  security_enabled    = word_85 & (1<<1);
+  if (security_supported)
+    {
+      erase_unit = (word_89 & 0xff) * 2;
+      enhanced_erase_unit = (word_90 & 0xff) * 2;
+    }
+  frozen = word_128 & (1<<3);
 
   g_object_freeze_notify (G_OBJECT (drive));
+  /* TODO: export Security{Supported,Enabled} properties
+  udisks_drive_ata_set_security_supported (UDISKS_DRIVE_ATA (drive), !!security_supported);
+  udisks_drive_ata_set_security_enabled (UDISKS_DRIVE_ATA (drive), !!security_enabled);
+  */
   udisks_drive_ata_set_security_erase_unit_minutes (UDISKS_DRIVE_ATA (drive), erase_unit);
   udisks_drive_ata_set_security_enhanced_erase_unit_minutes (UDISKS_DRIVE_ATA (drive), enhanced_erase_unit);
-  udisks_drive_ata_set_security_frozen (UDISKS_DRIVE_ATA (drive), frozen);
+  udisks_drive_ata_set_security_frozen (UDISKS_DRIVE_ATA (drive), !!frozen);
   g_object_thaw_notify (G_OBJECT (drive));
 }
 
@@ -277,7 +320,8 @@ gboolean
 udisks_linux_drive_ata_update (UDisksLinuxDriveAta    *drive,
                                UDisksLinuxDriveObject *object)
 {
-  GUdevDevice *device;
+  UDisksLinuxDevice *device
+;
   device = udisks_linux_drive_object_get_device (object, TRUE /* get_hw */);
   if (device == NULL)
     goto out;
@@ -413,7 +457,7 @@ udisks_linux_drive_ata_refresh_smart_sync (UDisksLinuxDriveAta  *drive,
                                            GError              **error)
 {
   UDisksLinuxDriveObject *object;
-  GUdevDevice *device = NULL;
+  UDisksLinuxDevice *device = NULL;
   gboolean ret = FALSE;
   SkDisk *d = NULL;
   SkBool awake;
@@ -475,7 +519,7 @@ udisks_linux_drive_ata_refresh_smart_sync (UDisksLinuxDriveAta  *drive,
     }
   else
     {
-      if (sk_disk_open (g_udev_device_get_device_file (device), &d) != 0)
+      if (sk_disk_open (g_udev_device_get_device_file (device->udev_device), &d) != 0)
         {
           g_set_error (error,
                        UDISKS_ERROR,
@@ -593,7 +637,7 @@ udisks_linux_drive_ata_smart_selftest_sync (UDisksLinuxDriveAta     *drive,
                                             GError                 **error)
 {
   UDisksLinuxDriveObject  *object;
-  GUdevDevice *device;
+  UDisksLinuxDevice *device;
   SkDisk *d = NULL;
   gboolean ret = FALSE;
   SkSmartSelfTest test;
@@ -622,7 +666,7 @@ udisks_linux_drive_ata_smart_selftest_sync (UDisksLinuxDriveAta     *drive,
       goto out;
     }
 
-  if (sk_disk_open (g_udev_device_get_device_file (device), &d) != 0)
+  if (sk_disk_open (g_udev_device_get_device_file (device->udev_device), &d) != 0)
     {
       g_set_error (error,
                    UDISKS_ERROR,
@@ -1131,283 +1175,6 @@ handle_smart_selftest_start (UDisksDriveAta        *_drive,
 
 /* ---------------------------------------------------------------------------------------------------- */
 
-#define ATA_DEFAULT_COMMAND_TIMEOUT_MSEC (5 * 1000)
-
-typedef struct
-{
-  guint8  command;
-  guint8  feature;
-  guint8  count;
-  guint8  device;
-  guint32 lba;
-  gsize   buffer_size;
-  guchar *buffer;
-} AtaCommandInput;
-
-typedef struct
-{
-  guint8  error;
-  guint8  count;
-  guint8  device;
-  guint8  status;
-  guint32 lba;
-  gsize   buffer_size;
-  guchar *buffer;
-} AtaCommandOutput;
-
-typedef enum
-{
-  ATA_COMMAND_PROTOCOL_NONE,           /* Non-data */
-  ATA_COMMAND_PROTOCOL_DRIVE_TO_HOST,  /* PIO Data-In */
-  ATA_COMMAND_PROTOCOL_HOST_TO_DRIVE,  /* PIO Data-Out */
-} AtaCommandProtocol;
-
-static gboolean
-ata_send_command (gint                 fd,
-                  gint                 timeout_msec,
-                  AtaCommandProtocol   protocol,
-                  AtaCommandInput     *input,
-                  AtaCommandOutput    *output,
-                  GError             **error)
-{
-  struct sg_io_v4 io_v4;
-  uint8_t cdb[16];
-  gint cdb_len = 16;
-  uint8_t sense[32];
-  uint8_t *desc = sense+8;
-  gboolean use_ata12 = FALSE;
-  gboolean ret = FALSE;
-  gint rc;
-
-  g_return_val_if_fail (fd != -1, FALSE);
-  g_return_val_if_fail (timeout_msec == -1 || timeout_msec > 0, FALSE);
-  g_return_val_if_fail (/* protocol >= 0 && */ protocol <= 2, FALSE);
-  g_return_val_if_fail (input != NULL, FALSE);
-  g_return_val_if_fail (input->buffer_size == 0 || input->buffer != NULL, FALSE);
-  g_return_val_if_fail (output != NULL, FALSE);
-  g_return_val_if_fail (output->buffer_size == 0 || output->buffer != NULL, FALSE);
-  g_return_val_if_fail (error == NULL || *error == NULL, FALSE);
-
-  if (timeout_msec == -1)
-    timeout_msec = ATA_DEFAULT_COMMAND_TIMEOUT_MSEC;
-
-  /* zero outputs, even if returning an error */
-  output->error = 0;
-  output->count = 0;
-  output->device = 0;
-  output->status = 0;
-  output->lba = 0;
-  if (output->buffer != NULL)
-    memset (output->buffer, 0, output->buffer_size);
-
-  memset (cdb, 0, sizeof (cdb));
-
-  /* Prefer ATA PASS-THROUGH (16) to ATA PASS-THROUGH (12) since the op-code
-   * for the latter clashes with the MMC blank command.
-   *
-   * TODO: this is hard-coded to FALSE for now - should retry with the 12-byte
-   *       version only if the 16-byte version fails. But we don't do that
-   *       right now
-   */
-  use_ata12 = FALSE;
-
-  if (use_ata12)
-    {
-      /* Do not confuse optical drive firmware with ATA commands
-       * some drives are reported to blank CD-RWs because the op-code
-       * for ATA PASS-THROUGH (12) clashes with the MMC blank command.
-       *
-       * http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=556635
-       */
-      if (ioctl (fd, CDROM_GET_CAPABILITY, NULL) >= 0)
-        {
-          g_set_error (error, G_IO_ERROR, G_IO_ERROR_FAILED,
-                       "Refusing to send ATA PASS-THROUGH (12) to optical drive");
-          goto out;
-        }
-
-      /*
-       * ATA Pass-Through 12 byte command, as described in
-       *
-       *  T10 04-262r8 ATA Command Pass-Through
-       *
-       * from http://www.t10.org/ftp/t10/document.04/04-262r8.pdf
-       */
-      cdb[0] = 0xa1;                        /* OPERATION CODE: 12 byte pass through */
-      switch (protocol)
-        {
-        case ATA_COMMAND_PROTOCOL_NONE:
-          cdb[1] = 3 << 1;                  /* PROTOCOL: Non-data */
-          cdb[2] = 0x20;                    /* OFF_LINE=0, CK_COND=1, T_DIR=0, BYT_BLOK=0, T_LENGTH=0 */
-          break;
-        case ATA_COMMAND_PROTOCOL_DRIVE_TO_HOST:
-          cdb[1] = 4 << 1;                  /* PROTOCOL: PIO Data-In */
-          cdb[2] = 0x2e;                    /* OFF_LINE=0, CK_COND=1, T_DIR=1, BYT_BLOK=1, T_LENGTH=2 */
-          break;
-        case ATA_COMMAND_PROTOCOL_HOST_TO_DRIVE:
-          cdb[1] = 5 << 1;                  /* PROTOCOL: PIO Data-Out */
-          cdb[2] = 0x26;                    /* OFF_LINE=0, CK_COND=1, T_DIR=0, BYT_BLOK=1, T_LENGTH=2 */
-          break;
-        default:
-          g_assert_not_reached ();
-          break;
-        }
-      cdb[3] = input->feature;              /* FEATURES */
-      cdb[4] = input->count;                /* SECTORS */
-      cdb[5] = (input->lba >>  0) & 0xff;   /* LBA LOW */
-      cdb[6] = (input->lba >>  8) & 0xff;   /* LBA MID */
-      cdb[7] = (input->lba >> 16) & 0xff;   /* LBA HIGH */
-      cdb[8] = input->device;               /* SELECT */
-      cdb[9] = input->command;              /* ATA COMMAND */
-      cdb_len = 12;
-    }
-  else
-    {
-      /*
-       * ATA Pass-Through 16 byte command, as described in
-       *
-       *  T10 04-262r8 ATA Command Pass-Through
-       *
-       * from http://www.t10.org/ftp/t10/document.04/04-262r8.pdf
-       */
-      cdb[0] = 0x85;                        /* OPERATION CODE: 16 byte pass through */
-      switch (protocol)
-        {
-        case ATA_COMMAND_PROTOCOL_NONE:
-          cdb[1] = 3 << 1;                  /* PROTOCOL: Non-data */
-          cdb[2] = 0x20;                    /* OFF_LINE=0, CK_COND=1, T_DIR=0, BYT_BLOK=0, T_LENGTH=0 */
-          break;
-        case ATA_COMMAND_PROTOCOL_DRIVE_TO_HOST:
-          cdb[1] = 4 << 1;                  /* PROTOCOL: PIO Data-In */
-          cdb[2] = 0x2e;                    /* OFF_LINE=0, CK_COND=1, T_DIR=1, BYT_BLOK=1, T_LENGTH=2 */
-          break;
-        case ATA_COMMAND_PROTOCOL_HOST_TO_DRIVE:
-          cdb[1] = 5 << 1;                  /* PROTOCOL: PIO Data-Out */
-          cdb[2] = 0x26;                    /* OFF_LINE=0, CK_COND=1, T_DIR=0, BYT_BLOK=1, T_LENGTH=2 */
-          break;
-        default:
-          g_assert_not_reached ();
-          break;
-        }
-      cdb[ 3] = (input->feature >>  8) & 0xff;   /* FEATURES */
-      cdb[ 4] = (input->feature >>  0) & 0xff;   /* FEATURES */
-      cdb[ 5] = (input->count >>  8) & 0xff;     /* SECTORS */
-      cdb[ 6] = (input->count >>  0) & 0xff;     /* SECTORS */
-      cdb[ 8] = (input->lba >> 16) & 0xff;       /* LBA HIGH */
-      cdb[10] = (input->lba >>  8) & 0xff;       /* LBA MID */
-      cdb[12] = (input->lba >>  0) & 0xff;       /* LBA LOW */
-      cdb[13] = input->device;                   /* SELECT */
-      cdb[14] = input->command;                  /* ATA COMMAND */
-      cdb_len = 16;
-    }
-
-  /* See http://sg.danny.cz/sg/sg_io.html and http://www.tldp.org/HOWTO/SCSI-Generic-HOWTO/index.html
-   * for detailed information about how the SG_IO ioctl work
-   */
-
-  memset (sense, 0, sizeof (sense));
-  memset (&io_v4, 0, sizeof (io_v4));
-  io_v4.guard = 'Q';
-  io_v4.protocol = BSG_PROTOCOL_SCSI;
-  io_v4.subprotocol = BSG_SUB_PROTOCOL_SCSI_CMD;
-  io_v4.request_len = cdb_len;
-  io_v4.request = (uintptr_t) cdb;
-  io_v4.max_response_len = sizeof (sense);
-  io_v4.response = (uintptr_t) sense;
-  io_v4.din_xfer_len = output->buffer_size;
-  io_v4.din_xferp = (uintptr_t) output->buffer;
-  io_v4.dout_xfer_len = input->buffer_size;
-  io_v4.dout_xferp = (uintptr_t) input->buffer;
-  if (timeout_msec == G_MAXINT)
-    io_v4.timeout = G_MAXUINT;
-  else
-    io_v4.timeout = timeout_msec;
-
-  rc = ioctl (fd, SG_IO, &io_v4);
-  if (rc != 0)
-    {
-      /* could be that the driver doesn't do version 4, try version 3 */
-      if (errno == EINVAL)
-        {
-          struct sg_io_hdr io_hdr;
-
-          memset(&io_hdr, 0, sizeof (struct sg_io_hdr));
-          io_hdr.interface_id = 'S';
-          io_hdr.cmdp = (unsigned char*) cdb;
-          io_hdr.cmd_len = cdb_len;
-          switch (protocol)
-            {
-            case ATA_COMMAND_PROTOCOL_NONE:
-              io_hdr.dxfer_direction = SG_DXFER_NONE;
-              break;
-
-            case ATA_COMMAND_PROTOCOL_DRIVE_TO_HOST:
-              io_hdr.dxferp = output->buffer;
-              io_hdr.dxfer_len = output->buffer_size;
-              io_hdr.dxfer_direction = SG_DXFER_FROM_DEV;
-              break;
-
-            case ATA_COMMAND_PROTOCOL_HOST_TO_DRIVE:
-              io_hdr.dxferp = input->buffer;
-              io_hdr.dxfer_len = input->buffer_size;
-              io_hdr.dxfer_direction = SG_DXFER_TO_DEV;
-              break;
-            }
-          io_hdr.sbp = sense;
-          io_hdr.mx_sb_len = sizeof (sense);
-          if (timeout_msec == G_MAXINT)
-            io_hdr.timeout = G_MAXUINT;
-          else
-            io_hdr.timeout = timeout_msec;
-
-          rc = ioctl(fd, SG_IO, &io_hdr);
-          if (rc != 0)
-            {
-              g_set_error (error, G_IO_ERROR, g_io_error_from_errno (errno),
-                           "SGIO v3 ioctl failed (v4 not supported): %m");
-              goto out;
-            }
-        }
-      else
-        {
-          g_set_error (error, G_IO_ERROR, g_io_error_from_errno (errno),
-                       "SGIO v4 ioctl failed: %m");
-          goto out;
-        }
-    }
-
-  if (!(sense[0] == 0x72 && desc[0] == 0x9 && desc[1] == 0x0c))
-    {
-      gchar *s = udisks_daemon_util_hexdump (sense, 32);
-      g_set_error (error, G_IO_ERROR, G_IO_ERROR_FAILED,
-                   "Unexpected sense data returned:\n%s", s);
-      g_free (s);
-      goto out;
-    }
-
-  output->error = desc[3];
-  output->count = desc[5];
-  output->device = desc[12];
-  output->status = desc[13];
-  output->lba = (desc[11] << 16) | (desc[9] << 8) | desc[7];
-
-  /* TODO: be more exact with the error code perhaps? */
-  if (output->error != 0 || output->status & 0x01)
-    {
-      g_set_error (error, G_IO_ERROR, G_IO_ERROR_FAILED,
-                   "ATA command failed: error=0x%02x count=0x%02x status=0x%02x",
-                   output->error, output->count, output->status);
-      goto out;
-    }
-
-  ret = TRUE;
-
- out:
-  return ret;
-}
-
-/* ---------------------------------------------------------------------------------------------------- */
-
 static gboolean
 handle_pm_get_state (UDisksDriveAta        *_drive,
                      GDBusMethodInvocation *invocation,
@@ -1416,7 +1183,7 @@ handle_pm_get_state (UDisksDriveAta        *_drive,
   UDisksLinuxDriveAta *drive = UDISKS_LINUX_DRIVE_ATA (_drive);
   UDisksLinuxDriveObject  *object = NULL;
   UDisksDaemon *daemon;
-  GUdevDevice *device = NULL;
+  UDisksLinuxDevice *device = NULL;
   gint fd = -1;
   GError *error = NULL;
   const gchar *message;
@@ -1478,25 +1245,25 @@ handle_pm_get_state (UDisksDriveAta        *_drive,
       goto out;
     }
 
-  fd = open (g_udev_device_get_device_file (device), O_RDONLY|O_NONBLOCK);
+  fd = open (g_udev_device_get_device_file (device->udev_device), O_RDONLY|O_NONBLOCK);
   if (fd == -1)
     {
       g_dbus_method_invocation_return_error (invocation, UDISKS_ERROR, UDISKS_ERROR_FAILED,
                                              "Error opening device file %s: %m",
-                                             g_udev_device_get_device_file (device));
+                                             g_udev_device_get_device_file (device->udev_device));
       goto out;
     }
 
   {
     /* ATA8: 7.8 CHECK POWER MODE - E5h, Non-Data */
-    AtaCommandInput input = {.command = 0xe5};
-    AtaCommandOutput output = {0};
-    if (!ata_send_command (fd,
-                           -1,
-                           ATA_COMMAND_PROTOCOL_NONE,
-                           &input,
-                           &output,
-                           &error))
+    UDisksAtaCommandInput input = {.command = 0xe5};
+    UDisksAtaCommandOutput output = {0};
+    if (!udisks_ata_send_command_sync (fd,
+                                       -1,
+                                       UDISKS_ATA_COMMAND_PROTOCOL_NONE,
+                                       &input,
+                                       &output,
+                                       &error))
       {
         g_prefix_error (&error, "Error sending ATA command CHECK POWER MODE: ");
         g_dbus_method_invocation_take_error (invocation, error);
@@ -1526,7 +1293,7 @@ handle_pm_standby (UDisksDriveAta        *_drive,
   UDisksLinuxBlockObject *block_object = NULL;
   UDisksBlock *block = NULL;
   UDisksDaemon *daemon;
-  GUdevDevice *device = NULL;
+  UDisksLinuxDevice *device = NULL;
   gint fd = -1;
   GError *error = NULL;
   const gchar *message;
@@ -1609,25 +1376,25 @@ handle_pm_standby (UDisksDriveAta        *_drive,
       goto out;
     }
 
-  fd = open (g_udev_device_get_device_file (device), O_RDONLY|O_NONBLOCK);
+  fd = open (g_udev_device_get_device_file (device->udev_device), O_RDONLY|O_NONBLOCK);
   if (fd == -1)
     {
       g_dbus_method_invocation_return_error (invocation, UDISKS_ERROR, UDISKS_ERROR_FAILED,
                                              "Error opening device file %s: %m",
-                                             g_udev_device_get_device_file (device));
+                                             g_udev_device_get_device_file (device->udev_device));
       goto out;
     }
 
   {
     /* ATA8: 7.55 STANDBY IMMEDIATE - E0h, Non-Data */
-    AtaCommandInput input = {.command = 0xe0};
-    AtaCommandOutput output = {0};
-    if (!ata_send_command (fd,
-                           -1,
-                           ATA_COMMAND_PROTOCOL_NONE,
-                           &input,
-                           &output,
-                           &error))
+    UDisksAtaCommandInput input = {.command = 0xe0};
+    UDisksAtaCommandOutput output = {0};
+    if (!udisks_ata_send_command_sync (fd,
+                                       -1,
+                                       UDISKS_ATA_COMMAND_PROTOCOL_NONE,
+                                       &input,
+                                       &output,
+                                       &error))
       {
         g_prefix_error (&error, "Error sending ATA command STANDBY IMMEDIATE: ");
         g_dbus_method_invocation_take_error (invocation, error);
@@ -1657,7 +1424,7 @@ handle_pm_wakeup (UDisksDriveAta        *_drive,
   UDisksLinuxBlockObject *block_object = NULL;
   UDisksBlock *block = NULL;
   UDisksDaemon *daemon;
-  GUdevDevice *device = NULL;
+  UDisksLinuxDevice *device = NULL;
   gint fd = -1;
   GError *error = NULL;
   const gchar *message;
@@ -1741,12 +1508,12 @@ handle_pm_wakeup (UDisksDriveAta        *_drive,
       goto out;
     }
 
-  fd = open (g_udev_device_get_device_file (device), O_RDONLY);
+  fd = open (g_udev_device_get_device_file (device->udev_device), O_RDONLY);
   if (fd == -1)
     {
       g_dbus_method_invocation_return_error (invocation, UDISKS_ERROR, UDISKS_ERROR_FAILED,
                                              "Error opening device file %s: %m",
-                                             g_udev_device_get_device_file (device));
+                                             g_udev_device_get_device_file (device->udev_device));
       goto out;
     }
 
@@ -1755,7 +1522,7 @@ handle_pm_wakeup (UDisksDriveAta        *_drive,
       g_dbus_method_invocation_return_error (invocation, UDISKS_ERROR, UDISKS_ERROR_FAILED,
                                              "Error reading %d bytes from %s: %m",
                                              (gint) sizeof (buf),
-                                             g_udev_device_get_device_file (device));
+                                             g_udev_device_get_device_file (device->udev_device));
       goto out;
     }
 
@@ -1823,8 +1590,10 @@ typedef struct
   gint ata_pm_standby;
   gint ata_apm_level;
   gint ata_aam_level;
+  gboolean ata_write_cache_enabled;
+  gboolean ata_write_cache_enabled_set;
   UDisksLinuxDriveAta *ata;
-  GUdevDevice *device;
+  UDisksLinuxDevice *device;
   GVariant *configuration;
   UDisksDrive *drive;
   UDisksLinuxDriveObject *object;
@@ -1849,13 +1618,14 @@ apply_configuration_thread_func (gpointer user_data)
   gint fd = -1;
   GError *error = NULL;
 
-  device_file = g_udev_device_get_device_file (data->device);
+  device_file = g_udev_device_get_device_file (data->device->udev_device);
 
   udisks_notice ("Applying configuration from %s/udisks2/%s.conf to %s",
                  PACKAGE_SYSCONF_DIR, udisks_drive_get_id (data->drive), device_file);
 
 
-  fd = open (device_file, O_RDONLY|O_NONBLOCK);
+  /* Use O_RDRW instead of O_RDONLY to force a 'change' uevent so properties are updated */
+  fd = open (device_file, O_RDWR|O_NONBLOCK);
   if (fd == -1)
     {
       udisks_error ("Error opening device file %s: %m", device_file);
@@ -1865,14 +1635,14 @@ apply_configuration_thread_func (gpointer user_data)
   if (data->ata_pm_standby != -1)
     {
       /* ATA8: 7.18 IDLE - E3h, Non-Data */
-      AtaCommandInput input = {.command = 0xe3, .count = data->ata_pm_standby};
-      AtaCommandOutput output = {0};
-      if (!ata_send_command (fd,
-                             -1,
-                             ATA_COMMAND_PROTOCOL_NONE,
-                             &input,
-                             &output,
-                             &error))
+      UDisksAtaCommandInput input = {.command = 0xe3, .count = data->ata_pm_standby};
+      UDisksAtaCommandOutput output = {0};
+      if (!udisks_ata_send_command_sync (fd,
+                                         -1,
+                                         UDISKS_ATA_COMMAND_PROTOCOL_NONE,
+                                         &input,
+                                         &output,
+                                         &error))
         {
           udisks_error ("Error sending ATA command IDLE (timeout=%d) to %s: %s (%s, %d)",
                         data->ata_pm_standby, device_file,
@@ -1893,19 +1663,19 @@ apply_configuration_thread_func (gpointer user_data)
       /* ATA8: 7.48 SET FEATURES - EFh, Non-Data
        *       7.48.6 Enable/disable the APM feature set
        */
-      AtaCommandInput input = {.command = 0xef, .feature = 0x05, .count = data->ata_apm_level};
-      AtaCommandOutput output = {0};
+      UDisksAtaCommandInput input = {.command = 0xef, .feature = 0x05, .count = data->ata_apm_level};
+      UDisksAtaCommandOutput output = {0};
       if (data->ata_apm_level == 0xff)
         {
           input.feature = 0x85;
           input.count = 0x00;
         }
-      if (!ata_send_command (fd,
-                             -1,
-                             ATA_COMMAND_PROTOCOL_NONE,
-                             &input,
-                             &output,
-                             &error))
+      if (!udisks_ata_send_command_sync (fd,
+                                         -1,
+                                         UDISKS_ATA_COMMAND_PROTOCOL_NONE,
+                                         &input,
+                                         &output,
+                                         &error))
         {
           udisks_error ("Error sending ATA command SET FEATURES, sub-command 0x%02x (ata_apm_level=%d) to %s: %s (%s, %d)",
                         input.feature, data->ata_apm_level, device_file,
@@ -1924,19 +1694,19 @@ apply_configuration_thread_func (gpointer user_data)
       /* ATA8: 7.48 SET FEATURES - EFh, Non-Data
        *       7.48.11 Enable/disable the AAM feature set
        */
-      AtaCommandInput input = {.command = 0xef, .feature = 0x42, .count = data->ata_aam_level};
-      AtaCommandOutput output = {0};
+      UDisksAtaCommandInput input = {.command = 0xef, .feature = 0x42, .count = data->ata_aam_level};
+      UDisksAtaCommandOutput output = {0};
       if (data->ata_apm_level == 0xff)
         {
           input.feature = 0xc2;
           input.count = 0x00;
         }
-      if (!ata_send_command (fd,
-                             -1,
-                             ATA_COMMAND_PROTOCOL_NONE,
-                             &input,
-                             &output,
-                             &error))
+      if (!udisks_ata_send_command_sync (fd,
+                                         -1,
+                                         UDISKS_ATA_COMMAND_PROTOCOL_NONE,
+                                         &input,
+                                         &output,
+                                         &error))
         {
           udisks_error ("Error sending ATA command SET FEATURES, sub-command 0x%02x (ata_aam_level=%d) to %s: %s (%s, %d)",
                         input.feature, data->ata_aam_level, device_file,
@@ -1950,6 +1720,35 @@ apply_configuration_thread_func (gpointer user_data)
         }
     }
 
+  if (data->ata_write_cache_enabled_set)
+    {
+      /* ATA8: 7.48 SET FEATURES - EFh, Non-Data
+       *       7.48.4 Enable/disable volatile write cache
+       */
+      UDisksAtaCommandInput input = {.command = 0xef, .feature = 0x82};
+      UDisksAtaCommandOutput output = {0};
+      if (data->ata_write_cache_enabled)
+        input.feature = 0x02;
+      if (!udisks_ata_send_command_sync (fd,
+                                         -1,
+                                         UDISKS_ATA_COMMAND_PROTOCOL_NONE,
+                                         &input,
+                                         &output,
+                                         &error))
+        {
+          udisks_error ("Error sending ATA command SET FEATURES, sub-command 0x%02x to %s: %s (%s, %d)",
+                        input.feature, device_file,
+                        error->message, g_quark_to_string (error->domain), error->code);
+          g_clear_error (&error);
+        }
+      else
+        {
+          udisks_notice ("%s Write-Cache on %s [%s]",
+                         data->ata_write_cache_enabled ? "Enabled" : "Disabled",
+                         device_file, udisks_drive_get_id (data->drive));
+        }
+    }
+
  out:
   if (fd != -1)
     close (fd);
@@ -1960,7 +1759,7 @@ apply_configuration_thread_func (gpointer user_data)
 /**
  * udisks_linux_drive_ata_apply_configuration:
  * @drive: A #UDisksLinuxDriveAta.
- * @device: A #GUdevDevice
+ * @device: A #UDisksLinuxDevice
  * @configuration: The configuration to apply.
  *
  * Spawns a thread to apply @configuration to @drive, if any. Does not
@@ -1968,7 +1767,7 @@ apply_configuration_thread_func (gpointer user_data)
  */
 void
 udisks_linux_drive_ata_apply_configuration (UDisksLinuxDriveAta     *drive,
-                                            GUdevDevice             *device,
+                                            UDisksLinuxDevice       *device,
                                             GVariant                *configuration)
 {
   gboolean has_conf = FALSE;
@@ -1978,6 +1777,8 @@ udisks_linux_drive_ata_apply_configuration (UDisksLinuxDriveAta     *drive,
   data->ata_pm_standby = -1;
   data->ata_apm_level = -1;
   data->ata_aam_level = -1;
+  data->ata_write_cache_enabled = FALSE;
+  data->ata_write_cache_enabled_set = FALSE;
   data->ata = g_object_ref (drive);
   data->device = g_object_ref (device);
   data->configuration = g_variant_ref (configuration);
@@ -1994,6 +1795,11 @@ udisks_linux_drive_ata_apply_configuration (UDisksLinuxDriveAta     *drive,
   has_conf |= g_variant_lookup (configuration, "ata-pm-standby", "i", &data->ata_pm_standby);
   has_conf |= g_variant_lookup (configuration, "ata-apm-level", "i", &data->ata_apm_level);
   has_conf |= g_variant_lookup (configuration, "ata-aam-level", "i", &data->ata_aam_level);
+  if (g_variant_lookup (configuration, "ata-write-cache-enabled", "b", &data->ata_write_cache_enabled))
+    {
+      data->ata_write_cache_enabled_set = TRUE;
+      has_conf = TRUE;
+    }
 
   /* don't do anything if none of the configuration is set */
   if (!has_conf)
@@ -2068,7 +1874,7 @@ udisks_linux_drive_ata_secure_erase_sync (UDisksLinuxDriveAta     *drive,
   UDisksLinuxDriveObject *object = NULL;
   UDisksLinuxBlockObject *block_object = NULL;
   UDisksDaemon *daemon;
-  GUdevDevice *device = NULL;
+  UDisksLinuxDevice *device = NULL;
   const gchar *device_file = NULL;
   gint fd = -1;
   union
@@ -2120,8 +1926,8 @@ udisks_linux_drive_ata_secure_erase_sync (UDisksLinuxDriveAta     *drive,
     }
 
   /* Use O_EXCL so it fails if mounted or in use */
-  device_file = g_udev_device_get_device_file (device);
-  fd = open (g_udev_device_get_device_file (device), O_RDONLY | O_EXCL);
+  device_file = g_udev_device_get_device_file (device->udev_device);
+  fd = open (g_udev_device_get_device_file (device->udev_device), O_RDONLY | O_EXCL);
   if (fd == -1)
     {
       g_set_error (&local_error, UDISKS_ERROR, UDISKS_ERROR_FAILED,
@@ -2137,14 +1943,14 @@ udisks_linux_drive_ata_secure_erase_sync (UDisksLinuxDriveAta     *drive,
   /* First get the IDENTIFY data directly from the drive, for sanity checks */
   {
     /* ATA8: 7.16 IDENTIFY DEVICE - ECh, PIO Data-In */
-    AtaCommandInput input = {.command = 0xec};
-    AtaCommandOutput output = {.buffer = identify.buf, .buffer_size = sizeof (identify.buf)};
-    if (!ata_send_command (fd,
-                           -1,
-                           ATA_COMMAND_PROTOCOL_DRIVE_TO_HOST,
-                           &input,
-                           &output,
-                           &local_error))
+    UDisksAtaCommandInput input = {.command = 0xec};
+    UDisksAtaCommandOutput output = {.buffer = identify.buf, .buffer_size = sizeof (identify.buf)};
+    if (!udisks_ata_send_command_sync (fd,
+                                       -1,
+                                       UDISKS_ATA_COMMAND_PROTOCOL_DRIVE_TO_HOST,
+                                       &input,
+                                       &output,
+                                       &local_error))
       {
         g_prefix_error (&local_error, "Error sending ATA command IDENTIFY DEVICE: ");
         goto out;
@@ -2229,16 +2035,16 @@ udisks_linux_drive_ata_secure_erase_sync (UDisksLinuxDriveAta     *drive,
   {
     /* ATA8: 7.45 SECURITY SET PASSWORD - F1h, PIO Data-Out */
     guchar buf[512];
-    AtaCommandInput input = {.command = 0xf1, .buffer = buf, .buffer_size = sizeof (buf)};
-    AtaCommandOutput output = {0};
+    UDisksAtaCommandInput input = {.command = 0xf1, .buffer = buf, .buffer_size = sizeof (buf)};
+    UDisksAtaCommandOutput output = {0};
     memset (buf, 0, sizeof (buf));
     memcpy (buf + 2, pass, strlen (pass));
-    if (!ata_send_command (fd,
-                           -1,
-                           ATA_COMMAND_PROTOCOL_HOST_TO_DRIVE,
-                           &input,
-                           &output,
-                           &local_error))
+    if (!udisks_ata_send_command_sync (fd,
+                                       -1,
+                                       UDISKS_ATA_COMMAND_PROTOCOL_HOST_TO_DRIVE,
+                                       &input,
+                                       &output,
+                                       &local_error))
       {
         g_prefix_error (&local_error, "Error sending ATA command SECURITY SET PASSWORD: ");
         goto out;
@@ -2256,14 +2062,14 @@ udisks_linux_drive_ata_secure_erase_sync (UDisksLinuxDriveAta     *drive,
   /* Third... do SECURITY ERASE PREPARE */
   {
     /* ATA8: 7.42 SECURITY ERASE PREPARE - F3h, Non-Data */
-    AtaCommandInput input = {.command = 0xf3};
-    AtaCommandOutput output = {0};
-    if (!ata_send_command (fd,
-                           -1,
-                           ATA_COMMAND_PROTOCOL_NONE,
-                           &input,
-                           &output,
-                           &local_error))
+    UDisksAtaCommandInput input = {.command = 0xf3};
+    UDisksAtaCommandOutput output = {0};
+    if (!udisks_ata_send_command_sync (fd,
+                                       -1,
+                                       UDISKS_ATA_COMMAND_PROTOCOL_NONE,
+                                       &input,
+                                       &output,
+                                       &local_error))
       {
         g_prefix_error (&local_error, "Error sending ATA command SECURITY ERASE PREPARE: ");
         goto out;
@@ -2274,18 +2080,18 @@ udisks_linux_drive_ata_secure_erase_sync (UDisksLinuxDriveAta     *drive,
   {
     /* ATA8: 7.43 SECURITY ERASE UNIT - F4h, PIO Data-Out */
     guchar buf[512];
-    AtaCommandInput input = {.command = 0xf4, .buffer = buf, .buffer_size = sizeof (buf)};
-    AtaCommandOutput output = {0};
+    UDisksAtaCommandInput input = {.command = 0xf4, .buffer = buf, .buffer_size = sizeof (buf)};
+    UDisksAtaCommandOutput output = {0};
     memset (buf, 0, sizeof (buf));
     if (enhanced)
       buf[0] |= 0x02;
     memcpy (buf + 2, pass, strlen (pass));
-    if (!ata_send_command (fd,
-                           G_MAXINT, /* disable timeout */
-                           ATA_COMMAND_PROTOCOL_HOST_TO_DRIVE,
-                           &input,
-                           &output,
-                           &local_error))
+    if (!udisks_ata_send_command_sync (fd,
+                                       G_MAXINT, /* disable timeout */
+                                       UDISKS_ATA_COMMAND_PROTOCOL_HOST_TO_DRIVE,
+                                       &input,
+                                       &output,
+                                       &local_error))
       {
         g_prefix_error (&local_error, "Error sending ATA command SECURITY ERASE UNIT (enhanced=%d): ",
                         enhanced ? 1 : 0);
@@ -2305,17 +2111,17 @@ udisks_linux_drive_ata_secure_erase_sync (UDisksLinuxDriveAta     *drive,
     {
       /* ATA8: 7.41 SECURITY DISABLE PASSWORD - F6h, PIO Data-Out */
       guchar buf[512];
-      AtaCommandInput input = {.command = 0xf6, .buffer = buf, .buffer_size = sizeof (buf)};
-      AtaCommandOutput output = {0};
+      UDisksAtaCommandInput input = {.command = 0xf6, .buffer = buf, .buffer_size = sizeof (buf)};
+      UDisksAtaCommandOutput output = {0};
       GError *cleanup_error = NULL;
       memset (buf, 0, sizeof (buf));
       memcpy (buf + 2, pass, strlen (pass));
-      if (!ata_send_command (fd,
-                             -1,
-                             ATA_COMMAND_PROTOCOL_HOST_TO_DRIVE,
-                             &input,
-                             &output,
-                             &cleanup_error))
+      if (!udisks_ata_send_command_sync (fd,
+                                         -1,
+                                         UDISKS_ATA_COMMAND_PROTOCOL_HOST_TO_DRIVE,
+                                         &input,
+                                         &output,
+                                         &cleanup_error))
         {
           udisks_error ("Failed to clear user password '%s' on %s (%s) while attemping clean-up after a failed secure erase operation. You may need to manually unlock the drive. The error was: %s (%s, %d)",
                         pass,
@@ -2469,6 +2275,172 @@ handle_security_erase_unit (UDisksDriveAta        *_drive,
 
 /* ---------------------------------------------------------------------------------------------------- */
 
+static gboolean
+handle_smart_set_enabled (UDisksDriveAta        *_drive,
+                          GDBusMethodInvocation *invocation,
+                          gboolean               value,
+                          GVariant              *options)
+{
+  UDisksLinuxDriveAta *drive = UDISKS_LINUX_DRIVE_ATA (_drive);
+  UDisksLinuxDriveObject *object = NULL;
+  UDisksLinuxBlockObject *block_object = NULL;
+  UDisksDaemon *daemon;
+  GError *error = NULL;
+  UDisksLinuxDevice *device = NULL;
+  gint fd = -1;
+  const gchar *message;
+  const gchar *action_id;
+  uid_t caller_uid;
+  gid_t caller_gid;
+
+  object = udisks_daemon_util_dup_object (drive, &error);
+  if (object == NULL)
+    {
+      g_dbus_method_invocation_take_error (invocation, error);
+      goto out;
+    }
+
+  block_object = udisks_linux_drive_object_get_block (object, FALSE);
+  if (block_object == NULL)
+    {
+      g_dbus_method_invocation_return_error (invocation,
+                                             UDISKS_ERROR,
+                                             UDISKS_ERROR_FAILED,
+                                             "Unable to find block device for drive");
+      goto out;
+    }
+
+  daemon = udisks_linux_drive_object_get_daemon (object);
+
+  error = NULL;
+  if (!udisks_daemon_util_get_caller_uid_sync (daemon,
+                                               invocation,
+                                               NULL /* GCancellable */,
+                                               &caller_uid,
+                                               &caller_gid,
+                                               NULL,
+                                               &error))
+    {
+      g_dbus_method_invocation_return_gerror (invocation, error);
+      g_error_free (error);
+      goto out;
+    }
+
+  if (value)
+    {
+      /* Translators: Shown in authentication dialog when the user
+       * requests enabling SMART on a disk.
+       *
+       * Do not translate $(drive), it's a placeholder and
+       * will be replaced by the name of the drive/device in question
+       */
+      message = N_("Authentication is required to enable SMART on $(drive)");
+    }
+  else
+    {
+      /* Translators: Shown in authentication dialog when the user
+       * requests enabling SMART on a disk.
+       *
+       * Do not translate $(drive), it's a placeholder and
+       * will be replaced by the name of the drive/device in question
+       */
+      message = N_("Authentication is required to disable SMART on $(drive)");
+    }
+  action_id = "org.freedesktop.udisks2.ata-smart-enable-disable";
+
+  /* Check that the user is authorized */
+  if (!udisks_daemon_util_check_authorization_sync (daemon,
+                                                    UDISKS_OBJECT (object),
+                                                    action_id,
+                                                    options,
+                                                    message,
+                                                    invocation))
+    goto out;
+
+  device = udisks_linux_drive_object_get_device (object, TRUE /* get_hw */);
+  if (device == NULL)
+    {
+      g_dbus_method_invocation_return_error (invocation, UDISKS_ERROR, UDISKS_ERROR_FAILED,
+                                             "No udev device");
+      goto out;
+    }
+
+  fd = open (g_udev_device_get_device_file (device->udev_device), O_RDONLY|O_NONBLOCK);
+  if (fd == -1)
+    {
+      g_dbus_method_invocation_return_error (invocation, UDISKS_ERROR, UDISKS_ERROR_FAILED,
+                                             "Error opening device file %s: %m",
+                                             g_udev_device_get_device_file (device->udev_device));
+      goto out;
+    }
+
+  {
+    /* ATA8: 7.53.4 SMART ENABLE OPERATIONS - B0h/D8h, Non-Data
+     *       7.53.2 SMART DISABLE OPERATIONS - B0h/D9h, Non-Data
+     */
+    UDisksAtaCommandInput input = {.command = 0xb0};
+    UDisksAtaCommandOutput output = {0};
+    if (value)
+      input.feature = 0xd8;
+    else
+      input.feature = 0xd9;
+    input.lba = 0x004fc2; /* will be encoded as 0xc2 0x4f 0x00 as per the ATA spec */
+    if (!udisks_ata_send_command_sync (fd,
+                                       -1,
+                                       UDISKS_ATA_COMMAND_PROTOCOL_NONE,
+                                       &input,
+                                       &output,
+                                       &error))
+      {
+        g_prefix_error (&error, "Error sending ATA command SMART, sub-command %s OPERATIONS: ",
+                        value ? "ENABLE" : "DISABLE");
+        g_dbus_method_invocation_take_error (invocation, error);
+        goto out;
+      }
+  }
+
+  /* Reread new IDENTIFY data */
+  if (!udisks_linux_device_reprobe_sync (device, NULL, &error))
+    {
+      g_prefix_error (&error, "Error reprobing device: ");
+      g_dbus_method_invocation_take_error (invocation, error);
+      goto out;
+    }
+
+  /* if we just enabled SMART, re-read SMART data before returning */
+  if (value)
+    {
+      if (!udisks_linux_drive_ata_refresh_smart_sync (drive,
+                                                      FALSE, /* nowakeup */
+                                                      NULL, /* simulate_path */
+                                                      NULL, /* cancellable */
+                                                      &error))
+        {
+          g_prefix_error (&error, "Error updating SMART data: ");
+          g_dbus_method_invocation_take_error (invocation, error);
+          goto out;
+        }
+    }
+  else
+    {
+      update_smart (drive, device);
+    }
+  /* ensure property changes are sent before the method return */
+  g_dbus_interface_skeleton_flush (G_DBUS_INTERFACE_SKELETON (drive));
+
+  udisks_drive_ata_complete_smart_set_enabled (_drive, invocation);
+
+ out:
+  if (fd != -1)
+    close (fd);
+  g_clear_object (&device);
+  g_clear_object (&block_object);
+  g_clear_object (&object);
+  return TRUE; /* returning TRUE means that we handled the method invocation */
+}
+
+/* ---------------------------------------------------------------------------------------------------- */
+
 static void
 drive_ata_iface_init (UDisksDriveAtaIface *iface)
 {
@@ -2476,6 +2448,7 @@ drive_ata_iface_init (UDisksDriveAtaIface *iface)
   iface->handle_smart_get_attributes = handle_smart_get_attributes;
   iface->handle_smart_selftest_abort = handle_smart_selftest_abort;
   iface->handle_smart_selftest_start = handle_smart_selftest_start;
+  iface->handle_smart_set_enabled = handle_smart_set_enabled;
 
   iface->handle_pm_get_state = handle_pm_get_state;
   iface->handle_pm_standby = handle_pm_standby;

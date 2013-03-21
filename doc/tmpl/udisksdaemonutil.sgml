@@ -218,3 +218,22 @@ udisksdaemonutil
 @Returns: 
 
 
+<!-- ##### FUNCTION udisks_daemon_util_get_free_mdraid_device ##### -->
+<para>
+
+</para>
+
+@void: 
+@Returns: 
+
+
+<!-- ##### FUNCTION udisks_ata_identify_get_word ##### -->
+<para>
+
+</para>
+
+@identify_data: 
+@word_number: 
+@Returns: 
+
+

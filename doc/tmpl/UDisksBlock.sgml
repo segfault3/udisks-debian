@@ -176,7 +176,17 @@ UDisksBlock
 
 </para>
 
+<!-- ##### ARG UDisksBlock:hint-symbolic-icon-name ##### -->
+<para>
+
+</para>
+
 <!-- ##### ARG UDisksBlock:hint-system ##### -->
+<para>
+
+</para>
+
+<!-- ##### ARG UDisksBlock:id ##### -->
 <para>
 
 </para>
@@ -202,6 +212,16 @@ UDisksBlock
 </para>
 
 <!-- ##### ARG UDisksBlock:id-version ##### -->
+<para>
+
+</para>
+
+<!-- ##### ARG UDisksBlock:mdraid ##### -->
+<para>
+
+</para>
+
+<!-- ##### ARG UDisksBlock:mdraid-member ##### -->
 <para>
 
 </para>
@@ -261,6 +281,10 @@ UDisksBlock
 @get_read_only: 
 @get_size: 
 @get_symlinks: 
+@get_hint_symbolic_icon_name: 
+@get_id: 
+@get_mdraid: 
+@get_mdraid_member: 
 
 <!-- ##### FUNCTION udisks_block_interface_info ##### -->
 <para>
@@ -813,6 +837,15 @@ UDisksBlock
 @Returns: 
 
 
+<!-- ##### FUNCTION udisks_block_get_id ##### -->
+<para>
+
+</para>
+
+@object: 
+@Returns: 
+
+
 <!-- ##### FUNCTION udisks_block_get_size ##### -->
 <para>
 
@@ -886,6 +919,33 @@ UDisksBlock
 
 
 <!-- ##### FUNCTION udisks_block_get_hint_icon_name ##### -->
+<para>
+
+</para>
+
+@object: 
+@Returns: 
+
+
+<!-- ##### FUNCTION udisks_block_get_hint_symbolic_icon_name ##### -->
+<para>
+
+</para>
+
+@object: 
+@Returns: 
+
+
+<!-- ##### FUNCTION udisks_block_get_mdraid ##### -->
+<para>
+
+</para>
+
+@object: 
+@Returns: 
+
+
+<!-- ##### FUNCTION udisks_block_get_mdraid_member ##### -->
 <para>
 
 </para>
@@ -984,6 +1044,15 @@ UDisksBlock
 @Returns: 
 
 
+<!-- ##### FUNCTION udisks_block_dup_id ##### -->
+<para>
+
+</para>
+
+@object: 
+@Returns: 
+
+
 <!-- ##### FUNCTION udisks_block_dup_symlinks ##### -->
 <para>
 
@@ -1003,6 +1072,33 @@ UDisksBlock
 
 
 <!-- ##### FUNCTION udisks_block_dup_hint_icon_name ##### -->
+<para>
+
+</para>
+
+@object: 
+@Returns: 
+
+
+<!-- ##### FUNCTION udisks_block_dup_hint_symbolic_icon_name ##### -->
+<para>
+
+</para>
+
+@object: 
+@Returns: 
+
+
+<!-- ##### FUNCTION udisks_block_dup_mdraid ##### -->
+<para>
+
+</para>
+
+@object: 
+@Returns: 
+
+
+<!-- ##### FUNCTION udisks_block_dup_mdraid_member ##### -->
 <para>
 
 </para>
@@ -1110,6 +1206,15 @@ UDisksBlock
 @value: 
 
 
+<!-- ##### FUNCTION udisks_block_set_id ##### -->
+<para>
+
+</para>
+
+@object: 
+@value: 
+
+
 <!-- ##### FUNCTION udisks_block_set_size ##### -->
 <para>
 
@@ -1183,6 +1288,33 @@ UDisksBlock
 
 
 <!-- ##### FUNCTION udisks_block_set_hint_icon_name ##### -->
+<para>
+
+</para>
+
+@object: 
+@value: 
+
+
+<!-- ##### FUNCTION udisks_block_set_hint_symbolic_icon_name ##### -->
+<para>
+
+</para>
+
+@object: 
+@value: 
+
+
+<!-- ##### FUNCTION udisks_block_set_mdraid ##### -->
+<para>
+
+</para>
+
+@object: 
+@value: 
+
+
+<!-- ##### FUNCTION udisks_block_set_mdraid_member ##### -->
 <para>
 
 </para>

@@ -39,10 +39,11 @@
 #include "udiskslinuxblockobject.h"
 #include "udiskslinuxfsinfo.h"
 #include "udisksdaemon.h"
-#include "udiskscleanup.h"
+#include "udisksstate.h"
 #include "udisksdaemonutil.h"
 #include "udisksmountmonitor.h"
 #include "udisksmount.h"
+#include "udiskslinuxdevice.h"
 
 /**
  * SECTION:udiskslinuxfilesystem
@@ -135,7 +136,7 @@ udisks_linux_filesystem_update (UDisksLinuxFilesystem  *filesystem,
                                 UDisksLinuxBlockObject *object)
 {
   UDisksMountMonitor *mount_monitor;
-  GUdevDevice *device;
+  UDisksLinuxDevice *device;
   GPtrArray *p;
   GList *mounts;
   GList *l;
@@ -144,7 +145,7 @@ udisks_linux_filesystem_update (UDisksLinuxFilesystem  *filesystem,
   device = udisks_linux_block_object_get_device (object);
 
   p = g_ptr_array_new ();
-  mounts = udisks_mount_monitor_get_mounts_for_dev (mount_monitor, g_udev_device_get_device_number (device));
+  mounts = udisks_mount_monitor_get_mounts_for_dev (mount_monitor, g_udev_device_get_device_number (device->udev_device));
   /* we are guaranteed that the list is sorted so if there are
    * multiple mounts we'll always get the same order
    */
@@ -840,6 +841,8 @@ calculate_mount_point (UDisksDaemon              *daemon,
                        const gchar               *fs_type,
                        GError                   **error)
 {
+  UDisksLinuxBlockObject *object = NULL;
+  gboolean fs_shared = FALSE;
   const gchar *label = NULL;
   const gchar *uuid = NULL;
   gchar *escaped_user_name = NULL;
@@ -858,10 +861,25 @@ calculate_mount_point (UDisksDaemon              *daemon,
       uuid = udisks_block_get_id_uuid (block);
     }
 
+  object = udisks_daemon_util_dup_object (block, NULL);
+  if (object != NULL)
+    {
+      UDisksLinuxDevice *device = udisks_linux_block_object_get_device (object);
+      if (device != NULL)
+        {
+          if (device->udev_device != NULL)
+            {
+              /* TODO: maybe introduce Block:HintFilesystemShared instead of pulling it directly from the udev device */
+              fs_shared = g_udev_device_get_property_as_boolean (device->udev_device, "UDISKS_FILESYSTEM_SHARED");
+            }
+          g_object_unref (device);
+        }
+    }
+
   /* If we know the user-name and it doesn't have any '/' character in
    * it, mount in /run/media/$USER
    */
-  if (user_name != NULL && strstr (user_name, "/") == NULL)
+  if (!fs_shared && (user_name != NULL && strstr (user_name, "/") == NULL))
     {
       mount_dir = g_strdup_printf ("/run/media/%s", user_name);
       if (!g_file_test (mount_dir, G_FILE_TEST_EXISTS))
@@ -962,6 +980,7 @@ calculate_mount_point (UDisksDaemon              *daemon,
   g_free (mount_dir);
 
  out:
+  g_clear_object (&object);
   g_free (escaped_user_name);
   return mount_point;
 }
@@ -1102,7 +1121,7 @@ handle_mount (UDisksFilesystem       *filesystem,
   UDisksObject *object;
   UDisksBlock *block;
   UDisksDaemon *daemon;
-  UDisksCleanup *cleanup;
+  UDisksState *state;
   uid_t caller_uid;
   gid_t caller_gid;
   pid_t caller_pid;
@@ -1148,7 +1167,7 @@ handle_mount (UDisksFilesystem       *filesystem,
 
   block = udisks_object_peek_block (object);
   daemon = udisks_linux_block_object_get_daemon (UDISKS_LINUX_BLOCK_OBJECT (object));
-  cleanup = udisks_daemon_get_cleanup (daemon);
+  state = udisks_daemon_get_state (daemon);
 
   /* check if mount point is managed by e.g. /etc/fstab or similar */
   if (is_system_managed (block, &mount_point_to_use, &fstab_mount_options))
@@ -1309,11 +1328,11 @@ handle_mount (UDisksFilesystem       *filesystem,
                      caller_uid);
 
       /* update the mounted-fs file */
-      udisks_cleanup_add_mounted_fs (cleanup,
-                                     mount_point_to_use,
-                                     udisks_block_get_device_number (block),
-                                     caller_uid,
-                                     TRUE); /* fstab_mounted */
+      udisks_state_add_mounted_fs (state,
+                                   mount_point_to_use,
+                                   udisks_block_get_device_number (block),
+                                   caller_uid,
+                                   TRUE); /* fstab_mounted */
 
       udisks_filesystem_complete_mount (filesystem, invocation, mount_point_to_use);
       goto out;
@@ -1464,11 +1483,11 @@ handle_mount (UDisksFilesystem       *filesystem,
     }
 
   /* update the mounted-fs file */
-  udisks_cleanup_add_mounted_fs (cleanup,
-                                 mount_point_to_use,
-                                 udisks_block_get_device_number (block),
-                                 caller_uid,
-                                 FALSE); /* fstab_mounted */
+  udisks_state_add_mounted_fs (state,
+                               mount_point_to_use,
+                               udisks_block_get_device_number (block),
+                               caller_uid,
+                               FALSE); /* fstab_mounted */
 
   udisks_notice ("Mounted %s at %s on behalf of uid %d",
                  udisks_block_get_device (block),
@@ -1518,7 +1537,7 @@ handle_unmount (UDisksFilesystem       *filesystem,
   UDisksObject *object;
   UDisksBlock *block;
   UDisksDaemon *daemon;
-  UDisksCleanup *cleanup;
+  UDisksState *state;
   gchar *mount_point;
   gchar *fstab_mount_options;
   gchar *escaped_mount_point;
@@ -1553,7 +1572,7 @@ handle_unmount (UDisksFilesystem       *filesystem,
 
   block = udisks_object_peek_block (object);
   daemon = udisks_linux_block_object_get_daemon (UDISKS_LINUX_BLOCK_OBJECT (object));
-  cleanup = udisks_daemon_get_cleanup (daemon);
+  state = udisks_daemon_get_state (daemon);
   system_managed = FALSE;
 
   if (options != NULL)
@@ -1659,10 +1678,10 @@ handle_unmount (UDisksFilesystem       *filesystem,
     }
 
   error = NULL;
-  mount_point = udisks_cleanup_find_mounted_fs (cleanup,
-                                                udisks_block_get_device_number (block),
-                                                &mounted_by_uid,
-                                                &fstab_mounted);
+  mount_point = udisks_state_find_mounted_fs (state,
+                                              udisks_block_get_device_number (block),
+                                              &mounted_by_uid,
+                                              &fstab_mounted);
   if (mount_point == NULL)
     {
       /* allow unmounting stuff not mentioned in mounted-fs, but treat it like root mounted it */
@@ -1740,7 +1759,7 @@ handle_unmount (UDisksFilesystem       *filesystem,
       goto out;
     }
 
-  /* OK, filesystem unmounted.. the cleanup routines will remove the mountpoint for us */
+  /* OK, filesystem unmounted.. the state/cleanup routines will remove the mountpoint for us */
 
   udisks_notice ("Unmounted %s on behalf of uid %d",
                  udisks_block_get_device (block),
@@ -1921,13 +1940,16 @@ handle_set_label (UDisksFilesystem       *filesystem,
    * will be replaced by the name of the drive/device in question
    */
   message = N_("Authentication is required to change the filesystem label on $(drive)");
-  if (udisks_block_get_hint_system (block))
+  if (!udisks_daemon_util_setup_by_user (daemon, object, caller_uid))
     {
-      action_id = "org.freedesktop.udisks2.modify-device-system";
-    }
-  else if (!udisks_daemon_util_on_same_seat (daemon, UDISKS_OBJECT (object), caller_pid))
-    {
-      action_id = "org.freedesktop.udisks2.modify-device-other-seat";
+      if (udisks_block_get_hint_system (block))
+        {
+          action_id = "org.freedesktop.udisks2.modify-device-system";
+        }
+      else if (!udisks_daemon_util_on_same_seat (daemon, UDISKS_OBJECT (object), caller_pid))
+        {
+          action_id = "org.freedesktop.udisks2.modify-device-other-seat";
+        }
     }
 
   /* Check that the user is actually authorized to change the

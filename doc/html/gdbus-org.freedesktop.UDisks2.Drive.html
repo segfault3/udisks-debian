@@ -43,10 +43,11 @@
 <a class="link" href="gdbus-org.freedesktop.UDisks2.Drive.html#gdbus-method-org-freedesktop-UDisks2-Drive.Eject" title="The Eject() method">Eject</a>            (IN  a{sv} options);
 <a class="link" href="gdbus-org.freedesktop.UDisks2.Drive.html#gdbus-method-org-freedesktop-UDisks2-Drive.SetConfiguration" title="The SetConfiguration() method">SetConfiguration</a> (IN  a{sv} value,
                   IN  a{sv} options);
+<a class="link" href="gdbus-org.freedesktop.UDisks2.Drive.html#gdbus-method-org-freedesktop-UDisks2-Drive.PowerOff" title="The PowerOff() method">PowerOff</a>         (IN  a{sv} options);
 </pre>
 </div>
 <div class="refsect1">
-<a name="idp6151360"></a><h2>Properties</h2>
+<a name="idp6247792"></a><h2>Properties</h2>
 <pre class="synopsis">
 <a class="link" href="gdbus-org.freedesktop.UDisks2.Drive.html#gdbus-property-org-freedesktop-UDisks2-Drive.Vendor" title='The "Vendor" property'>Vendor</a>                 readable   s
 <a class="link" href="gdbus-org.freedesktop.UDisks2.Drive.html#gdbus-property-org-freedesktop-UDisks2-Drive.Model" title='The "Model" property'>Model</a>                  readable   s
@@ -75,6 +76,8 @@
 <a class="link" href="gdbus-org.freedesktop.UDisks2.Drive.html#gdbus-property-org-freedesktop-UDisks2-Drive.Removable" title='The "Removable" property'>Removable</a>              readable   b
 <a class="link" href="gdbus-org.freedesktop.UDisks2.Drive.html#gdbus-property-org-freedesktop-UDisks2-Drive.Ejectable" title='The "Ejectable" property'>Ejectable</a>              readable   b
 <a class="link" href="gdbus-org.freedesktop.UDisks2.Drive.html#gdbus-property-org-freedesktop-UDisks2-Drive.SortKey" title='The "SortKey" property'>SortKey</a>                readable   s
+<a class="link" href="gdbus-org.freedesktop.UDisks2.Drive.html#gdbus-property-org-freedesktop-UDisks2-Drive.CanPowerOff" title='The "CanPowerOff" property'>CanPowerOff</a>            readable   b
+<a class="link" href="gdbus-org.freedesktop.UDisks2.Drive.html#gdbus-property-org-freedesktop-UDisks2-Drive.SiblingId" title='The "SiblingId" property'>SiblingId</a>              readable   s
 </pre>
 </div>
 <div class="refsect1">
@@ -152,6 +155,48 @@ SetConfiguration (IN  a{sv} value,
 </tr>
 </tbody>
 </table></div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="gdbus-method-org-freedesktop-UDisks2-Drive.PowerOff"></a><h3>The PowerOff() method</h3>
+<pre class="programlisting">
+PowerOff (IN  a{sv} options);
+</pre>
+<p>        Arranges for the drive to be safely removed and powered
+        off. On the OS side this includes ensuring that no process is
+        using the drive, then requesting that in-flight buffers and
+        caches are committed to stable storage. The exact steps for
+        powering off the drive depends on the drive itself and the
+        interconnect used. For drives connected through USB, the
+        effect is that the USB device will be deconfigured followed by
+        disabling the upstream hub port it is connected to.
+</p>
+<p>        Note that as some physical devices contain multiple drives
+        (for example 4-in-1 flash card reader USB devices) powering
+        off one drive may affect other drives. Applications can
+        examine the <a class="link" href="gdbus-org.freedesktop.UDisks2.Drive.html#gdbus-property-org-freedesktop-UDisks2-Drive.SiblingId" title='The "SiblingId" property'>"SiblingId"</a> property
+        to determine such relationships.
+</p>
+<p>        There are not a lot of guarantees associated with this method
+        so it should only be called in response to an user
+        action. Usually the effect is that the drive disappears as if
+        it was unplugged.
+</p>
+<p>        This method only works if the
+        <a class="link" href="gdbus-org.freedesktop.UDisks2.Drive.html#gdbus-property-org-freedesktop-UDisks2-Drive.CanPowerOff" title='The "CanPowerOff" property'>"CanPowerOff"</a> property
+        is set to <code class="constant">TRUE</code>.
+</p>
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
+<col align="left" valign="top">
+<col>
+</colgroup>
+<tbody><tr>
+<td><p><span class="term"><code class="literal">IN a{sv} <em class="parameter"><code>options</code></em></code>:</span></p></td>
+<td><p>Options (currently unused except for <a class="link" href="udisks-std-options.html" title="The options parameter">standard options</a>).</p></td>
+</tr></tbody>
+</table></div>
+<p class="since">Since 2.1</p>
 </div>
 </div>
 <div class="refsect1">
@@ -250,6 +295,12 @@ Configuration  readable   a{sv}
 <td><p><span class="term">ata-aam-level (type <code class="literal">'i'</code>)</span></p></td>
 <td><p>
                The AAM level for ATA drives (See ATA command <span class="quote">“<span class="quote">SET FEATURES</span>”</span>, sub-commands 0x42 and 0xc2).
+             </p></td>
+</tr>
+<tr>
+<td><p><span class="term">ata-write-cache-enabled (type <code class="literal">'b'</code>)</span></p></td>
+<td><p>
+               Whether the write-cache is enabled (See ATA command <span class="quote">“<span class="quote">SET FEATURES</span>”</span>, sub-commands 0x82 and 0x02). Since 2.1.
              </p></td>
 </tr>
 </tbody>
@@ -655,6 +706,31 @@ SortKey  readable   s
 </pre>
 <p>         A string that can be used for sorting drive objects.
 </p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="gdbus-property-org-freedesktop-UDisks2-Drive.CanPowerOff"></a><h3>The "CanPowerOff" property</h3>
+<pre class="programlisting">
+CanPowerOff  readable   b
+</pre>
+<p>         Whether the drive can be safely removed / powered off. See
+         the <a class="link" href="gdbus-org.freedesktop.UDisks2.Drive.html#gdbus-method-org-freedesktop-UDisks2-Drive.PowerOff" title="The PowerOff() method">PowerOff()</a> method for more
+         information.
+</p>
+<p>         See <a class="xref" href="udisks.8.html" title="udisks"><span class="refentrytitle">udisks</span>(8)</a> for how to influence the value of this property.
+</p>
+<p class="since">Since 2.1</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="gdbus-property-org-freedesktop-UDisks2-Drive.SiblingId"></a><h3>The "SiblingId" property</h3>
+<pre class="programlisting">
+SiblingId  readable   s
+</pre>
+<p>         An opaque token that, if non-blank, is used to group drives
+         that are part of the same physical device.
+</p>
+<p class="since">Since 2.1</p>
 </div>
 </div>
 </div>

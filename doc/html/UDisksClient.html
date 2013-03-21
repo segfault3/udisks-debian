@@ -7,7 +7,7 @@
 <link rel="home" href="index.html" title="UDisks Reference Manual">
 <link rel="up" href="ref-library.html" title="Part III. Library API Reference">
 <link rel="prev" href="ref-library.html" title="Part III. Library API Reference">
-<link rel="next" href="udisks2-UDisksError.html" title="UDisksError">
+<link rel="next" href="UDisksObjectInfo.html" title="UDisksObjectInfo">
 <meta name="generator" content="GTK-Doc V1.18 (XML mode)">
 <link rel="stylesheet" href="style.css" type="text/css">
 </head>
@@ -18,7 +18,7 @@
 <td><a accesskey="u" href="ref-library.html"><img src="up.png" width="24" height="24" border="0" alt="Up"></a></td>
 <td><a accesskey="h" href="index.html"><img src="home.png" width="24" height="24" border="0" alt="Home"></a></td>
 <th width="100%" align="center">UDisks Reference Manual</th>
-<td><a accesskey="n" href="udisks2-UDisksError.html"><img src="right.png" width="24" height="24" border="0" alt="Next"></a></td>
+<td><a accesskey="n" href="UDisksObjectInfo.html"><img src="right.png" width="24" height="24" border="0" alt="Next"></a></td>
 </tr>
 <tr><td colspan="5" class="shortcuts">
 <a href="#UDisksClient.synopsis" class="shortcut">Top</a>
@@ -63,9 +63,14 @@
                                                          <em class="parameter"><code>const <span class="type">gchar</span> *object_path</code></em>);
 <a class="link" href="UDisksObject.html" title="UDisksObject"><span class="returnvalue">UDisksObject</span></a> *      <a class="link" href="UDisksClient.html#udisks-client-peek-object" title="udisks_client_peek_object ()">udisks_client_peek_object</a>           (<em class="parameter"><code><a class="link" href="UDisksClient.html" title="UDisksClient"><span class="type">UDisksClient</span></a> *client</code></em>,
                                                          <em class="parameter"><code>const <span class="type">gchar</span> *object_path</code></em>);
-<span class="returnvalue">GDBusObjectManager</span> * <a class="link" href="UDisksClient.html#udisks-client-get-object-manager" title="udisks_client_get_object_manager ()">udisks_client_get_object_manager</a>   (<em class="parameter"><code><a class="link" href="UDisksClient.html" title="UDisksClient"><span class="type">UDisksClient</span></a> *client</code></em>);
+<a href="/usr/share/gtk-doc/html/gen/GDBusObjectManager.html"><span class="returnvalue">GDBusObjectManager</span></a> * <a class="link" href="UDisksClient.html#udisks-client-get-object-manager" title="udisks_client_get_object_manager ()">udisks_client_get_object_manager</a>   (<em class="parameter"><code><a class="link" href="UDisksClient.html" title="UDisksClient"><span class="type">UDisksClient</span></a> *client</code></em>);
 <a class="link" href="UDisksManager.html" title="UDisksManager"><span class="returnvalue">UDisksManager</span></a> *     <a class="link" href="UDisksClient.html#udisks-client-get-manager" title="udisks_client_get_manager ()">udisks_client_get_manager</a>           (<em class="parameter"><code><a class="link" href="UDisksClient.html" title="UDisksClient"><span class="type">UDisksClient</span></a> *client</code></em>);
 <span class="returnvalue">void</span>                <a class="link" href="UDisksClient.html#udisks-client-settle" title="udisks_client_settle ()">udisks_client_settle</a>                (<em class="parameter"><code><a class="link" href="UDisksClient.html" title="UDisksClient"><span class="type">UDisksClient</span></a> *client</code></em>);
+<span class="returnvalue">void</span>                <a class="link" href="UDisksClient.html#udisks-client-queue-changed" title="udisks_client_queue_changed ()">udisks_client_queue_changed</a>         (<em class="parameter"><code><a class="link" href="UDisksClient.html" title="UDisksClient"><span class="type">UDisksClient</span></a> *client</code></em>);
+<span class="returnvalue">GList</span> *             <a class="link" href="UDisksClient.html#udisks-client-get-jobs-for-object" title="udisks_client_get_jobs_for_object ()">udisks_client_get_jobs_for_object</a>   (<em class="parameter"><code><a class="link" href="UDisksClient.html" title="UDisksClient"><span class="type">UDisksClient</span></a> *client</code></em>,
+                                                         <em class="parameter"><code><a class="link" href="UDisksObject.html" title="UDisksObject"><span class="type">UDisksObject</span></a> *object</code></em>);
+<span class="returnvalue">gchar</span> *             <a class="link" href="UDisksClient.html#udisks-client-get-job-description" title="udisks_client_get_job_description ()">udisks_client_get_job_description</a>   (<em class="parameter"><code><a class="link" href="UDisksClient.html" title="UDisksClient"><span class="type">UDisksClient</span></a> *client</code></em>,
+                                                         <em class="parameter"><code><a class="link" href="UDisksJob.html" title="UDisksJob"><span class="type">UDisksJob</span></a> *job</code></em>);
 <a class="link" href="UDisksBlock.html" title="UDisksBlock"><span class="returnvalue">UDisksBlock</span></a> *       <a class="link" href="UDisksClient.html#udisks-client-get-block-for-dev" title="udisks_client_get_block_for_dev ()">udisks_client_get_block_for_dev</a>     (<em class="parameter"><code><a class="link" href="UDisksClient.html" title="UDisksClient"><span class="type">UDisksClient</span></a> *client</code></em>,
                                                          <em class="parameter"><code><span class="type">dev_t</span> block_device_number</code></em>);
 <span class="returnvalue">GList</span> *             <a class="link" href="UDisksClient.html#udisks-client-get-block-for-label" title="udisks_client_get_block_for_label ()">udisks_client_get_block_for_label</a>   (<em class="parameter"><code><a class="link" href="UDisksClient.html" title="UDisksClient"><span class="type">UDisksClient</span></a> *client</code></em>,
@@ -86,11 +91,20 @@
                                                          <em class="parameter"><code><a class="link" href="UDisksBlock.html" title="UDisksBlock"><span class="type">UDisksBlock</span></a> *block</code></em>);
 <span class="returnvalue">GList</span> *             <a class="link" href="UDisksClient.html#udisks-client-get-partitions" title="udisks_client_get_partitions ()">udisks_client_get_partitions</a>        (<em class="parameter"><code><a class="link" href="UDisksClient.html" title="UDisksClient"><span class="type">UDisksClient</span></a> *client</code></em>,
                                                          <em class="parameter"><code><a class="link" href="UDisksPartitionTable.html" title="UDisksPartitionTable"><span class="type">UDisksPartitionTable</span></a> *table</code></em>);
-<span class="returnvalue">GList</span> *             <a class="link" href="UDisksClient.html#udisks-client-get-jobs-for-object" title="udisks_client_get_jobs_for_object ()">udisks_client_get_jobs_for_object</a>   (<em class="parameter"><code><a class="link" href="UDisksClient.html" title="UDisksClient"><span class="type">UDisksClient</span></a> *client</code></em>,
+<span class="returnvalue">GList</span> *             <a class="link" href="UDisksClient.html#udisks-client-get-drive-siblings" title="udisks_client_get_drive_siblings ()">udisks_client_get_drive_siblings</a>    (<em class="parameter"><code><a class="link" href="UDisksClient.html" title="UDisksClient"><span class="type">UDisksClient</span></a> *client</code></em>,
+                                                         <em class="parameter"><code><a class="link" href="UDisksDrive.html" title="UDisksDrive"><span class="type">UDisksDrive</span></a> *drive</code></em>);
+<a class="link" href="UDisksBlock.html" title="UDisksBlock"><span class="returnvalue">UDisksBlock</span></a> *       <a class="link" href="UDisksClient.html#udisks-client-get-block-for-mdraid" title="udisks_client_get_block_for_mdraid ()">udisks_client_get_block_for_mdraid</a>  (<em class="parameter"><code><a class="link" href="UDisksClient.html" title="UDisksClient"><span class="type">UDisksClient</span></a> *client</code></em>,
+                                                         <em class="parameter"><code><a class="link" href="UDisksMDRaid.html" title="UDisksMDRaid"><span class="type">UDisksMDRaid</span></a> *raid</code></em>);
+<span class="returnvalue">GList</span> *             <a class="link" href="UDisksClient.html#udisks-client-get-all-blocks-for-mdraid" title="udisks_client_get_all_blocks_for_mdraid ()">udisks_client_get_all_blocks_for_mdraid</a>
+                                                        (<em class="parameter"><code><a class="link" href="UDisksClient.html" title="UDisksClient"><span class="type">UDisksClient</span></a> *client</code></em>,
+                                                         <em class="parameter"><code><a class="link" href="UDisksMDRaid.html" title="UDisksMDRaid"><span class="type">UDisksMDRaid</span></a> *raid</code></em>);
+<span class="returnvalue">GList</span> *             <a class="link" href="UDisksClient.html#udisks-client-get-members-for-mdraid" title="udisks_client_get_members_for_mdraid ()">udisks_client_get_members_for_mdraid</a>
+                                                        (<em class="parameter"><code><a class="link" href="UDisksClient.html" title="UDisksClient"><span class="type">UDisksClient</span></a> *client</code></em>,
+                                                         <em class="parameter"><code><a class="link" href="UDisksMDRaid.html" title="UDisksMDRaid"><span class="type">UDisksMDRaid</span></a> *raid</code></em>);
+<a class="link" href="UDisksMDRaid.html" title="UDisksMDRaid"><span class="returnvalue">UDisksMDRaid</span></a> *      <a class="link" href="UDisksClient.html#udisks-client-get-mdraid-for-block" title="udisks_client_get_mdraid_for_block ()">udisks_client_get_mdraid_for_block</a>  (<em class="parameter"><code><a class="link" href="UDisksClient.html" title="UDisksClient"><span class="type">UDisksClient</span></a> *client</code></em>,
+                                                         <em class="parameter"><code><a class="link" href="UDisksBlock.html" title="UDisksBlock"><span class="type">UDisksBlock</span></a> *block</code></em>);
+<a class="link" href="UDisksObjectInfo.html" title="UDisksObjectInfo"><span class="returnvalue">UDisksObjectInfo</span></a> *  <a class="link" href="UDisksClient.html#udisks-client-get-object-info" title="udisks_client_get_object_info ()">udisks_client_get_object_info</a>       (<em class="parameter"><code><a class="link" href="UDisksClient.html" title="UDisksClient"><span class="type">UDisksClient</span></a> *client</code></em>,
                                                          <em class="parameter"><code><a class="link" href="UDisksObject.html" title="UDisksObject"><span class="type">UDisksObject</span></a> *object</code></em>);
-<span class="returnvalue">gchar</span> *             <a class="link" href="UDisksClient.html#udisks-client-get-job-description" title="udisks_client_get_job_description ()">udisks_client_get_job_description</a>   (<em class="parameter"><code><a class="link" href="UDisksClient.html" title="UDisksClient"><span class="type">UDisksClient</span></a> *client</code></em>,
-                                                         <em class="parameter"><code><a class="link" href="UDisksJob.html" title="UDisksJob"><span class="type">UDisksJob</span></a> *job</code></em>);
-
 <span class="returnvalue">void</span>                <a class="link" href="UDisksClient.html#udisks-client-get-drive-info" title="udisks_client_get_drive_info ()">udisks_client_get_drive_info</a>        (<em class="parameter"><code><a class="link" href="UDisksClient.html" title="UDisksClient"><span class="type">UDisksClient</span></a> *client</code></em>,
                                                          <em class="parameter"><code><a class="link" href="UDisksDrive.html" title="UDisksDrive"><span class="type">UDisksDrive</span></a> *drive</code></em>,
                                                          <em class="parameter"><code><span class="type">gchar</span> **out_name</code></em>,
@@ -98,6 +112,7 @@
                                                          <em class="parameter"><code><span class="type">GIcon</span> **out_drive_icon</code></em>,
                                                          <em class="parameter"><code><span class="type">gchar</span> **out_media_description</code></em>,
                                                          <em class="parameter"><code><span class="type">GIcon</span> **out_media_icon</code></em>);
+
 <span class="returnvalue">gchar</span> *             <a class="link" href="UDisksClient.html#udisks-client-get-partition-info" title="udisks_client_get_partition_info ()">udisks_client_get_partition_info</a>    (<em class="parameter"><code><a class="link" href="UDisksClient.html" title="UDisksClient"><span class="type">UDisksClient</span></a> *client</code></em>,
                                                          <em class="parameter"><code><a class="link" href="UDisksPartition.html" title="UDisksPartition"><span class="type">UDisksPartition</span></a> *partition</code></em>);
 
@@ -163,7 +178,7 @@ UDisksClient implements
 <a name="UDisksClient.properties"></a><h2>Properties</h2>
 <pre class="synopsis">
   "<a class="link" href="UDisksClient.html#UDisksClient--manager" title='The "manager" property'>manager</a>"                  <a class="link" href="UDisksManager.html" title="UDisksManager"><span class="type">UDisksManager</span></a>*        : Read
-  "<a class="link" href="UDisksClient.html#UDisksClient--object-manager" title='The "object-manager" property'>object-manager</a>"           <span class="type">GDBusObjectManager</span>*   : Read
+  "<a class="link" href="UDisksClient.html#UDisksClient--object-manager" title='The "object-manager" property'>object-manager</a>"           <a href="/usr/share/gtk-doc/html/gen/GDBusObjectManager.html"><span class="type">GDBusObjectManager</span></a>*   : Read
 </pre>
 </div>
 <div class="refsect1">
@@ -192,7 +207,7 @@ The major version of the libudisks2 header files.
 <hr>
 <div class="refsect2">
 <a name="UDISKS-MINOR-VERSION:CAPS"></a><h3>UDISKS_MINOR_VERSION</h3>
-<pre class="programlisting">#define UDISKS_MINOR_VERSION 0
+<pre class="programlisting">#define UDISKS_MINOR_VERSION 1
 </pre>
 <p>
 The minor version of the libudisks2 header files.
@@ -201,7 +216,7 @@ The minor version of the libudisks2 header files.
 <hr>
 <div class="refsect2">
 <a name="UDISKS-MICRO-VERSION:CAPS"></a><h3>UDISKS_MICRO_VERSION</h3>
-<pre class="programlisting">#define UDISKS_MICRO_VERSION 1
+<pre class="programlisting">#define UDISKS_MICRO_VERSION 0
 </pre>
 <p>
 The micro version of the libudisks2 header files.
@@ -418,9 +433,9 @@ count on the returned <a class="link" href="UDisksObject.html" title="UDisksObje
 <hr>
 <div class="refsect2">
 <a name="udisks-client-get-object-manager"></a><h3>udisks_client_get_object_manager ()</h3>
-<pre class="programlisting"><span class="returnvalue">GDBusObjectManager</span> * udisks_client_get_object_manager   (<em class="parameter"><code><a class="link" href="UDisksClient.html" title="UDisksClient"><span class="type">UDisksClient</span></a> *client</code></em>);</pre>
+<pre class="programlisting"><a href="/usr/share/gtk-doc/html/gen/GDBusObjectManager.html"><span class="returnvalue">GDBusObjectManager</span></a> * udisks_client_get_object_manager   (<em class="parameter"><code><a class="link" href="UDisksClient.html" title="UDisksClient"><span class="type">UDisksClient</span></a> *client</code></em>);</pre>
 <p>
-Gets the <span class="type">GDBusObjectManager</span> used by <em class="parameter"><code>client</code></em>.
+Gets the <a href="/usr/share/gtk-doc/html/gen/GDBusObjectManager.html"><span class="type">GDBusObjectManager</span></a> used by <em class="parameter"><code>client</code></em>.
 </p>
 <div class="variablelist"><table border="0" class="variablelist">
 <colgroup>
@@ -434,7 +449,7 @@ Gets the <span class="type">GDBusObjectManager</span> used by <em class="paramet
 </tr>
 <tr>
 <td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
-<td>A <span class="type">GDBusObjectManager</span>. Do not free, the
+<td>A <a href="/usr/share/gtk-doc/html/gen/GDBusObjectManager.html"><span class="type">GDBusObjectManager</span></a>. Do not free, the
 instance is owned by <em class="parameter"><code>client</code></em>. <span class="annotation">[<a href="http://foldoc.org/transfer%20none"><span class="acronym">transfer none</span></a>]</span>
 </td>
 </tr>
@@ -494,6 +509,94 @@ a newly created object (such as the <a class="link" href="gdbus-org.freedesktop.
 <td><p><span class="term"><em class="parameter"><code>client</code></em> :</span></p></td>
 <td>A <a class="link" href="UDisksClient.html" title="UDisksClient"><span class="type">UDisksClient</span></a>.</td>
 </tr></tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="udisks-client-queue-changed"></a><h3>udisks_client_queue_changed ()</h3>
+<pre class="programlisting"><span class="returnvalue">void</span>                udisks_client_queue_changed         (<em class="parameter"><code><a class="link" href="UDisksClient.html" title="UDisksClient"><span class="type">UDisksClient</span></a> *client</code></em>);</pre>
+<p>
+Queues up a <a class="link" href="UDisksClient.html#UDisksClient-changed" title='The "changed" signal'><span class="type">"changed"</span></a> signal and rate-limit it. See
+the documentation for the <a class="link" href="UDisksClient.html#UDisksClient-changed" title='The "changed" signal'><span class="type">"changed"</span></a> property for more
+information.
+</p>
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
+<col align="left" valign="top">
+<col>
+</colgroup>
+<tbody><tr>
+<td><p><span class="term"><em class="parameter"><code>client</code></em> :</span></p></td>
+<td>A <a class="link" href="UDisksClient.html" title="UDisksClient"><span class="type">UDisksClient</span></a>.</td>
+</tr></tbody>
+</table></div>
+<p class="since">Since 2.1</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="udisks-client-get-jobs-for-object"></a><h3>udisks_client_get_jobs_for_object ()</h3>
+<pre class="programlisting"><span class="returnvalue">GList</span> *             udisks_client_get_jobs_for_object   (<em class="parameter"><code><a class="link" href="UDisksClient.html" title="UDisksClient"><span class="type">UDisksClient</span></a> *client</code></em>,
+                                                         <em class="parameter"><code><a class="link" href="UDisksObject.html" title="UDisksObject"><span class="type">UDisksObject</span></a> *object</code></em>);</pre>
+<p>
+Gets all the <a class="link" href="UDisksJob.html" title="UDisksJob"><span class="type">UDisksJob</span></a> instances that reference <em class="parameter"><code>object</code></em>, if any.
+</p>
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
+<col align="left" valign="top">
+<col>
+</colgroup>
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>client</code></em> :</span></p></td>
+<td>A <a class="link" href="UDisksClient.html" title="UDisksClient"><span class="type">UDisksClient</span></a>.</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>object</code></em> :</span></p></td>
+<td>A <a class="link" href="UDisksObject.html" title="UDisksObject"><span class="type">UDisksObject</span></a>.</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td>A list of <a class="link" href="UDisksJob.html" title="UDisksJob"><span class="type">UDisksJob</span></a> instances. The
+returned list should be freed with <code class="function">g_list_free()</code> after each
+element has been freed with <code class="function">g_object_unref()</code>. <span class="annotation">[<a href="http://foldoc.org/transfer%20full"><span class="acronym">transfer full</span></a>][<a href="http://foldoc.org/element-type"><span class="acronym">element-type</span></a> UDisksJob]</span>
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="udisks-client-get-job-description"></a><h3>udisks_client_get_job_description ()</h3>
+<pre class="programlisting"><span class="returnvalue">gchar</span> *             udisks_client_get_job_description   (<em class="parameter"><code><a class="link" href="UDisksClient.html" title="UDisksClient"><span class="type">UDisksClient</span></a> *client</code></em>,
+                                                         <em class="parameter"><code><a class="link" href="UDisksJob.html" title="UDisksJob"><span class="type">UDisksJob</span></a> *job</code></em>);</pre>
+<p>
+Gets a human-readable and localized text string describing the
+operation of <em class="parameter"><code>job</code></em>.
+</p>
+<p>
+For known job types, see the documentation for the
+<a class="link" href="gdbus-org.freedesktop.UDisks2.Job.html#gdbus-property-org-freedesktop-UDisks2-Job.Operation" title='The "Operation" property'>Job:Operation</a>
+D-Bus property.
+</p>
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
+<col align="left" valign="top">
+<col>
+</colgroup>
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>client</code></em> :</span></p></td>
+<td>A <a class="link" href="UDisksClient.html" title="UDisksClient"><span class="type">UDisksClient</span></a>.</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>job</code></em> :</span></p></td>
+<td>A <a class="link" href="UDisksJob.html" title="UDisksJob"><span class="type">UDisksJob</span></a>.</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td>A string that should be freed with <code class="function">g_free()</code>.</td>
+</tr>
+</tbody>
 </table></div>
 </div>
 <hr>
@@ -800,11 +903,195 @@ element has been freed with <code class="function">g_object_unref()</code>. <spa
 </div>
 <hr>
 <div class="refsect2">
-<a name="udisks-client-get-jobs-for-object"></a><h3>udisks_client_get_jobs_for_object ()</h3>
-<pre class="programlisting"><span class="returnvalue">GList</span> *             udisks_client_get_jobs_for_object   (<em class="parameter"><code><a class="link" href="UDisksClient.html" title="UDisksClient"><span class="type">UDisksClient</span></a> *client</code></em>,
+<a name="udisks-client-get-drive-siblings"></a><h3>udisks_client_get_drive_siblings ()</h3>
+<pre class="programlisting"><span class="returnvalue">GList</span> *             udisks_client_get_drive_siblings    (<em class="parameter"><code><a class="link" href="UDisksClient.html" title="UDisksClient"><span class="type">UDisksClient</span></a> *client</code></em>,
+                                                         <em class="parameter"><code><a class="link" href="UDisksDrive.html" title="UDisksDrive"><span class="type">UDisksDrive</span></a> *drive</code></em>);</pre>
+<p>
+Gets all siblings for <em class="parameter"><code>drive</code></em>.
+</p>
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
+<col align="left" valign="top">
+<col>
+</colgroup>
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>client</code></em> :</span></p></td>
+<td>A <a class="link" href="UDisksClient.html" title="UDisksClient"><span class="type">UDisksClient</span></a>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>drive</code></em> :</span></p></td>
+<td>A <a class="link" href="UDisksDrive.html" title="UDisksDrive"><span class="type">UDisksDrive</span></a>.</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td>A list of <a class="link" href="UDisksDrive.html" title="UDisksDrive"><span class="type">UDisksDrive</span></a> instances. The
+returned list should be freed with <code class="function">g_list_free()</code> after each element has been
+freed with <code class="function">g_object_unref()</code>. <span class="annotation">[<a href="http://foldoc.org/transfer%20full"><span class="acronym">transfer full</span></a>][<a href="http://foldoc.org/element-type"><span class="acronym">element-type</span></a> UDisksDrive]</span>
+</td>
+</tr>
+</tbody>
+</table></div>
+<p class="since">Since 2.1</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="udisks-client-get-block-for-mdraid"></a><h3>udisks_client_get_block_for_mdraid ()</h3>
+<pre class="programlisting"><a class="link" href="UDisksBlock.html" title="UDisksBlock"><span class="returnvalue">UDisksBlock</span></a> *       udisks_client_get_block_for_mdraid  (<em class="parameter"><code><a class="link" href="UDisksClient.html" title="UDisksClient"><span class="type">UDisksClient</span></a> *client</code></em>,
+                                                         <em class="parameter"><code><a class="link" href="UDisksMDRaid.html" title="UDisksMDRaid"><span class="type">UDisksMDRaid</span></a> *raid</code></em>);</pre>
+<p>
+Gets the RAID device (e.g. <code class="filename">/dev/md0</code>) for <em class="parameter"><code>raid</code></em>.
+</p>
+<p>
+In the case of a <a class="ulink" href="http://en.wikipedia.org/wiki/Split-brain_(computing)" target="_top">split-brain
+syndrome</a>, it is undefined which RAID device is
+returned. For example this can happen if
+<code class="filename">/dev/sda</code> and <code class="filename">/dev/sdb</code> are
+components of a two-disk RAID-1 and <code class="filename">/dev/md0</code>
+and <code class="filename">/dev/md1</code> are two degraded arrays, each one
+using exactly one of the two devices. Use
+<a class="link" href="UDisksClient.html#udisks-client-get-all-blocks-for-mdraid" title="udisks_client_get_all_blocks_for_mdraid ()"><code class="function">udisks_client_get_all_blocks_for_mdraid()</code></a> to get all RAID devices.
+</p>
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
+<col align="left" valign="top">
+<col>
+</colgroup>
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>client</code></em> :</span></p></td>
+<td>A <a class="link" href="UDisksClient.html" title="UDisksClient"><span class="type">UDisksClient</span></a>.</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>raid</code></em> :</span></p></td>
+<td>A <a class="link" href="UDisksMDRaid.html" title="UDisksMDRaid"><span class="type">UDisksMDRaid</span></a>.</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td>A <a class="link" href="UDisksBlock.html" title="UDisksBlock"><span class="type">UDisksBlock</span></a> or <code class="literal">NULL</code> if no RAID device is running. <span class="annotation">[<a href="http://foldoc.org/transfer%20full"><span class="acronym">transfer full</span></a>]</span>
+</td>
+</tr>
+</tbody>
+</table></div>
+<p class="since">Since 2.1</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="udisks-client-get-all-blocks-for-mdraid"></a><h3>udisks_client_get_all_blocks_for_mdraid ()</h3>
+<pre class="programlisting"><span class="returnvalue">GList</span> *             udisks_client_get_all_blocks_for_mdraid
+                                                        (<em class="parameter"><code><a class="link" href="UDisksClient.html" title="UDisksClient"><span class="type">UDisksClient</span></a> *client</code></em>,
+                                                         <em class="parameter"><code><a class="link" href="UDisksMDRaid.html" title="UDisksMDRaid"><span class="type">UDisksMDRaid</span></a> *raid</code></em>);</pre>
+<p>
+Gets all RAID devices (e.g. <code class="filename">/dev/md0</code> and <code class="filename">/dev/md1</code>) for <em class="parameter"><code>raid</code></em>.
+</p>
+<p>
+This is usually only useful in <a class="ulink" href="http://en.wikipedia.org/wiki/Split-brain_(computing)" target="_top">split-brain
+situations</a> — see <a class="link" href="UDisksClient.html#udisks-client-get-block-for-mdraid" title="udisks_client_get_block_for_mdraid ()"><code class="function">udisks_client_get_block_for_mdraid()</code></a> for
+an example — and is normally used only to convey the problem in an
+user interface.
+</p>
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
+<col align="left" valign="top">
+<col>
+</colgroup>
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>client</code></em> :</span></p></td>
+<td>A <a class="link" href="UDisksClient.html" title="UDisksClient"><span class="type">UDisksClient</span></a>.</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>raid</code></em> :</span></p></td>
+<td>A <a class="link" href="UDisksMDRaid.html" title="UDisksMDRaid"><span class="type">UDisksMDRaid</span></a>.</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td>A list of <a class="link" href="UDisksBlock.html" title="UDisksBlock"><span class="type">UDisksBlock</span></a> instances. The
+returned list should be freed with <code class="function">g_list_free()</code> after each
+element has been freed with <code class="function">g_object_unref()</code>. <span class="annotation">[<a href="http://foldoc.org/transfer%20full"><span class="acronym">transfer full</span></a>][<a href="http://foldoc.org/element-type"><span class="acronym">element-type</span></a> UDisksBlock]</span>
+</td>
+</tr>
+</tbody>
+</table></div>
+<p class="since">Since 2.1</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="udisks-client-get-members-for-mdraid"></a><h3>udisks_client_get_members_for_mdraid ()</h3>
+<pre class="programlisting"><span class="returnvalue">GList</span> *             udisks_client_get_members_for_mdraid
+                                                        (<em class="parameter"><code><a class="link" href="UDisksClient.html" title="UDisksClient"><span class="type">UDisksClient</span></a> *client</code></em>,
+                                                         <em class="parameter"><code><a class="link" href="UDisksMDRaid.html" title="UDisksMDRaid"><span class="type">UDisksMDRaid</span></a> *raid</code></em>);</pre>
+<p>
+Gets the physical block devices that are part of <em class="parameter"><code>raid</code></em>.
+</p>
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
+<col align="left" valign="top">
+<col>
+</colgroup>
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>client</code></em> :</span></p></td>
+<td>A <a class="link" href="UDisksClient.html" title="UDisksClient"><span class="type">UDisksClient</span></a>.</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>raid</code></em> :</span></p></td>
+<td>A <a class="link" href="UDisksMDRaid.html" title="UDisksMDRaid"><span class="type">UDisksMDRaid</span></a>.</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td>A list of <a class="link" href="UDisksBlock.html" title="UDisksBlock"><span class="type">UDisksBlock</span></a> instances. The
+returned list should be freed with <code class="function">g_list_free()</code> after each
+element has been freed with <code class="function">g_object_unref()</code>. <span class="annotation">[<a href="http://foldoc.org/transfer%20full"><span class="acronym">transfer full</span></a>][<a href="http://foldoc.org/element-type"><span class="acronym">element-type</span></a> UDisksBlock]</span>
+</td>
+</tr>
+</tbody>
+</table></div>
+<p class="since">Since 2.1</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="udisks-client-get-mdraid-for-block"></a><h3>udisks_client_get_mdraid_for_block ()</h3>
+<pre class="programlisting"><a class="link" href="UDisksMDRaid.html" title="UDisksMDRaid"><span class="returnvalue">UDisksMDRaid</span></a> *      udisks_client_get_mdraid_for_block  (<em class="parameter"><code><a class="link" href="UDisksClient.html" title="UDisksClient"><span class="type">UDisksClient</span></a> *client</code></em>,
+                                                         <em class="parameter"><code><a class="link" href="UDisksBlock.html" title="UDisksBlock"><span class="type">UDisksBlock</span></a> *block</code></em>);</pre>
+<p>
+Gets the <a class="link" href="UDisksMDRaid.html" title="UDisksMDRaid"><span class="type">UDisksMDRaid</span></a> that <em class="parameter"><code>block</code></em> is the block device for, if any.
+</p>
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
+<col align="left" valign="top">
+<col>
+</colgroup>
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>client</code></em> :</span></p></td>
+<td>A <a class="link" href="UDisksClient.html" title="UDisksClient"><span class="type">UDisksClient</span></a>.</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>block</code></em> :</span></p></td>
+<td>A <a class="link" href="UDisksBlock.html" title="UDisksBlock"><span class="type">UDisksBlock</span></a>.</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td>A <a class="link" href="UDisksMDRaid.html" title="UDisksMDRaid"><span class="type">UDisksMDRaid</span></a> or <code class="literal">NULL</code> if there is no
+<a class="link" href="UDisksMDRaid.html" title="UDisksMDRaid"><span class="type">UDisksMDRaid</span></a> for <em class="parameter"><code>block</code></em> or <em class="parameter"><code>block</code></em> is not a MD-RAID block
+device. Free the returned object with <code class="function">g_object_unref()</code>. <span class="annotation">[<a href="http://foldoc.org/transfer%20full"><span class="acronym">transfer full</span></a>]</span>
+</td>
+</tr>
+</tbody>
+</table></div>
+<p class="since">Since 2.1</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="udisks-client-get-object-info"></a><h3>udisks_client_get_object_info ()</h3>
+<pre class="programlisting"><a class="link" href="UDisksObjectInfo.html" title="UDisksObjectInfo"><span class="returnvalue">UDisksObjectInfo</span></a> *  udisks_client_get_object_info       (<em class="parameter"><code><a class="link" href="UDisksClient.html" title="UDisksClient"><span class="type">UDisksClient</span></a> *client</code></em>,
                                                          <em class="parameter"><code><a class="link" href="UDisksObject.html" title="UDisksObject"><span class="type">UDisksObject</span></a> *object</code></em>);</pre>
 <p>
-Gets all the <a class="link" href="UDisksJob.html" title="UDisksJob"><span class="type">UDisksJob</span></a> instances that reference <em class="parameter"><code>object</code></em>, if any.
+Gets information about a <a class="link" href="UDisksObject.html" title="UDisksObject"><span class="type">UDisksObject</span></a> instance that is suitable to
+present in an user interface. Information is returned in the
+<a class="link" href="UDisksObjectInfo.html" title="UDisksObjectInfo"><span class="type">UDisksObjectInfo</span></a> object and is localized.
 </p>
 <div class="variablelist"><table border="0" class="variablelist">
 <colgroup>
@@ -822,43 +1109,12 @@ Gets all the <a class="link" href="UDisksJob.html" title="UDisksJob"><span class
 </tr>
 <tr>
 <td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
-<td>A list of <a class="link" href="UDisksJob.html" title="UDisksJob"><span class="type">UDisksJob</span></a> instances. The
-returned list should be freed with <code class="function">g_list_free()</code> after each
-element has been freed with <code class="function">g_object_unref()</code>. <span class="annotation">[<a href="http://foldoc.org/transfer%20full"><span class="acronym">transfer full</span></a>][<a href="http://foldoc.org/element-type"><span class="acronym">element-type</span></a> UDisksJob]</span>
+<td>A <a class="link" href="UDisksObjectInfo.html" title="UDisksObjectInfo"><span class="type">UDisksObjectInfo</span></a> instance that should be freed with <code class="function">g_object_unref()</code>. <span class="annotation">[<a href="http://foldoc.org/transfer%20full"><span class="acronym">transfer full</span></a>]</span>
 </td>
 </tr>
 </tbody>
 </table></div>
-</div>
-<hr>
-<div class="refsect2">
-<a name="udisks-client-get-job-description"></a><h3>udisks_client_get_job_description ()</h3>
-<pre class="programlisting"><span class="returnvalue">gchar</span> *             udisks_client_get_job_description   (<em class="parameter"><code><a class="link" href="UDisksClient.html" title="UDisksClient"><span class="type">UDisksClient</span></a> *client</code></em>,
-                                                         <em class="parameter"><code><a class="link" href="UDisksJob.html" title="UDisksJob"><span class="type">UDisksJob</span></a> *job</code></em>);</pre>
-<p>
-Gets a human-readable and localized text string describing the
-operation of <em class="parameter"><code>job</code></em>.
-</p>
-<div class="variablelist"><table border="0" class="variablelist">
-<colgroup>
-<col align="left" valign="top">
-<col>
-</colgroup>
-<tbody>
-<tr>
-<td><p><span class="term"><em class="parameter"><code>client</code></em> :</span></p></td>
-<td>A <a class="link" href="UDisksClient.html" title="UDisksClient"><span class="type">UDisksClient</span></a>.</td>
-</tr>
-<tr>
-<td><p><span class="term"><em class="parameter"><code>job</code></em> :</span></p></td>
-<td>A <a class="link" href="UDisksJob.html" title="UDisksJob"><span class="type">UDisksJob</span></a>.</td>
-</tr>
-<tr>
-<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
-<td>A string that should be freed with <code class="function">g_free()</code>.</td>
-</tr>
-</tbody>
-</table></div>
+<p class="since">Since 2.1</p>
 </div>
 <hr>
 <div class="refsect2">
@@ -870,147 +1126,13 @@ operation of <em class="parameter"><code>job</code></em>.
                                                          <em class="parameter"><code><span class="type">GIcon</span> **out_drive_icon</code></em>,
                                                          <em class="parameter"><code><span class="type">gchar</span> **out_media_description</code></em>,
                                                          <em class="parameter"><code><span class="type">GIcon</span> **out_media_icon</code></em>);</pre>
+<div class="warning" style="margin-left: 0.5in; margin-right: 0.5in;">
+<h3 class="title">Warning</h3>
+<p><code class="literal">udisks_client_get_drive_info</code> has been deprecated since version 2.1 and should not be used in newly-written code. Use <a class="link" href="UDisksClient.html#udisks-client-get-object-info" title="udisks_client_get_object_info ()"><code class="function">udisks_client_get_object_info()</code></a> instead.</p>
+</div>
 <p>
 Gets information about a <a class="link" href="UDisksDrive.html" title="UDisksDrive"><span class="type">UDisksDrive</span></a> object that is suitable to
 present in an user interface. The returned strings are localized.
-</p>
-<p>
-If there is no media in <em class="parameter"><code>drive</code></em>, then <em class="parameter"><code>out_media_icon</code></em> is set to the
-same value as <em class="parameter"><code>out_drive_icon</code></em>.
-</p>
-<p>
-If the <em class="parameter"><code>drive</code></em> doesn't support removable media or if no media is
-available, then <code class="literal">NULL</code> is always returned for <em class="parameter"><code>out_media_description</code></em>
-and <em class="parameter"><code>out_media_icon</code></em>.
-</p>
-<p>
-If the <a class="link" href="gdbus-org.freedesktop.UDisks2.Block.html#gdbus-property-org-freedesktop-UDisks2-Block.HintName" title='The "HintName" property'>HintName</a>
-and/or
-<a class="link" href="gdbus-org.freedesktop.UDisks2.Block.html#gdbus-property-org-freedesktop-UDisks2-Block.HintName" title='The "HintName" property'>HintIconName</a>
-properties on the block device for <em class="parameter"><code>drive</code></em> are set (see <a class="xref" href="udisks.8.html" title="udisks"><span class="refentrytitle">udisks</span>(8)</a>),
-their values are returned in the drive and media
-description and icon (e.g. <em class="parameter"><code>out_description</code></em>, <em class="parameter"><code>out_drive_icon</code></em>, <em class="parameter"><code>out_media_description</code></em> and <em class="parameter"><code>out_media_icon</code></em>).
-</p>
-<p>
-The returned data is best described by example:
-</p>
-<div class="informaltable"><table border="1">
-<colgroup>
-<col>
-<col>
-<col>
-<col>
-<col>
-<col>
-</colgroup>
-<thead><tr>
-<th>Device / Media</th>
-<th>name</th>
-<th>description</th>
-<th>icon</th>
-<th>media_description</th>
-<th>media_icon</th>
-</tr></thead>
-<tbody>
-<tr>
-<td>USB Thumb Drive</td>
-<td>Kingston DataTraveler 2.0</td>
-<td>4.0 GB Thumb Drive</td>
-<td>media-removable</td>
-<td>NULL</td>
-<td>NULL</td>
-</tr>
-<tr>
-<td>Internal System Disk (Hard Disk)</td>
-<td>ST3320620AS</td>
-<td>320 GB Hard Disk</td>
-<td>drive-harddisk</td>
-<td>NULL</td>
-<td>NULL</td>
-</tr>
-<tr>
-<td>Internal System Disk (Solid State)</td>
-<td>INTEL SSDSA2MH080G1GC</td>
-<td>80 GB Disk</td>
-<td>drive-harddisk</td>
-<td>NULL</td>
-<td>NULL</td>
-</tr>
-<tr>
-<td>Optical Drive (empty)</td>
-<td>LITE-ON DVDRW SOHW-812S</td>
-<td>CD/DVD Drive</td>
-<td>drive-optical</td>
-<td>NULL</td>
-<td>NULL</td>
-</tr>
-<tr>
-<td>Optical Drive (with CD-ROM data disc)</td>
-<td>LITE-ON DVDRW SOHW-812S</td>
-<td>CD/DVD Drive</td>
-<td>drive-optical</td>
-<td>CD-ROM Disc</td>
-<td>media-optical-cd-rom</td>
-</tr>
-<tr>
-<td>Optical Drive (with mixed disc)</td>
-<td>LITE-ON DVDRW SOHW-812S</td>
-<td>CD/DVD Drive</td>
-<td>drive-optical</td>
-<td>Audio/Data CD-ROM Disc</td>
-<td>media-optical-cd-rom</td>
-</tr>
-<tr>
-<td>Optical Drive (with audio disc)</td>
-<td>LITE-ON DVDRW SOHW-812S</td>
-<td>CD/DVD Drive</td>
-<td>drive-optical</td>
-<td>Audio Disc</td>
-<td>media-optical-cd-audio</td>
-</tr>
-<tr>
-<td>Optical Drive (with DVD-ROM disc)</td>
-<td>LITE-ON DVDRW SOHW-812S</td>
-<td>CD/DVD Drive</td>
-<td>drive-optical</td>
-<td>DVD-ROM Disc</td>
-<td>media-optical-dvd-rom</td>
-</tr>
-<tr>
-<td>Optical Drive (with blank DVD-R disc)</td>
-<td>LITE-ON DVDRW SOHW-812S</td>
-<td>CD/DVD Drive</td>
-<td>drive-optical</td>
-<td>Blank DVD-R Disc</td>
-<td>media-optical-dvd-r</td>
-</tr>
-<tr>
-<td>External USB Hard Disk</td>
-<td>WD 2500JB External</td>
-<td>250 GB Hard Disk</td>
-<td>drive-harddisk-usb</td>
-<td>NULL</td>
-<td>NULL</td>
-</tr>
-<tr>
-<td>USB Compact Flash Reader (without media)</td>
-<td>BELKIN USB 2 HS-CF</td>
-<td>Compact Flash Drive</td>
-<td>drive-removable-media-flash-cf</td>
-<td>NULL</td>
-<td>NULL</td>
-</tr>
-<tr>
-<td>USB Compact Flash Reader (with media)</td>
-<td>BELKIN USB 2 HS-CF</td>
-<td>Compact Flash Drive</td>
-<td>drive-removable-media-flash-cf</td>
-<td>Compact Flash media</td>
-<td>media-flash-cf</td>
-</tr>
-</tbody>
-</table></div>
-<p>
 </p>
 <div class="variablelist"><table border="0" class="variablelist">
 <colgroup>
@@ -1223,7 +1345,8 @@ Detailed information about a partition type.
 user interfaces where the partition type is selected.
 </p>
 <p>
-This struct may grow in the future.
+This struct may grow in the future without it being considered an
+ABI break.
 </p>
 <div class="variablelist"><table border="0" class="variablelist">
 <colgroup>
@@ -1507,9 +1630,9 @@ The <a class="link" href="UDisksManager.html" title="UDisksManager"><span class=
 <hr>
 <div class="refsect2">
 <a name="UDisksClient--object-manager"></a><h3>The <code class="literal">"object-manager"</code> property</h3>
-<pre class="programlisting">  "object-manager"           <span class="type">GDBusObjectManager</span>*   : Read</pre>
+<pre class="programlisting">  "object-manager"           <a href="/usr/share/gtk-doc/html/gen/GDBusObjectManager.html"><span class="type">GDBusObjectManager</span></a>*   : Read</pre>
 <p>
-The <span class="type">GDBusObjectManager</span> used by the <a class="link" href="UDisksClient.html" title="UDisksClient"><span class="type">UDisksClient</span></a> instance.
+The <a href="/usr/share/gtk-doc/html/gen/GDBusObjectManager.html"><span class="type">GDBusObjectManager</span></a> used by the <a class="link" href="UDisksClient.html" title="UDisksClient"><span class="type">UDisksClient</span></a> instance.
 </p>
 </div>
 </div>

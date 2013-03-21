@@ -24,6 +24,12 @@
 #include "udisksclient.h"
 #include "udiskserror.h"
 #include "udisks-generated.h"
+#include "udisksobjectinfo.h"
+
+/* For __GNUC_PREREQ usage below */
+#ifdef __GNUC__
+# include <features.h>
+#endif
 
 /**
  * SECTION:udisksclient
@@ -807,535 +813,227 @@ udisks_client_get_drive_for_block (UDisksClient  *client,
 
 /* ---------------------------------------------------------------------------------------------------- */
 
-typedef enum
+/**
+ * udisks_client_get_mdraid_for_block:
+ * @client: A #UDisksClient.
+ * @block: A #UDisksBlock.
+ *
+ * Gets the #UDisksMDRaid that @block is the block device for, if any.
+ *
+ * Returns: (transfer full): A #UDisksMDRaid or %NULL if there is no
+ *   #UDisksMDRaid for @block or @block is not a MD-RAID block
+ *   device. Free the returned object with g_object_unref().
+ *
+ * Since: 2.1
+ */
+UDisksMDRaid *
+udisks_client_get_mdraid_for_block (UDisksClient  *client,
+                                    UDisksBlock   *block)
 {
-  DRIVE_TYPE_UNSET,
-  DRIVE_TYPE_DRIVE,
-  DRIVE_TYPE_DISK,
-  DRIVE_TYPE_CARD,
-  DRIVE_TYPE_DISC
-} DriveType;
+  UDisksMDRaid *ret = NULL;
+  GDBusObject *object;
 
-static const struct
-{
-  const gchar *id;
-  const gchar *media_name;
-  const gchar *media_family;
-  const gchar *media_icon;
-  DriveType    media_type;
-  const gchar *drive_icon;
-} media_data[] =
-{
-  /* Translators: 'Thumb' here refers to "USB thumb drive", see http://en.wikipedia.org/wiki/Thumb_drive */
-  {"thumb",      NC_("media-type", "Thumb"),        NC_("media-type", "Thumb"),        "media-removable",   DRIVE_TYPE_DRIVE, "media-removable"},
+  g_return_val_if_fail (UDISKS_IS_CLIENT (client), NULL);
+  g_return_val_if_fail (UDISKS_IS_BLOCK (block), NULL);
 
-  {"floppy",     NC_("media-type", "Floppy"),       NC_("media-type", "Floppy"), "media-floppy",      DRIVE_TYPE_DISK, "drive-removable-media-floppy"},
-  {"floppy_zip", NC_("media-type", "Zip"),          NC_("media-type", "Zip"),    "media-floppy-jaz",  DRIVE_TYPE_DISK, "drive-removable-media-floppy-jaz"},
-  {"floppy_jaz", NC_("media-type", "Jaz"),          NC_("media-type", "Jaz"),    "media-floppy-zip",  DRIVE_TYPE_DISK, "drive-removable-media-floppy-zip"},
-
-  {"flash",      NC_("media-type", "Flash"),        NC_("media-type", "Flash"),        "media-flash",       DRIVE_TYPE_CARD, "drive-removable-media-flash"},
-  {"flash_ms",   NC_("media-type", "MemoryStick"),  NC_("media-type", "MemoryStick"),  "media-flash-ms",    DRIVE_TYPE_CARD, "drive-removable-media-flash-ms"},
-  {"flash_sm",   NC_("media-type", "SmartMedia"),   NC_("media-type", "SmartMedia"),   "media-flash-sm",    DRIVE_TYPE_CARD, "drive-removable-media-flash-sm"},
-  {"flash_cf",   NC_("media-type", "CompactFlash"), NC_("media-type", "CompactFlash"), "media-flash-cf",    DRIVE_TYPE_CARD, "drive-removable-media-flash-cf"},
-  {"flash_mmc",  NC_("media-type", "MMC"),          NC_("media-type", "SD"),           "media-flash-mmc",   DRIVE_TYPE_CARD, "drive-removable-media-flash-mmc"},
-  {"flash_sd",   NC_("media-type", "SD"),           NC_("media-type", "SD"),           "media-flash-sd",    DRIVE_TYPE_CARD, "drive-removable-media-flash-sd"},
-  {"flash_sdxc", NC_("media-type", "SDXC"),         NC_("media-type", "SD"),           "media-flash-sd-xc", DRIVE_TYPE_CARD, "drive-removable-media-flash-sd-xc"},
-  {"flash_sdhc", NC_("media-type", "SDHC"),         NC_("media-type", "SD"),           "media-flash-sd-hc", DRIVE_TYPE_CARD, "drive-removable-media-flash-sd-hc"},
-
-  {"optical_cd",             NC_("media-type", "CD-ROM"),    NC_("media-type", "CD"),      "media-optical-cd-rom",        DRIVE_TYPE_DISC, "drive-optical"},
-  {"optical_cd_r",           NC_("media-type", "CD-R"),      NC_("media-type", "CD"),      "media-optical-cd-r",          DRIVE_TYPE_DISC, "drive-optical-recorder"},
-  {"optical_cd_rw",          NC_("media-type", "CD-RW"),     NC_("media-type", "CD"),      "media-optical-cd-rw",         DRIVE_TYPE_DISC, "drive-optical-recorder"},
-  {"optical_dvd",            NC_("media-type", "DVD"),       NC_("media-type", "DVD"),     "media-optical-dvd-rom",       DRIVE_TYPE_DISC, "drive-optical"},
-  {"optical_dvd_r",          NC_("media-type", "DVD-R"),     NC_("media-type", "DVD"),     "media-optical-dvd-r",         DRIVE_TYPE_DISC, "drive-optical-recorder"},
-  {"optical_dvd_rw",         NC_("media-type", "DVD-RW"),    NC_("media-type", "DVD"),     "media-optical-dvd-rw",        DRIVE_TYPE_DISC, "drive-optical-recorder"},
-  {"optical_dvd_ram",        NC_("media-type", "DVD-RAM"),   NC_("media-type", "DVD"),     "media-optical-dvd-ram",       DRIVE_TYPE_DISC, "drive-optical-recorder"},
-  {"optical_dvd_plus_r",     NC_("media-type", "DVD+R"),     NC_("media-type", "DVD"),     "media-optical-dvd-r-plus",    DRIVE_TYPE_DISC, "drive-optical-recorder"},
-  {"optical_dvd_plus_rw",    NC_("media-type", "DVD+RW"),    NC_("media-type", "DVD"),     "media-optical-dvd-rw-plus",   DRIVE_TYPE_DISC, "drive-optical-recorder"},
-  {"optical_dvd_plus_r_dl",  NC_("media-type", "DVD+R DL"),  NC_("media-type", "DVD"),     "media-optical-dvd-dl-r-plus", DRIVE_TYPE_DISC, "drive-optical-recorder"},
-  {"optical_dvd_plus_rw_dl", NC_("media-type", "DVD+RW DL"), NC_("media-type", "DVD"),     "media-optical-dvd-dl-r-plus", DRIVE_TYPE_DISC, "drive-optical-recorder"},
-  {"optical_bd",             NC_("media-type", "BD-ROM"),    NC_("media-type", "Blu-Ray"), "media-optical-bd-rom",        DRIVE_TYPE_DISC, "drive-optical"},
-  {"optical_bd_r",           NC_("media-type", "BD-R"),      NC_("media-type", "Blu-Ray"), "media-optical-bd-r",          DRIVE_TYPE_DISC, "drive-optical-recorder"},
-  {"optical_bd_re",          NC_("media-type", "BD-RE"),     NC_("media-type", "Blu-Ray"), "media-optical-bd-re",         DRIVE_TYPE_DISC, "drive-optical-recorder"},
-  {"optical_hddvd",          NC_("media-type", "HDDVD"),     NC_("media-type", "HDDVD"),   "media-optical-hddvd-rom",     DRIVE_TYPE_DISC, "drive-optical"},
-  {"optical_hddvd_r",        NC_("media-type", "HDDVD-R"),   NC_("media-type", "HDDVD"),   "media-optical-hddvd-r",       DRIVE_TYPE_DISC, "drive-optical-recorder"},
-  {"optical_hddvd_rw",       NC_("media-type", "HDDVD-RW"),  NC_("media-type", "HDDVD"),   "media-optical-hddvd-rw",      DRIVE_TYPE_DISC, "drive-optical-recorder"},
-  {"optical_mo",             NC_("media-type", "MO"),        NC_("media-type", "CD"),      "media-optical-mo",            DRIVE_TYPE_DISC, "drive-optical"},
-  {"optical_mrw",            NC_("media-type", "MRW"),       NC_("media-type", "CD"),      "media-optical-mrw",           DRIVE_TYPE_DISC, "drive-optical-recorder"},
-  {"optical_mrw_w",          NC_("media-type", "MRW-W"),     NC_("media-type", "CD"),      "media-optical-mrw-w",         DRIVE_TYPE_DISC, "drive-optical-recorder"},
-};
+  object = g_dbus_object_manager_get_object (client->object_manager, udisks_block_get_mdraid (block));
+  if (object != NULL)
+    ret = udisks_object_get_mdraid (UDISKS_OBJECT (object));
+  return ret;
+}
 
 /* ---------------------------------------------------------------------------------------------------- */
 
-static gboolean
-strv_has (const gchar * const *haystack,
-          const gchar          *needle)
+/**
+ * udisks_client_get_block_for_mdraid:
+ * @client: A #UDisksClient.
+ * @raid: A #UDisksMDRaid.
+ *
+ * Gets the RAID device (e.g. <filename>/dev/md0</filename>) for @raid.
+ *
+ * In the case of a <ulink
+ * url="http://en.wikipedia.org/wiki/Split-brain_(computing)">split-brain
+ * syndrome</ulink>, it is undefined which RAID device is
+ * returned. For example this can happen if
+ * <filename>/dev/sda</filename> and <filename>/dev/sdb</filename> are
+ * components of a two-disk RAID-1 and <filename>/dev/md0</filename>
+ * and <filename>/dev/md1</filename> are two degraded arrays, each one
+ * using exactly one of the two devices. Use
+ * udisks_client_get_all_blocks_for_mdraid() to get all RAID devices.
+ *
+ * Returns: (transfer full): A #UDisksBlock or %NULL if no RAID device is running.
+ *
+ * Since: 2.1
+ */
+UDisksBlock *
+udisks_client_get_block_for_mdraid (UDisksClient *client,
+                                    UDisksMDRaid *raid)
 {
-  gboolean ret;
-  guint n;
+  UDisksBlock *ret = NULL;
+  GList *l, *object_proxies = NULL;
+  GDBusObject *raid_object;
+  const gchar *raid_objpath;
 
-  ret = FALSE;
+  g_return_val_if_fail (UDISKS_IS_CLIENT (client), NULL);
+  g_return_val_if_fail (UDISKS_IS_MDRAID (raid), NULL);
 
-  for (n = 0; haystack != NULL && haystack[n] != NULL; n++)
+  raid_object = g_dbus_interface_get_object (G_DBUS_INTERFACE (raid));
+  if (raid_object == NULL)
+    goto out;
+
+  raid_objpath = g_dbus_object_get_object_path (raid_object);
+
+  object_proxies = g_dbus_object_manager_get_objects (client->object_manager);
+  for (l = object_proxies; l != NULL; l = l->next)
     {
-      if (g_strcmp0 (haystack[n], needle) == 0)
+      UDisksObject *object = UDISKS_OBJECT (l->data);
+      UDisksBlock *block;
+
+      block = udisks_object_get_block (object);
+      if (block == NULL)
+        continue;
+
+      /* ignore partitions */
+      if (udisks_object_peek_partition (object) != NULL)
+        continue;
+
+      if (g_strcmp0 (udisks_block_get_mdraid (block), raid_objpath) == 0)
         {
-          ret = TRUE;
+          ret = block;
           goto out;
         }
+      g_object_unref (block);
     }
 
  out:
+  g_list_foreach (object_proxies, (GFunc) g_object_unref, NULL);
+  g_list_free (object_proxies);
   return ret;
 }
 
 /**
- * udisks_client_get_drive_info:
+ * udisks_client_get_all_blocks_for_mdraid:
  * @client: A #UDisksClient.
- * @drive: A #UDisksDrive.
- * @out_name: (out) (allow-none): Return location for name or %NULL.
- * @out_description: (out) (allow-none): Return location for description or %NULL.
- * @out_drive_icon: (out) (allow-none): Return location for icon representing the drive or %NULL.
- * @out_media_description: (out) (allow-none): Return location for description of the media or %NULL.
- * @out_media_icon: (out) (allow-none): Return location for icon representing the media or %NULL.
+ * @raid: A #UDisksMDRaid.
  *
- * Gets information about a #UDisksDrive object that is suitable to
- * present in an user interface. The returned strings are localized.
+ * Gets all RAID devices (e.g. <filename>/dev/md0</filename> and <filename>/dev/md1</filename>) for @raid.
  *
- * If there is no media in @drive, then @out_media_icon is set to the
- * same value as @out_drive_icon.
+ * This is usually only useful in <ulink
+ * url="http://en.wikipedia.org/wiki/Split-brain_(computing)">split-brain
+ * situations</ulink> — see udisks_client_get_block_for_mdraid() for
+ * an example — and is normally used only to convey the problem in an
+ * user interface.
  *
- * If the @drive doesn't support removable media or if no media is
- * available, then %NULL is always returned for @out_media_description
- * and @out_media_icon.
+ * Returns: (transfer full) (element-type UDisksBlock): A list of #UDisksBlock instances. The
+ *   returned list should be freed with g_list_free() after each
+ *   element has been freed with g_object_unref().
  *
- * If the <link linkend="gdbus-property-org-freedesktop-UDisks2-Block.HintName">HintName</link>
- * and/or
- * <link linkend="gdbus-property-org-freedesktop-UDisks2-Block.HintName">HintIconName</link>
- * properties on the block device for @drive are set (see <xref linkend="udisks.8"/>),
- * their values are returned in the drive and media
- * description and icon (e.g. @out_description, @out_drive_icon, @out_media_description and @out_media_icon).
- *
- * The returned data is best described by example:
- * <informaltable>
- *   <tgroup cols="6">
- *     <thead>
- *       <row>
- *         <entry>Device / Media</entry>
- *         <entry>name</entry>
- *         <entry>description</entry>
- *         <entry>icon</entry>
- *         <entry>media_description</entry>
- *         <entry>media_icon</entry>
- *       </row>
- *     </thead>
- *     <tbody>
- *       <row>
- *         <entry>USB Thumb Drive</entry>
- *         <entry>Kingston DataTraveler 2.0</entry>
- *         <entry>4.0 GB Thumb Drive</entry>
- *         <entry>media-removable</entry>
- *         <entry>NULL</entry>
- *         <entry>NULL</entry>
- *       </row>
- *       <row>
- *         <entry>Internal System Disk (Hard Disk)</entry>
- *         <entry>ST3320620AS</entry>
- *         <entry>320 GB Hard Disk</entry>
- *         <entry>drive-harddisk</entry>
- *         <entry>NULL</entry>
- *         <entry>NULL</entry>
- *       </row>
- *       <row>
- *         <entry>Internal System Disk (Solid State)</entry>
- *         <entry>INTEL SSDSA2MH080G1GC</entry>
- *         <entry>80 GB Disk</entry>
- *         <entry>drive-harddisk</entry>
- *         <entry>NULL</entry>
- *         <entry>NULL</entry>
- *       </row>
- *       <row>
- *         <entry>Optical Drive (empty)</entry>
- *         <entry>LITE-ON DVDRW SOHW-812S</entry>
- *         <entry>CD/DVD Drive</entry>
- *         <entry>drive-optical</entry>
- *         <entry>NULL</entry>
- *         <entry>NULL</entry>
- *       </row>
- *       <row>
- *         <entry>Optical Drive (with CD-ROM data disc)</entry>
- *         <entry>LITE-ON DVDRW SOHW-812S</entry>
- *         <entry>CD/DVD Drive</entry>
- *         <entry>drive-optical</entry>
- *         <entry>CD-ROM Disc</entry>
- *         <entry>media-optical-cd-rom</entry>
- *       </row>
- *       <row>
- *         <entry>Optical Drive (with mixed disc)</entry>
- *         <entry>LITE-ON DVDRW SOHW-812S</entry>
- *         <entry>CD/DVD Drive</entry>
- *         <entry>drive-optical</entry>
- *         <entry>Audio/Data CD-ROM Disc</entry>
- *         <entry>media-optical-cd-rom</entry>
- *       </row>
- *       <row>
- *         <entry>Optical Drive (with audio disc)</entry>
- *         <entry>LITE-ON DVDRW SOHW-812S</entry>
- *         <entry>CD/DVD Drive</entry>
- *         <entry>drive-optical</entry>
- *         <entry>Audio Disc</entry>
- *         <entry>media-optical-cd-audio</entry>
- *       </row>
- *       <row>
- *         <entry>Optical Drive (with DVD-ROM disc)</entry>
- *         <entry>LITE-ON DVDRW SOHW-812S</entry>
- *         <entry>CD/DVD Drive</entry>
- *         <entry>drive-optical</entry>
- *         <entry>DVD-ROM Disc</entry>
- *         <entry>media-optical-dvd-rom</entry>
- *       </row>
- *       <row>
- *         <entry>Optical Drive (with blank DVD-R disc)</entry>
- *         <entry>LITE-ON DVDRW SOHW-812S</entry>
- *         <entry>CD/DVD Drive</entry>
- *         <entry>drive-optical</entry>
- *         <entry>Blank DVD-R Disc</entry>
- *         <entry>media-optical-dvd-r</entry>
- *       </row>
- *       <row>
- *         <entry>External USB Hard Disk</entry>
- *         <entry>WD 2500JB External</entry>
- *         <entry>250 GB Hard Disk</entry>
- *         <entry>drive-harddisk-usb</entry>
- *         <entry>NULL</entry>
- *         <entry>NULL</entry>
- *       </row>
- *       <row>
- *         <entry>USB Compact Flash Reader (without media)</entry>
- *         <entry>BELKIN USB 2 HS-CF</entry>
- *         <entry>Compact Flash Drive</entry>
- *         <entry>drive-removable-media-flash-cf</entry>
- *         <entry>NULL</entry>
- *         <entry>NULL</entry>
- *       </row>
- *       <row>
- *         <entry>USB Compact Flash Reader (with media)</entry>
- *         <entry>BELKIN USB 2 HS-CF</entry>
- *         <entry>Compact Flash Drive</entry>
- *         <entry>drive-removable-media-flash-cf</entry>
- *         <entry>Compact Flash media</entry>
- *         <entry>media-flash-cf</entry>
- *       </row>
- *     </tbody>
- *   </tgroup>
- * </informaltable>
+ * Since: 2.1
  */
-void
-udisks_client_get_drive_info (UDisksClient  *client,
-                              UDisksDrive   *drive,
-                              gchar        **out_name,
-                              gchar        **out_description,
-                              GIcon        **out_icon,
-                              gchar        **out_media_description,
-                              GIcon        **out_media_icon)
+GList *
+udisks_client_get_all_blocks_for_mdraid (UDisksClient *client,
+                                         UDisksMDRaid *raid)
 {
-  gchar *name;
-  gchar *description;
-  GIcon *icon;
-  gchar *media_description;
-  GIcon *media_icon;
-  const gchar *vendor;
-  const gchar *model;
-  const gchar *media;
-  const gchar *const *media_compat;
-  gboolean media_available;
-  gboolean media_removable;
-  gboolean rotation_rate;
-  guint64 size;
-  gchar *size_str;
-  guint n;
-  GString *desc_str;
-  DriveType desc_type;
-  gchar *hyphenated_connection_bus;
-  const gchar *connection_bus;
-  UDisksBlock *block = NULL;
+  GList *ret = NULL;
+  GList *l, *object_proxies = NULL;
+  GDBusObject *raid_object;
+  const gchar *raid_objpath;
 
-  g_return_if_fail (UDISKS_IS_DRIVE (drive));
+  g_return_val_if_fail (UDISKS_IS_CLIENT (client), NULL);
+  g_return_val_if_fail (UDISKS_IS_MDRAID (raid), NULL);
 
-  name = NULL;
-  description = NULL;
-  icon = NULL;
-  media_description = NULL;
-  media_icon = NULL;
-  size_str = NULL;
+  raid_object = g_dbus_interface_get_object (G_DBUS_INTERFACE (raid));
+  if (raid_object == NULL)
+    goto out;
 
-  vendor = udisks_drive_get_vendor (drive);
-  model = udisks_drive_get_model (drive);
-  size = udisks_drive_get_size (drive);
-  media_removable = udisks_drive_get_media_removable (drive);
-  media_available = udisks_drive_get_media_available (drive);
-  rotation_rate = udisks_drive_get_rotation_rate (drive);
-  if (size > 0)
-    size_str = udisks_client_get_size_for_display (client, size, FALSE, FALSE);
-  media = udisks_drive_get_media (drive);
-  media_compat = udisks_drive_get_media_compatibility (drive);
-  connection_bus = udisks_drive_get_connection_bus (drive);
-  if (strlen (connection_bus) > 0)
-    hyphenated_connection_bus = g_strdup_printf ("-%s", connection_bus);
-  else
-    hyphenated_connection_bus = g_strdup ("");
+  raid_objpath = g_dbus_object_get_object_path (raid_object);
 
-  /* Name is easy - that's just "$vendor $model" */
-  if (strlen (vendor) == 0)
-    vendor = NULL;
-  if (strlen (model) == 0)
-    model = NULL;
-  name = g_strdup_printf ("%s%s%s",
-                          vendor != NULL ? vendor : "",
-                          vendor != NULL ? " " : "",
-                          model != NULL ? model : "");
-
-  desc_type = DRIVE_TYPE_UNSET;
-  desc_str = g_string_new (NULL);
-  for (n = 0; n < G_N_ELEMENTS (media_data) - 1; n++)
+  object_proxies = g_dbus_object_manager_get_objects (client->object_manager);
+  for (l = object_proxies; l != NULL; l = l->next)
     {
-      /* media_compat */
-      if (strv_has (media_compat, media_data[n].id))
-        {
-          if (icon == NULL)
-            icon = g_themed_icon_new_with_default_fallbacks (media_data[n].drive_icon);
-          if (strstr (desc_str->str, media_data[n].media_family) == NULL)
-            {
-              if (desc_str->len > 0)
-                g_string_append (desc_str, "/");
-              g_string_append (desc_str, g_dpgettext2 (GETTEXT_PACKAGE, "media-type", media_data[n].media_family));
-            }
-          desc_type = media_data[n].media_type;
-        }
+      UDisksObject *object = UDISKS_OBJECT (l->data);
+      UDisksBlock *block;
 
-      if (media_removable && media_available)
-        {
-          /* media */
-          if (g_strcmp0 (media, media_data[n].id) == 0)
-            {
-              if (media_description == NULL)
-                {
-                  switch (media_data[n].media_type)
-                    {
-                    case DRIVE_TYPE_UNSET:
-                      g_assert_not_reached ();
-                      break;
-                    case DRIVE_TYPE_DRIVE:
-                      /* Translators: Used to describe drive without removable media. The %s is the type, e.g. 'Thumb' */
-                      media_description = g_strdup_printf (C_("drive-with-fixed-media", "%s Drive"), g_dpgettext2 (GETTEXT_PACKAGE, "media-type", media_data[n].media_name));
-                      break;
-                    case DRIVE_TYPE_DISK:
-                      /* Translators: Used to describe generic media. The %s is the type, e.g. 'Zip' or 'Floppy' */
-                      media_description = g_strdup_printf (C_("drive-with-generic-media", "%s Disk"), g_dpgettext2 (GETTEXT_PACKAGE, "media-type", media_data[n].media_name));
-                      break;
-                    case DRIVE_TYPE_CARD:
-                      /* Translators: Used to describe flash media. The %s is the type, e.g. 'SD' or 'CompactFlash' */
-                      media_description = g_strdup_printf (C_("flash-media", "%s Card"), g_dpgettext2 (GETTEXT_PACKAGE, "media-type", media_data[n].media_name));
-                      break;
-                    case DRIVE_TYPE_DISC:
-                      /* Translators: Used to describe optical discs. The %s is the type, e.g. 'CD-R' or 'DVD-ROM' */
-                      media_description = g_strdup_printf (C_("optical-media", "%s Disc"), g_dpgettext2 (GETTEXT_PACKAGE, "media-type", media_data[n].media_name));
-                      break;
-                    }
-                }
-              if (media_icon == NULL)
-                media_icon = g_themed_icon_new_with_default_fallbacks (media_data[n].media_icon);
-            }
-        }
-    }
+      block = udisks_object_get_block (object);
+      if (block == NULL)
+        continue;
 
-  switch (desc_type)
-    {
-    case DRIVE_TYPE_UNSET:
-      if (media_removable)
+      /* ignore partitions */
+      if (udisks_object_peek_partition (object) != NULL)
+        continue;
+
+      if (g_strcmp0 (udisks_block_get_mdraid (block), raid_objpath) == 0)
         {
-          if (size_str != NULL)
-            {
-              /* Translators: Used to describe a drive. The %s is the size, e.g. '20 GB' */
-              description = g_strdup_printf (C_("drive-with-size", "%s Drive"), size_str);
-            }
-          else
-            {
-              /* Translators: Used to describe a drive we know very little about (removable media or size not known) */
-              description = g_strdup (C_("generic-drive", "Drive"));
-            }
+          ret = g_list_prepend (ret, block);
         }
       else
         {
-          if (rotation_rate == 0)
-            {
-              if (size_str != NULL)
-                {
-                  /* Translators: Used to describe a non-rotating drive (rotation rate either unknown
-                   * or it's a solid-state drive). The %s is the size, e.g. '20 GB'.  */
-                  description = g_strdup_printf (C_("disk-non-rotational", "%s Disk"), size_str);
-                }
-              else
-                {
-                  /* Translators: Used to describe a non-rotating drive (rotation rate either unknown
-                   * or it's a solid-state drive). The drive is either using removable media or its
-                   * size not known. */
-                  description = g_strdup (C_("disk-non-rotational", "Disk"));
-                }
-            }
-          else
-            {
-              if (size_str != NULL)
-                {
-                  /* Translators: Used to describe a hard-disk drive (HDD). The %s is the size, e.g. '20 GB'.  */
-                  description = g_strdup_printf (C_("disk-hdd", "%s Hard Disk"), size_str);
-                }
-              else
-                {
-                  /* Translators: Used to describe a hard-disk drive (HDD) (removable media or size not known) */
-                  description = g_strdup (C_("disk-hdd", "Hard Disk"));
-                }
-            }
+          g_object_unref (block);
         }
-      break;
+    }
 
-    case DRIVE_TYPE_CARD:
-      /* Translators: Used to describe a card reader. The %s is the card type e.g. 'CompactFlash'.  */
-      description = g_strdup_printf (C_("drive-card-reader", "%s Card Reader"), desc_str->str);
-      break;
+ out:
+  g_list_foreach (object_proxies, (GFunc) g_object_unref, NULL);
+  g_list_free (object_proxies);
+  ret = g_list_reverse (ret);
+  return ret;
+}
 
-    case DRIVE_TYPE_DRIVE: /* explicit fall-through */
-    case DRIVE_TYPE_DISK: /* explicit fall-through */
-    case DRIVE_TYPE_DISC:
-      if (!media_removable && size_str != NULL)
+/**
+ * udisks_client_get_members_for_mdraid:
+ * @client: A #UDisksClient.
+ * @raid: A #UDisksMDRaid.
+ *
+ * Gets the physical block devices that are part of @raid.
+ *
+ * Returns: (transfer full) (element-type UDisksBlock): A list of #UDisksBlock instances. The
+ *   returned list should be freed with g_list_free() after each
+ *   element has been freed with g_object_unref().
+ *
+ * Since: 2.1
+ */
+GList *
+udisks_client_get_members_for_mdraid (UDisksClient *client,
+                                      UDisksMDRaid *raid)
+{
+  GList *ret = NULL;
+  GList *l, *object_proxies = NULL;
+  GDBusObject *raid_object;
+  const gchar *raid_objpath;
+
+  g_return_val_if_fail (UDISKS_IS_CLIENT (client), NULL);
+  g_return_val_if_fail (UDISKS_IS_MDRAID (raid), NULL);
+
+  raid_object = g_dbus_interface_get_object (G_DBUS_INTERFACE (raid));
+  if (raid_object == NULL)
+    goto out;
+
+  raid_objpath = g_dbus_object_get_object_path (raid_object);
+
+  object_proxies = g_dbus_object_manager_get_objects (client->object_manager);
+  for (l = object_proxies; l != NULL; l = l->next)
+    {
+      UDisksObject *object = UDISKS_OBJECT (l->data);
+      UDisksBlock *block;
+
+      block = udisks_object_get_block (object);
+      if (block == NULL)
+        continue;
+
+      if (g_strcmp0 (udisks_block_get_mdraid_member (block), raid_objpath) == 0)
         {
-          /* Translators: Used to describe drive. The first %s is the size e.g. '20 GB' and the
-           * second %s is the drive type e.g. 'Thumb'.
-           */
-          description = g_strdup_printf (C_("drive-with-size-and-type", "%s %s Drive"), size_str, desc_str->str);
+          ret = g_list_prepend (ret, block); /* adopts reference to block */
         }
       else
         {
-          /* Translators: Used to describe drive. The first %s is the drive type e.g. 'Thumb'.
-           */
-          description = g_strdup_printf (C_("drive-with-type", "%s Drive"), desc_str->str);
-        }
-      break;
-    }
-  g_string_free (desc_str, TRUE);
-
-  /* fallback for icon */
-  if (icon == NULL)
-    {
-      gchar *s;
-      if (media_removable)
-        s = g_strdup_printf ("drive-removable-media%s", hyphenated_connection_bus);
-      else
-        s = g_strdup_printf ("drive-harddisk%s", hyphenated_connection_bus);
-      icon = g_themed_icon_new_with_default_fallbacks (s);
-      g_free (s);
-    }
-  /* fallback for media_icon */
-  if (media_removable && media_available && media_icon == NULL)
-    {
-      gchar *s;
-      if (media_removable)
-        s = g_strdup_printf ("drive-removable-media%s", hyphenated_connection_bus);
-      else
-        s = g_strdup_printf ("drive-harddisk%s", hyphenated_connection_bus);
-      media_icon = g_themed_icon_new_with_default_fallbacks (s);
-      g_free (s);
-    }
-
-  /* prepend a qualifier to the media description, based on the disc state */
-  if (udisks_drive_get_optical_blank (drive))
-    {
-      gchar *s;
-      /* Translators: String used for a blank disc. The %s is the disc type e.g. "CD-RW Disc" */
-      s = g_strdup_printf (C_("optical-media", "Blank %s"), media_description);
-      g_free (media_description);
-      media_description = s;
-    }
-  else if (udisks_drive_get_optical_num_audio_tracks (drive) > 0 &&
-           udisks_drive_get_optical_num_data_tracks (drive) > 0)
-    {
-      gchar *s;
-      /* Translators: String used for a mixed disc. The %s is the disc type e.g. "CD-ROM Disc" */
-      s = g_strdup_printf (C_("optical-media", "Mixed %s"), media_description);
-      g_free (media_description);
-      media_description = s;
-    }
-  else if (udisks_drive_get_optical_num_audio_tracks (drive) > 0 &&
-           udisks_drive_get_optical_num_data_tracks (drive) == 0)
-    {
-      gchar *s;
-      /* Translators: String used for an audio disc. The %s is the disc type e.g. "CD-ROM Disc" */
-      s = g_strdup_printf (C_("optical-media", "Audio %s"), media_description);
-      g_free (media_description);
-      media_description = s;
-    }
-
-  /* Apply UDISKS_NAME and UDISKS_ICON_NAME hints, if available */
-  block = udisks_client_get_block_for_drive (client, drive, TRUE);
-  if (block != NULL)
-    {
-      const gchar *s;
-
-      s = udisks_block_get_hint_name (block);
-      if (s != NULL && strlen (s) > 0)
-        {
-          g_free (description);
-          g_free (media_description);
-          description = g_strdup (s);
-          media_description = g_strdup (s);
-        }
-
-      s = udisks_block_get_hint_icon_name (block);
-      if (s != NULL && strlen (s) > 0)
-        {
-          g_clear_object (&icon);
-          g_clear_object (&media_icon);
-          icon = g_themed_icon_new_with_default_fallbacks (s);
-          media_icon = g_themed_icon_new_with_default_fallbacks (s);
+          g_object_unref (block);
         }
     }
 
-#if 0
-  /* for debugging */
-  g_print ("mr=%d,ma=%d dd=%s, md=%s and di='%s', mi='%s'\n",
-           media_removable,
-           media_available,
-           description,
-           media_description,
-           icon == NULL ? "" : g_icon_to_string (icon),
-           media_icon == NULL ? "" : g_icon_to_string (media_icon));
-#endif
-
-  /* return values to caller */
-  if (out_name != NULL)
-    *out_name = name;
-  else
-    g_free (name);
-  if (out_description != NULL)
-    *out_description = description;
-  else
-    g_free (description);
-  if (out_icon != NULL)
-    *out_icon = icon;
-  else if (icon != NULL)
-    g_object_unref (icon);
-  if (out_media_description != NULL)
-    *out_media_description = media_description;
-  else
-    g_free (media_description);
-  if (out_media_icon != NULL)
-    *out_media_icon = media_icon;
-  else if (media_icon != NULL)
-    g_object_unref (media_icon);
-
-  g_free (hyphenated_connection_bus);
-  g_free (size_str);
-
-  g_clear_object (&block);
+ out:
+  g_list_foreach (object_proxies, (GFunc) g_object_unref, NULL);
+  g_list_free (object_proxies);
+  return ret;
 }
 
 /* ---------------------------------------------------------------------------------------------------- */
@@ -1511,6 +1209,61 @@ udisks_client_get_cleartext_block (UDisksClient  *client,
  out:
   g_list_foreach (objects, (GFunc) g_object_unref, NULL);
   g_list_free (objects);
+  return ret;
+}
+
+/* ---------------------------------------------------------------------------------------------------- */
+
+/**
+ * udisks_client_get_drive_siblings:
+ * @client: A #UDisksClient
+ * @drive: A #UDisksDrive.
+ *
+ * Gets all siblings for @drive.
+ *
+ * Returns: (transfer full) (element-type UDisksDrive): A list of #UDisksDrive instances. The
+ *   returned list should be freed with g_list_free() after each element has been
+ *   freed with g_object_unref().
+ *
+ * Since: 2.1
+ */
+GList *
+udisks_client_get_drive_siblings  (UDisksClient  *client,
+                                   UDisksDrive   *drive)
+{
+  GList *ret = NULL;
+  const gchar *sibling_id = NULL;
+  GList *l, *object_proxies = NULL;
+
+  g_return_val_if_fail (UDISKS_IS_CLIENT (client), NULL);
+  g_return_val_if_fail (UDISKS_IS_DRIVE (drive), NULL);
+
+  sibling_id = udisks_drive_get_sibling_id (drive);
+  if (sibling_id == NULL || strlen (sibling_id) == 0)
+    goto out;
+
+  object_proxies = g_dbus_object_manager_get_objects (client->object_manager);
+  for (l = object_proxies; l != NULL; l = l->next)
+    {
+      UDisksObject *object = UDISKS_OBJECT (l->data);
+      UDisksDrive *iter_drive;
+
+      iter_drive = udisks_object_get_drive (object);
+      if (iter_drive == NULL)
+        continue;
+
+      if (iter_drive != drive &&
+          g_strcmp0 (udisks_drive_get_sibling_id (iter_drive), sibling_id) == 0)
+        {
+          ret = g_list_prepend (ret, g_object_ref (iter_drive));
+        }
+
+      g_object_unref (iter_drive);
+    }
+  ret = g_list_reverse (ret);
+ out:
+  g_list_foreach (object_proxies, (GFunc) g_object_unref, NULL);
+  g_list_free (object_proxies);
   return ret;
 }
 
@@ -1734,9 +1487,21 @@ on_changed_timeout (gpointer user_data)
   return FALSE; /* remove source */
 }
 
-static void
-queue_changed (UDisksClient *client)
+/**
+ * udisks_client_queue_changed:
+ * @client: A #UDisksClient.
+ *
+ * Queues up a #UDisksClient::changed signal and rate-limit it. See
+ * the documentation for the #UDisksClient::changed property for more
+ * information.
+ *
+ * Since: 2.1
+ */
+void
+udisks_client_queue_changed (UDisksClient *client)
 {
+  g_return_if_fail (UDISKS_IS_CLIENT (client));
+
   if (client->changed_timeout_source != NULL)
     goto out;
 
@@ -1768,7 +1533,7 @@ on_object_added (GDBusObjectManager  *manager,
   g_list_foreach (interfaces, (GFunc) g_object_unref, NULL);
   g_list_free (interfaces);
 
-  queue_changed (client);
+  udisks_client_queue_changed (client);
 }
 
 static void
@@ -1777,7 +1542,7 @@ on_object_removed (GDBusObjectManager  *manager,
                    gpointer             user_data)
 {
   UDisksClient *client = UDISKS_CLIENT (user_data);
-  queue_changed (client);
+  udisks_client_queue_changed (client);
 }
 
 static void
@@ -1798,7 +1563,7 @@ on_interface_added (GDBusObjectManager  *manager,
 
   init_interface_proxy (client, G_DBUS_PROXY (interface));
 
-  queue_changed (client);
+  udisks_client_queue_changed (client);
 }
 
 static void
@@ -1808,7 +1573,7 @@ on_interface_removed (GDBusObjectManager  *manager,
                       gpointer             user_data)
 {
   UDisksClient *client = UDISKS_CLIENT (user_data);
-  queue_changed (client);
+  udisks_client_queue_changed (client);
 }
 
 static void
@@ -1820,7 +1585,7 @@ on_interface_proxy_properties_changed (GDBusObjectManagerClient   *manager,
                                        gpointer                    user_data)
 {
   UDisksClient *client = UDISKS_CLIENT (user_data);
-  queue_changed (client);
+  udisks_client_queue_changed (client);
 }
 
 /* ---------------------------------------------------------------------------------------------------- */
@@ -2167,11 +1932,11 @@ static const struct
   {"other",      "swap",              NULL,    NC_("fs-type", "Swap"),                              NC_("fs-type", "Swap")},
   {"raid",       "LVM2_member",       "*",     NC_("fs-type", "LVM2 Physical Volume (%s)"),         NC_("fs-type", "LVM2 PV")},
   {"raid",       "LVM2_member",       NULL,    NC_("fs-type", "LVM2 Physical Volume"),              NC_("fs-type", "LVM2 PV")},
-  {"raid",       "linux_raid_member", "*",     NC_("fs-type", "Software RAID Component (version %s)"), NC_("fs-type", "MD Raid")},
-  {"raid",       "linux_raid_member", NULL,    NC_("fs-type", "Software RAID Component"),           NC_("fs-type", "MD Raid")},
+  {"raid",       "linux_raid_member", "*",     NC_("fs-type", "Linux RAID Member (version %s)"),    NC_("fs-type", "Linux RAID Member")},
+  {"raid",       "linux_raid_member", NULL,    NC_("fs-type", "Linux RAID Member"),                 NC_("fs-type", "Linux RAID Member")},
   {"raid",       "zfs_member",        "*",     NC_("fs-type", "ZFS Device (ZPool version %s)"),     NC_("fs-type", "ZFS (v%s)")},
   {"raid",       "zfs_member",        NULL,    NC_("fs-type", "ZFS Device"),                        NC_("fs-type", "ZFS")},
-  {"raid",       "isw_raid_member",   "*",     NC_("fs-type", "Intel Matrix RAID Member (version %s)"), NC_("fs-type", "IMSM RAID (%s)")},
+  {"raid",       "isw_raid_member",   "*",     NC_("fs-type", "Intel Matrix RAID Member (version %s)"), NC_("fs-type", "IMSM RAID Member (%s)")},
   {"raid",       "isw_raid_member",   NULL,    NC_("fs-type", "Intel Matrix RAID Member"),          NC_("fs-type", "IMSM RAID")},
   {"crypto",     "crypto_LUKS",       "*",     NC_("fs-type", "LUKS Encryption (version %s)"),      NC_("fs-type", "LUKS")},
   {"crypto",     "crypto_LUKS",       NULL,    NC_("fs-type", "LUKS Encryption"),                   NC_("fs-type", "LUKS")},
@@ -2223,14 +1988,22 @@ udisks_client_get_id_for_display (UDisksClient *client,
                    (g_strcmp0 (id_type[n].version, "*") == 0 && strlen (version) > 0))
             {
               /* we know better than the compiler here */
-#pragma GCC diagnostic push
-#pragma GCC diagnostic ignored "-Wformat-nonliteral"
+#ifdef __GNUC_PREREQ
+# if __GNUC_PREREQ(4,6)
+#  pragma GCC diagnostic push
+#  pragma GCC diagnostic ignored "-Wformat-nonliteral"
+# endif
+#endif
               if (long_string)
                 ret = g_strdup_printf (g_dpgettext2 (GETTEXT_PACKAGE, "fs-type", id_type[n].long_name), version);
               else
                 ret = g_strdup_printf (g_dpgettext2 (GETTEXT_PACKAGE, "fs-type", id_type[n].short_name), version);
               goto out;
-#pragma GCC diagnostic pop
+#ifdef __GNUC_PREREQ
+# if __GNUC_PREREQ(4,6)
+#  pragma GCC diagnostic pop
+# endif
+#endif
             }
         }
     }
@@ -2631,6 +2404,10 @@ udisks_client_get_partition_type_for_display (UDisksClient  *client,
  * Gets a human-readable and localized text string describing the
  * operation of @job.
  *
+ * For known job types, see the documentation for the
+ * <link linkend="gdbus-property-org-freedesktop-UDisks2-Job.Operation">Job:Operation</link>
+ * D-Bus property.
+ *
  * Returns: A string that should be freed with g_free().
  */
 gchar *
@@ -2639,6 +2416,7 @@ udisks_client_get_job_description (UDisksClient   *client,
 {
   static gsize once = 0;
   static GHashTable *hash = NULL;
+  const gchar *operation = NULL;
   gchar *ret = NULL;
 
   g_return_val_if_fail (UDISKS_IS_CLIENT (client), NULL);
@@ -2665,10 +2443,19 @@ udisks_client_get_job_description (UDisksClient   *client,
       g_hash_table_insert (hash, (gpointer) "cleanup",              (gpointer) C_("job", "Cleaning Up"));
       g_hash_table_insert (hash, (gpointer) "ata-secure-erase",     (gpointer) C_("job", "ATA Secure Erase"));
       g_hash_table_insert (hash, (gpointer) "ata-enhanced-secure-erase", (gpointer) C_("job", "ATA Enhanced Secure Erase"));
+      g_hash_table_insert (hash, (gpointer) "md-raid-stop",         (gpointer) C_("job", "Stopping RAID Array"));
+      g_hash_table_insert (hash, (gpointer) "md-raid-start",        (gpointer) C_("job", "Starting RAID Array"));
+      g_hash_table_insert (hash, (gpointer) "md-raid-fault-device", (gpointer) C_("job", "Marking Device as Faulty"));
+      g_hash_table_insert (hash, (gpointer) "md-raid-remove-device",(gpointer) C_("job", "Removing Device from Array"));
+      g_hash_table_insert (hash, (gpointer) "md-raid-add-device",   (gpointer) C_("job", "Adding Device to Array"));
+      g_hash_table_insert (hash, (gpointer) "md-raid-set-bitmap",   (gpointer) C_("job", "Setting Write-Intent Bitmap"));
+      g_hash_table_insert (hash, (gpointer) "md-raid-create",       (gpointer) C_("job", "Creating RAID Array"));
       g_once_init_leave (&once, (gsize) 1);
     }
 
-  ret = g_strdup (g_hash_table_lookup (hash, udisks_job_get_operation (job)));
+  operation = udisks_job_get_operation (job);
+  if (operation != NULL)
+    ret = g_strdup (g_hash_table_lookup (hash, operation));
   if (ret == NULL)
     ret = g_strdup_printf (C_("unknown-job", "Unknown (%s)"), udisks_job_get_operation (job));
 

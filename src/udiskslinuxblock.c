@@ -43,7 +43,7 @@
 #include "udiskslinuxdriveobject.h"
 #include "udiskslinuxfsinfo.h"
 #include "udisksdaemon.h"
-#include "udiskscleanup.h"
+#include "udisksstate.h"
 #include "udisksdaemonutil.h"
 #include "udiskslinuxprovider.h"
 #include "udisksfstabmonitor.h"
@@ -54,6 +54,9 @@
 #include "udisksbasejob.h"
 #include "udiskssimplejob.h"
 #include "udiskslinuxdriveata.h"
+#include "udiskslinuxmdraidobject.h"
+#include "udiskslinuxdevice.h"
+#include "udiskslinuxpartition.h"
 
 /**
  * SECTION:udiskslinuxblock
@@ -153,13 +156,13 @@ find_block_device_by_sysfs_path (GDBusObjectManagerServer *object_manager,
   for (l = objects; l != NULL; l = l->next)
     {
       GDBusObjectSkeleton *object = G_DBUS_OBJECT_SKELETON (l->data);
-      GUdevDevice *device;
+      UDisksLinuxDevice *device;
 
       if (!UDISKS_IS_LINUX_BLOCK_OBJECT (object))
         continue;
 
       device = udisks_linux_block_object_get_device (UDISKS_LINUX_BLOCK_OBJECT (object));
-      if (g_strcmp0 (sysfs_path, g_udev_device_get_sysfs_path (device)) == 0)
+      if (g_strcmp0 (sysfs_path, g_udev_device_get_sysfs_path (device->udev_device)) == 0)
         {
           ret = g_strdup (g_dbus_object_get_object_path (G_DBUS_OBJECT (object)));
           g_object_unref (device);
@@ -208,10 +211,10 @@ find_drive (GDBusObjectManagerServer  *object_manager,
       drive_devices = udisks_linux_drive_object_get_devices (UDISKS_LINUX_DRIVE_OBJECT (object));
       for (j = drive_devices; j != NULL; j = j->next)
         {
-          GUdevDevice *drive_device = G_UDEV_DEVICE (j->data);
+          UDisksLinuxDevice *drive_device = UDISKS_LINUX_DEVICE (j->data);
           const gchar *drive_sysfs_path;
 
-          drive_sysfs_path = g_udev_device_get_sysfs_path (drive_device);
+          drive_sysfs_path = g_udev_device_get_sysfs_path (drive_device->udev_device);
           if (g_strcmp0 (whole_disk_block_device_sysfs_path, drive_sysfs_path) == 0)
             {
               if (out_drive != NULL)
@@ -235,9 +238,84 @@ find_drive (GDBusObjectManagerServer  *object_manager,
 
 /* ---------------------------------------------------------------------------------------------------- */
 
+static UDisksLinuxMDRaidObject *
+find_mdraid (GDBusObjectManagerServer  *object_manager,
+             const gchar               *md_uuid)
+{
+  UDisksLinuxMDRaidObject *ret = NULL;
+  GList *objects = NULL, *l;
+
+  objects = g_dbus_object_manager_get_objects (G_DBUS_OBJECT_MANAGER (object_manager));
+  for (l = objects; l != NULL; l = l->next)
+    {
+      GDBusObjectSkeleton *object = G_DBUS_OBJECT_SKELETON (l->data);
+      if (UDISKS_IS_LINUX_MDRAID_OBJECT (object))
+        {
+          UDisksMDRaid *mdraid = udisks_object_get_mdraid (UDISKS_OBJECT (object));
+          if (mdraid != NULL)
+            {
+              if (g_strcmp0 (udisks_mdraid_get_uuid (mdraid), md_uuid) == 0)
+                {
+                  ret = g_object_ref (object);
+                  g_object_unref (mdraid);
+                  goto out;
+                }
+              g_object_unref (mdraid);
+            }
+        }
+    }
+
+ out:
+  g_list_foreach (objects, (GFunc) g_object_unref, NULL);
+  g_list_free (objects);
+  return ret;
+}
+
+/* ---------------------------------------------------------------------------------------------------- */
+
+static void
+update_mdraid (UDisksLinuxBlock         *block,
+               UDisksLinuxDevice        *device,
+               UDisksDrive              *drive,
+               GDBusObjectManagerServer *object_manager)
+{
+  UDisksBlock *iface = UDISKS_BLOCK (block);
+  const gchar *uuid;
+  const gchar *objpath_mdraid = "/";
+  const gchar *objpath_mdraid_member = "/";
+  UDisksLinuxMDRaidObject *object = NULL;
+
+  uuid = g_udev_device_get_property (device->udev_device, "UDISKS_MD_UUID");
+  if (uuid != NULL && strlen (uuid) > 0)
+    {
+      object = find_mdraid (object_manager, uuid);
+      if (object != NULL)
+        {
+          objpath_mdraid = g_dbus_object_get_object_path (G_DBUS_OBJECT (object));
+          g_clear_object (&object);
+        }
+    }
+
+  uuid = g_udev_device_get_property (device->udev_device, "UDISKS_MD_MEMBER_UUID");
+  if (uuid != NULL && strlen (uuid) > 0)
+    {
+      object = find_mdraid (object_manager, uuid);
+      if (object != NULL)
+        {
+          objpath_mdraid_member = g_dbus_object_get_object_path (G_DBUS_OBJECT (object));
+          g_clear_object (&object);
+        }
+    }
+
+  udisks_block_set_mdraid (iface, objpath_mdraid);
+  udisks_block_set_mdraid_member (iface, objpath_mdraid_member);
+}
+
+/* ---------------------------------------------------------------------------------------------------- */
+
 static void
 update_hints (UDisksLinuxBlock  *block,
-              GUdevDevice       *device,
+              UDisksLinuxDevice *device,
               UDisksDrive       *drive)
 {
   UDisksBlock *iface = UDISKS_BLOCK (block);
@@ -247,6 +325,7 @@ update_hints (UDisksLinuxBlock  *block,
   gboolean hint_auto;
   const gchar *hint_name;
   const gchar *hint_icon_name;
+  const gchar *hint_symbolic_icon_name;
   const gchar *device_file;
 
   /* very conservative defaults */
@@ -256,8 +335,9 @@ update_hints (UDisksLinuxBlock  *block,
   hint_auto = FALSE;
   hint_name = NULL;
   hint_icon_name = NULL;
+  hint_symbolic_icon_name = NULL;
 
-  device_file = g_udev_device_get_device_file (device);
+  device_file = g_udev_device_get_device_file (device->udev_device);
 
   /* Provide easy access to _only_ the following devices
    *
@@ -291,26 +371,28 @@ update_hints (UDisksLinuxBlock  *block,
     }
 
   /* CD-ROM media / drives are not partitionable, at least not here on Linux */
-  if (g_udev_device_get_property_as_boolean (device, "ID_CDROM"))
+  if (g_udev_device_get_property_as_boolean (device->udev_device, "ID_CDROM"))
     hint_partitionable = FALSE;
 
   /* device-mapper devices are not partitionable (TODO: for multipath, they are via kpartx(8) hacks) */
-  if (g_str_has_prefix (g_udev_device_get_name (device), "dm-"))
+  if (g_str_has_prefix (g_udev_device_get_name (device->udev_device), "dm-"))
     hint_partitionable = FALSE;
 
   /* TODO: set ignore to TRUE for physical paths belonging to a drive with multiple paths */
 
   /* override from udev properties */
-  if (g_udev_device_has_property (device, "UDISKS_SYSTEM"))
-    hint_system = g_udev_device_get_property_as_boolean (device, "UDISKS_SYSTEM");
-  if (g_udev_device_has_property (device, "UDISKS_IGNORE"))
-    hint_ignore = g_udev_device_get_property_as_boolean (device, "UDISKS_IGNORE");
-  if (g_udev_device_has_property (device, "UDISKS_AUTO"))
-    hint_auto = g_udev_device_get_property_as_boolean (device, "UDISKS_AUTO");
-  if (g_udev_device_has_property (device, "UDISKS_NAME"))
-    hint_name = g_udev_device_get_property (device, "UDISKS_NAME");
-  if (g_udev_device_has_property (device, "UDISKS_ICON_NAME"))
-    hint_icon_name = g_udev_device_get_property (device, "UDISKS_ICON_NAME");
+  if (g_udev_device_has_property (device->udev_device, "UDISKS_SYSTEM"))
+    hint_system = g_udev_device_get_property_as_boolean (device->udev_device, "UDISKS_SYSTEM");
+  if (g_udev_device_has_property (device->udev_device, "UDISKS_IGNORE"))
+    hint_ignore = g_udev_device_get_property_as_boolean (device->udev_device, "UDISKS_IGNORE");
+  if (g_udev_device_has_property (device->udev_device, "UDISKS_AUTO"))
+    hint_auto = g_udev_device_get_property_as_boolean (device->udev_device, "UDISKS_AUTO");
+  if (g_udev_device_has_property (device->udev_device, "UDISKS_NAME"))
+    hint_name = g_udev_device_get_property (device->udev_device, "UDISKS_NAME");
+  if (g_udev_device_has_property (device->udev_device, "UDISKS_ICON_NAME"))
+    hint_icon_name = g_udev_device_get_property (device->udev_device, "UDISKS_ICON_NAME");
+  if (g_udev_device_has_property (device->udev_device, "UDISKS_SYMBOLIC_ICON_NAME"))
+    hint_symbolic_icon_name = g_udev_device_get_property (device->udev_device, "UDISKS_SYMBOLIC_ICON_NAME");
 
   /* ... and scene! */
   udisks_block_set_hint_partitionable (iface, hint_partitionable);
@@ -319,6 +401,7 @@ update_hints (UDisksLinuxBlock  *block,
   udisks_block_set_hint_auto (iface, hint_auto);
   udisks_block_set_hint_name (iface, hint_name);
   udisks_block_set_hint_icon_name (iface, hint_icon_name);
+  udisks_block_set_hint_symbolic_icon_name (iface, hint_symbolic_icon_name);
 }
 
 /* ---------------------------------------------------------------------------------------------------- */
@@ -633,7 +716,7 @@ udisks_linux_block_update (UDisksLinuxBlock        *block,
   UDisksBlock *iface = UDISKS_BLOCK (block);
   UDisksDaemon *daemon;
   GDBusObjectManagerServer *object_manager;
-  GUdevDevice *device;
+  UDisksLinuxDevice *device;
   GUdevDeviceNumber dev;
   gchar *drive_object_path;
   UDisksDrive *drive;
@@ -641,10 +724,13 @@ udisks_linux_block_update (UDisksLinuxBlock        *block,
   const gchar *device_file;
   const gchar *const *symlinks;
   const gchar *preferred_device_file;
+  const gchar *id_device_file;
+  gboolean media_removable = FALSE;
   guint64 size;
   gboolean media_available;
   gboolean media_change_detected;
   gboolean read_only;
+  guint n;
 
   drive = NULL;
 
@@ -655,21 +741,21 @@ udisks_linux_block_update (UDisksLinuxBlock        *block,
   daemon = udisks_linux_block_object_get_daemon (object);
   object_manager = udisks_daemon_get_object_manager (daemon);
 
-  dev = g_udev_device_get_device_number (device);
-  device_file = g_udev_device_get_device_file (device);
-  symlinks = g_udev_device_get_device_file_symlinks (device);
+  dev = g_udev_device_get_device_number (device->udev_device);
+  device_file = g_udev_device_get_device_file (device->udev_device);
+  symlinks = g_udev_device_get_device_file_symlinks (device->udev_device);
 
   udisks_block_set_device (iface, device_file);
   udisks_block_set_symlinks (iface, symlinks);
   udisks_block_set_device_number (iface, dev);
 
-  size = udisks_daemon_util_block_get_size (device,
+  size = udisks_daemon_util_block_get_size (device->udev_device,
                                             &media_available,
                                             &media_change_detected);
   udisks_block_set_size (iface, size);
 
-  read_only = g_udev_device_get_sysfs_attr_as_boolean (device, "ro");
-  if (!read_only && g_str_has_prefix (g_udev_device_get_name (device), "sr"))
+  read_only = g_udev_device_get_sysfs_attr_as_boolean (device->udev_device, "ro");
+  if (!read_only && g_str_has_prefix (g_udev_device_get_name (device->udev_device), "sr"))
     read_only = TRUE;
   udisks_block_set_read_only (iface, read_only);
 
@@ -680,14 +766,14 @@ udisks_linux_block_update (UDisksLinuxBlock        *block,
    *       in user-space and wants you to use libdevmapper to obtain it...
    */
   udisks_block_set_crypto_backing_device (iface, "/");
-  if (g_str_has_prefix (g_udev_device_get_name (device), "dm-"))
+  if (g_str_has_prefix (g_udev_device_get_name (device->udev_device), "dm-"))
     {
       gchar *dm_uuid;
-      dm_uuid = get_sysfs_attr (device, "dm/uuid");
+      dm_uuid = get_sysfs_attr (device->udev_device, "dm/uuid");
       if (dm_uuid != NULL && g_str_has_prefix (dm_uuid, "CRYPT-LUKS1"))
         {
           gchar **slaves;
-          slaves = udisks_daemon_util_resolve_links (g_udev_device_get_sysfs_path (device),
+          slaves = udisks_daemon_util_resolve_links (g_udev_device_get_sysfs_path (device->udev_device),
                                                      "slaves");
           if (g_strv_length (slaves) == 1)
             {
@@ -714,12 +800,11 @@ udisks_linux_block_update (UDisksLinuxBlock        *block,
   preferred_device_file = NULL;
   if (g_str_has_prefix (device_file, "/dev/dm-"))
     {
-      guint n;
       const gchar *dm_name;
       gchar *dm_name_dev_file = NULL;
       const gchar *dm_name_dev_file_as_symlink = NULL;
 
-      dm_name = g_udev_device_get_property (device, "DM_NAME");
+      dm_name = g_udev_device_get_property (device->udev_device, "DM_NAME");
       if (dm_name != NULL)
         dm_name_dev_file = g_strdup_printf ("/dev/mapper/%s", dm_name);
       for (n = 0; symlinks != NULL && symlinks[n] != NULL; n++)
@@ -740,9 +825,38 @@ udisks_linux_block_update (UDisksLinuxBlock        *block,
         preferred_device_file = dm_name_dev_file_as_symlink;
       g_free (dm_name_dev_file);
     }
+  else if (g_str_has_prefix (device_file, "/dev/md"))
+    {
+      const gchar *md_name;
+
+      md_name = g_udev_device_get_property (device->udev_device, "UDISKS_MD_NAME");
+      if (md_name != NULL)
+        {
+          gchar *md_name_dev_file = NULL;
+          const gchar *sep;
+          const gchar *md_name_dev_file_as_symlink = NULL;
+          /* skip homehost */
+          sep = strstr (md_name, ":");
+          if (sep != NULL)
+            md_name_dev_file = g_strdup_printf ("/dev/md/%s", sep + 1);
+          else
+            md_name_dev_file = g_strdup_printf ("/dev/md/%s", md_name);
+          for (n = 0; symlinks != NULL && symlinks[n] != NULL; n++)
+            {
+              if (g_str_has_prefix (symlinks[n], md_name_dev_file))
+                {
+                  md_name_dev_file_as_symlink = symlinks[n];
+                }
+            }
+          /* Use /dev/md/$MD_NAME, if it's available as a symlink */
+          if (preferred_device_file == NULL && md_name_dev_file_as_symlink != NULL)
+            preferred_device_file = md_name_dev_file_as_symlink;
+          g_free (md_name_dev_file);
+        }
+    }
   /* fallback to the device name */
   if (preferred_device_file == NULL)
-    preferred_device_file = g_udev_device_get_device_file (device);
+    preferred_device_file = g_udev_device_get_device_file (device->udev_device);
   udisks_block_set_preferred_device (iface, preferred_device_file);
 
   /* Determine the drive this block device belongs to
@@ -750,7 +864,7 @@ udisks_linux_block_update (UDisksLinuxBlock        *block,
    * TODO: if this is slow we could have a cache or ensure that we
    * only do this once or something else
    */
-  drive_object_path = find_drive (object_manager, device, &drive);
+  drive_object_path = find_drive (object_manager, device->udev_device, &drive);
   if (drive_object_path != NULL)
     {
       udisks_block_set_drive (iface, drive_object_path);
@@ -761,20 +875,80 @@ udisks_linux_block_update (UDisksLinuxBlock        *block,
       udisks_block_set_drive (iface, "/");
     }
 
-  udisks_block_set_id_usage (iface, g_udev_device_get_property (device, "ID_FS_USAGE"));
-  udisks_block_set_id_type (iface, g_udev_device_get_property (device, "ID_FS_TYPE"));
-  s = udisks_decode_udev_string (g_udev_device_get_property (device, "ID_FS_VERSION"));
+  if (drive != NULL)
+    media_removable = udisks_drive_get_media_removable (drive);
+
+  id_device_file = NULL;
+  if (media_removable)
+    {
+      /* Drive with removable media: determine id by finding a
+       * suitable /dev/disk/by-uuid symlink (fall back to
+       * /dev/disk/by-label)
+       *
+       * TODO: add features to ata_id / cdrom_id in systemd to extract
+       *       medium identiers (at optical discs have these) and add
+       *       udev rules to create symlinks in something like
+       *       /dev/disk/by-medium. Then use said symlinks to for the
+       *       id_device_file
+       */
+      for (n = 0; symlinks != NULL && symlinks[n] != NULL; n++)
+        {
+          if (g_str_has_prefix (symlinks[n], "/dev/disk/by-uuid/"))
+            {
+              id_device_file = symlinks[n];
+              break;
+            }
+          else if (g_str_has_prefix (symlinks[n], "/dev/disk/by-label/"))
+            {
+              id_device_file = symlinks[n];
+            }
+        }
+    }
+  else
+    {
+      /* Drive without removable media: determine id by finding a
+       * suitable /dev/disk/by-id symlink
+       */
+      for (n = 0; symlinks != NULL && symlinks[n] != NULL; n++)
+        {
+          if (g_str_has_prefix (symlinks[n], "/dev/disk/by-id/"))
+            {
+              id_device_file = symlinks[n];
+              break;
+            }
+        }
+    }
+  if (id_device_file != NULL)
+    {
+      gchar *id = g_strdup (id_device_file + strlen ("/dev/disk/"));
+      for (n = 0; id[n] != '\0'; n++)
+        {
+          if (id[n] == '/' || id[n] == ' ')
+            id[n] = '-';
+        }
+      udisks_block_set_id (iface, id);
+      g_free (id);
+    }
+  else
+    {
+      udisks_block_set_id (iface, NULL);
+    }
+
+  udisks_block_set_id_usage (iface, g_udev_device_get_property (device->udev_device, "ID_FS_USAGE"));
+  udisks_block_set_id_type (iface, g_udev_device_get_property (device->udev_device, "ID_FS_TYPE"));
+  s = udisks_decode_udev_string (g_udev_device_get_property (device->udev_device, "ID_FS_VERSION"));
   udisks_block_set_id_version (iface, s);
   g_free (s);
-  s = udisks_decode_udev_string (g_udev_device_get_property (device, "ID_FS_LABEL_ENC"));
+  s = udisks_decode_udev_string (g_udev_device_get_property (device->udev_device, "ID_FS_LABEL_ENC"));
   udisks_block_set_id_label (iface, s);
   g_free (s);
-  s = udisks_decode_udev_string (g_udev_device_get_property (device, "ID_FS_UUID_ENC"));
+  s = udisks_decode_udev_string (g_udev_device_get_property (device->udev_device, "ID_FS_UUID_ENC"));
   udisks_block_set_id_uuid (iface, s);
   g_free (s);
 
   update_hints (block, device, drive);
   update_configuration (block, daemon);
+  update_mdraid (block, device, drive, object_manager);
 
  out:
   if (device != NULL)
@@ -1442,7 +1616,7 @@ handle_remove_configuration_item (UDisksBlock           *_block,
           g_dbus_method_invocation_take_error (invocation, error);
           goto out;
         }
-      udisks_block_complete_add_configuration_item (UDISKS_BLOCK (block), invocation);
+      udisks_block_complete_remove_configuration_item (UDISKS_BLOCK (block), invocation);
     }
   else if (g_strcmp0 (type, "crypttab") == 0)
     {
@@ -1460,7 +1634,7 @@ handle_remove_configuration_item (UDisksBlock           *_block,
           g_dbus_method_invocation_take_error (invocation, error);
           goto out;
         }
-      udisks_block_complete_add_configuration_item (UDISKS_BLOCK (block), invocation);
+      udisks_block_complete_remove_configuration_item (UDISKS_BLOCK (block), invocation);
     }
   else
     {
@@ -1532,7 +1706,7 @@ handle_update_configuration_item (UDisksBlock           *_block,
           g_dbus_method_invocation_take_error (invocation, error);
           goto out;
         }
-      udisks_block_complete_add_configuration_item (UDISKS_BLOCK (block), invocation);
+      udisks_block_complete_update_configuration_item (UDISKS_BLOCK (block), invocation);
     }
   else if (g_strcmp0 (old_type, "crypttab") == 0)
     {
@@ -1550,7 +1724,7 @@ handle_update_configuration_item (UDisksBlock           *_block,
           g_dbus_method_invocation_take_error (invocation, error);
           goto out;
         }
-      udisks_block_complete_add_configuration_item (UDISKS_BLOCK (block), invocation);
+      udisks_block_complete_update_configuration_item (UDISKS_BLOCK (block), invocation);
     }
   else
     {
@@ -1822,6 +1996,8 @@ erase_device (UDisksBlock  *block,
       goto out;
     }
 
+  udisks_job_set_bytes (UDISKS_JOB (job), size);
+
   buf = g_new0 (guchar, ERASE_SIZE);
   pos = 0;
   time_of_last_signal = g_get_monotonic_time ();
@@ -1882,6 +2058,59 @@ erase_device (UDisksBlock  *block,
 
 /* ---------------------------------------------------------------------------------------------------- */
 
+static const struct
+{
+  const gchar *table_type;
+  const gchar *id_type;
+  const gchar *partition_type;
+} partition_types_by_id[] = {
+  {"dos", "vfat",         "0x0c"},
+  {"dos", "ntfs",         "0x07"},
+  {"dos", "exfat",        "0x0c"},
+  {"dos", "swap",         "0x82"},
+  {"dos", "ext2",         "0x83"},
+  {"dos", "ext3",         "0x83"},
+  {"dos", "ext4",         "0x83"},
+  {"dos", "xfs",          "0x83"},
+  {"dos", "btrfs",        "0x83"},
+  {"dos", "crypto_LUKS",  "0x83"}, /* TODO: perhaps default to LUKS-specific type */
+
+  {"gpt", "vfat",         "ebd0a0a2-b9e5-4433-87c0-68b6b72699c7"}, /* Microsoft Basic Data */
+  {"gpt", "ntfs",         "ebd0a0a2-b9e5-4433-87c0-68b6b72699c7"},
+  {"gpt", "exfat",        "ebd0a0a2-b9e5-4433-87c0-68b6b72699c7"},
+  {"gpt", "swap",         "0657fd6d-a4ab-43c4-84e5-0933c84b4f4f"}, /* Linux Swap */
+  {"gpt", "ext2",         "0fc63daf-8483-4772-8e79-3d69d8477de4"}, /* Linux Filesystem */
+  {"gpt", "ext3",         "0fc63daf-8483-4772-8e79-3d69d8477de4"},
+  {"gpt", "ext4",         "0fc63daf-8483-4772-8e79-3d69d8477de4"},
+  {"gpt", "xfs",          "0fc63daf-8483-4772-8e79-3d69d8477de4"},
+  {"gpt", "btrfs",        "0fc63daf-8483-4772-8e79-3d69d8477de4"},
+  {"gpt", "crypto_LUKS",  "0fc63daf-8483-4772-8e79-3d69d8477de4"}, /* TODO: perhaps default to LUKS-specific type */
+};
+
+
+/* may return NULL if nothing suitable was found */
+static const gchar *
+determine_partition_type_for_id (const gchar *table_type,
+                                 const gchar *id_type)
+{
+  const gchar *ret = NULL;
+  guint n;
+
+  for (n = 0; n < G_N_ELEMENTS (partition_types_by_id); n++)
+    {
+      if (g_strcmp0 (partition_types_by_id[n].table_type, table_type) == 0 &&
+          g_strcmp0 (partition_types_by_id[n].id_type,    id_type) == 0)
+        {
+          ret = partition_types_by_id[n].partition_type;
+          goto out;
+        }
+    }
+ out:
+  return ret;
+}
+
+/* ---------------------------------------------------------------------------------------------------- */
+
 static gboolean
 handle_format (UDisksBlock           *block,
                GDBusMethodInvocation *invocation,
@@ -1890,13 +2119,15 @@ handle_format (UDisksBlock           *block,
 {
   FormatWaitData *wait_data = NULL;
   UDisksObject *object;
+  UDisksPartition *partition = NULL;
+  UDisksPartitionTable *partition_table = NULL;
   UDisksObject *cleartext_object = NULL;
   UDisksBlock *cleartext_block = NULL;
-  GUdevDevice *udev_cleartext_device = NULL;
+  UDisksLinuxDevice *udev_cleartext_device = NULL;
   UDisksBlock *block_to_mkfs = NULL;
   UDisksObject *object_to_mkfs = NULL;
   UDisksDaemon *daemon;
-  UDisksCleanup *cleanup;
+  UDisksState *state;
   const gchar *action_id;
   const gchar *message;
   const FSInfo *fs_info;
@@ -1916,6 +2147,9 @@ handle_format (UDisksBlock           *block,
   gchar *escaped_device = NULL;
   gboolean was_partitioned = FALSE;
   UDisksInhibitCookie *inhibit_cookie = NULL;
+  gboolean no_block = FALSE;
+  gboolean update_partition_type = FALSE;
+  const gchar *partition_type = NULL;
 
   error = NULL;
   object = udisks_daemon_util_dup_object (block, &error);
@@ -1926,13 +2160,37 @@ handle_format (UDisksBlock           *block,
     }
 
   daemon = udisks_linux_block_object_get_daemon (UDISKS_LINUX_BLOCK_OBJECT (object));
-  cleanup = udisks_daemon_get_cleanup (daemon);
+  state = udisks_daemon_get_state (daemon);
   command = NULL;
   error_message = NULL;
 
   g_variant_lookup (options, "take-ownership", "b", &take_ownership);
   g_variant_lookup (options, "encrypt.passphrase", "s", &encrypt_passphrase);
   g_variant_lookup (options, "erase", "s", &erase_type);
+  g_variant_lookup (options, "no-block", "b", &no_block);
+  g_variant_lookup (options, "update-partition-type", "b", &update_partition_type);
+
+  partition = udisks_object_get_partition (object);
+  if (partition != NULL)
+    {
+      UDisksObject *partition_table_object;
+      partition_table_object = udisks_daemon_find_object (daemon, udisks_partition_get_table (partition));
+      if (partition_table_object == NULL)
+        {
+          g_clear_object (&partition);
+        }
+      else
+        {
+          partition_table = udisks_object_get_partition_table (partition_table_object);
+          g_clear_object (&partition_table_object);
+        }
+    }
+  /* figure out partition type to set, if requested */
+  if (update_partition_type && partition != NULL && partition_table != NULL)
+    {
+      partition_type = determine_partition_type_for_id (udisks_partition_table_get_type_ (partition_table),
+                                                        encrypt_passphrase != NULL ? "crypto_LUKS" : type);
+    }
 
   error = NULL;
   if (!udisks_daemon_util_get_caller_pid_sync (daemon,
@@ -1940,6 +2198,14 @@ handle_format (UDisksBlock           *block,
                                                NULL /* GCancellable */,
                                                &caller_pid,
                                                &error))
+    {
+      g_dbus_method_invocation_return_gerror (invocation, error);
+      g_error_free (error);
+      goto out;
+    }
+
+  error = NULL;
+  if (!udisks_daemon_util_get_caller_uid_sync (daemon, invocation, NULL /* GCancellable */, &caller_uid, &caller_gid, NULL, &error))
     {
       g_dbus_method_invocation_return_gerror (invocation, error);
       g_error_free (error);
@@ -1970,22 +2236,17 @@ handle_format (UDisksBlock           *block,
        */
       message = N_("Authentication is required to format $(drive)");
       action_id = "org.freedesktop.udisks2.modify-device";
-      if (udisks_block_get_hint_system (block))
+      if (!udisks_daemon_util_setup_by_user (daemon, object, caller_uid))
         {
-          action_id = "org.freedesktop.udisks2.modify-device-system";
+          if (udisks_block_get_hint_system (block))
+            {
+              action_id = "org.freedesktop.udisks2.modify-device-system";
+            }
+          else if (!udisks_daemon_util_on_same_seat (daemon, object, caller_pid))
+            {
+              action_id = "org.freedesktop.udisks2.modify-device-other-seat";
+            }
         }
-      else if (!udisks_daemon_util_on_same_seat (daemon, object, caller_pid))
-        {
-          action_id = "org.freedesktop.udisks2.modify-device-other-seat";
-        }
-    }
-
-  error = NULL;
-  if (!udisks_daemon_util_get_caller_uid_sync (daemon, invocation, NULL /* GCancellable */, &caller_uid, &caller_gid, NULL, &error))
-    {
-      g_dbus_method_invocation_return_gerror (invocation, error);
-      g_error_free (error);
-      goto out;
     }
 
   /* TODO: Consider just accepting any @type and just running "mkfs -t <type>".
@@ -2016,6 +2277,13 @@ handle_format (UDisksBlock           *block,
 
   was_partitioned = (udisks_object_peek_partition_table (object) != NULL);
 
+  /* return early, if requested */
+  if (no_block)
+    {
+      udisks_block_complete_format (block, invocation);
+      invocation = NULL;
+    }
+
   /* First wipe the device... */
   if (!udisks_daemon_launch_spawned_job_sync (daemon,
                                               object,
@@ -2029,11 +2297,12 @@ handle_format (UDisksBlock           *block,
                                               "wipefs -a %s",
                                               escaped_device))
     {
-      g_dbus_method_invocation_return_error (invocation,
-                                             UDISKS_ERROR,
-                                             UDISKS_ERROR_FAILED,
-                                             "Error wiping device: %s",
-                                             error_message);
+      if (invocation != NULL)
+        g_dbus_method_invocation_return_error (invocation,
+                                               UDISKS_ERROR,
+                                               UDISKS_ERROR_FAILED,
+                                               "Error wiping device: %s",
+                                               error_message);
       g_free (error_message);
       goto out;
     }
@@ -2052,7 +2321,10 @@ handle_format (UDisksBlock           *block,
                                           &error) == NULL)
     {
       g_prefix_error (&error, "Error synchronizing after initial wipe: ");
-      g_dbus_method_invocation_take_error (invocation, error);
+      if (invocation != NULL)
+        g_dbus_method_invocation_take_error (invocation, error);
+      else
+        g_clear_error (&error);
       goto out;
     }
 
@@ -2065,7 +2337,10 @@ handle_format (UDisksBlock           *block,
       if (!erase_device (block, object, daemon, caller_uid, erase_type, &error))
         {
           g_prefix_error (&error, "Error erasing device: ");
-          g_dbus_method_invocation_take_error (invocation, error);
+          if (invocation != NULL)
+            g_dbus_method_invocation_take_error (invocation, error);
+          else
+            g_clear_error (&error);
           goto out;
         }
     }
@@ -2088,11 +2363,12 @@ handle_format (UDisksBlock           *block,
                                                   "cryptsetup luksFormat \"%s\"",
                                                   escaped_device))
         {
-          g_dbus_method_invocation_return_error (invocation,
-                                                 UDISKS_ERROR,
-                                                 UDISKS_ERROR_FAILED,
-                                                 "Error creating LUKS device: %s",
-                                                 error_message);
+          if (invocation != NULL)
+            g_dbus_method_invocation_return_error (invocation,
+                                                   UDISKS_ERROR,
+                                                   UDISKS_ERROR_FAILED,
+                                                   "Error creating LUKS device: %s",
+                                                   error_message);
           g_free (error_message);
           goto out;
         }
@@ -2106,7 +2382,10 @@ handle_format (UDisksBlock           *block,
                                               &error) == NULL)
         {
           g_prefix_error (&error, "Error waiting for LUKS UUID: ");
-          g_dbus_method_invocation_take_error (invocation, error);
+          if (invocation != NULL)
+            g_dbus_method_invocation_take_error (invocation, error);
+          else
+            g_clear_error (&error);
           goto out;
         }
 
@@ -2125,11 +2404,12 @@ handle_format (UDisksBlock           *block,
                                                   escaped_device,
                                                   mapped_name))
         {
-          g_dbus_method_invocation_return_error (invocation,
-                                                 UDISKS_ERROR,
-                                                 UDISKS_ERROR_FAILED,
-                                                 "Error opening LUKS device: %s",
-                                                 error_message);
+          if (invocation != NULL)
+            g_dbus_method_invocation_return_error (invocation,
+                                                   UDISKS_ERROR,
+                                                   UDISKS_ERROR_FAILED,
+                                                   "Error opening LUKS device: %s",
+                                                   error_message);
           g_free (error_message);
           goto out;
         }
@@ -2144,24 +2424,28 @@ handle_format (UDisksBlock           *block,
       if (cleartext_object == NULL)
         {
           g_prefix_error (&error, "Error waiting for LUKS cleartext device: ");
-          g_dbus_method_invocation_take_error (invocation, error);
+          if (invocation != NULL)
+            g_dbus_method_invocation_take_error (invocation, error);
+          else
+            g_clear_error (&error);
           goto out;
         }
       cleartext_block = udisks_object_get_block (cleartext_object);
       if (cleartext_block == NULL)
         {
-          g_dbus_method_invocation_return_error (invocation, UDISKS_ERROR, UDISKS_ERROR_FAILED,
-                                                 "LUKS cleartext device does not have block interface");
+          if (invocation != NULL)
+            g_dbus_method_invocation_return_error (invocation, UDISKS_ERROR, UDISKS_ERROR_FAILED,
+                                                   "LUKS cleartext device does not have block interface");
           goto out;
         }
 
       /* update the unlocked-luks file */
       udev_cleartext_device = udisks_linux_block_object_get_device (UDISKS_LINUX_BLOCK_OBJECT (cleartext_object));
-      udisks_cleanup_add_unlocked_luks (cleanup,
-                                        udisks_block_get_device_number (cleartext_block),
-                                        udisks_block_get_device_number (block),
-                                        g_udev_device_get_sysfs_attr (udev_cleartext_device, "dm/uuid"),
-                                        caller_uid);
+      udisks_state_add_unlocked_luks (state,
+                                      udisks_block_get_device_number (cleartext_block),
+                                      udisks_block_get_device_number (block),
+                                      g_udev_device_get_sysfs_attr (udev_cleartext_device->udev_device, "dm/uuid"),
+                                      caller_uid);
 
       object_to_mkfs = cleartext_object;
       block_to_mkfs = cleartext_block;
@@ -2178,7 +2462,10 @@ handle_format (UDisksBlock           *block,
       if (!erase_device (block_to_mkfs, object_to_mkfs, daemon, caller_uid, erase_type, &error))
         {
           g_prefix_error (&error, "Error erasing cleartext device: ");
-          g_dbus_method_invocation_take_error (invocation, error);
+          if (invocation != NULL)
+            g_dbus_method_invocation_take_error (invocation, error);
+          else
+            g_clear_error (&error);
           goto out;
         }
     }
@@ -2189,11 +2476,12 @@ handle_format (UDisksBlock           *block,
       /* TODO: return an error if label is too long */
       if (strstr (fs_info->command_create_fs, "$LABEL") == NULL)
         {
-          g_dbus_method_invocation_return_error (invocation,
-                       UDISKS_ERROR,
-                       UDISKS_ERROR_NOT_SUPPORTED,
-                       "File system type %s does not support labels",
-                       type);
+          if (invocation != NULL)
+            g_dbus_method_invocation_return_error (invocation,
+                                                   UDISKS_ERROR,
+                                                   UDISKS_ERROR_NOT_SUPPORTED,
+                                                   "File system type %s does not support labels",
+                                                   type);
           goto out;
         }
     }
@@ -2213,11 +2501,12 @@ handle_format (UDisksBlock           *block,
                                               NULL, /* input_string */
                                               "%s", command))
     {
-      g_dbus_method_invocation_return_error (invocation,
-                                             UDISKS_ERROR,
-                                             UDISKS_ERROR_FAILED,
-                                             "Error creating file system: %s",
-                                             error_message);
+      if (invocation != NULL)
+        g_dbus_method_invocation_return_error (invocation,
+                                               UDISKS_ERROR,
+                                               UDISKS_ERROR_FAILED,
+                                               "Error creating file system: %s",
+                                               error_message);
       g_free (error_message);
       goto out;
     }
@@ -2236,7 +2525,10 @@ handle_format (UDisksBlock           *block,
       g_prefix_error (&error,
                       "Error synchronizing after formatting with type `%s': ",
                       type);
-      g_dbus_method_invocation_take_error (invocation, error);
+      if (invocation != NULL)
+        g_dbus_method_invocation_take_error (invocation, error);
+      else
+        g_clear_error (&error);
       goto out;
     }
 
@@ -2247,16 +2539,18 @@ handle_format (UDisksBlock           *block,
 
       if (mkdtemp (tos_dir) == NULL)
         {
-          g_dbus_method_invocation_return_error (invocation, UDISKS_ERROR, UDISKS_ERROR_FAILED,
-                                                 "Cannot create directory %s: %m", tos_dir);
+          if (invocation != NULL)
+            g_dbus_method_invocation_return_error (invocation, UDISKS_ERROR, UDISKS_ERROR_FAILED,
+                                                   "Cannot create directory %s: %m", tos_dir);
           goto out;
         }
       if (mount (udisks_block_get_device (block_to_mkfs), tos_dir, type, 0, NULL) != 0)
         {
-          g_dbus_method_invocation_return_error (invocation, UDISKS_ERROR, UDISKS_ERROR_FAILED,
-                                                 "Cannot mount %s at %s: %m",
-                                                 udisks_block_get_device (block_to_mkfs),
-                                                 tos_dir);
+          if (invocation != NULL)
+            g_dbus_method_invocation_return_error (invocation, UDISKS_ERROR, UDISKS_ERROR_FAILED,
+                                                   "Cannot mount %s at %s: %m",
+                                                   udisks_block_get_device (block_to_mkfs),
+                                                   tos_dir);
           if (rmdir (tos_dir) != 0)
             {
               udisks_warning ("Error removing directory %s: %m", tos_dir);
@@ -2265,8 +2559,9 @@ handle_format (UDisksBlock           *block,
         }
       if (chown (tos_dir, caller_uid, caller_gid) != 0)
         {
-          g_dbus_method_invocation_return_error (invocation, UDISKS_ERROR, UDISKS_ERROR_FAILED,
-                                                 "Cannot chown %s to uid=%d and gid=%d: %m", tos_dir, caller_uid, caller_gid);
+          if (invocation != NULL)
+            g_dbus_method_invocation_return_error (invocation, UDISKS_ERROR, UDISKS_ERROR_FAILED,
+                                                   "Cannot chown %s to uid=%d and gid=%d: %m", tos_dir, caller_uid, caller_gid);
           if (umount (tos_dir) != 0)
             {
               udisks_warning ("Error unmounting directory %s: %m", tos_dir);
@@ -2280,8 +2575,9 @@ handle_format (UDisksBlock           *block,
         }
       if (chmod (tos_dir, 0700) != 0)
         {
-          g_dbus_method_invocation_return_error (invocation, UDISKS_ERROR, UDISKS_ERROR_FAILED,
-                                                 "Cannot chmod %s to mode 0700: %m", tos_dir);
+          if (invocation != NULL)
+            g_dbus_method_invocation_return_error (invocation, UDISKS_ERROR, UDISKS_ERROR_FAILED,
+                                                   "Cannot chmod %s to mode 0700: %m", tos_dir);
           if (umount (tos_dir) != 0)
             {
               udisks_warning ("Error unmounting directory %s: %m", tos_dir);
@@ -2296,8 +2592,9 @@ handle_format (UDisksBlock           *block,
 
       if (umount (tos_dir) != 0)
         {
-          g_dbus_method_invocation_return_error (invocation, UDISKS_ERROR, UDISKS_ERROR_FAILED,
-                                                 "Cannot unmount %s: %m", tos_dir);
+          if (invocation != NULL)
+            g_dbus_method_invocation_return_error (invocation, UDISKS_ERROR, UDISKS_ERROR_FAILED,
+                                                   "Cannot unmount %s: %m", tos_dir);
           if (rmdir (tos_dir) != 0)
             {
               udisks_warning ("Error removing directory %s: %m", tos_dir);
@@ -2307,13 +2604,34 @@ handle_format (UDisksBlock           *block,
 
       if (rmdir (tos_dir) != 0)
         {
-          g_dbus_method_invocation_return_error (invocation, UDISKS_ERROR, UDISKS_ERROR_FAILED,
-                                                 "Cannot remove directory %s: %m", tos_dir);
+          if (invocation != NULL)
+            g_dbus_method_invocation_return_error (invocation, UDISKS_ERROR, UDISKS_ERROR_FAILED,
+                                                   "Cannot remove directory %s: %m", tos_dir);
           goto out;
         }
     }
 
-  udisks_block_complete_format (block, invocation);
+  /* Set the partition type, if requested */
+  if (partition_type != NULL && partition != NULL)
+    {
+      if (g_strcmp0 (udisks_partition_get_type_ (partition), partition_type) != 0)
+        {
+          if (!udisks_linux_partition_set_type_sync (UDISKS_LINUX_PARTITION (partition),
+                                                     partition_type,
+                                                     caller_uid,
+                                                     NULL, /* cancellable */
+                                                     &error))
+            {
+              g_prefix_error (&error, "Error setting partition type after formatting: ");
+              g_dbus_method_invocation_take_error (invocation, error);
+              goto out;
+            }
+        }
+    }
+
+
+  if (invocation != NULL)
+    udisks_block_complete_format (block, invocation);
 
  out:
   udisks_daemon_util_uninhibit_system_sync (inhibit_cookie);
@@ -2326,6 +2644,8 @@ handle_format (UDisksBlock           *block,
   g_clear_object (&cleartext_block);
   g_clear_object (&udev_cleartext_device);
   g_free (wait_data);
+  g_clear_object (&partition_table);
+  g_clear_object (&partition);
   g_clear_object (&object);
   return TRUE; /* returning true means that we handled the method invocation */
 }
@@ -2450,7 +2770,7 @@ handle_open_for_restore (UDisksBlock           *block,
     }
 
   out_fd_list = g_unix_fd_list_new_from_array (&fd, 1);
-  udisks_block_complete_open_for_backup (block, invocation, out_fd_list, g_variant_new_handle (0));
+  udisks_block_complete_open_for_restore (block, invocation, out_fd_list, g_variant_new_handle (0));
 
  out:
   g_clear_object (&out_fd_list);
@@ -2524,7 +2844,7 @@ handle_open_for_benchmark (UDisksBlock           *block,
     }
 
   out_fd_list = g_unix_fd_list_new_from_array (&fd, 1);
-  udisks_block_complete_open_for_backup (block, invocation, out_fd_list, g_variant_new_handle (0));
+  udisks_block_complete_open_for_benchmark (block, invocation, out_fd_list, g_variant_new_handle (0));
 
  out:
   g_clear_object (&out_fd_list);
@@ -2540,7 +2860,7 @@ handle_rescan (UDisksBlock           *block,
                GVariant              *options)
 {
   UDisksObject *object = NULL;
-  GUdevDevice *udev_device = NULL;
+  UDisksLinuxDevice *device = NULL;
   UDisksDaemon *daemon;
   const gchar *action_id;
   const gchar *message;
@@ -2572,16 +2892,16 @@ handle_rescan (UDisksBlock           *block,
                                                     invocation))
     goto out;
 
-  udev_device = udisks_linux_block_object_get_device (UDISKS_LINUX_BLOCK_OBJECT (object));
+  device = udisks_linux_block_object_get_device (UDISKS_LINUX_BLOCK_OBJECT (object));
 
   udisks_linux_block_object_trigger_uevent (UDISKS_LINUX_BLOCK_OBJECT (object));
-  if (g_strcmp0 (g_udev_device_get_devtype (udev_device), "disk") == 0)
+  if (g_strcmp0 (g_udev_device_get_devtype (device->udev_device), "disk") == 0)
     udisks_linux_block_object_reread_partition_table (UDISKS_LINUX_BLOCK_OBJECT (object));
 
   udisks_block_complete_rescan (block, invocation);
 
  out:
-  g_clear_object (&udev_device);
+  g_clear_object (&device);
   g_clear_object (&object);
   return TRUE; /* returning true means that we handled the method invocation */
 }

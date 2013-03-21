@@ -106,15 +106,6 @@ UDisksDaemon
 @Returns: 
 
 
-<!-- ##### FUNCTION udisks_daemon_get_persistent_store ##### -->
-<para>
-
-</para>
-
-@daemon: 
-@Returns: 
-
-
 <!-- ##### FUNCTION udisks_daemon_get_authority ##### -->
 <para>
 
@@ -124,7 +115,7 @@ UDisksDaemon
 @Returns: 
 
 
-<!-- ##### FUNCTION udisks_daemon_get_cleanup ##### -->
+<!-- ##### FUNCTION udisks_daemon_get_state ##### -->
 <para>
 
 </para>

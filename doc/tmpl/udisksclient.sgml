@@ -152,6 +152,34 @@ UDisksClient
 @client: 
 
 
+<!-- ##### FUNCTION udisks_client_queue_changed ##### -->
+<para>
+
+</para>
+
+@client: 
+
+
+<!-- ##### FUNCTION udisks_client_get_jobs_for_object ##### -->
+<para>
+
+</para>
+
+@client: 
+@object: 
+@Returns: 
+
+
+<!-- ##### FUNCTION udisks_client_get_job_description ##### -->
+<para>
+
+</para>
+
+@client: 
+@job: 
+@Returns: 
+
+
 <!-- ##### FUNCTION udisks_client_get_block_for_dev ##### -->
 <para>
 
@@ -243,23 +271,63 @@ UDisksClient
 @Returns: 
 
 
-<!-- ##### FUNCTION udisks_client_get_jobs_for_object ##### -->
+<!-- ##### FUNCTION udisks_client_get_drive_siblings ##### -->
+<para>
+
+</para>
+
+@client: 
+@drive: 
+@Returns: 
+
+
+<!-- ##### FUNCTION udisks_client_get_block_for_mdraid ##### -->
+<para>
+
+</para>
+
+@client: 
+@raid: 
+@Returns: 
+
+
+<!-- ##### FUNCTION udisks_client_get_all_blocks_for_mdraid ##### -->
+<para>
+
+</para>
+
+@client: 
+@raid: 
+@Returns: 
+
+
+<!-- ##### FUNCTION udisks_client_get_members_for_mdraid ##### -->
+<para>
+
+</para>
+
+@client: 
+@raid: 
+@Returns: 
+
+
+<!-- ##### FUNCTION udisks_client_get_mdraid_for_block ##### -->
+<para>
+
+</para>
+
+@client: 
+@block: 
+@Returns: 
+
+
+<!-- ##### FUNCTION udisks_client_get_object_info ##### -->
 <para>
 
 </para>
 
 @client: 
 @object: 
-@Returns: 
-
-
-<!-- ##### FUNCTION udisks_client_get_job_description ##### -->
-<para>
-
-</para>
-
-@client: 
-@job: 
 @Returns: 
 
 

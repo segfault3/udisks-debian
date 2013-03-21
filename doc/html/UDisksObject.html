@@ -61,6 +61,7 @@ struct              <a class="link" href="UDisksObject.html#UDisksObjectIface" t
 <a class="link" href="UDisksPartition.html" title="UDisksPartition"><span class="returnvalue">UDisksPartition</span></a> *   <a class="link" href="UDisksObject.html#udisks-object-get-partition" title="udisks_object_get_partition ()">udisks_object_get_partition</a>         (<em class="parameter"><code><a class="link" href="UDisksObject.html" title="UDisksObject"><span class="type">UDisksObject</span></a> *object</code></em>);
 <a class="link" href="UDisksPartitionTable.html" title="UDisksPartitionTable"><span class="returnvalue">UDisksPartitionTable</span></a> * <a class="link" href="UDisksObject.html#udisks-object-get-partition-table" title="udisks_object_get_partition_table ()">udisks_object_get_partition_table</a>
                                                         (<em class="parameter"><code><a class="link" href="UDisksObject.html" title="UDisksObject"><span class="type">UDisksObject</span></a> *object</code></em>);
+<a class="link" href="UDisksMDRaid.html" title="UDisksMDRaid"><span class="returnvalue">UDisksMDRaid</span></a> *      <a class="link" href="UDisksObject.html#udisks-object-get-mdraid" title="udisks_object_get_mdraid ()">udisks_object_get_mdraid</a>            (<em class="parameter"><code><a class="link" href="UDisksObject.html" title="UDisksObject"><span class="type">UDisksObject</span></a> *object</code></em>);
 <a class="link" href="UDisksBlock.html" title="UDisksBlock"><span class="returnvalue">UDisksBlock</span></a> *       <a class="link" href="UDisksObject.html#udisks-object-peek-block" title="udisks_object_peek_block ()">udisks_object_peek_block</a>            (<em class="parameter"><code><a class="link" href="UDisksObject.html" title="UDisksObject"><span class="type">UDisksObject</span></a> *object</code></em>);
 <a class="link" href="UDisksDrive.html" title="UDisksDrive"><span class="returnvalue">UDisksDrive</span></a> *       <a class="link" href="UDisksObject.html#udisks-object-peek-drive" title="udisks_object_peek_drive ()">udisks_object_peek_drive</a>            (<em class="parameter"><code><a class="link" href="UDisksObject.html" title="UDisksObject"><span class="type">UDisksObject</span></a> *object</code></em>);
 <a class="link" href="UDisksDriveAta.html" title="UDisksDriveAta"><span class="returnvalue">UDisksDriveAta</span></a> *    <a class="link" href="UDisksObject.html#udisks-object-peek-drive-ata" title="udisks_object_peek_drive_ata ()">udisks_object_peek_drive_ata</a>        (<em class="parameter"><code><a class="link" href="UDisksObject.html" title="UDisksObject"><span class="type">UDisksObject</span></a> *object</code></em>);
@@ -73,6 +74,7 @@ struct              <a class="link" href="UDisksObject.html#UDisksObjectIface" t
 <a class="link" href="UDisksPartition.html" title="UDisksPartition"><span class="returnvalue">UDisksPartition</span></a> *   <a class="link" href="UDisksObject.html#udisks-object-peek-partition" title="udisks_object_peek_partition ()">udisks_object_peek_partition</a>        (<em class="parameter"><code><a class="link" href="UDisksObject.html" title="UDisksObject"><span class="type">UDisksObject</span></a> *object</code></em>);
 <a class="link" href="UDisksPartitionTable.html" title="UDisksPartitionTable"><span class="returnvalue">UDisksPartitionTable</span></a> * <a class="link" href="UDisksObject.html#udisks-object-peek-partition-table" title="udisks_object_peek_partition_table ()">udisks_object_peek_partition_table</a>
                                                         (<em class="parameter"><code><a class="link" href="UDisksObject.html" title="UDisksObject"><span class="type">UDisksObject</span></a> *object</code></em>);
+<a class="link" href="UDisksMDRaid.html" title="UDisksMDRaid"><span class="returnvalue">UDisksMDRaid</span></a> *      <a class="link" href="UDisksObject.html#udisks-object-peek-mdraid" title="udisks_object_peek_mdraid ()">udisks_object_peek_mdraid</a>           (<em class="parameter"><code><a class="link" href="UDisksObject.html" title="UDisksObject"><span class="type">UDisksObject</span></a> *object</code></em>);
 struct              <a class="link" href="UDisksObject.html#UDisksObjectProxy-struct" title="struct UDisksObjectProxy">UDisksObjectProxy</a>;
 struct              <a class="link" href="UDisksObject.html#UDisksObjectProxyClass" title="struct UDisksObjectProxyClass">UDisksObjectProxyClass</a>;
 <a class="link" href="UDisksObject.html#UDisksObjectProxy"><span class="returnvalue">UDisksObjectProxy</span></a> * <a class="link" href="UDisksObject.html#udisks-object-proxy-new" title="udisks_object_proxy_new ()">udisks_object_proxy_new</a>             (<em class="parameter"><code><span class="type">GDBusConnection</span> *connection</code></em>,
@@ -108,6 +110,8 @@ struct              <a class="link" href="UDisksObject.html#UDisksObjectSkeleton
 <span class="returnvalue">void</span>                <a class="link" href="UDisksObject.html#udisks-object-skeleton-set-partition-table" title="udisks_object_skeleton_set_partition_table ()">udisks_object_skeleton_set_partition_table</a>
                                                         (<em class="parameter"><code><a class="link" href="UDisksObject.html#UDisksObjectSkeleton"><span class="type">UDisksObjectSkeleton</span></a> *object</code></em>,
                                                          <em class="parameter"><code><a class="link" href="UDisksPartitionTable.html" title="UDisksPartitionTable"><span class="type">UDisksPartitionTable</span></a> *interface_</code></em>);
+<span class="returnvalue">void</span>                <a class="link" href="UDisksObject.html#udisks-object-skeleton-set-mdraid" title="udisks_object_skeleton_set_mdraid ()">udisks_object_skeleton_set_mdraid</a>   (<em class="parameter"><code><a class="link" href="UDisksObject.html#UDisksObjectSkeleton"><span class="type">UDisksObjectSkeleton</span></a> *object</code></em>,
+                                                         <em class="parameter"><code><a class="link" href="UDisksMDRaid.html" title="UDisksMDRaid"><span class="type">UDisksMDRaid</span></a> *interface_</code></em>);
 </pre>
 </div>
 <div class="refsect1">
@@ -118,7 +122,7 @@ struct              <a class="link" href="UDisksObject.html#UDisksObjectSkeleton
 </pre>
 <pre class="synopsis">
   GObject
-   +----GDBusObjectProxy
+   +----<a href="/usr/share/gtk-doc/html/gen/GDBusObjectProxy.html">GDBusObjectProxy</a>
          +----UDisksObjectProxy
 </pre>
 <pre class="synopsis">
@@ -127,28 +131,29 @@ struct              <a class="link" href="UDisksObject.html#UDisksObjectSkeleton
          +----UDisksObjectSkeleton
                +----<a class="link" href="UDisksLinuxBlockObject.html" title="UDisksLinuxBlockObject">UDisksLinuxBlockObject</a>
                +----<a class="link" href="UDisksLinuxDriveObject.html" title="UDisksLinuxDriveObject">UDisksLinuxDriveObject</a>
+               +----<a class="link" href="UDisksLinuxMDRaidObject.html" title="UDisksLinuxMDRaidObject">UDisksLinuxMDRaidObject</a>
 </pre>
 </div>
 <div class="refsect1">
 <a name="UDisksObject.prerequisites"></a><h2>Prerequisites</h2>
 <p>
 UDisksObject requires
- GDBusObject and  GObject.</p>
+ <a href="/usr/share/gtk-doc/html/gen/GDBusObject.html">GDBusObject</a> and  GObject.</p>
 </div>
 <div class="refsect1">
 <a name="UDisksObject.implemented-interfaces"></a><h2>Implemented Interfaces</h2>
 <p>
 UDisksObjectProxy implements
- GDBusObject and  <a class="link" href="UDisksObject.html" title="UDisksObject">UDisksObject</a>.</p>
+ <a href="/usr/share/gtk-doc/html/gen/GDBusObject.html">GDBusObject</a> and  <a class="link" href="UDisksObject.html" title="UDisksObject">UDisksObject</a>.</p>
 <p>
 UDisksObjectSkeleton implements
- GDBusObject and  <a class="link" href="UDisksObject.html" title="UDisksObject">UDisksObject</a>.</p>
+ <a href="/usr/share/gtk-doc/html/gen/GDBusObject.html">GDBusObject</a> and  <a class="link" href="UDisksObject.html" title="UDisksObject">UDisksObject</a>.</p>
 </div>
 <div class="refsect1">
 <a name="UDisksObject.implementations"></a><h2>Known Implementations</h2>
 <p>
 UDisksObject is implemented by
- <a class="link" href="UDisksLinuxBlockObject.html" title="UDisksLinuxBlockObject">UDisksLinuxBlockObject</a>,  <a class="link" href="UDisksLinuxDriveObject.html" title="UDisksLinuxDriveObject">UDisksLinuxDriveObject</a>,  <a class="link" href="UDisksObject.html#UDisksObjectProxy">UDisksObjectProxy</a> and  <a class="link" href="UDisksObject.html#UDisksObjectSkeleton">UDisksObjectSkeleton</a>.</p>
+ <a class="link" href="UDisksLinuxBlockObject.html" title="UDisksLinuxBlockObject">UDisksLinuxBlockObject</a>,  <a class="link" href="UDisksLinuxDriveObject.html" title="UDisksLinuxDriveObject">UDisksLinuxDriveObject</a>,  <a class="link" href="UDisksLinuxMDRaidObject.html" title="UDisksLinuxMDRaidObject">UDisksLinuxMDRaidObject</a>,  <a class="link" href="UDisksObject.html#UDisksObjectProxy">UDisksObjectProxy</a> and  <a class="link" href="UDisksObject.html#UDisksObjectSkeleton">UDisksObjectSkeleton</a>.</p>
 </div>
 <div class="refsect1">
 <a name="UDisksObject.properties"></a><h2>Properties</h2>
@@ -161,6 +166,7 @@ UDisksObject is implemented by
   "<a class="link" href="UDisksObject.html#UDisksObject--job" title='The "job" property'>job</a>"                      <a class="link" href="UDisksJob.html" title="UDisksJob"><span class="type">UDisksJob</span></a>*            : Read / Write
   "<a class="link" href="UDisksObject.html#UDisksObject--loop" title='The "loop" property'>loop</a>"                     <a class="link" href="UDisksLoop.html" title="UDisksLoop"><span class="type">UDisksLoop</span></a>*           : Read / Write
   "<a class="link" href="UDisksObject.html#UDisksObject--manager" title='The "manager" property'>manager</a>"                  <a class="link" href="UDisksManager.html" title="UDisksManager"><span class="type">UDisksManager</span></a>*        : Read / Write
+  "<a class="link" href="UDisksObject.html#UDisksObject--mdraid" title='The "mdraid" property'>mdraid</a>"                   <a class="link" href="UDisksMDRaid.html" title="UDisksMDRaid"><span class="type">UDisksMDRaid</span></a>*         : Read / Write
   "<a class="link" href="UDisksObject.html#UDisksObject--partition" title='The "partition" property'>partition</a>"                <a class="link" href="UDisksPartition.html" title="UDisksPartition"><span class="type">UDisksPartition</span></a>*      : Read / Write
   "<a class="link" href="UDisksObject.html#UDisksObject--partition-table" title='The "partition-table" property'>partition-table</a>"          <a class="link" href="UDisksPartitionTable.html" title="UDisksPartitionTable"><span class="type">UDisksPartitionTable</span></a>*  : Read / Write
   "<a class="link" href="UDisksObject.html#UDisksObject--swapspace" title='The "swapspace" property'>swapspace</a>"                <a class="link" href="UDisksSwapspace.html" title="UDisksSwapspace"><span class="type">UDisksSwapspace</span></a>*      : Read / Write
@@ -477,6 +483,32 @@ Gets the <a class="link" href="UDisksPartitionTable.html" title="UDisksPartition
 </tr>
 </tbody>
 </table></div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="udisks-object-get-mdraid"></a><h3>udisks_object_get_mdraid ()</h3>
+<pre class="programlisting"><a class="link" href="UDisksMDRaid.html" title="UDisksMDRaid"><span class="returnvalue">UDisksMDRaid</span></a> *      udisks_object_get_mdraid            (<em class="parameter"><code><a class="link" href="UDisksObject.html" title="UDisksObject"><span class="type">UDisksObject</span></a> *object</code></em>);</pre>
+<p>
+Gets the <a class="link" href="UDisksMDRaid.html" title="UDisksMDRaid"><span class="type">UDisksMDRaid</span></a> instance for the D-Bus interface <a class="link" href="gdbus-org.freedesktop.UDisks2.MDRaid.html#gdbus-interface-org-freedesktop-UDisks2-MDRaid.top_of_page">org.freedesktop.UDisks2.MDRaid</a> on <em class="parameter"><code>object</code></em>, if any.
+</p>
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
+<col align="left" valign="top">
+<col>
+</colgroup>
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>object</code></em> :</span></p></td>
+<td>A <a class="link" href="UDisksObject.html" title="UDisksObject"><span class="type">UDisksObject</span></a>.</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td>A <a class="link" href="UDisksMDRaid.html" title="UDisksMDRaid"><span class="type">UDisksMDRaid</span></a> that must be freed with <code class="function">g_object_unref()</code> or <code class="literal">NULL</code> if <em class="parameter"><code>object</code></em> does not implement the interface. <span class="annotation">[<a href="http://foldoc.org/transfer%20full"><span class="acronym">transfer full</span></a>]</span>
+</td>
+</tr>
+</tbody>
+</table></div>
+<p class="since">Since 2.1</p>
 </div>
 <hr>
 <div class="refsect2">
@@ -822,6 +854,38 @@ Like <a class="link" href="UDisksObject.html#udisks-object-get-partition-table" 
 </div>
 <hr>
 <div class="refsect2">
+<a name="udisks-object-peek-mdraid"></a><h3>udisks_object_peek_mdraid ()</h3>
+<pre class="programlisting"><a class="link" href="UDisksMDRaid.html" title="UDisksMDRaid"><span class="returnvalue">UDisksMDRaid</span></a> *      udisks_object_peek_mdraid           (<em class="parameter"><code><a class="link" href="UDisksObject.html" title="UDisksObject"><span class="type">UDisksObject</span></a> *object</code></em>);</pre>
+<p>
+Like <a class="link" href="UDisksObject.html#udisks-object-get-mdraid" title="udisks_object_get_mdraid ()"><code class="function">udisks_object_get_mdraid()</code></a> but doesn't increase the reference count on the returned object.
+</p>
+<p>
+</p>
+<div class="warning" style="margin-left: 0.5in; margin-right: 0.5in;">
+<h3 class="title">Warning</h3>It is not safe to use the returned object if you are on another thread than the one where the <span class="type">GDBusObjectManagerClient</span> or <span class="type">GDBusObjectManagerServer</span> for <em class="parameter"><code>object</code></em> is running.</div>
+<p>
+</p>
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
+<col align="left" valign="top">
+<col>
+</colgroup>
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>object</code></em> :</span></p></td>
+<td>A <a class="link" href="UDisksObject.html" title="UDisksObject"><span class="type">UDisksObject</span></a>.</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td>A <a class="link" href="UDisksMDRaid.html" title="UDisksMDRaid"><span class="type">UDisksMDRaid</span></a> or <code class="literal">NULL</code> if <em class="parameter"><code>object</code></em> does not implement the interface. Do not free the returned object, it is owned by <em class="parameter"><code>object</code></em>. <span class="annotation">[<a href="http://foldoc.org/transfer%20none"><span class="acronym">transfer none</span></a>]</span>
+</td>
+</tr>
+</tbody>
+</table></div>
+<p class="since">Since 2.1</p>
+</div>
+<hr>
+<div class="refsect2">
 <a name="UDisksObjectProxy-struct"></a><h3>struct UDisksObjectProxy</h3>
 <pre class="programlisting">struct UDisksObjectProxy;</pre>
 <p>
@@ -844,7 +908,7 @@ Class structure for <a class="link" href="UDisksObject.html#UDisksObjectProxy"><
 <col>
 </colgroup>
 <tbody><tr>
-<td><p><span class="term"><span class="type">GDBusObjectProxyClass</span> <em class="structfield"><code><a name="UDisksObjectProxyClass.parent-class"></a>parent_class</code></em>;</span></p></td>
+<td><p><span class="term"><a href="/usr/share/gtk-doc/html/gen/GDBusObjectProxy.html#GDBusObjectProxyClass"><span class="type">GDBusObjectProxyClass</span></a> <em class="structfield"><code><a name="UDisksObjectProxyClass.parent-class"></a>parent_class</code></em>;</span></p></td>
 <td>The parent class.</td>
 </tr></tbody>
 </table></div>
@@ -1225,6 +1289,33 @@ Sets the <a class="link" href="UDisksPartitionTable.html" title="UDisksPartition
 </tbody>
 </table></div>
 </div>
+<hr>
+<div class="refsect2">
+<a name="udisks-object-skeleton-set-mdraid"></a><h3>udisks_object_skeleton_set_mdraid ()</h3>
+<pre class="programlisting"><span class="returnvalue">void</span>                udisks_object_skeleton_set_mdraid   (<em class="parameter"><code><a class="link" href="UDisksObject.html#UDisksObjectSkeleton"><span class="type">UDisksObjectSkeleton</span></a> *object</code></em>,
+                                                         <em class="parameter"><code><a class="link" href="UDisksMDRaid.html" title="UDisksMDRaid"><span class="type">UDisksMDRaid</span></a> *interface_</code></em>);</pre>
+<p>
+Sets the <a class="link" href="UDisksMDRaid.html" title="UDisksMDRaid"><span class="type">UDisksMDRaid</span></a> instance for the D-Bus interface <a class="link" href="gdbus-org.freedesktop.UDisks2.MDRaid.html#gdbus-interface-org-freedesktop-UDisks2-MDRaid.top_of_page">org.freedesktop.UDisks2.MDRaid</a> on <em class="parameter"><code>object</code></em>.
+</p>
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
+<col align="left" valign="top">
+<col>
+</colgroup>
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>object</code></em> :</span></p></td>
+<td>A <a class="link" href="UDisksObject.html#UDisksObjectSkeleton"><span class="type">UDisksObjectSkeleton</span></a>.</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>interface_</code></em> :</span></p></td>
+<td>A <a class="link" href="UDisksMDRaid.html" title="UDisksMDRaid"><span class="type">UDisksMDRaid</span></a> or <code class="literal">NULL</code> to clear the interface. <span class="annotation">[<a href="http://foldoc.org/allow-none"><span class="acronym">allow-none</span></a>]</span>
+</td>
+</tr>
+</tbody>
+</table></div>
+<p class="since">Since 2.1</p>
+</div>
 </div>
 <div class="refsect1">
 <a name="UDisksObject.property-details"></a><h2>Property Details</h2>
@@ -1314,6 +1405,18 @@ The <a class="link" href="UDisksManager.html" title="UDisksManager"><span class=
 <p>
 Connect to the <span class="type">"notify"</span> signal to get informed of property changes.
 </p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="UDisksObject--mdraid"></a><h3>The <code class="literal">"mdraid"</code> property</h3>
+<pre class="programlisting">  "mdraid"                   <a class="link" href="UDisksMDRaid.html" title="UDisksMDRaid"><span class="type">UDisksMDRaid</span></a>*         : Read / Write</pre>
+<p>
+The <a class="link" href="UDisksMDRaid.html" title="UDisksMDRaid"><span class="type">UDisksMDRaid</span></a> instance corresponding to the D-Bus interface <a class="link" href="gdbus-org.freedesktop.UDisks2.MDRaid.html#gdbus-interface-org-freedesktop-UDisks2-MDRaid.top_of_page">org.freedesktop.UDisks2.MDRaid</a>, if any.
+</p>
+<p>
+Connect to the <span class="type">"notify"</span> signal to get informed of property changes.
+</p>
+<p class="since">Since 2.1</p>
 </div>
 <hr>
 <div class="refsect2">
