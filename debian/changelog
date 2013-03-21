@@ -1,5 +1,11 @@
-udisks2 (2.0.1-2) UNRELEASED; urgency=low
+udisks2 (2.1.0-1) UNRELEASED; urgency=low
 
+  * New upstream release.
+    - Add support for creating UDF filesystems (Closes: #699360)
+    - Add drive poweroff method, so that gvfs can power down hotplugged drives
+      instead of just ejecting them. (LP: #1067876)
+  * mount_in_media.patch: Port redirection of "mounted-fs" storage to /var/lib
+    to new code structure.
   * Drop test_luks_with_vfat.patch: Fixed in current 3.7 kernel.
 
  -- Martin Pitt <mpitt@debian.org>  Tue, 08 Jan 2013 16:02:56 +0100

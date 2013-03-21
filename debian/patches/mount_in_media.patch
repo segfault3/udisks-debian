@@ -6,16 +6,16 @@ Bug-Ubuntu: https://launchpad.net/bugs/1020759
 
 Index: udisks2/src/udiskslinuxfilesystem.c
 ===================================================================
---- udisks2.orig/src/udiskslinuxfilesystem.c	2012-09-06 10:22:25.000000000 +0200
-+++ udisks2/src/udiskslinuxfilesystem.c	2012-09-07 15:55:28.775184539 +0200
-@@ -859,26 +859,26 @@
+--- udisks2.orig/src/udiskslinuxfilesystem.c	2013-03-21 07:44:19.320207135 +0100
++++ udisks2/src/udiskslinuxfilesystem.c	2013-03-21 07:44:19.308207134 +0100
+@@ -877,26 +877,26 @@
      }
  
    /* If we know the user-name and it doesn't have any '/' character in
 -   * it, mount in /run/media/$USER
 +   * it, mount in /media/$USER
     */
-   if (user_name != NULL && strstr (user_name, "/") == NULL)
+   if (!fs_shared && (user_name != NULL && strstr (user_name, "/") == NULL))
      {
 -      mount_dir = g_strdup_printf ("/run/media/%s", user_name);
 +      mount_dir = g_strdup_printf ("/media/%s", user_name);
@@ -42,52 +42,31 @@ Index: udisks2/src/udiskslinuxfilesystem.c
            if (g_mkdir (mount_dir, 0700) != 0)
              {
                g_set_error (error,
-Index: udisks2/src/udiskscleanup.c
+Index: udisks2/src/udisksstate.c
 ===================================================================
---- udisks2.orig/src/udiskscleanup.c	2012-07-28 13:32:27.617931122 +0200
-+++ udisks2/src/udiskscleanup.c	2012-09-07 15:56:57.387188826 +0200
-@@ -753,7 +753,7 @@
-   /* load existing entries */
-   error = NULL;
-   value = udisks_persistent_store_get (cleanup->persistent_store,
--                                       UDISKS_PERSISTENT_FLAGS_TEMPORARY_STORE,
-+                                       UDISKS_PERSISTENT_FLAGS_NORMAL_STORE,
-                                        "mounted-fs",
-                                        G_VARIANT_TYPE ("a{sa{sv}}"),
-                                        &error);
-@@ -790,7 +790,7 @@
-     {
-       error = NULL;
-       if (!udisks_persistent_store_set (cleanup->persistent_store,
--                                        UDISKS_PERSISTENT_FLAGS_TEMPORARY_STORE,
-+                                        UDISKS_PERSISTENT_FLAGS_NORMAL_STORE,
-                                         "mounted-fs",
-                                         G_VARIANT_TYPE ("a{sa{sv}}"),
-                                         new_value, /* consumes new_value */
-@@ -848,7 +848,7 @@
-   /* load existing entries */
-   error = NULL;
-   value = udisks_persistent_store_get (cleanup->persistent_store,
--                                       UDISKS_PERSISTENT_FLAGS_TEMPORARY_STORE,
-+                                       UDISKS_PERSISTENT_FLAGS_NORMAL_STORE,
-                                        "mounted-fs",
-                                        G_VARIANT_TYPE ("a{sa{sv}}"),
-                                        &error);
-@@ -913,7 +913,7 @@
-   /* save new entries */
-   error = NULL;
-   if (!udisks_persistent_store_set (cleanup->persistent_store,
--                                    UDISKS_PERSISTENT_FLAGS_TEMPORARY_STORE,
-+                                    UDISKS_PERSISTENT_FLAGS_NORMAL_STORE,
-                                     "mounted-fs",
-                                     G_VARIANT_TYPE ("a{sa{sv}}"),
-                                     new_value, /* consumes new_value */
-@@ -961,7 +961,7 @@
-   /* load existing entries */
-   error = NULL;
-   value = udisks_persistent_store_get (cleanup->persistent_store,
--                                       UDISKS_PERSISTENT_FLAGS_TEMPORARY_STORE,
-+                                       UDISKS_PERSISTENT_FLAGS_NORMAL_STORE,
-                                        "mounted-fs",
-                                        G_VARIANT_TYPE ("a{sa{sv}}"),
-                                        &error);
+--- udisks2.orig/src/udisksstate.c	2013-03-21 07:44:19.320207135 +0100
++++ udisks2/src/udisksstate.c	2013-03-21 07:44:19.312207135 +0100
+@@ -2235,7 +2235,10 @@
+    * - could also mmap the file
+    */
+ 
+-  path = g_strdup_printf ("/run/udisks2/%s", key);
++  if (strcmp (key, "mounted-fs") == 0)
++    path = g_strdup_printf ("/var/lib/udisks2/%s", key);
++  else
++    path = g_strdup_printf ("/run/udisks2/%s", key);
+ 
+   /* see if it's already in the cache */
+   ret = g_hash_table_lookup (state->cache, path);
+@@ -2301,7 +2304,10 @@
+   data = g_malloc (size);
+   g_variant_store (normalized, data);
+ 
+-  path = g_strdup_printf ("/run/udisks2/%s", key);
++  if (strcmp (key, "mounted-fs") == 0)
++    path = g_strdup_printf ("/var/lib/udisks2/%s", key);
++  else
++    path = g_strdup_printf ("/run/udisks2/%s", key);
+ 
+   g_hash_table_insert (state->cache, g_strdup (path), g_variant_ref (value));
+ 
