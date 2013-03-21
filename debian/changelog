@@ -8,6 +8,7 @@ udisks2 (2.1.0-1) UNRELEASED; urgency=low
     to new code structure.
   * Drop test_luks_with_vfat.patch: Fixed in current 3.7 kernel.
   * libudisks2-0.symbols: Add new symbols from this release.
+  * Add 00git_logind_test.patch: Fix test for logind availability.
 
  -- Martin Pitt <mpitt@debian.org>  Tue, 08 Jan 2013 16:02:56 +0100
 

@@ -1,0 +1,41 @@
+From 266bae418f6f55e0061b089c5bbfdeac2598f155 Mon Sep 17 00:00:00 2001
+From: Martin Pitt <martinpitt@gnome.org>
+Date: Thu, 21 Mar 2013 07:23:59 +0100
+Subject: [PATCH] Fix test for logind availability
+
+sd_booted() is not an appropriate check for whether we should talk to logind,
+test for /run/systemd/seats/ instead.
+
+For details, see:
+<https://mail.gnome.org/archives/desktop-devel-list/2013-March/msg00092.html>
+---
+ src/udisksdaemonutil.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
+
+diff --git a/src/udisksdaemonutil.c b/src/udisksdaemonutil.c
+index 4c23906..fb50a0f 100644
+--- a/src/udisksdaemonutil.c
++++ b/src/udisksdaemonutil.c
+@@ -44,6 +44,8 @@
+ #if defined(HAVE_LIBSYSTEMD_LOGIN)
+ #include <systemd/sd-daemon.h>
+ #include <systemd/sd-login.h>
++
++#define LOGIND_AVAILABLE() (access("/run/systemd/seats/", F_OK) >= 0)
+ #endif
+ 
+ /**
+@@ -1039,8 +1041,8 @@ udisks_daemon_util_on_same_seat (UDisksDaemon          *daemon,
+   UDisksObject *drive_object = NULL;
+   UDisksDrive *drive = NULL;
+ 
+-  /* if we haven't booted with systemd, assume it's always the same seat */
+-  if (sd_booted () <= 0)
++  /* if we don't have logind, assume it's always the same seat */
++  if (!LOGIND_AVAILABLE())
+     return TRUE;
+ 
+   if (UDISKS_IS_LINUX_BLOCK_OBJECT (object))
+-- 
+1.8.1.2
+
