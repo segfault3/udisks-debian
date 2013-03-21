@@ -1,4 +1,4 @@
-udisks2 (2.1.0-1) UNRELEASED; urgency=low
+udisks2 (2.1.0-1) experimental; urgency=low
 
   * New upstream release.
     - Add support for creating UDF filesystems (Closes: #699360)
@@ -10,7 +10,7 @@ udisks2 (2.1.0-1) UNRELEASED; urgency=low
   * libudisks2-0.symbols: Add new symbols from this release.
   * Add 00git_logind_test.patch: Fix test for logind availability.
 
- -- Martin Pitt <mpitt@debian.org>  Tue, 08 Jan 2013 16:02:56 +0100
+ -- Martin Pitt <mpitt@debian.org>  Thu, 21 Mar 2013 08:14:49 +0100
 
 udisks2 (2.0.1-1) experimental; urgency=low
 
