@@ -1118,7 +1118,7 @@ class Luks(UDisksTestCase):
     def test_0_create_teardown(self):
         '''LUKS create/teardown'''
 
-        self.fs_create(None, 'vfat', GLib.Variant('a{sv}', {
+        self.fs_create(None, 'ext4', GLib.Variant('a{sv}', {
             'encrypt.passphrase': GLib.Variant('s', 's3kr1t'),
             'label': GLib.Variant('s', 'treasure'),
             }))
@@ -1154,7 +1154,7 @@ class Luks(UDisksTestCase):
             clear_obj = self.client.get_object(clear_path)
             self.assertEqual(clear_obj.get_property('encrypted'), None)
             clear_block = clear_obj.get_property('block')
-            self.assertEqual(clear_block.get_property('id-type'), 'vfat')
+            self.assertEqual(clear_block.get_property('id-type'), 'ext4')
             self.assertEqual(clear_block.get_property('id-usage'), 'filesystem')
             self.assertEqual(clear_block.get_property('id-label'), 'treasure')
             self.assertNotEqual(clear_block.get_property('crypto-backing-device'), None)
