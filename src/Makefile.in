@@ -88,6 +88,8 @@ am_libudisks_daemon_la_OBJECTS = libudisks_daemon_la-udisksdaemon.lo \
 	libudisks_daemon_la-udiskslinuxdriveobject.lo \
 	libudisks_daemon_la-udiskslinuxdrive.lo \
 	libudisks_daemon_la-udiskslinuxdriveata.lo \
+	libudisks_daemon_la-udiskslinuxmdraidobject.lo \
+	libudisks_daemon_la-udiskslinuxmdraid.lo \
 	libudisks_daemon_la-udiskslinuxmanager.lo \
 	libudisks_daemon_la-udiskslinuxfsinfo.lo \
 	libudisks_daemon_la-udisksbasejob.lo \
@@ -96,14 +98,15 @@ am_libudisks_daemon_la_OBJECTS = libudisks_daemon_la-udisksdaemon.lo \
 	libudisks_daemon_la-udiskssimplejob.lo \
 	libudisks_daemon_la-udisksmount.lo \
 	libudisks_daemon_la-udisksmountmonitor.lo \
-	libudisks_daemon_la-udiskspersistentstore.lo \
 	libudisks_daemon_la-udisksdaemonutil.lo \
 	libudisks_daemon_la-udiskslogging.lo \
-	libudisks_daemon_la-udiskscleanup.lo \
+	libudisks_daemon_la-udisksstate.lo \
 	libudisks_daemon_la-udisksfstabentry.lo \
 	libudisks_daemon_la-udisksfstabmonitor.lo \
 	libudisks_daemon_la-udiskscrypttabentry.lo \
-	libudisks_daemon_la-udiskscrypttabmonitor.lo $(am__objects_2) \
+	libudisks_daemon_la-udiskscrypttabmonitor.lo \
+	libudisks_daemon_la-udiskslinuxdevice.lo \
+	libudisks_daemon_la-udisksata.lo $(am__objects_2) \
 	$(am__objects_1)
 libudisks_daemon_la_OBJECTS = $(am_libudisks_daemon_la_OBJECTS)
 AM_V_lt = $(am__v_lt_@AM_V@)
@@ -439,6 +442,8 @@ libudisks_daemon_la_SOURCES = \
 	udiskslinuxdriveobject.h	udiskslinuxdriveobject.c	\
 	udiskslinuxdrive.h		udiskslinuxdrive.c		\
 	udiskslinuxdriveata.h		udiskslinuxdriveata.c		\
+	udiskslinuxmdraidobject.h	udiskslinuxmdraidobject.c	\
+	udiskslinuxmdraid.h		udiskslinuxmdraid.c		\
 	udiskslinuxmanager.h		udiskslinuxmanager.c		\
 	udiskslinuxfsinfo.h		udiskslinuxfsinfo.c		\
 	udisksbasejob.h			udisksbasejob.c			\
@@ -447,15 +452,16 @@ libudisks_daemon_la_SOURCES = \
 	udiskssimplejob.h		udiskssimplejob.c		\
 	udisksmount.h			udisksmount.c			\
 	udisksmountmonitor.h		udisksmountmonitor.c		\
-	udiskspersistentstore.h		udiskspersistentstore.c		\
 	udisksdaemonutil.h		udisksdaemonutil.c		\
 	udiskslogging.h			udiskslogging.c			\
-	udiskscleanup.h			udiskscleanup.c			\
+	udisksstate.h			udisksstate.c			\
 	udisksprivate.h							\
 	udisksfstabentry.h		udisksfstabentry.c		\
 	udisksfstabmonitor.h		udisksfstabmonitor.c		\
 	udiskscrypttabentry.h		udiskscrypttabentry.c		\
 	udiskscrypttabmonitor.h		udiskscrypttabmonitor.c		\
+	udiskslinuxdevice.h		udiskslinuxdevice.c		\
+	udisksata.h			udisksata.c			\
 	$(BUILT_SOURCES)						\
 	$(NULL)
 
@@ -604,8 +610,8 @@ distclean-compile:
 	-rm -f *.tab.c
 
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libudisks_daemon_la-udisks-daemon-marshal.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libudisks_daemon_la-udisksata.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libudisks_daemon_la-udisksbasejob.Plo@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libudisks_daemon_la-udiskscleanup.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libudisks_daemon_la-udiskscrypttabentry.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libudisks_daemon_la-udiskscrypttabmonitor.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libudisks_daemon_la-udisksdaemon.Plo@am__quote@
@@ -614,6 +620,7 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libudisks_daemon_la-udisksfstabmonitor.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libudisks_daemon_la-udiskslinuxblock.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libudisks_daemon_la-udiskslinuxblockobject.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libudisks_daemon_la-udiskslinuxdevice.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libudisks_daemon_la-udiskslinuxdrive.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libudisks_daemon_la-udiskslinuxdriveata.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libudisks_daemon_la-udiskslinuxdriveobject.Plo@am__quote@
@@ -622,6 +629,8 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libudisks_daemon_la-udiskslinuxfsinfo.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libudisks_daemon_la-udiskslinuxloop.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libudisks_daemon_la-udiskslinuxmanager.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libudisks_daemon_la-udiskslinuxmdraid.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libudisks_daemon_la-udiskslinuxmdraidobject.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libudisks_daemon_la-udiskslinuxpartition.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libudisks_daemon_la-udiskslinuxpartitiontable.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libudisks_daemon_la-udiskslinuxprovider.Plo@am__quote@
@@ -629,10 +638,10 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libudisks_daemon_la-udiskslogging.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libudisks_daemon_la-udisksmount.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libudisks_daemon_la-udisksmountmonitor.Plo@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libudisks_daemon_la-udiskspersistentstore.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libudisks_daemon_la-udisksprovider.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libudisks_daemon_la-udiskssimplejob.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libudisks_daemon_la-udisksspawnedjob.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libudisks_daemon_la-udisksstate.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libudisks_daemon_la-udisksthreadedjob.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/udisksd-main.Po@am__quote@
 
@@ -755,6 +764,20 @@ libudisks_daemon_la-udiskslinuxdriveata.lo: udiskslinuxdriveata.c
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libudisks_daemon_la_CFLAGS) $(CFLAGS) -c -o libudisks_daemon_la-udiskslinuxdriveata.lo `test -f 'udiskslinuxdriveata.c' || echo '$(srcdir)/'`udiskslinuxdriveata.c
 
+libudisks_daemon_la-udiskslinuxmdraidobject.lo: udiskslinuxmdraidobject.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libudisks_daemon_la_CFLAGS) $(CFLAGS) -MT libudisks_daemon_la-udiskslinuxmdraidobject.lo -MD -MP -MF $(DEPDIR)/libudisks_daemon_la-udiskslinuxmdraidobject.Tpo -c -o libudisks_daemon_la-udiskslinuxmdraidobject.lo `test -f 'udiskslinuxmdraidobject.c' || echo '$(srcdir)/'`udiskslinuxmdraidobject.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/libudisks_daemon_la-udiskslinuxmdraidobject.Tpo $(DEPDIR)/libudisks_daemon_la-udiskslinuxmdraidobject.Plo
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='udiskslinuxmdraidobject.c' object='libudisks_daemon_la-udiskslinuxmdraidobject.lo' libtool=yes @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libudisks_daemon_la_CFLAGS) $(CFLAGS) -c -o libudisks_daemon_la-udiskslinuxmdraidobject.lo `test -f 'udiskslinuxmdraidobject.c' || echo '$(srcdir)/'`udiskslinuxmdraidobject.c
+
+libudisks_daemon_la-udiskslinuxmdraid.lo: udiskslinuxmdraid.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libudisks_daemon_la_CFLAGS) $(CFLAGS) -MT libudisks_daemon_la-udiskslinuxmdraid.lo -MD -MP -MF $(DEPDIR)/libudisks_daemon_la-udiskslinuxmdraid.Tpo -c -o libudisks_daemon_la-udiskslinuxmdraid.lo `test -f 'udiskslinuxmdraid.c' || echo '$(srcdir)/'`udiskslinuxmdraid.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/libudisks_daemon_la-udiskslinuxmdraid.Tpo $(DEPDIR)/libudisks_daemon_la-udiskslinuxmdraid.Plo
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='udiskslinuxmdraid.c' object='libudisks_daemon_la-udiskslinuxmdraid.lo' libtool=yes @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libudisks_daemon_la_CFLAGS) $(CFLAGS) -c -o libudisks_daemon_la-udiskslinuxmdraid.lo `test -f 'udiskslinuxmdraid.c' || echo '$(srcdir)/'`udiskslinuxmdraid.c
+
 libudisks_daemon_la-udiskslinuxmanager.lo: udiskslinuxmanager.c
 @am__fastdepCC_TRUE@	$(AM_V_CC)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libudisks_daemon_la_CFLAGS) $(CFLAGS) -MT libudisks_daemon_la-udiskslinuxmanager.lo -MD -MP -MF $(DEPDIR)/libudisks_daemon_la-udiskslinuxmanager.Tpo -c -o libudisks_daemon_la-udiskslinuxmanager.lo `test -f 'udiskslinuxmanager.c' || echo '$(srcdir)/'`udiskslinuxmanager.c
 @am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/libudisks_daemon_la-udiskslinuxmanager.Tpo $(DEPDIR)/libudisks_daemon_la-udiskslinuxmanager.Plo
@@ -811,13 +834,6 @@ libudisks_daemon_la-udisksmountmonitor.lo: udisksmountmonitor.c
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libudisks_daemon_la_CFLAGS) $(CFLAGS) -c -o libudisks_daemon_la-udisksmountmonitor.lo `test -f 'udisksmountmonitor.c' || echo '$(srcdir)/'`udisksmountmonitor.c
 
-libudisks_daemon_la-udiskspersistentstore.lo: udiskspersistentstore.c
-@am__fastdepCC_TRUE@	$(AM_V_CC)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libudisks_daemon_la_CFLAGS) $(CFLAGS) -MT libudisks_daemon_la-udiskspersistentstore.lo -MD -MP -MF $(DEPDIR)/libudisks_daemon_la-udiskspersistentstore.Tpo -c -o libudisks_daemon_la-udiskspersistentstore.lo `test -f 'udiskspersistentstore.c' || echo '$(srcdir)/'`udiskspersistentstore.c
-@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/libudisks_daemon_la-udiskspersistentstore.Tpo $(DEPDIR)/libudisks_daemon_la-udiskspersistentstore.Plo
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='udiskspersistentstore.c' object='libudisks_daemon_la-udiskspersistentstore.lo' libtool=yes @AMDEPBACKSLASH@
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libudisks_daemon_la_CFLAGS) $(CFLAGS) -c -o libudisks_daemon_la-udiskspersistentstore.lo `test -f 'udiskspersistentstore.c' || echo '$(srcdir)/'`udiskspersistentstore.c
-
 libudisks_daemon_la-udisksdaemonutil.lo: udisksdaemonutil.c
 @am__fastdepCC_TRUE@	$(AM_V_CC)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libudisks_daemon_la_CFLAGS) $(CFLAGS) -MT libudisks_daemon_la-udisksdaemonutil.lo -MD -MP -MF $(DEPDIR)/libudisks_daemon_la-udisksdaemonutil.Tpo -c -o libudisks_daemon_la-udisksdaemonutil.lo `test -f 'udisksdaemonutil.c' || echo '$(srcdir)/'`udisksdaemonutil.c
 @am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/libudisks_daemon_la-udisksdaemonutil.Tpo $(DEPDIR)/libudisks_daemon_la-udisksdaemonutil.Plo
@@ -832,12 +848,12 @@ libudisks_daemon_la-udiskslogging.lo: udiskslogging.c
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libudisks_daemon_la_CFLAGS) $(CFLAGS) -c -o libudisks_daemon_la-udiskslogging.lo `test -f 'udiskslogging.c' || echo '$(srcdir)/'`udiskslogging.c
 
-libudisks_daemon_la-udiskscleanup.lo: udiskscleanup.c
-@am__fastdepCC_TRUE@	$(AM_V_CC)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libudisks_daemon_la_CFLAGS) $(CFLAGS) -MT libudisks_daemon_la-udiskscleanup.lo -MD -MP -MF $(DEPDIR)/libudisks_daemon_la-udiskscleanup.Tpo -c -o libudisks_daemon_la-udiskscleanup.lo `test -f 'udiskscleanup.c' || echo '$(srcdir)/'`udiskscleanup.c
-@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/libudisks_daemon_la-udiskscleanup.Tpo $(DEPDIR)/libudisks_daemon_la-udiskscleanup.Plo
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='udiskscleanup.c' object='libudisks_daemon_la-udiskscleanup.lo' libtool=yes @AMDEPBACKSLASH@
+libudisks_daemon_la-udisksstate.lo: udisksstate.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libudisks_daemon_la_CFLAGS) $(CFLAGS) -MT libudisks_daemon_la-udisksstate.lo -MD -MP -MF $(DEPDIR)/libudisks_daemon_la-udisksstate.Tpo -c -o libudisks_daemon_la-udisksstate.lo `test -f 'udisksstate.c' || echo '$(srcdir)/'`udisksstate.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/libudisks_daemon_la-udisksstate.Tpo $(DEPDIR)/libudisks_daemon_la-udisksstate.Plo
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='udisksstate.c' object='libudisks_daemon_la-udisksstate.lo' libtool=yes @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libudisks_daemon_la_CFLAGS) $(CFLAGS) -c -o libudisks_daemon_la-udiskscleanup.lo `test -f 'udiskscleanup.c' || echo '$(srcdir)/'`udiskscleanup.c
+@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libudisks_daemon_la_CFLAGS) $(CFLAGS) -c -o libudisks_daemon_la-udisksstate.lo `test -f 'udisksstate.c' || echo '$(srcdir)/'`udisksstate.c
 
 libudisks_daemon_la-udisksfstabentry.lo: udisksfstabentry.c
 @am__fastdepCC_TRUE@	$(AM_V_CC)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libudisks_daemon_la_CFLAGS) $(CFLAGS) -MT libudisks_daemon_la-udisksfstabentry.lo -MD -MP -MF $(DEPDIR)/libudisks_daemon_la-udisksfstabentry.Tpo -c -o libudisks_daemon_la-udisksfstabentry.lo `test -f 'udisksfstabentry.c' || echo '$(srcdir)/'`udisksfstabentry.c
@@ -866,6 +882,20 @@ libudisks_daemon_la-udiskscrypttabmonitor.lo: udiskscrypttabmonitor.c
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='udiskscrypttabmonitor.c' object='libudisks_daemon_la-udiskscrypttabmonitor.lo' libtool=yes @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libudisks_daemon_la_CFLAGS) $(CFLAGS) -c -o libudisks_daemon_la-udiskscrypttabmonitor.lo `test -f 'udiskscrypttabmonitor.c' || echo '$(srcdir)/'`udiskscrypttabmonitor.c
+
+libudisks_daemon_la-udiskslinuxdevice.lo: udiskslinuxdevice.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libudisks_daemon_la_CFLAGS) $(CFLAGS) -MT libudisks_daemon_la-udiskslinuxdevice.lo -MD -MP -MF $(DEPDIR)/libudisks_daemon_la-udiskslinuxdevice.Tpo -c -o libudisks_daemon_la-udiskslinuxdevice.lo `test -f 'udiskslinuxdevice.c' || echo '$(srcdir)/'`udiskslinuxdevice.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/libudisks_daemon_la-udiskslinuxdevice.Tpo $(DEPDIR)/libudisks_daemon_la-udiskslinuxdevice.Plo
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='udiskslinuxdevice.c' object='libudisks_daemon_la-udiskslinuxdevice.lo' libtool=yes @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libudisks_daemon_la_CFLAGS) $(CFLAGS) -c -o libudisks_daemon_la-udiskslinuxdevice.lo `test -f 'udiskslinuxdevice.c' || echo '$(srcdir)/'`udiskslinuxdevice.c
+
+libudisks_daemon_la-udisksata.lo: udisksata.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libudisks_daemon_la_CFLAGS) $(CFLAGS) -MT libudisks_daemon_la-udisksata.lo -MD -MP -MF $(DEPDIR)/libudisks_daemon_la-udisksata.Tpo -c -o libudisks_daemon_la-udisksata.lo `test -f 'udisksata.c' || echo '$(srcdir)/'`udisksata.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/libudisks_daemon_la-udisksata.Tpo $(DEPDIR)/libudisks_daemon_la-udisksata.Plo
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='udisksata.c' object='libudisks_daemon_la-udisksata.lo' libtool=yes @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libudisks_daemon_la_CFLAGS) $(CFLAGS) -c -o libudisks_daemon_la-udisksata.lo `test -f 'udisksata.c' || echo '$(srcdir)/'`udisksata.c
 
 libudisks_daemon_la-udisks-daemon-marshal.lo: udisks-daemon-marshal.c
 @am__fastdepCC_TRUE@	$(AM_V_CC)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libudisks_daemon_la_CFLAGS) $(CFLAGS) -MT libudisks_daemon_la-udisks-daemon-marshal.lo -MD -MP -MF $(DEPDIR)/libudisks_daemon_la-udisks-daemon-marshal.Tpo -c -o libudisks_daemon_la-udisks-daemon-marshal.lo `test -f 'udisks-daemon-marshal.c' || echo '$(srcdir)/'`udisks-daemon-marshal.c

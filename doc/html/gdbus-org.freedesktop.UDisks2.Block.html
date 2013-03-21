@@ -6,7 +6,7 @@
 <meta name="generator" content="DocBook XSL Stylesheets V1.77.1">
 <link rel="home" href="index.html" title="UDisks Reference Manual">
 <link rel="up" href="ch02.html" title="D-Bus Interfaces">
-<link rel="prev" href="gdbus-org.freedesktop.UDisks2.Drive.Ata.html" title="org.freedesktop.UDisks2.Drive.Ata">
+<link rel="prev" href="gdbus-org.freedesktop.UDisks2.MDRaid.html" title="org.freedesktop.UDisks2.MDRaid">
 <link rel="next" href="gdbus-org.freedesktop.UDisks2.Partition.html" title="org.freedesktop.UDisks2.Partition">
 <meta name="generator" content="GTK-Doc V1.18 (XML mode)">
 <link rel="stylesheet" href="style.css" type="text/css">
@@ -14,7 +14,7 @@
 <body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
 <table class="navigation" id="top" width="100%" summary="Navigation header" cellpadding="2" cellspacing="2">
 <tr valign="middle">
-<td><a accesskey="p" href="gdbus-org.freedesktop.UDisks2.Drive.Ata.html"><img src="left.png" width="24" height="24" border="0" alt="Prev"></a></td>
+<td><a accesskey="p" href="gdbus-org.freedesktop.UDisks2.MDRaid.html"><img src="left.png" width="24" height="24" border="0" alt="Prev"></a></td>
 <td><a accesskey="u" href="ch02.html"><img src="up.png" width="24" height="24" border="0" alt="Up"></a></td>
 <td><a accesskey="h" href="index.html"><img src="home.png" width="24" height="24" border="0" alt="Home"></a></td>
 <th width="100%" align="center">UDisks Reference Manual</th>
@@ -61,28 +61,32 @@
 </pre>
 </div>
 <div class="refsect1">
-<a name="idp9819904"></a><h2>Properties</h2>
+<a name="idp9036864"></a><h2>Properties</h2>
 <pre class="synopsis">
-<a class="link" href="gdbus-org.freedesktop.UDisks2.Block.html#gdbus-property-org-freedesktop-UDisks2-Block.Device" title='The "Device" property'>Device</a>               readable   ay
-<a class="link" href="gdbus-org.freedesktop.UDisks2.Block.html#gdbus-property-org-freedesktop-UDisks2-Block.PreferredDevice" title='The "PreferredDevice" property'>PreferredDevice</a>      readable   ay
-<a class="link" href="gdbus-org.freedesktop.UDisks2.Block.html#gdbus-property-org-freedesktop-UDisks2-Block.Symlinks" title='The "Symlinks" property'>Symlinks</a>             readable   aay
-<a class="link" href="gdbus-org.freedesktop.UDisks2.Block.html#gdbus-property-org-freedesktop-UDisks2-Block.DeviceNumber" title='The "DeviceNumber" property'>DeviceNumber</a>         readable   t
-<a class="link" href="gdbus-org.freedesktop.UDisks2.Block.html#gdbus-property-org-freedesktop-UDisks2-Block.Size" title='The "Size" property'>Size</a>                 readable   t
-<a class="link" href="gdbus-org.freedesktop.UDisks2.Block.html#gdbus-property-org-freedesktop-UDisks2-Block.ReadOnly" title='The "ReadOnly" property'>ReadOnly</a>             readable   b
-<a class="link" href="gdbus-org.freedesktop.UDisks2.Block.html#gdbus-property-org-freedesktop-UDisks2-Block.Drive" title='The "Drive" property'>Drive</a>                readable   o
-<a class="link" href="gdbus-org.freedesktop.UDisks2.Block.html#gdbus-property-org-freedesktop-UDisks2-Block.IdUsage" title='The "IdUsage" property'>IdUsage</a>              readable   s
-<a class="link" href="gdbus-org.freedesktop.UDisks2.Block.html#gdbus-property-org-freedesktop-UDisks2-Block.IdType" title='The "IdType" property'>IdType</a>               readable   s
-<a class="link" href="gdbus-org.freedesktop.UDisks2.Block.html#gdbus-property-org-freedesktop-UDisks2-Block.IdVersion" title='The "IdVersion" property'>IdVersion</a>            readable   s
-<a class="link" href="gdbus-org.freedesktop.UDisks2.Block.html#gdbus-property-org-freedesktop-UDisks2-Block.IdLabel" title='The "IdLabel" property'>IdLabel</a>              readable   s
-<a class="link" href="gdbus-org.freedesktop.UDisks2.Block.html#gdbus-property-org-freedesktop-UDisks2-Block.IdUUID" title='The "IdUUID" property'>IdUUID</a>               readable   s
-<a class="link" href="gdbus-org.freedesktop.UDisks2.Block.html#gdbus-property-org-freedesktop-UDisks2-Block.Configuration" title='The "Configuration" property'>Configuration</a>        readable   a(sa{sv})
-<a class="link" href="gdbus-org.freedesktop.UDisks2.Block.html#gdbus-property-org-freedesktop-UDisks2-Block.CryptoBackingDevice" title='The "CryptoBackingDevice" property'>CryptoBackingDevice</a>  readable   o
-<a class="link" href="gdbus-org.freedesktop.UDisks2.Block.html#gdbus-property-org-freedesktop-UDisks2-Block.HintPartitionable" title='The "HintPartitionable" property'>HintPartitionable</a>    readable   b
-<a class="link" href="gdbus-org.freedesktop.UDisks2.Block.html#gdbus-property-org-freedesktop-UDisks2-Block.HintSystem" title='The "HintSystem" property'>HintSystem</a>           readable   b
-<a class="link" href="gdbus-org.freedesktop.UDisks2.Block.html#gdbus-property-org-freedesktop-UDisks2-Block.HintIgnore" title='The "HintIgnore" property'>HintIgnore</a>           readable   b
-<a class="link" href="gdbus-org.freedesktop.UDisks2.Block.html#gdbus-property-org-freedesktop-UDisks2-Block.HintAuto" title='The "HintAuto" property'>HintAuto</a>             readable   b
-<a class="link" href="gdbus-org.freedesktop.UDisks2.Block.html#gdbus-property-org-freedesktop-UDisks2-Block.HintName" title='The "HintName" property'>HintName</a>             readable   s
-<a class="link" href="gdbus-org.freedesktop.UDisks2.Block.html#gdbus-property-org-freedesktop-UDisks2-Block.HintIconName" title='The "HintIconName" property'>HintIconName</a>         readable   s
+<a class="link" href="gdbus-org.freedesktop.UDisks2.Block.html#gdbus-property-org-freedesktop-UDisks2-Block.Device" title='The "Device" property'>Device</a>                readable   ay
+<a class="link" href="gdbus-org.freedesktop.UDisks2.Block.html#gdbus-property-org-freedesktop-UDisks2-Block.PreferredDevice" title='The "PreferredDevice" property'>PreferredDevice</a>       readable   ay
+<a class="link" href="gdbus-org.freedesktop.UDisks2.Block.html#gdbus-property-org-freedesktop-UDisks2-Block.Symlinks" title='The "Symlinks" property'>Symlinks</a>              readable   aay
+<a class="link" href="gdbus-org.freedesktop.UDisks2.Block.html#gdbus-property-org-freedesktop-UDisks2-Block.DeviceNumber" title='The "DeviceNumber" property'>DeviceNumber</a>          readable   t
+<a class="link" href="gdbus-org.freedesktop.UDisks2.Block.html#gdbus-property-org-freedesktop-UDisks2-Block.Id" title='The "Id" property'>Id</a>                    readable   s
+<a class="link" href="gdbus-org.freedesktop.UDisks2.Block.html#gdbus-property-org-freedesktop-UDisks2-Block.Size" title='The "Size" property'>Size</a>                  readable   t
+<a class="link" href="gdbus-org.freedesktop.UDisks2.Block.html#gdbus-property-org-freedesktop-UDisks2-Block.ReadOnly" title='The "ReadOnly" property'>ReadOnly</a>              readable   b
+<a class="link" href="gdbus-org.freedesktop.UDisks2.Block.html#gdbus-property-org-freedesktop-UDisks2-Block.Drive" title='The "Drive" property'>Drive</a>                 readable   o
+<a class="link" href="gdbus-org.freedesktop.UDisks2.Block.html#gdbus-property-org-freedesktop-UDisks2-Block.MDRaid" title='The "MDRaid" property'>MDRaid</a>                readable   o
+<a class="link" href="gdbus-org.freedesktop.UDisks2.Block.html#gdbus-property-org-freedesktop-UDisks2-Block.MDRaidMember" title='The "MDRaidMember" property'>MDRaidMember</a>          readable   o
+<a class="link" href="gdbus-org.freedesktop.UDisks2.Block.html#gdbus-property-org-freedesktop-UDisks2-Block.IdUsage" title='The "IdUsage" property'>IdUsage</a>               readable   s
+<a class="link" href="gdbus-org.freedesktop.UDisks2.Block.html#gdbus-property-org-freedesktop-UDisks2-Block.IdType" title='The "IdType" property'>IdType</a>                readable   s
+<a class="link" href="gdbus-org.freedesktop.UDisks2.Block.html#gdbus-property-org-freedesktop-UDisks2-Block.IdVersion" title='The "IdVersion" property'>IdVersion</a>             readable   s
+<a class="link" href="gdbus-org.freedesktop.UDisks2.Block.html#gdbus-property-org-freedesktop-UDisks2-Block.IdLabel" title='The "IdLabel" property'>IdLabel</a>               readable   s
+<a class="link" href="gdbus-org.freedesktop.UDisks2.Block.html#gdbus-property-org-freedesktop-UDisks2-Block.IdUUID" title='The "IdUUID" property'>IdUUID</a>                readable   s
+<a class="link" href="gdbus-org.freedesktop.UDisks2.Block.html#gdbus-property-org-freedesktop-UDisks2-Block.Configuration" title='The "Configuration" property'>Configuration</a>         readable   a(sa{sv})
+<a class="link" href="gdbus-org.freedesktop.UDisks2.Block.html#gdbus-property-org-freedesktop-UDisks2-Block.CryptoBackingDevice" title='The "CryptoBackingDevice" property'>CryptoBackingDevice</a>   readable   o
+<a class="link" href="gdbus-org.freedesktop.UDisks2.Block.html#gdbus-property-org-freedesktop-UDisks2-Block.HintPartitionable" title='The "HintPartitionable" property'>HintPartitionable</a>     readable   b
+<a class="link" href="gdbus-org.freedesktop.UDisks2.Block.html#gdbus-property-org-freedesktop-UDisks2-Block.HintSystem" title='The "HintSystem" property'>HintSystem</a>            readable   b
+<a class="link" href="gdbus-org.freedesktop.UDisks2.Block.html#gdbus-property-org-freedesktop-UDisks2-Block.HintIgnore" title='The "HintIgnore" property'>HintIgnore</a>            readable   b
+<a class="link" href="gdbus-org.freedesktop.UDisks2.Block.html#gdbus-property-org-freedesktop-UDisks2-Block.HintAuto" title='The "HintAuto" property'>HintAuto</a>              readable   b
+<a class="link" href="gdbus-org.freedesktop.UDisks2.Block.html#gdbus-property-org-freedesktop-UDisks2-Block.HintName" title='The "HintName" property'>HintName</a>              readable   s
+<a class="link" href="gdbus-org.freedesktop.UDisks2.Block.html#gdbus-property-org-freedesktop-UDisks2-Block.HintIconName" title='The "HintIconName" property'>HintIconName</a>          readable   s
+<a class="link" href="gdbus-org.freedesktop.UDisks2.Block.html#gdbus-property-org-freedesktop-UDisks2-Block.HintSymbolicIconName" title='The "HintSymbolicIconName" property'>HintSymbolicIconName</a>  readable   s
 </pre>
 </div>
 <div class="refsect1">
@@ -266,6 +270,22 @@ Format (IN  s     type,
         a secure erase or <span class="quote">“<span class="quote">ata-secure-erase-enhanced</span>”</span> to
         perform an enhanced secure erase.
 </p>
+<p>        If the option <em class="parameter"><code>update-partition-type</code></em> is
+        set to <code class="constant">TRUE</code> and the object in question is a partition, then
+        its type (cf. the <a class="link" href="gdbus-org.freedesktop.UDisks2.Partition.html#gdbus-property-org-freedesktop-UDisks2-Partition.Type" title='The "Type" property'>"Type"</a>
+        property) will be set to the <span class="emphasis"><em>natural</em></span>
+        partition type matching <em class="parameter"><code>type</code></em>, if any. For example, if
+        formatting a GPT partition with a FAT filesystem, the
+        <span class="quote">“<span class="quote">Microsoft Basic Data</span>”</span> partition type will be
+        chosen; similar, if formatting a DOS partition with a Ext4
+        filesystem then partition type 0x83 is chosen.
+</p>
+<p>        If the option <em class="parameter"><code>no-block</code></em> is set to <code class="constant">TRUE</code>
+        then the method returns just before the actual formatting
+        takes place but after authorization and other checks are
+        done. This is useful for applications that want to format
+        several devices in parallel.
+</p>
 <div class="variablelist"><table border="0" class="variablelist">
 <colgroup>
 <col align="left" valign="top">
@@ -278,7 +298,7 @@ Format (IN  s     type,
 </tr>
 <tr>
 <td><p><span class="term"><code class="literal">IN a{sv} <em class="parameter"><code>options</code></em></code>:</span></p></td>
-<td><p>Options - known options (in addition to <a class="link" href="udisks-std-options.html" title="The options parameter">standard options</a>) includes <em class="parameter"><code>label</code></em> (of type 's'), <em class="parameter"><code>take-ownership</code></em> (of type 'b'), <em class="parameter"><code>encrypt.passphrase</code></em> (of type 's') and <em class="parameter"><code>erase</code></em> (of type 's').</p></td>
+<td><p>Options - known options (in addition to <a class="link" href="udisks-std-options.html" title="The options parameter">standard options</a>) includes <em class="parameter"><code>label</code></em> (of type 's'), <em class="parameter"><code>take-ownership</code></em> (of type 'b'), <em class="parameter"><code>encrypt.passphrase</code></em> (of type 's'), <em class="parameter"><code>erase</code></em> (of type 's'), <em class="parameter"><code>no-block</code></em> (of type 'b') and <em class="parameter"><code>update-partition-type</code></em> (of type 'b').</p></td>
 </tr>
 </tbody>
 </table></div>
@@ -450,6 +470,36 @@ DeviceNumber  readable   t
 </div>
 <hr>
 <div class="refsect2">
+<a name="gdbus-property-org-freedesktop-UDisks2-Block.Id"></a><h3>The "Id" property</h3>
+<pre class="programlisting">
+Id  readable   s
+</pre>
+<p>         A unique and persistent identifier for the device or blank if
+         no such identifier is available.
+</p>
+<p>         For devices with fixed media, this identifier is derived from
+         vital product data / UUIDs / serial numbers of the drive or
+         construct (e.g. LVM or MD-RAID) the block device is part
+         of. For devices with removable media, this identifier is
+         derived from the medium currently inserted.
+</p>
+<p>         This identifier is guaranteed to not include the slash
+         character '/' (U+002F SOLIDUS) which means it can be used as
+         a filename.
+</p>
+<p>         Examples:
+         <span class="quote">“<span class="quote">by-id-ata-INTEL_SSDSA2MH080G1GC_CVEM842101HD080DGN</span>”</span>,
+         <span class="quote">“<span class="quote">by-id-ata-ST1000LM024_HN-M101MBB_S2TBJA0C230233-part3</span>”</span>,
+         <span class="quote">“<span class="quote">by-id-usb-Kingston_DataTraveler_2.0_0013729940C4F9A166250D3E-0:0</span>”</span>,
+         <span class="quote">“<span class="quote">by-id-dm-name-luks-6d81fe85-26b1-4f8b-b834-405454c1cd46</span>”</span>,
+         <span class="quote">“<span class="quote">by-id-dm-name-vg_thinkpad-lv_swap</span>”</span>,
+         <span class="quote">“<span class="quote">by-label-HARRY_POTTER_SORCERERS_STONE-</span>”</span>,
+         <span class="quote">“<span class="quote">by-uuid-D22D-08B8</span>”</span>.
+</p>
+<p class="since">Since 2.1</p>
+</div>
+<hr>
+<div class="refsect2">
 <a name="gdbus-property-org-freedesktop-UDisks2-Block.Size"></a><h3>The "Size" property</h3>
 <pre class="programlisting">
 Size  readable   t
@@ -473,6 +523,30 @@ Drive  readable   o
 <p>         The <a class="link" href="gdbus-org.freedesktop.UDisks2.Drive.html#gdbus-interface-org-freedesktop-UDisks2-Drive.top_of_page">org.freedesktop.UDisks2.Drive</a> object that the block device
          belongs to, or '/' if no such object exists.
 </p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="gdbus-property-org-freedesktop-UDisks2-Block.MDRaid"></a><h3>The "MDRaid" property</h3>
+<pre class="programlisting">
+MDRaid  readable   o
+</pre>
+<p>         If the block device is a running MD-RAID array, this is set
+         to the <a class="link" href="gdbus-org.freedesktop.UDisks2.MDRaid.html#gdbus-interface-org-freedesktop-UDisks2-MDRaid.top_of_page">org.freedesktop.UDisks2.MDRaid</a> object that it
+         correspond to. Is '/' if no such object exists.
+</p>
+<p class="since">Since 2.1</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="gdbus-property-org-freedesktop-UDisks2-Block.MDRaidMember"></a><h3>The "MDRaidMember" property</h3>
+<pre class="programlisting">
+MDRaidMember  readable   o
+</pre>
+<p>         If the block device is a member of a MD-RAID array, this
+         is set to the <a class="link" href="gdbus-org.freedesktop.UDisks2.MDRaid.html#gdbus-interface-org-freedesktop-UDisks2-MDRaid.top_of_page">org.freedesktop.UDisks2.MDRaid</a> object that it
+         correspond to. Is '/' if no such object exists.
+</p>
+<p class="since">Since 2.1</p>
 </div>
 <hr>
 <div class="refsect2">
@@ -786,6 +860,21 @@ HintIconName  readable   s
 </p>
 <p>         See <a class="xref" href="udisks.8.html" title="udisks"><span class="refentrytitle">udisks</span>(8)</a> for how to influence the value of this property.
 </p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="gdbus-property-org-freedesktop-UDisks2-Block.HintSymbolicIconName"></a><h3>The "HintSymbolicIconName" property</h3>
+<pre class="programlisting">
+HintSymbolicIconName  readable   s
+</pre>
+<p>         If not blank, the icon name to use when presenting the device using a symbolic icon.
+</p>
+<p>         The name must adhere to the
+         <a class="ulink" href="http://www.freedesktop.org/wiki/Specifications/icon-theme-spec" target="_top">freedesktop.org icon theme specification</a>.
+</p>
+<p>         See <a class="xref" href="udisks.8.html" title="udisks"><span class="refentrytitle">udisks</span>(8)</a> for how to influence the value of this property.
+</p>
+<p class="since">Since 2.1</p>
 </div>
 </div>
 </div>

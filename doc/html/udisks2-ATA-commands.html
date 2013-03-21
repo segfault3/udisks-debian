@@ -1,0 +1,258 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>ATA commands</title>
+<meta name="generator" content="DocBook XSL Stylesheets V1.77.1">
+<link rel="home" href="index.html" title="UDisks Reference Manual">
+<link rel="up" href="ref-daemon-core.html" title="Core">
+<link rel="prev" href="UDisksState.html" title="UDisksState">
+<link rel="next" href="ref-daemon-monitoring.html" title="State and Configuration">
+<meta name="generator" content="GTK-Doc V1.18 (XML mode)">
+<link rel="stylesheet" href="style.css" type="text/css">
+</head>
+<body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
+<table class="navigation" id="top" width="100%" summary="Navigation header" cellpadding="2" cellspacing="2">
+<tr valign="middle">
+<td><a accesskey="p" href="UDisksState.html"><img src="left.png" width="24" height="24" border="0" alt="Prev"></a></td>
+<td><a accesskey="u" href="ref-daemon-core.html"><img src="up.png" width="24" height="24" border="0" alt="Up"></a></td>
+<td><a accesskey="h" href="index.html"><img src="home.png" width="24" height="24" border="0" alt="Home"></a></td>
+<th width="100%" align="center">UDisks Reference Manual</th>
+<td><a accesskey="n" href="ref-daemon-monitoring.html"><img src="right.png" width="24" height="24" border="0" alt="Next"></a></td>
+</tr>
+<tr><td colspan="5" class="shortcuts">
+<a href="#udisks2-ATA-commands.synopsis" class="shortcut">Top</a>
+                   | 
+                  <a href="#udisks2-ATA-commands.description" class="shortcut">Description</a>
+</td></tr>
+</table>
+<div class="refentry">
+<a name="udisks2-ATA-commands"></a><div class="titlepage"></div>
+<div class="refnamediv"><table width="100%"><tr>
+<td valign="top">
+<h2><span class="refentrytitle"><a name="udisks2-ATA-commands.top_of_page"></a>ATA commands</span></h2>
+<p>ATA commands — Helper routines for ATA commands</p>
+</td>
+<td valign="top" align="right"></td>
+</tr></table></div>
+<div class="refsynopsisdiv">
+<a name="udisks2-ATA-commands.synopsis"></a><h2>Synopsis</h2>
+<pre class="synopsis">enum                <a class="link" href="udisks2-ATA-commands.html#UDisksAtaCommandProtocol" title="enum UDisksAtaCommandProtocol">UDisksAtaCommandProtocol</a>;
+                    <a class="link" href="udisks2-ATA-commands.html#UDisksAtaCommandInput" title="UDisksAtaCommandInput">UDisksAtaCommandInput</a>;
+                    <a class="link" href="udisks2-ATA-commands.html#UDisksAtaCommandOutput" title="UDisksAtaCommandOutput">UDisksAtaCommandOutput</a>;
+<span class="returnvalue">gboolean</span>            <a class="link" href="udisks2-ATA-commands.html#udisks-ata-send-command-sync" title="udisks_ata_send_command_sync ()">udisks_ata_send_command_sync</a>        (<em class="parameter"><code><span class="type">gint</span> fd</code></em>,
+                                                         <em class="parameter"><code><span class="type">gint</span> timeout_msec</code></em>,
+                                                         <em class="parameter"><code><a class="link" href="udisks2-ATA-commands.html#UDisksAtaCommandProtocol" title="enum UDisksAtaCommandProtocol"><span class="type">UDisksAtaCommandProtocol</span></a> protocol</code></em>,
+                                                         <em class="parameter"><code><a class="link" href="udisks2-ATA-commands.html#UDisksAtaCommandInput" title="UDisksAtaCommandInput"><span class="type">UDisksAtaCommandInput</span></a> *input</code></em>,
+                                                         <em class="parameter"><code><a class="link" href="udisks2-ATA-commands.html#UDisksAtaCommandOutput" title="UDisksAtaCommandOutput"><span class="type">UDisksAtaCommandOutput</span></a> *output</code></em>,
+                                                         <em class="parameter"><code><span class="type">GError</span> **error</code></em>);
+</pre>
+</div>
+<div class="refsect1">
+<a name="udisks2-ATA-commands.description"></a><h2>Description</h2>
+<p>
+Helper routines for sending ATA commands to a device.
+</p>
+</div>
+<div class="refsect1">
+<a name="udisks2-ATA-commands.details"></a><h2>Details</h2>
+<div class="refsect2">
+<a name="UDisksAtaCommandProtocol"></a><h3>enum UDisksAtaCommandProtocol</h3>
+<pre class="programlisting">typedef enum {
+  UDISKS_ATA_COMMAND_PROTOCOL_NONE,
+  UDISKS_ATA_COMMAND_PROTOCOL_DRIVE_TO_HOST,
+  UDISKS_ATA_COMMAND_PROTOCOL_HOST_TO_DRIVE
+} UDisksAtaCommandProtocol;
+</pre>
+<p>
+Enumeration used to specify the protocol of an ATA command
+</p>
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
+<col align="left" valign="top">
+<col>
+</colgroup>
+<tbody>
+<tr>
+<td><p><a name="UDISKS-ATA-COMMAND-PROTOCOL-NONE:CAPS"></a><span class="term"><code class="literal">UDISKS_ATA_COMMAND_PROTOCOL_NONE</code></span></p></td>
+<td>Non-data
+</td>
+</tr>
+<tr>
+<td><p><a name="UDISKS-ATA-COMMAND-PROTOCOL-DRIVE-TO-HOST:CAPS"></a><span class="term"><code class="literal">UDISKS_ATA_COMMAND_PROTOCOL_DRIVE_TO_HOST</code></span></p></td>
+<td>PIO Data-In
+</td>
+</tr>
+<tr>
+<td><p><a name="UDISKS-ATA-COMMAND-PROTOCOL-HOST-TO-DRIVE:CAPS"></a><span class="term"><code class="literal">UDISKS_ATA_COMMAND_PROTOCOL_HOST_TO_DRIVE</code></span></p></td>
+<td>PIO Data-Out
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="UDisksAtaCommandInput"></a><h3>UDisksAtaCommandInput</h3>
+<pre class="programlisting">typedef struct {
+  guint8  command;
+  guint8  feature;
+  guint8  count;
+  guint8  device;
+  guint32 lba;
+  gsize   buffer_size;
+  guchar *buffer;
+} UDisksAtaCommandInput;
+</pre>
+<p>
+Struct used for input data when sending ATA commands.
+</p>
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
+<col align="left" valign="top">
+<col>
+</colgroup>
+<tbody>
+<tr>
+<td><p><span class="term"><span class="type">guint8</span> <em class="structfield"><code><a name="UDisksAtaCommandInput.command"></a>command</code></em>;</span></p></td>
+<td>Command</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="type">guint8</span> <em class="structfield"><code><a name="UDisksAtaCommandInput.feature"></a>feature</code></em>;</span></p></td>
+<td>Feature</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="type">guint8</span> <em class="structfield"><code><a name="UDisksAtaCommandInput.count"></a>count</code></em>;</span></p></td>
+<td>Count</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="type">guint8</span> <em class="structfield"><code><a name="UDisksAtaCommandInput.device"></a>device</code></em>;</span></p></td>
+<td>Device</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="type">guint32</span> <em class="structfield"><code><a name="UDisksAtaCommandInput.lba"></a>lba</code></em>;</span></p></td>
+<td>LBA</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="type">gsize</span> <em class="structfield"><code><a name="UDisksAtaCommandInput.buffer-size"></a>buffer_size</code></em>;</span></p></td>
+<td>Size of the <em class="parameter"><code>buffer</code></em> member or 0</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="type">guchar</span> *<em class="structfield"><code><a name="UDisksAtaCommandInput.buffer"></a>buffer</code></em>;</span></p></td>
+<td>Data to send to device or <code class="literal">NULL</code>
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="UDisksAtaCommandOutput"></a><h3>UDisksAtaCommandOutput</h3>
+<pre class="programlisting">typedef struct {
+  guint8  error;
+  guint8  count;
+  guint8  device;
+  guint8  status;
+  guint32 lba;
+  gsize   buffer_size;
+  guchar *buffer;
+} UDisksAtaCommandOutput;
+</pre>
+<p>
+Struct used for output data when sending ATA commands.
+</p>
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
+<col align="left" valign="top">
+<col>
+</colgroup>
+<tbody>
+<tr>
+<td><p><span class="term"><span class="type">guint8</span> <em class="structfield"><code><a name="UDisksAtaCommandOutput.error"></a>error</code></em>;</span></p></td>
+<td>Error</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="type">guint8</span> <em class="structfield"><code><a name="UDisksAtaCommandOutput.count"></a>count</code></em>;</span></p></td>
+<td>Count</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="type">guint8</span> <em class="structfield"><code><a name="UDisksAtaCommandOutput.device"></a>device</code></em>;</span></p></td>
+<td>Device</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="type">guint8</span> <em class="structfield"><code><a name="UDisksAtaCommandOutput.status"></a>status</code></em>;</span></p></td>
+<td>Status</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="type">guint32</span> <em class="structfield"><code><a name="UDisksAtaCommandOutput.lba"></a>lba</code></em>;</span></p></td>
+<td>LBA</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="type">gsize</span> <em class="structfield"><code><a name="UDisksAtaCommandOutput.buffer-size"></a>buffer_size</code></em>;</span></p></td>
+<td>Size of the <em class="parameter"><code>buffer</code></em> member or 0</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="type">guchar</span> *<em class="structfield"><code><a name="UDisksAtaCommandOutput.buffer"></a>buffer</code></em>;</span></p></td>
+<td>Pointer to where to recieve data from the device or <code class="literal">NULL</code>
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="udisks-ata-send-command-sync"></a><h3>udisks_ata_send_command_sync ()</h3>
+<pre class="programlisting"><span class="returnvalue">gboolean</span>            udisks_ata_send_command_sync        (<em class="parameter"><code><span class="type">gint</span> fd</code></em>,
+                                                         <em class="parameter"><code><span class="type">gint</span> timeout_msec</code></em>,
+                                                         <em class="parameter"><code><a class="link" href="udisks2-ATA-commands.html#UDisksAtaCommandProtocol" title="enum UDisksAtaCommandProtocol"><span class="type">UDisksAtaCommandProtocol</span></a> protocol</code></em>,
+                                                         <em class="parameter"><code><a class="link" href="udisks2-ATA-commands.html#UDisksAtaCommandInput" title="UDisksAtaCommandInput"><span class="type">UDisksAtaCommandInput</span></a> *input</code></em>,
+                                                         <em class="parameter"><code><a class="link" href="udisks2-ATA-commands.html#UDisksAtaCommandOutput" title="UDisksAtaCommandOutput"><span class="type">UDisksAtaCommandOutput</span></a> *output</code></em>,
+                                                         <em class="parameter"><code><span class="type">GError</span> **error</code></em>);</pre>
+<p>
+Sends a command to an ATA device. Blocks the calling thread while the command is pending.
+</p>
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
+<col align="left" valign="top">
+<col>
+</colgroup>
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>fd</code></em> :</span></p></td>
+<td>A file descriptor for a ATA device.</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>timeout_msec</code></em> :</span></p></td>
+<td>Timeout in milli-seconds for the command. Use -1 for the default (5 seconds) timeout and <code class="literal">G_MAXINT</code> for no timeout.</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>protocol</code></em> :</span></p></td>
+<td>The direction of the command.</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>input</code></em> :</span></p></td>
+<td>The input for the command.</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>output</code></em> :</span></p></td>
+<td>The output for the command.</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>error</code></em> :</span></p></td>
+<td>Return location for error or <code class="literal">NULL</code>.</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td>
+<code class="literal">TRUE</code> if the command succeded, <code class="literal">FALSE</code> if <em class="parameter"><code>error</code></em> is set.</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+</div>
+</div>
+<div class="footer">
+<hr>
+          Generated by GTK-Doc V1.18</div>
+</body>
+</html>

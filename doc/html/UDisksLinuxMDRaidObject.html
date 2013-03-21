@@ -1,0 +1,325 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>UDisksLinuxMDRaidObject</title>
+<meta name="generator" content="DocBook XSL Stylesheets V1.77.1">
+<link rel="home" href="index.html" title="UDisks Reference Manual">
+<link rel="up" href="ref-daemon-mdraid.html" title="Linux RAID">
+<link rel="prev" href="UDisksLinuxMDRaid.html" title="UDisksLinuxMDRaid">
+<link rel="next" href="ref-daemon-block-devices.html" title="Block devices on Linux">
+<meta name="generator" content="GTK-Doc V1.18 (XML mode)">
+<link rel="stylesheet" href="style.css" type="text/css">
+</head>
+<body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
+<table class="navigation" id="top" width="100%" summary="Navigation header" cellpadding="2" cellspacing="2">
+<tr valign="middle">
+<td><a accesskey="p" href="UDisksLinuxMDRaid.html"><img src="left.png" width="24" height="24" border="0" alt="Prev"></a></td>
+<td><a accesskey="u" href="ref-daemon-mdraid.html"><img src="up.png" width="24" height="24" border="0" alt="Up"></a></td>
+<td><a accesskey="h" href="index.html"><img src="home.png" width="24" height="24" border="0" alt="Home"></a></td>
+<th width="100%" align="center">UDisks Reference Manual</th>
+<td><a accesskey="n" href="ref-daemon-block-devices.html"><img src="right.png" width="24" height="24" border="0" alt="Next"></a></td>
+</tr>
+<tr><td colspan="5" class="shortcuts">
+<a href="#UDisksLinuxMDRaidObject.synopsis" class="shortcut">Top</a>
+                   | 
+                  <a href="#UDisksLinuxMDRaidObject.description" class="shortcut">Description</a>
+                   | 
+                  <a href="#UDisksLinuxMDRaidObject.object-hierarchy" class="shortcut">Object Hierarchy</a>
+                   | 
+                  <a href="#UDisksLinuxMDRaidObject.implemented-interfaces" class="shortcut">Implemented Interfaces</a>
+                   | 
+                  <a href="#UDisksLinuxMDRaidObject.properties" class="shortcut">Properties</a>
+</td></tr>
+</table>
+<div class="refentry">
+<a name="UDisksLinuxMDRaidObject"></a><div class="titlepage"></div>
+<div class="refnamediv"><table width="100%"><tr>
+<td valign="top">
+<h2><span class="refentrytitle"><a name="UDisksLinuxMDRaidObject.top_of_page"></a>UDisksLinuxMDRaidObject</span></h2>
+<p>UDisksLinuxMDRaidObject — Object representing a Linux Software RAID array</p>
+</td>
+<td valign="top" align="right"></td>
+</tr></table></div>
+<div class="refsynopsisdiv">
+<a name="UDisksLinuxMDRaidObject.synopsis"></a><h2>Synopsis</h2>
+<pre class="synopsis">                    <a class="link" href="UDisksLinuxMDRaidObject.html#UDisksLinuxMDRaidObject-struct" title="UDisksLinuxMDRaidObject">UDisksLinuxMDRaidObject</a>;
+<a class="link" href="UDisksLinuxMDRaidObject.html" title="UDisksLinuxMDRaidObject"><span class="returnvalue">UDisksLinuxMDRaidObject</span></a> * <a class="link" href="UDisksLinuxMDRaidObject.html#udisks-linux-mdraid-object-new" title="udisks_linux_mdraid_object_new ()">udisks_linux_mdraid_object_new</a>
+                                                        (<em class="parameter"><code><a class="link" href="UDisksDaemon.html" title="UDisksDaemon"><span class="type">UDisksDaemon</span></a> *daemon</code></em>,
+                                                         <em class="parameter"><code>const <span class="type">gchar</span> *uuid</code></em>);
+<span class="returnvalue">void</span>                <a class="link" href="UDisksLinuxMDRaidObject.html#udisks-linux-mdraid-object-uevent" title="udisks_linux_mdraid_object_uevent ()">udisks_linux_mdraid_object_uevent</a>   (<em class="parameter"><code><a class="link" href="UDisksLinuxMDRaidObject.html" title="UDisksLinuxMDRaidObject"><span class="type">UDisksLinuxMDRaidObject</span></a> *object</code></em>,
+                                                         <em class="parameter"><code>const <span class="type">gchar</span> *action</code></em>,
+                                                         <em class="parameter"><code><a class="link" href="UDisksLinuxDevice.html" title="UDisksLinuxDevice"><span class="type">UDisksLinuxDevice</span></a> *device</code></em>,
+                                                         <em class="parameter"><code><span class="type">gboolean</span> is_member</code></em>);
+<span class="returnvalue">gboolean</span>            <a class="link" href="UDisksLinuxMDRaidObject.html#udisks-linux-mdraid-object-have-devices" title="udisks_linux_mdraid_object_have_devices ()">udisks_linux_mdraid_object_have_devices</a>
+                                                        (<em class="parameter"><code><a class="link" href="UDisksLinuxMDRaidObject.html" title="UDisksLinuxMDRaidObject"><span class="type">UDisksLinuxMDRaidObject</span></a> *object</code></em>);
+<a class="link" href="UDisksDaemon.html" title="UDisksDaemon"><span class="returnvalue">UDisksDaemon</span></a> *      <a class="link" href="UDisksLinuxMDRaidObject.html#udisks-linux-mdraid-object-get-daemon" title="udisks_linux_mdraid_object_get_daemon ()">udisks_linux_mdraid_object_get_daemon</a>
+                                                        (<em class="parameter"><code><a class="link" href="UDisksLinuxMDRaidObject.html" title="UDisksLinuxMDRaidObject"><span class="type">UDisksLinuxMDRaidObject</span></a> *object</code></em>);
+<a class="link" href="UDisksLinuxDevice.html" title="UDisksLinuxDevice"><span class="returnvalue">UDisksLinuxDevice</span></a> * <a class="link" href="UDisksLinuxMDRaidObject.html#udisks-linux-mdraid-object-get-device" title="udisks_linux_mdraid_object_get_device ()">udisks_linux_mdraid_object_get_device</a>
+                                                        (<em class="parameter"><code><a class="link" href="UDisksLinuxMDRaidObject.html" title="UDisksLinuxMDRaidObject"><span class="type">UDisksLinuxMDRaidObject</span></a> *object</code></em>);
+<span class="returnvalue">GList</span> *             <a class="link" href="UDisksLinuxMDRaidObject.html#udisks-linux-mdraid-object-get-members" title="udisks_linux_mdraid_object_get_members ()">udisks_linux_mdraid_object_get_members</a>
+                                                        (<em class="parameter"><code><a class="link" href="UDisksLinuxMDRaidObject.html" title="UDisksLinuxMDRaidObject"><span class="type">UDisksLinuxMDRaidObject</span></a> *object</code></em>);
+const <span class="returnvalue">gchar</span> *       <a class="link" href="UDisksLinuxMDRaidObject.html#udisks-linux-mdraid-object-get-uuid" title="udisks_linux_mdraid_object_get_uuid ()">udisks_linux_mdraid_object_get_uuid</a> (<em class="parameter"><code><a class="link" href="UDisksLinuxMDRaidObject.html" title="UDisksLinuxMDRaidObject"><span class="type">UDisksLinuxMDRaidObject</span></a> *object</code></em>);
+</pre>
+</div>
+<div class="refsect1">
+<a name="UDisksLinuxMDRaidObject.object-hierarchy"></a><h2>Object Hierarchy</h2>
+<pre class="synopsis">
+  GObject
+   +----GDBusObjectSkeleton
+         +----<a class="link" href="UDisksObject.html#UDisksObjectSkeleton">UDisksObjectSkeleton</a>
+               +----UDisksLinuxMDRaidObject
+</pre>
+</div>
+<div class="refsect1">
+<a name="UDisksLinuxMDRaidObject.implemented-interfaces"></a><h2>Implemented Interfaces</h2>
+<p>
+UDisksLinuxMDRaidObject implements
+ <a href="/usr/share/gtk-doc/html/gen/GDBusObject.html">GDBusObject</a> and  <a class="link" href="UDisksObject.html" title="UDisksObject">UDisksObject</a>.</p>
+</div>
+<div class="refsect1">
+<a name="UDisksLinuxMDRaidObject.properties"></a><h2>Properties</h2>
+<pre class="synopsis">
+  "<a class="link" href="UDisksLinuxMDRaidObject.html#UDisksLinuxMDRaidObject--daemon" title='The "daemon" property'>daemon</a>"                   <a class="link" href="UDisksDaemon.html" title="UDisksDaemon"><span class="type">UDisksDaemon</span></a>*         : Read / Write / Construct Only
+  "<a class="link" href="UDisksLinuxMDRaidObject.html#UDisksLinuxMDRaidObject--uuid" title='The "uuid" property'>uuid</a>"                     <span class="type">gchar</span>*                : Write / Construct Only
+</pre>
+</div>
+<div class="refsect1">
+<a name="UDisksLinuxMDRaidObject.description"></a><h2>Description</h2>
+<p>
+Object corresponding to a Linux Software RAID array.
+</p>
+</div>
+<div class="refsect1">
+<a name="UDisksLinuxMDRaidObject.details"></a><h2>Details</h2>
+<div class="refsect2">
+<a name="UDisksLinuxMDRaidObject-struct"></a><h3>UDisksLinuxMDRaidObject</h3>
+<pre class="programlisting">typedef struct _UDisksLinuxMDRaidObject UDisksLinuxMDRaidObject;</pre>
+<p>
+The <a class="link" href="UDisksLinuxMDRaidObject.html" title="UDisksLinuxMDRaidObject"><span class="type">UDisksLinuxMDRaidObject</span></a> structure contains only private data and
+should only be accessed using the provided API.
+</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="udisks-linux-mdraid-object-new"></a><h3>udisks_linux_mdraid_object_new ()</h3>
+<pre class="programlisting"><a class="link" href="UDisksLinuxMDRaidObject.html" title="UDisksLinuxMDRaidObject"><span class="returnvalue">UDisksLinuxMDRaidObject</span></a> * udisks_linux_mdraid_object_new
+                                                        (<em class="parameter"><code><a class="link" href="UDisksDaemon.html" title="UDisksDaemon"><span class="type">UDisksDaemon</span></a> *daemon</code></em>,
+                                                         <em class="parameter"><code>const <span class="type">gchar</span> *uuid</code></em>);</pre>
+<p>
+Create a new MDRaid object.
+</p>
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
+<col align="left" valign="top">
+<col>
+</colgroup>
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>daemon</code></em> :</span></p></td>
+<td>A <a class="link" href="UDisksDaemon.html" title="UDisksDaemon"><span class="type">UDisksDaemon</span></a>.</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>uuid</code></em> :</span></p></td>
+<td>The UUID for the array.</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td>A <a class="link" href="UDisksLinuxMDRaidObject.html" title="UDisksLinuxMDRaidObject"><span class="type">UDisksLinuxMDRaidObject</span></a> object. Free with <code class="function">g_object_unref()</code>.</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="udisks-linux-mdraid-object-uevent"></a><h3>udisks_linux_mdraid_object_uevent ()</h3>
+<pre class="programlisting"><span class="returnvalue">void</span>                udisks_linux_mdraid_object_uevent   (<em class="parameter"><code><a class="link" href="UDisksLinuxMDRaidObject.html" title="UDisksLinuxMDRaidObject"><span class="type">UDisksLinuxMDRaidObject</span></a> *object</code></em>,
+                                                         <em class="parameter"><code>const <span class="type">gchar</span> *action</code></em>,
+                                                         <em class="parameter"><code><a class="link" href="UDisksLinuxDevice.html" title="UDisksLinuxDevice"><span class="type">UDisksLinuxDevice</span></a> *device</code></em>,
+                                                         <em class="parameter"><code><span class="type">gboolean</span> is_member</code></em>);</pre>
+<p>
+Updates all information on interfaces on <em class="parameter"><code>mdraid</code></em>.
+</p>
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
+<col align="left" valign="top">
+<col>
+</colgroup>
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>object</code></em> :</span></p></td>
+<td>A <a class="link" href="UDisksLinuxMDRaidObject.html" title="UDisksLinuxMDRaidObject"><span class="type">UDisksLinuxMDRaidObject</span></a>.</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>action</code></em> :</span></p></td>
+<td>Uevent action or <code class="literal">NULL</code>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>device</code></em> :</span></p></td>
+<td>A <a class="link" href="UDisksLinuxDevice.html" title="UDisksLinuxDevice"><span class="type">UDisksLinuxDevice</span></a> device object or <code class="literal">NULL</code> if the device hasn't changed.</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>is_member</code></em> :</span></p></td>
+<td>
+<code class="literal">TRUE</code> if <em class="parameter"><code>device</code></em> is a member, <code class="literal">FALSE</code> if it's the raid device.</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="udisks-linux-mdraid-object-have-devices"></a><h3>udisks_linux_mdraid_object_have_devices ()</h3>
+<pre class="programlisting"><span class="returnvalue">gboolean</span>            udisks_linux_mdraid_object_have_devices
+                                                        (<em class="parameter"><code><a class="link" href="UDisksLinuxMDRaidObject.html" title="UDisksLinuxMDRaidObject"><span class="type">UDisksLinuxMDRaidObject</span></a> *object</code></em>);</pre>
+<p>
+Checks if there are any devices associated with <em class="parameter"><code>object</code></em> at
+all. This includes both member devices and the raid device.
+</p>
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
+<col align="left" valign="top">
+<col>
+</colgroup>
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>object</code></em> :</span></p></td>
+<td>A <a class="link" href="UDisksLinuxMDRaidObject.html" title="UDisksLinuxMDRaidObject"><span class="type">UDisksLinuxMDRaidObject</span></a>.</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td>
+<code class="literal">TRUE</code> if at least one device is associated with <em class="parameter"><code>object</code></em>, <code class="literal">FALSE</code> otherwise.</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="udisks-linux-mdraid-object-get-daemon"></a><h3>udisks_linux_mdraid_object_get_daemon ()</h3>
+<pre class="programlisting"><a class="link" href="UDisksDaemon.html" title="UDisksDaemon"><span class="returnvalue">UDisksDaemon</span></a> *      udisks_linux_mdraid_object_get_daemon
+                                                        (<em class="parameter"><code><a class="link" href="UDisksLinuxMDRaidObject.html" title="UDisksLinuxMDRaidObject"><span class="type">UDisksLinuxMDRaidObject</span></a> *object</code></em>);</pre>
+<p>
+Gets the daemon used by <em class="parameter"><code>object</code></em>.
+</p>
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
+<col align="left" valign="top">
+<col>
+</colgroup>
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>object</code></em> :</span></p></td>
+<td>A <a class="link" href="UDisksLinuxMDRaidObject.html" title="UDisksLinuxMDRaidObject"><span class="type">UDisksLinuxMDRaidObject</span></a>.</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td>A <a class="link" href="UDisksDaemon.html" title="UDisksDaemon"><span class="type">UDisksDaemon</span></a>. Do not free, the object is owned by <em class="parameter"><code>object</code></em>.</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="udisks-linux-mdraid-object-get-device"></a><h3>udisks_linux_mdraid_object_get_device ()</h3>
+<pre class="programlisting"><a class="link" href="UDisksLinuxDevice.html" title="UDisksLinuxDevice"><span class="returnvalue">UDisksLinuxDevice</span></a> * udisks_linux_mdraid_object_get_device
+                                                        (<em class="parameter"><code><a class="link" href="UDisksLinuxMDRaidObject.html" title="UDisksLinuxMDRaidObject"><span class="type">UDisksLinuxMDRaidObject</span></a> *object</code></em>);</pre>
+<p>
+Gets the current <a class="link" href="UDisksLinuxDevice.html" title="UDisksLinuxDevice"><span class="type">UDisksLinuxDevice</span></a> object for the RAID device
+(e.g. /dev/md0) associated with <em class="parameter"><code>object</code></em>, if any.
+</p>
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
+<col align="left" valign="top">
+<col>
+</colgroup>
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>object</code></em> :</span></p></td>
+<td>A <a class="link" href="UDisksLinuxMDRaidObject.html" title="UDisksLinuxMDRaidObject"><span class="type">UDisksLinuxMDRaidObject</span></a>.</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td>A <a class="link" href="UDisksLinuxDevice.html" title="UDisksLinuxDevice"><span class="type">UDisksLinuxDevice</span></a> or <code class="literal">NULL</code>. Free with <code class="function">g_object_unref()</code>. <span class="annotation">[<a href="http://foldoc.org/transfer%20full"><span class="acronym">transfer full</span></a>]</span>
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="udisks-linux-mdraid-object-get-members"></a><h3>udisks_linux_mdraid_object_get_members ()</h3>
+<pre class="programlisting"><span class="returnvalue">GList</span> *             udisks_linux_mdraid_object_get_members
+                                                        (<em class="parameter"><code><a class="link" href="UDisksLinuxMDRaidObject.html" title="UDisksLinuxMDRaidObject"><span class="type">UDisksLinuxMDRaidObject</span></a> *object</code></em>);</pre>
+<p>
+Gets the current <a class="link" href="UDisksLinuxDevice.html" title="UDisksLinuxDevice"><span class="type">UDisksLinuxDevice</span></a> objects for the RAID members associated with <em class="parameter"><code>object</code></em>.
+</p>
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
+<col align="left" valign="top">
+<col>
+</colgroup>
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>object</code></em> :</span></p></td>
+<td>A <a class="link" href="UDisksLinuxMDRaidObject.html" title="UDisksLinuxMDRaidObject"><span class="type">UDisksLinuxMDRaidObject</span></a>.</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td>A list of <a class="link" href="UDisksLinuxDevice.html" title="UDisksLinuxDevice"><span class="type">UDisksLinuxDevice</span></a> objects. Free each element with
+<code class="function">g_object_unref()</code>, then free the list with <code class="function">g_list_free()</code>.</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="udisks-linux-mdraid-object-get-uuid"></a><h3>udisks_linux_mdraid_object_get_uuid ()</h3>
+<pre class="programlisting">const <span class="returnvalue">gchar</span> *       udisks_linux_mdraid_object_get_uuid (<em class="parameter"><code><a class="link" href="UDisksLinuxMDRaidObject.html" title="UDisksLinuxMDRaidObject"><span class="type">UDisksLinuxMDRaidObject</span></a> *object</code></em>);</pre>
+<p>
+Gets the UUID for <em class="parameter"><code>object</code></em>.
+</p>
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
+<col align="left" valign="top">
+<col>
+</colgroup>
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>object</code></em> :</span></p></td>
+<td>A <a class="link" href="UDisksLinuxMDRaidObject.html" title="UDisksLinuxMDRaidObject"><span class="type">UDisksLinuxMDRaidObject</span></a>.</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td>The UUID for object. Do not free, the string belongs to <em class="parameter"><code>object</code></em>. <span class="annotation">[<a href="http://foldoc.org/transfer%20none"><span class="acronym">transfer none</span></a>]</span>
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+</div>
+<div class="refsect1">
+<a name="UDisksLinuxMDRaidObject.property-details"></a><h2>Property Details</h2>
+<div class="refsect2">
+<a name="UDisksLinuxMDRaidObject--daemon"></a><h3>The <code class="literal">"daemon"</code> property</h3>
+<pre class="programlisting">  "daemon"                   <a class="link" href="UDisksDaemon.html" title="UDisksDaemon"><span class="type">UDisksDaemon</span></a>*         : Read / Write / Construct Only</pre>
+<p>
+The <a class="link" href="UDisksDaemon.html" title="UDisksDaemon"><span class="type">UDisksDaemon</span></a> the object is for.
+</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="UDisksLinuxMDRaidObject--uuid"></a><h3>The <code class="literal">"uuid"</code> property</h3>
+<pre class="programlisting">  "uuid"                     <span class="type">gchar</span>*                : Write / Construct Only</pre>
+<p>
+The UUID for the array.
+</p>
+<p>Default value: NULL</p>
+</div>
+</div>
+</div>
+<div class="footer">
+<hr>
+          Generated by GTK-Doc V1.18</div>
+</body>
+</html>

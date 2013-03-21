@@ -46,18 +46,20 @@
 </pre>
 </div>
 <div class="refsect1">
-<a name="idp7357696"></a><h2>Signals</h2>
+<a name="idp9660704"></a><h2>Signals</h2>
 <pre class="synopsis">
 <a class="link" href="gdbus-org.freedesktop.UDisks2.Job.html#gdbus-signal-org-freedesktop-UDisks2-Job.Completed" title='The "Completed" signal'>Completed</a> (b success,
            s message);
 </pre>
 </div>
 <div class="refsect1">
-<a name="idp9063360"></a><h2>Properties</h2>
+<a name="idp6141648"></a><h2>Properties</h2>
 <pre class="synopsis">
 <a class="link" href="gdbus-org.freedesktop.UDisks2.Job.html#gdbus-property-org-freedesktop-UDisks2-Job.Operation" title='The "Operation" property'>Operation</a>        readable   s
 <a class="link" href="gdbus-org.freedesktop.UDisks2.Job.html#gdbus-property-org-freedesktop-UDisks2-Job.Progress" title='The "Progress" property'>Progress</a>         readable   d
 <a class="link" href="gdbus-org.freedesktop.UDisks2.Job.html#gdbus-property-org-freedesktop-UDisks2-Job.ProgressValid" title='The "ProgressValid" property'>ProgressValid</a>    readable   b
+<a class="link" href="gdbus-org.freedesktop.UDisks2.Job.html#gdbus-property-org-freedesktop-UDisks2-Job.Bytes" title='The "Bytes" property'>Bytes</a>            readable   t
+<a class="link" href="gdbus-org.freedesktop.UDisks2.Job.html#gdbus-property-org-freedesktop-UDisks2-Job.Rate" title='The "Rate" property'>Rate</a>             readable   t
 <a class="link" href="gdbus-org.freedesktop.UDisks2.Job.html#gdbus-property-org-freedesktop-UDisks2-Job.StartTime" title='The "StartTime" property'>StartTime</a>        readable   t
 <a class="link" href="gdbus-org.freedesktop.UDisks2.Job.html#gdbus-property-org-freedesktop-UDisks2-Job.ExpectedEndTime" title='The "ExpectedEndTime" property'>ExpectedEndTime</a>  readable   t
 <a class="link" href="gdbus-org.freedesktop.UDisks2.Job.html#gdbus-property-org-freedesktop-UDisks2-Job.Objects" title='The "Objects" property'>Objects</a>          readable   ao
@@ -242,6 +244,34 @@ Operation  readable   s
 <td><p><span class="term">cleanup</span></p></td>
 <td><p>Cleaning up devices that were removed without being properly unmounted or shut down.</p></td>
 </tr>
+<tr>
+<td><p><span class="term">ata-secure-erase</span></p></td>
+<td><p>ATA Secure Erase.</p></td>
+</tr>
+<tr>
+<td><p><span class="term">ata-enhanced-secure-erase</span></p></td>
+<td><p>ATA Enhanced Secure Erase.</p></td>
+</tr>
+<tr>
+<td><p><span class="term">md-raid-stop</span></p></td>
+<td><p>Stopping a RAID Array.</p></td>
+</tr>
+<tr>
+<td><p><span class="term">md-raid-start</span></p></td>
+<td><p>Starting a RAID Array.</p></td>
+</tr>
+<tr>
+<td><p><span class="term">md-raid-fault-device</span></p></td>
+<td><p>Marking device in RAID Array as faulty.</p></td>
+</tr>
+<tr>
+<td><p><span class="term">md-raid-remove-device</span></p></td>
+<td><p>Removing device from RAID Array.</p></td>
+</tr>
+<tr>
+<td><p><span class="term">md-raid-create</span></p></td>
+<td><p>Create a RAID Array.</p></td>
+</tr>
 </tbody>
 </table></div>
 <p>
@@ -268,6 +298,39 @@ Progress  readable   d
 ProgressValid  readable   b
 </pre>
 <p>Set to <code class="constant">TRUE</code> if the <a class="link" href="gdbus-org.freedesktop.UDisks2.Job.html#gdbus-property-org-freedesktop-UDisks2-Job.Progress" title='The "Progress" property'>"Progress"</a> is valid.</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="gdbus-property-org-freedesktop-UDisks2-Job.Bytes"></a><h3>The "Bytes" property</h3>
+<pre class="programlisting">
+Bytes  readable   t
+</pre>
+<p>         If the job involves processing a known number of bytes (for
+         example, erasing a disk), this property contains the total
+         number of bytes to process. If not, the value of this
+         property is zero.
+</p>
+<p>         The intent of this property is for user interfaces to convey
+         information such as <span class="quote">“<span class="quote">123 GB of 1.0 TB completed</span>”</span>.
+</p>
+<p class="since">Since 2.1</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="gdbus-property-org-freedesktop-UDisks2-Job.Rate"></a><h3>The "Rate" property</h3>
+<pre class="programlisting">
+Rate  readable   t
+</pre>
+<p>         If the job involves processing a number of bytes (for
+         example, erasing) and the rate at which the processing takes
+         place is known, this property contains the rate (measured in
+         bytes per second).  Otherwise the value of this property is
+         zero.
+</p>
+<p>         The intent of this property is for user interfaces to convey
+         information such as <span class="quote">“<span class="quote">110 MB/sec</span>”</span>.
+</p>
+<p class="since">Since 2.1</p>
 </div>
 <hr>
 <div class="refsect2">

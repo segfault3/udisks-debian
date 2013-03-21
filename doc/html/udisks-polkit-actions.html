@@ -163,7 +163,7 @@
 </table></div>
 </div>
 <br class="table-break"><p>
-          For reference, the polkit actions defined by udisks 2.0.1
+          For reference, the polkit actions defined by udisks 2.1.0
 
           are included here:
           </p>
@@ -374,6 +374,54 @@
   &lt;/action&gt;
 
   &lt;!-- ###################################################################### --&gt;
+  &lt;!-- Manage MD-RAID --&gt;
+
+  &lt;action id="org.freedesktop.udisks2.manage-md-raid"&gt;
+    &lt;_description&gt;Manage RAID arrays&lt;/_description&gt;
+    &lt;_message&gt;Authentication is required to manage RAID arrays&lt;/_message&gt;
+    &lt;defaults&gt;
+      &lt;allow_any&gt;auth_admin&lt;/allow_any&gt;
+      &lt;allow_inactive&gt;auth_admin&lt;/allow_inactive&gt;
+      &lt;allow_active&gt;auth_admin_keep&lt;/allow_active&gt;
+    &lt;/defaults&gt;
+  &lt;/action&gt;
+
+  &lt;!-- ###################################################################### --&gt;
+  &lt;!-- Power off drives --&gt;
+
+  &lt;action id="org.freedesktop.udisks2.power-off-drive"&gt;
+    &lt;_description&gt;Power off drive&lt;/_description&gt;
+    &lt;_message&gt;Authentication is required to power off a drive&lt;/_message&gt;
+    &lt;defaults&gt;
+      &lt;allow_any&gt;auth_admin&lt;/allow_any&gt;
+      &lt;allow_inactive&gt;auth_admin&lt;/allow_inactive&gt;
+      &lt;allow_active&gt;yes&lt;/allow_active&gt;
+    &lt;/defaults&gt;
+  &lt;/action&gt;
+
+  &lt;!-- Power off a drive considered a "system device" --&gt;
+  &lt;action id="org.freedesktop.udisks2.power-off-drive-system"&gt;
+    &lt;_description&gt;Power off a system drive&lt;/_description&gt;
+    &lt;_message&gt;Authentication is required to power off a drive&lt;/_message&gt;
+    &lt;defaults&gt;
+      &lt;allow_any&gt;auth_admin&lt;/allow_any&gt;
+      &lt;allow_inactive&gt;auth_admin&lt;/allow_inactive&gt;
+      &lt;allow_active&gt;auth_admin_keep&lt;/allow_active&gt;
+    &lt;/defaults&gt;
+  &lt;/action&gt;
+
+  &lt;!-- Power off a drive attached to another seat --&gt;
+  &lt;action id="org.freedesktop.udisks2.power-off-drive-other-seat"&gt;
+    &lt;_description&gt;Power off a drive attached to another seat&lt;/_description&gt;
+    &lt;_message&gt;Authentication is required to power off a drive plugged into another seat&lt;/_message&gt;
+    &lt;defaults&gt;
+      &lt;allow_any&gt;auth_admin&lt;/allow_any&gt;
+      &lt;allow_inactive&gt;auth_admin&lt;/allow_inactive&gt;
+      &lt;allow_active&gt;auth_admin_keep&lt;/allow_active&gt;
+    &lt;/defaults&gt;
+  &lt;/action&gt;
+
+  &lt;!-- ###################################################################### --&gt;
   &lt;!-- Eject media from a drive --&gt;
 
   &lt;action id="org.freedesktop.udisks2.eject-media"&gt;
@@ -557,6 +605,17 @@
     &lt;/defaults&gt;
   &lt;/action&gt;
 
+  &lt;!-- Enable/Disable SMART --&gt;
+  &lt;action id="org.freedesktop.udisks2.ata-smart-enable-disable"&gt;
+    &lt;_description&gt;Enable/Disable SMART&lt;/_description&gt;
+    &lt;_message&gt;Authentication is required to enable/disable SMART&lt;/_message&gt;
+    &lt;defaults&gt;
+      &lt;allow_any&gt;auth_admin&lt;/allow_any&gt;
+      &lt;allow_inactive&gt;auth_admin&lt;/allow_inactive&gt;
+      &lt;allow_active&gt;auth_admin_keep&lt;/allow_active&gt;
+    &lt;/defaults&gt;
+  &lt;/action&gt;
+
   &lt;!-- ###################################################################### --&gt;
   &lt;!-- ATA Power Management --&gt;
 
@@ -632,7 +691,7 @@
     &lt;/defaults&gt;
   &lt;/action&gt;
 
-  &lt;!-- Cancel own job --&gt;
+  &lt;!-- Cancel job initiated by other user --&gt;
   &lt;action id="org.freedesktop.udisks2.cancel-job-other-user"&gt;
     &lt;_description&gt;Cancel job started by another user&lt;/_description&gt;
     &lt;_message&gt;Authentication is required to cancel a job started by another user&lt;/_message&gt;

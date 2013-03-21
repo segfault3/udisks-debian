@@ -49,6 +49,39 @@
       <arg name="options" direction="in" type="a{sv}"/>
       <arg name="resulting_device" direction="out" type="o"/>
     </method>
+
+    <!--
+        MDRaidCreate:
+        @blocks: An array of object paths to objects implementing the #org.freedesktop.UDisks2.Block interface.
+        @level: The RAID level for the array.
+        @name: The name for the array.
+        @chunk: The chunk size (in bytes) or 0 if @level is <quote>raid1</quote>.
+        @options: Options (currently unused except for <link linkend="udisks-std-options">standard options</link>).
+        @resulting_array: An object path to the object implementing the #org.freedesktop.UDisks2.MDRaid interface.
+        @since: 2.1
+
+        Creates a new RAID array on the block devices specified by
+        @blocks. Each element in this array must be an object path to
+        an object implementing the #org.freedesktop.UDisks2.Block
+        interface.
+
+        Known and supported values for @level include
+        <quote>raid0</quote>, <quote>raid1</quote>,
+        <quote>raid4</quote>, <quote>raid5</quote>,
+        <quote>raid6</quote> and <quote>raid10</quote>.
+
+        Before the array is created, all devices in @blocks are
+        erased. Once created (but before the method returns), the RAID
+        array will be erased.
+    -->
+    <method name="MDRaidCreate">
+      <arg name="blocks" direction="in" type="ao"/>
+      <arg name="level" direction="in" type="s"/>
+      <arg name="name" direction="in" type="s"/>
+      <arg name="chunk" direction="in" type="t"/>
+      <arg name="options" direction="in" type="a{sv}"/>
+      <arg name="resulting_array" direction="out" type="o"/>
+    </method>
   </interface>
 
   <!--
@@ -121,6 +154,12 @@
              <term>ata-aam-level (type <literal>'i'</literal>)</term>
              <listitem><para>
                The AAM level for ATA drives (See ATA command <quote>SET FEATURES</quote>, sub-commands 0x42 and 0xc2).
+             </para></listitem>
+           </varlistentry>
+           <varlistentry>
+             <term>ata-write-cache-enabled (type <literal>'b'</literal>)</term>
+             <listitem><para>
+               Whether the write-cache is enabled (See ATA command <quote>SET FEATURES</quote>, sub-commands 0x82 and 0x02). Since 2.1.
              </para></listitem>
            </varlistentry>
          </variablelist>
@@ -347,6 +386,56 @@
       <arg name="options" direction="in" type="a{sv}"/>
     </method>
 
+    <!--
+        PowerOff:
+        @options: Options (currently unused except for <link linkend="udisks-std-options">standard options</link>).
+        @since: 2.1
+
+        Arranges for the drive to be safely removed and powered
+        off. On the OS side this includes ensuring that no process is
+        using the drive, then requesting that in-flight buffers and
+        caches are committed to stable storage. The exact steps for
+        powering off the drive depends on the drive itself and the
+        interconnect used. For drives connected through USB, the
+        effect is that the USB device will be deconfigured followed by
+        disabling the upstream hub port it is connected to.
+
+        Note that as some physical devices contain multiple drives
+        (for example 4-in-1 flash card reader USB devices) powering
+        off one drive may affect other drives. Applications can
+        examine the #org.freedesktop.UDisks2.Drive:SiblingId property
+        to determine such relationships.
+
+        There are not a lot of guarantees associated with this method
+        so it should only be called in response to an user
+        action. Usually the effect is that the drive disappears as if
+        it was unplugged.
+
+        This method only works if the
+        #org.freedesktop.UDisks2.Drive:CanPowerOff property
+        is set to %TRUE.
+    -->
+    <method name="PowerOff">
+      <arg name="options" direction="in" type="a{sv}"/>
+    </method>
+
+    <!-- CanPowerOff:
+         @since: 2.1
+         Whether the drive can be safely removed / powered off. See
+         the org.freedesktop.UDisks2.Drive.PowerOff() method for more
+         information.
+
+         See <xref linkend="udisks.8"/> for how to influence the value of this property.
+    -->
+    <property name="CanPowerOff" type="b" access="read"/>
+
+    <!-- SiblingId:
+         @since: 2.1
+         An opaque token that, if non-blank, is used to group drives
+         that are part of the same physical device.
+    -->
+    <property name="SiblingId" type="s" access="read"/>
+
   </interface>
 
   <!--
@@ -523,6 +612,27 @@
       <arg name="options" direction="in" type="a{sv}"/>
     </method>
 
+    <!--
+        SmartSetEnabled:
+        @value: %TRUE to enable SMART, %FALSE to disable SMART.
+        @options: Options (currently unused except for <link linkend="udisks-std-options">standard options</link>).
+        @since: 2.1
+
+        Sets whether SMART is enabled for the drive. This setting is
+        stored in the non-volatile memory in the drive itself and does
+        not need to be refreshed every time the drive is powered on or
+        connected.
+
+        Since this may require authentication and thus may fail, it is
+        implemented this way instead of the
+        #org.freedesktop.UDisks2.Drive.Ata:SmartEnabled property being
+        writable.
+    -->
+    <method name="SmartSetEnabled">
+      <arg name="value" direction="in" type="b"/>
+      <arg name="options" direction="in" type="a{sv}"/>
+    </method>
+
     <!-- PmSupported: Whether the drive supports power management. -->
     <property name="PmSupported" type="b" access="read"/>
 
@@ -543,6 +653,18 @@
 
     <!-- AamVendorRecommendedValue: The vendor-recommended AAM value (or 0 if AAM is not supported). -->
     <property name="AamVendorRecommendedValue" type="i" access="read"/>
+
+    <!-- WriteCacheSupported:
+         @since: 2.1
+         Whether the drive supports configuring the write cache.
+    -->
+    <property name="WriteCacheSupported" type="b" access="read"/>
+
+    <!-- WriteCacheEnabled:
+         @since: 2.1
+         Whether the write-cache is enabled (or %FALSE if not supported).
+    -->
+    <property name="WriteCacheEnabled" type="b" access="read"/>
 
     <!--
         PmGetState:
@@ -690,6 +812,32 @@
     <!-- DeviceNumber: The dev_t of the block device. -->
     <property name="DeviceNumber" type="t" access="read"/>
 
+    <!-- Id:
+         @since: 2.1
+         A unique and persistent identifier for the device or blank if
+         no such identifier is available.
+
+         For devices with fixed media, this identifier is derived from
+         vital product data / UUIDs / serial numbers of the drive or
+         construct (e.g. LVM or MD-RAID) the block device is part
+         of. For devices with removable media, this identifier is
+         derived from the medium currently inserted.
+
+         This identifier is guaranteed to not include the slash
+         character '/' (U+002F SOLIDUS) which means it can be used as
+         a filename.
+
+         Examples:
+         <quote>by-id-ata-INTEL_SSDSA2MH080G1GC_CVEM842101HD080DGN</quote>,
+         <quote>by-id-ata-ST1000LM024_HN-M101MBB_S2TBJA0C230233-part3</quote>,
+         <quote>by-id-usb-Kingston_DataTraveler_2.0_0013729940C4F9A166250D3E-0:0</quote>,
+         <quote>by-id-dm-name-luks-6d81fe85-26b1-4f8b-b834-405454c1cd46</quote>,
+         <quote>by-id-dm-name-vg_thinkpad-lv_swap</quote>,
+         <quote>by-label-HARRY_POTTER_SORCERERS_STONE-</quote>,
+         <quote>by-uuid-D22D-08B8</quote>.
+    -->
+    <property name="Id" type="s" access="read"/>
+
     <!-- Size: The size of the block device. -->
     <property name="Size" type="t" access="read"/>
 
@@ -701,6 +849,22 @@
          belongs to, or '/' if no such object exists.
       -->
     <property name="Drive" type="o" access="read"/>
+
+    <!-- MDRaid:
+         @since: 2.1
+         If the block device is a running MD-RAID array, this is set
+         to the #org.freedesktop.UDisks2.MDRaid object that it
+         correspond to. Is '/' if no such object exists.
+      -->
+    <property name="MDRaid" type="o" access="read"/>
+
+    <!-- MDRaidMember:
+         @since: 2.1
+         If the block device is a member of a MD-RAID array, this
+         is set to the #org.freedesktop.UDisks2.MDRaid object that it
+         correspond to. Is '/' if no such object exists.
+      -->
+    <property name="MDRaidMember" type="o" access="read"/>
 
     <!-- IdUsage:
          A result of probing for signatures on the block device. Known values include:
@@ -924,6 +1088,17 @@
     -->
     <property name="HintIconName" type="s" access="read"/>
 
+    <!-- HintSymbolicIconName:
+         @since: 2.1
+         If not blank, the icon name to use when presenting the device using a symbolic icon.
+
+         The name must adhere to the
+         <ulink url="http://www.freedesktop.org/wiki/Specifications/icon-theme-spec">freedesktop.org icon theme specification</ulink>.
+
+         See <xref linkend="udisks.8"/> for how to influence the value of this property.
+    -->
+    <property name="HintSymbolicIconName" type="s" access="read"/>
+
     <!--
         AddConfigurationItem:
         @item: The configuration item to add.
@@ -994,7 +1169,7 @@
     <!--
         Format:
         @type: The type of file system, partition table or other content to format the device with.
-        @options: Options - known options (in addition to <link linkend="udisks-std-options">standard options</link>) includes <parameter>label</parameter> (of type 's'), <parameter>take-ownership</parameter> (of type 'b'), <parameter>encrypt.passphrase</parameter> (of type 's') and <parameter>erase</parameter> (of type 's').
+        @options: Options - known options (in addition to <link linkend="udisks-std-options">standard options</link>) includes <parameter>label</parameter> (of type 's'), <parameter>take-ownership</parameter> (of type 'b'), <parameter>encrypt.passphrase</parameter> (of type 's'), <parameter>erase</parameter> (of type 's'), <parameter>no-block</parameter> (of type 'b') and <parameter>update-partition-type</parameter> (of type 'b').
 
         Formats the device with a file system, partition table or
         other well-known content.
@@ -1030,6 +1205,22 @@
         before formatting, <quote>ata-secure-erase</quote> to perform
         a secure erase or <quote>ata-secure-erase-enhanced</quote> to
         perform an enhanced secure erase.
+
+        If the option <parameter>update-partition-type</parameter> is
+        set to %TRUE and the object in question is a partition, then
+        its type (cf. the #org.freedesktop.UDisks2.Partition:Type
+        property) will be set to the <emphasis>natural</emphasis>
+        partition type matching @type, if any. For example, if
+        formatting a GPT partition with a FAT filesystem, the
+        <quote>Microsoft Basic Data</quote> partition type will be
+        chosen; similar, if formatting a DOS partition with a Ext4
+        filesystem then partition type 0x83 is chosen.
+
+        If the option <parameter>no-block</parameter> is set to %TRUE
+        then the method returns just before the actual formatting
+        takes place but after authorization and other checks are
+        done. This is useful for applications that want to format
+        several devices in parallel.
     -->
     <method name="Format">
       <arg name="type" direction="in" type="s"/>
@@ -1549,13 +1740,265 @@
 
         Setter for the #org.freedesktop.UDisks2.Loop:Autoclear
         property. Since this may require authentication and thus may
-        fail, it is a implemented this way instead of the property
-        being writable.
+        fail, it is implemented this way instead of the property being
+        writable.
     -->
     <method name="SetAutoclear">
       <arg name="value" direction="in" type="b"/>
       <arg name="options" direction="in" type="a{sv}"/>
     </method>
+  </interface>
+
+  <!-- ********************************************************************** -->
+
+  <!--
+      org.freedesktop.UDisks2.MDRaid:
+      @short_description: Linux Software RAID
+      @since: 2.1
+
+      Objects implementing this interface represent
+      <ulink url="https://raid.wiki.kernel.org/index.php/Linux_Raid">Linux Software RAID arrays</ulink>
+      detected on the system. Both running and not-running arrays are represented.
+
+      Block devices point to objects implementing this interface, see
+      the #org.freedesktop.UDisks2.Block:MDRaid and
+      #org.freedesktop.UDisks2.Block:MDRaidMember properties on the
+      #org.freedesktop.UDisks2.Block D-Bus interface.
+  -->
+  <interface name="org.freedesktop.UDisks2.MDRaid">
+    <!-- UUID:
+         The UUID of the array.
+    -->
+    <property name="UUID" type="s" access="read"/>
+
+    <!-- Name:
+         The name of the array (TODO: homehost etc).
+    -->
+    <property name="Name" type="s" access="read"/>
+
+    <!-- Level:
+         The RAID level.
+
+         Known values include <literal>raid0</literal>, <literal>raid1</literal>, <literal>raid4</literal>, <literal>raid5</literal>, <literal>raid6</literal> and <literal>raid10</literal>.
+    -->
+    <property name="Level" type="s" access="read"/>
+
+    <!-- NumDevices:
+         Number of devices that are part of the array.
+    -->
+    <property name="NumDevices" type="u" access="read"/>
+
+    <!-- Size:
+         The size of the array or 0 if unknown.
+
+         This is the usable size, e.g. for a RAID-5 array backed by 4
+         1TB disks, this will be approximately 3 TB.
+    -->
+    <property name="Size" type="t" access="read"/>
+
+    <!-- SyncAction:
+         The current state of the array or empty if the array is not
+         running or if the array does not have any redundancy
+         (e.g. RAID-0 or linear).
+
+         Use the org.freedesktop.UDisks2.MDRaid.RequestSyncAction()
+         method to change this.
+
+         This property corresponds to the
+         <literal>sync_action</literal> sysfs file, see the
+         <filename><ulink url="http://www.kernel.org/doc/Documentation/md.txt">Documentation/md.txt</ulink></filename>
+         file shipped with the kernel sources.
+    -->
+    <property name="SyncAction" type="s" access="read"/>
+
+    <!-- SyncCompleted:
+         The fraction or sectors completed (always between <constant>0.0</constant> and <constant>1.0</constant>) in the sync operation or 0.0 if no operation is in progress.
+
+         This property corresponds to the
+         <literal>sync_completed</literal> sysfs file, see the
+         <filename><ulink url="http://www.kernel.org/doc/Documentation/md.txt">Documentation/md.txt</ulink></filename>
+         file shipped with the kernel sources.
+    -->
+    <property name="SyncCompleted" type="d" access="read"/>
+
+    <!-- SyncRate:
+         The rate (or speed) at which the sync operation takes
+         place. It is averaged over the last 30 seconds and measured
+         in bytes per second.
+
+         If the rate is unknown or no operation is in progress, the
+         value of this property is 0.
+
+         This property corresponds to the
+         <literal>sync_speed</literal> sysfs file, see the
+         <filename><ulink url="http://www.kernel.org/doc/Documentation/md.txt">Documentation/md.txt</ulink></filename>
+         file shipped with the kernel sources.
+    -->
+    <property name="SyncRate" type="t" access="read"/>
+
+    <!-- SyncRemainingTime:
+         The estimated number of micro-seconds until the operation is
+         finished
+
+         If the amount of remaining time is unknown or no operation is
+         in progress, the value of this property is 0.
+
+         This property is based on the value of the
+         <literal>sync_speed</literal> sysfs file, see the
+         <filename><ulink url="http://www.kernel.org/doc/Documentation/md.txt">Documentation/md.txt</ulink></filename>
+         file shipped with the kernel sources.
+    -->
+    <property name="SyncRemainingTime" type="t" access="read"/>
+
+    <!-- Degraded:
+         Number of devices by which the array is degraded (0 if not degraded or not running).
+
+         This property corresponds to the
+         <literal>degraded</literal> sysfs file, see the
+         <filename><ulink url="http://www.kernel.org/doc/Documentation/md.txt">Documentation/md.txt</ulink></filename>
+         file shipped with the kernel sources.
+    -->
+    <property name="Degraded" type="u" access="read"/>
+
+    <!-- BitmapLocation:
+         The location of a write-intent bitmap (empty if the array is not running), if any.
+
+         If the RAID array does not suppor write-intent bitmaps (for
+         example RAID-0 arrays), this is empty.
+
+         This property corresponds to the
+         <literal>bitmap/location</literal> sysfs file, see the
+         <filename><ulink url="http://www.kernel.org/doc/Documentation/md.txt">Documentation/md.txt</ulink></filename>
+         file shipped with the kernel sources.
+    -->
+    <property name="BitmapLocation" type="ay" access="read"/>
+
+    <!-- ChunkSize:
+         The chunk size (0 if the array is not running or not using striping).
+
+         This property corresponds to the
+         <literal>chunk_size</literal> sysfs file, see the
+         <filename><ulink url="http://www.kernel.org/doc/Documentation/md.txt">Documentation/md.txt</ulink></filename>
+         file shipped with the kernel sources.
+    -->
+    <property name="ChunkSize" type="t" access="read"/>
+
+    <!-- ActiveDevices:
+         This property is an array with block devices that are
+         currently associated with the with the array. It is empty if
+         the array is not running.
+
+         Each element of the array is a struct with the following members:
+         <variablelist>
+         <varlistentry><term>block (type 'o')</term>
+         <listitem><para>The object path for the underlying block device (guaranteed to implement the #org.freedesktop.UDisks2.Block interface)</para></listitem></varlistentry>
+         <varlistentry><term>slot (type 'i')</term>
+         <listitem><para>-1 if the device is not currently part of the array (ie. <literal>spare</literal> or <literal>faulty</literal>), otherwise the slot number the device currently fills (between 0 and #org.freedesktop.UDisks2.MDRaid:NumDevices)</para></listitem></varlistentry>
+         <varlistentry><term>state (type 'as')</term>
+         <listitem><para>The state of the device - known elements include <literal>faulty</literal>, <literal>in_sync</literal>, <literal>write_mostly</literal>, <literal>blocked</literal> and <literal>spare</literal></para></listitem></varlistentry>
+         <varlistentry><term>num_read_errors (type 't')</term>
+         <listitem><para>An ongoing count of read errors that have been detected on this device but have not caused the device to be evicted from the array</para></listitem></varlistentry>
+         <varlistentry><term>expansion (type 'a{sv}')</term>
+         <listitem><para>Currently unused. Intended for future expansion.</para></listitem></varlistentry>
+         </variablelist>
+         This property correspond to the
+         <filename>/sys/block/mdN/md/dev-*</filename> directories in sysfs and the sysfs files in each directory.
+         See the
+         <filename><ulink url="http://www.kernel.org/doc/Documentation/md.txt">Documentation/md.txt</ulink></filename>
+         file shipped with the kernel sources.
+    -->
+    <property name="ActiveDevices" type="a(oiasta{sv})" access="read"/>
+
+    <!--
+        Start:
+        @options: Options - known options (in addition to <link linkend="udisks-std-options">standard options</link>) includes <parameter>start-degraded</parameter> (of type 'b').
+
+        Starts the RAID array.
+
+        If the @option parameter contains the key @start-degraded with
+        the value %TRUE, the array will be started even if some members
+        are missing.
+    -->
+    <method name="Start">
+      <arg name="options" direction="in" type="a{sv}"/>
+    </method>
+
+    <!--
+        Stop:
+        @options: Options (currently unused except for <link linkend="udisks-std-options">standard options</link>).
+
+        Stops the RAID array.
+    -->
+    <method name="Stop">
+      <arg name="options" direction="in" type="a{sv}"/>
+    </method>
+
+    <!--
+        RemoveDevice:
+        @device: An object path to an object implementing the #org.freedesktop.UDisks2.Block interface.
+        @options: Options - known options (in addition to <link linkend="udisks-std-options">standard options</link>) includes <parameter>wipe</parameter> (of type 'b').
+
+        Removes @device from the array.
+
+        For this to work @device must already be associated with the
+        array, e.g. referenced in the
+        #org.freedesktop.UDisks2.MDRaid:ActiveDevices property.
+
+        If the @option parameter contains the key @wipe with the value
+        %TRUE, all known filesystem signatures will be erased from the
+        @device after removal.
+    -->
+    <method name="RemoveDevice">
+      <arg name="device" direction="in" type="o"/>
+      <arg name="options" direction="in" type="a{sv}"/>
+    </method>
+
+    <!--
+        AddDevice:
+        @device: An object path to an object implementing the #org.freedesktop.UDisks2.Block interface.
+        @options: Options (currently unused except for <link linkend="udisks-std-options">standard options</link>).
+
+        Adds @device to the array.
+    -->
+    <method name="AddDevice">
+      <arg name="device" direction="in" type="o"/>
+      <arg name="options" direction="in" type="a{sv}"/>
+    </method>
+
+    <!--
+        SetBitmapLocation:
+        @value: The value for the bitmap, currently only the values 'none' and 'internal' are supported.
+        @options: Options (currently unused except for <link linkend="udisks-std-options">standard options</link>).
+
+        Sets whether the array has a write-intent bitmap.
+    -->
+    <method name="SetBitmapLocation">
+      <arg name="value" direction="in" type="ay"/>
+      <arg name="options" direction="in" type="a{sv}"/>
+    </method>
+
+    <!--
+        RequestSyncAction:
+        @sync_action: The action to request.
+        @options: Options (currently unused except for <link linkend="udisks-std-options">standard options</link>).
+
+        This method call can be used to trigger and cancel data
+        redundancy checks and repairs. Currently only the values
+        <literal>check</literal>, <literal>repair</literal> and
+        <literal>idle</literal> can be used for @sync_action.
+
+        See also the property #org.freedesktop.UDisks2.MDRaid:SyncAction.
+
+        This method call is similar to writing to the
+        <literal>sync_action</literal> sysfs file, see the
+        <filename><ulink url="http://www.kernel.org/doc/Documentation/md.txt">Documentation/md.txt</ulink></filename>
+        file shipped with the kernel sources.
+    -->
+    <method name="RequestSyncAction">
+      <arg name="sync_action" direction="in" type="s"/>
+      <arg name="options" direction="in" type="a{sv}"/>
+    </method>
+
   </interface>
 
   <!-- ********************************************************************** -->
@@ -1643,6 +2086,20 @@
              <listitem><para>Creating a partition.</para></listitem></varlistentry>
            <varlistentry><term>cleanup</term>
              <listitem><para>Cleaning up devices that were removed without being properly unmounted or shut down.</para></listitem></varlistentry>
+           <varlistentry><term>ata-secure-erase</term>
+             <listitem><para>ATA Secure Erase.</para></listitem></varlistentry>
+           <varlistentry><term>ata-enhanced-secure-erase</term>
+             <listitem><para>ATA Enhanced Secure Erase.</para></listitem></varlistentry>
+           <varlistentry><term>md-raid-stop</term>
+             <listitem><para>Stopping a RAID Array.</para></listitem></varlistentry>
+           <varlistentry><term>md-raid-start</term>
+             <listitem><para>Starting a RAID Array.</para></listitem></varlistentry>
+           <varlistentry><term>md-raid-fault-device</term>
+             <listitem><para>Marking device in RAID Array as faulty.</para></listitem></varlistentry>
+           <varlistentry><term>md-raid-remove-device</term>
+             <listitem><para>Removing device from RAID Array.</para></listitem></varlistentry>
+           <varlistentry><term>md-raid-create</term>
+             <listitem><para>Create a RAID Array.</para></listitem></varlistentry>
          </variablelist>
          The
          <link linkend="udisks-client-get-job-description">udisks_client_get_job_description()</link>
@@ -1659,6 +2116,31 @@
 
     <!-- ProgressValid: Set to %TRUE if the #org.freedesktop.UDisks2.Job:Progress is valid. -->
     <property name="ProgressValid" type="b" access="read"/>
+
+    <!-- Bytes:
+         @since: 2.1
+         If the job involves processing a known number of bytes (for
+         example, erasing a disk), this property contains the total
+         number of bytes to process. If not, the value of this
+         property is zero.
+
+         The intent of this property is for user interfaces to convey
+         information such as <quote>123 GB of 1.0 TB completed</quote>.
+    -->
+    <property name="Bytes" type="t" access="read"/>
+
+    <!-- Rate:
+         @since: 2.1
+         If the job involves processing a number of bytes (for
+         example, erasing) and the rate at which the processing takes
+         place is known, this property contains the rate (measured in
+         bytes per second).  Otherwise the value of this property is
+         zero.
+
+         The intent of this property is for user interfaces to convey
+         information such as <quote>110 MB/sec</quote>.
+    -->
+    <property name="Rate" type="t" access="read"/>
 
     <!-- StartTime:
 

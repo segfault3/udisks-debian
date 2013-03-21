@@ -47,6 +47,11 @@ UDisksJob
 @arg2: 
 @Returns: 
 
+<!-- ##### ARG UDisksJob:bytes ##### -->
+<para>
+
+</para>
+
 <!-- ##### ARG UDisksJob:cancelable ##### -->
 <para>
 
@@ -77,6 +82,11 @@ UDisksJob
 
 </para>
 
+<!-- ##### ARG UDisksJob:rate ##### -->
+<para>
+
+</para>
+
 <!-- ##### ARG UDisksJob:start-time ##### -->
 <para>
 
@@ -103,6 +113,8 @@ UDisksJob
 @get_start_time: 
 @get_started_by_uid: 
 @completed: 
+@get_bytes: 
+@get_rate: 
 
 <!-- ##### FUNCTION udisks_job_interface_info ##### -->
 <para>
@@ -195,6 +207,24 @@ UDisksJob
 @Returns: 
 
 
+<!-- ##### FUNCTION udisks_job_get_bytes ##### -->
+<para>
+
+</para>
+
+@object: 
+@Returns: 
+
+
+<!-- ##### FUNCTION udisks_job_get_rate ##### -->
+<para>
+
+</para>
+
+@object: 
+@Returns: 
+
+
 <!-- ##### FUNCTION udisks_job_get_start_time ##### -->
 <para>
 
@@ -277,6 +307,24 @@ UDisksJob
 
 
 <!-- ##### FUNCTION udisks_job_set_progress ##### -->
+<para>
+
+</para>
+
+@object: 
+@value: 
+
+
+<!-- ##### FUNCTION udisks_job_set_bytes ##### -->
+<para>
+
+</para>
+
+@object: 
+@value: 
+
+
+<!-- ##### FUNCTION udisks_job_set_rate ##### -->
 <para>
 
 </para>

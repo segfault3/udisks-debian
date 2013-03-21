@@ -5,7 +5,7 @@
 <refentry id="udisks.8">
   <refentryinfo>
     <title>udisks</title>
-    <date>October 2012</date>
+    <date>March 2013</date>
     <productname>udisks</productname>
   </refentryinfo>
 
@@ -155,6 +155,19 @@
             </para>
           </listitem>
         </varlistentry>
+        <varlistentry>
+          <term><option>WriteCacheEnabled</option></term>
+          <listitem>
+            <para>
+              A boolean specifying whether to enable or disable the
+              Write Cache. Valid values for this key are
+              <quote>true</quote> and <quote>false</quote>. This is
+              similar to the <option>-W</option> option in
+              <citerefentry><refentrytitle>hdparm</refentrytitle><manvolnum>8</manvolnum></citerefentry>.
+              This key was added in 2.1.
+            </para>
+          </listitem>
+        </varlistentry>
       </variablelist>
     </refsect2>
   </refsect1>
@@ -196,6 +209,15 @@
         </listitem>
       </varlistentry>
       <varlistentry>
+        <term><option>UDISKS_CAN_POWER_OFF</option></term>
+        <listitem>
+          <para>
+            If set, this overrides the value of the
+            <link linkend="gdbus-property-org-freedesktop-UDisks2-Drive.CanPowerOff">CanPowerOff</link> property.
+          </para>
+        </listitem>
+      </varlistentry>
+      <varlistentry>
         <term><option>UDISKS_NAME</option></term>
         <listitem>
           <para>
@@ -214,6 +236,26 @@
             <ulink url="http://www.freedesktop.org/wiki/Specifications/icon-theme-spec">freedesktop.org icon theme specification</ulink>.
             This corresponds to the
             <link linkend="gdbus-property-org-freedesktop-UDisks2-Block.HintIconName">HintIconName</link> property.
+          </para>
+        </listitem>
+      </varlistentry>
+      <varlistentry>
+        <term><option>UDISKS_SYMBOLIC_ICON_NAME</option></term>
+        <listitem>
+          <para>
+            The icon to use for the device when presenting it in an user interface using a symbolic icon. If
+            set, the name must adhere to the
+            <ulink url="http://www.freedesktop.org/wiki/Specifications/icon-theme-spec">freedesktop.org icon theme specification</ulink>.
+            This corresponds to the
+            <link linkend="gdbus-property-org-freedesktop-UDisks2-Block.HintIconName">HintSymbolicIconName</link> property.
+          </para>
+        </listitem>
+      </varlistentry>
+      <varlistentry>
+        <term><option>UDISKS_FILESYSTEM_SHARED</option></term>
+        <listitem>
+          <para>
+            If set to 1, the filesystem on the device will be mounted in a shared directory (e.g. <filename class='directory'>/media/VolumeName</filename>) instead of a private directory (e.g. <filename class='directory'>/run/media/$USER/VolumeName</filename>) when the <link linkend="gdbus-method-org-freedesktop-UDisks2-Filesystem.Mount">Filesystem.Mount()</link> method is handled.
           </para>
         </listitem>
       </varlistentry>

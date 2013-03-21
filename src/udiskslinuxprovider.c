@@ -29,8 +29,10 @@
 #include "udiskslinuxprovider.h"
 #include "udiskslinuxblockobject.h"
 #include "udiskslinuxdriveobject.h"
+#include "udiskslinuxmdraidobject.h"
 #include "udiskslinuxmanager.h"
-#include "udiskscleanup.h"
+#include "udisksstate.h"
+#include "udiskslinuxdevice.h"
 
 /**
  * SECTION:udiskslinuxprovider
@@ -38,7 +40,7 @@
  * @short_description: Provides Linux-specific objects
  *
  * This object is used to add/remove Linux specific objects of type
- * #UDisksLinuxBlockObject and #UDisksLinuxDriveObject.
+ * #UDisksLinuxBlockObject, #UDisksLinuxDriveObject and #UDisksLinuxMDRaidObject.
  */
 
 typedef struct _UDisksLinuxProviderClass   UDisksLinuxProviderClass;
@@ -54,6 +56,8 @@ struct _UDisksLinuxProvider
   UDisksProvider parent_instance;
 
   GUdevClient *gudev_client;
+  GAsyncQueue *probe_request_queue;
+  GThread *probe_request_thread;
 
   UDisksObjectSkeleton *manager_object;
 
@@ -63,6 +67,11 @@ struct _UDisksLinuxProvider
   /* maps from VPD (serial, wwn) and sysfs_path to UDisksLinuxDriveObject instances */
   GHashTable *vpd_to_drive;
   GHashTable *sysfs_path_to_drive;
+
+  /* maps from array UUID and sysfs_path to UDisksLinuxMDRaidObject instances */
+  GHashTable *uuid_to_mdraid;
+  GHashTable *sysfs_path_to_mdraid;
+  GHashTable *sysfs_path_to_mdraid_members;
 
   GFileMonitor *etc_udisks2_dir_monitor;
 
@@ -83,7 +92,7 @@ struct _UDisksLinuxProviderClass
 
 static void udisks_linux_provider_handle_uevent (UDisksLinuxProvider *provider,
                                                  const gchar         *action,
-                                                 GUdevDevice         *device);
+                                                 UDisksLinuxDevice   *device);
 
 static gboolean on_housekeeping_timeout (gpointer user_data);
 
@@ -109,6 +118,8 @@ static void on_etc_udisks2_dir_monitor_changed (GFileMonitor     *monitor,
                                                 GFileMonitorEvent event_type,
                                                 gpointer          user_data);
 
+gpointer probe_request_thread_func (gpointer user_data);
+
 G_DEFINE_TYPE (UDisksLinuxProvider, udisks_linux_provider, UDISKS_TYPE_PROVIDER);
 
 static void
@@ -116,6 +127,11 @@ udisks_linux_provider_finalize (GObject *object)
 {
   UDisksLinuxProvider *provider = UDISKS_LINUX_PROVIDER (object);
   UDisksDaemon *daemon;
+
+  /* stop the request thread and wait for it */
+  g_async_queue_push (provider->probe_request_queue, (gpointer) 0xdeadbeef);
+  g_thread_join (provider->probe_request_thread);
+  g_async_queue_unref (provider->probe_request_queue);
 
   daemon = udisks_provider_get_daemon (UDISKS_PROVIDER (provider));
 
@@ -130,6 +146,9 @@ udisks_linux_provider_finalize (GObject *object)
   g_hash_table_unref (provider->sysfs_to_block);
   g_hash_table_unref (provider->vpd_to_drive);
   g_hash_table_unref (provider->sysfs_path_to_drive);
+  g_hash_table_unref (provider->uuid_to_mdraid);
+  g_hash_table_unref (provider->sysfs_path_to_mdraid);
+  g_hash_table_unref (provider->sysfs_path_to_mdraid_members);
   g_object_unref (provider->gudev_client);
 
   udisks_object_skeleton_set_manager (provider->manager_object, NULL);
@@ -155,6 +174,70 @@ udisks_linux_provider_finalize (GObject *object)
     G_OBJECT_CLASS (udisks_linux_provider_parent_class)->finalize (object);
 }
 
+/* ---------------------------------------------------------------------------------------------------- */
+
+typedef struct
+{
+  UDisksLinuxProvider *provider;
+  GUdevDevice *udev_device;
+  UDisksLinuxDevice *udisks_device;
+} ProbeRequest;
+
+static void
+probe_request_free (ProbeRequest *request)
+{
+  g_clear_object (&request->provider);
+  g_clear_object (&request->udev_device);
+  g_clear_object (&request->udisks_device);
+  g_slice_free (ProbeRequest, request);
+}
+
+/* ---------------------------------------------------------------------------------------------------- */
+
+/* called in main thread with a processed ProbeRequest struct - see probe_request_thread_func() */
+static gboolean
+on_idle_with_probed_uevent (gpointer user_data)
+{
+  ProbeRequest *request = user_data;
+  udisks_linux_provider_handle_uevent (request->provider,
+                                       g_udev_device_get_action (request->udev_device),
+                                       request->udisks_device);
+  probe_request_free (request);
+  return FALSE; /* remove source */
+}
+
+/* ---------------------------------------------------------------------------------------------------- */
+
+gpointer
+probe_request_thread_func (gpointer user_data)
+{
+  UDisksLinuxProvider *provider = UDISKS_LINUX_PROVIDER (user_data);
+  ProbeRequest *request;
+
+  do
+    {
+      request = g_async_queue_pop (provider->probe_request_queue);
+
+      /* used by _finalize() above to stop this thread - if received, we can
+       * no longer use @provider
+       */
+      if (request == (gpointer) 0xdeadbeef)
+        goto out;
+
+      /* probe the device - this may take a while */
+      request->udisks_device = udisks_linux_device_new_sync (request->udev_device);
+
+      /* now that we've probed the device, post the request back to the main thread */
+      g_idle_add (on_idle_with_probed_uevent, request);
+    }
+  while (TRUE);
+
+ out:
+  return NULL;
+}
+
+/* ---------------------------------------------------------------------------------------------------- */
+
 static void
 on_uevent (GUdevClient  *client,
            const gchar  *action,
@@ -162,9 +245,17 @@ on_uevent (GUdevClient  *client,
            gpointer      user_data)
 {
   UDisksLinuxProvider *provider = UDISKS_LINUX_PROVIDER (user_data);
-  //g_print ("%s:%s: entering\n", G_STRLOC, G_STRFUNC);
-  udisks_linux_provider_handle_uevent (provider, action, device);
+  ProbeRequest *request;
+
+  request = g_slice_new0 (ProbeRequest);
+  request->provider = g_object_ref (provider);
+  request->udev_device = g_object_ref (device);
+
+  /* process uevent in "probing-thread" */
+  g_async_queue_push (provider->probe_request_queue, request);
 }
+
+/* ---------------------------------------------------------------------------------------------------- */
 
 static void
 udisks_linux_provider_init (UDisksLinuxProvider *provider)
@@ -175,10 +266,16 @@ udisks_linux_provider_init (UDisksLinuxProvider *provider)
 
   /* get ourselves an udev client */
   provider->gudev_client = g_udev_client_new (subsystems);
+
   g_signal_connect (provider->gudev_client,
                     "uevent",
                     G_CALLBACK (on_uevent),
                     provider);
+
+  provider->probe_request_queue = g_async_queue_new ();
+  provider->probe_request_thread = g_thread_new ("probing-thread",
+                                                 probe_request_thread_func,
+                                                 provider);
 
   file = g_file_new_for_path (PACKAGE_SYSCONF_DIR "/udisks2");
   provider->etc_udisks2_dir_monitor = g_file_monitor_directory (file,
@@ -295,7 +392,9 @@ udisks_linux_provider_start (UDisksProvider *_provider)
   UDisksDaemon *daemon;
   UDisksManager *manager;
   GList *devices;
+  GList *udisks_devices;
   GList *l;
+  guint n;
 
   provider->coldplug = TRUE;
 
@@ -324,16 +423,47 @@ udisks_linux_provider_start (UDisksProvider *_provider)
                                                          g_str_equal,
                                                          g_free,
                                                          NULL);
+  provider->uuid_to_mdraid = g_hash_table_new_full (g_str_hash,
+                                                    g_str_equal,
+                                                    g_free,
+                                                    (GDestroyNotify) g_object_unref);
+  provider->sysfs_path_to_mdraid = g_hash_table_new_full (g_str_hash,
+                                                          g_str_equal,
+                                                          g_free,
+                                                          NULL);
+  provider->sysfs_path_to_mdraid_members = g_hash_table_new_full (g_str_hash,
+                                                                  g_str_equal,
+                                                                  g_free,
+                                                                  NULL);
 
   devices = g_udev_client_query_by_subsystem (provider->gudev_client, "block");
+
   /* make sure we process sda before sdz and sdz before sdaa */
   devices = g_list_sort (devices, (GCompareFunc) udev_device_name_cmp);
+
+  /* probe for extra data we don't get from udev */
+  udisks_info ("Initialization (device probing)");
+  udisks_devices = NULL;
   for (l = devices; l != NULL; l = l->next)
-    udisks_linux_provider_handle_uevent (provider, "add", G_UDEV_DEVICE (l->data));
-  for (l = devices; l != NULL; l = l->next)
-    udisks_linux_provider_handle_uevent (provider, "add", G_UDEV_DEVICE (l->data));
-  g_list_foreach (devices, (GFunc) g_object_unref, NULL);
-  g_list_free (devices);
+    {
+      GUdevDevice *device = G_UDEV_DEVICE (l->data);
+      udisks_devices = g_list_prepend (udisks_devices, udisks_linux_device_new_sync (device));
+    }
+  udisks_devices = g_list_reverse (udisks_devices);
+
+  /* do two coldplug runs to handle dependencies between devices */
+  for (n = 0; n < 2; n++)
+    {
+      udisks_info ("Initialization (coldplug %d/2)", n + 1);
+      for (l = udisks_devices; l != NULL; l = l->next)
+        {
+          UDisksLinuxDevice *device = l->data;
+          udisks_linux_provider_handle_uevent (provider, "add", device);
+        }
+    }
+  g_list_free_full (devices, g_object_unref);
+  g_list_free_full (udisks_devices, g_object_unref);
+  udisks_info ("Initialization complete");
 
   /* schedule housekeeping for every 10 minutes */
   provider->housekeeping_timeout = g_timeout_add_seconds (10*60,
@@ -362,7 +492,6 @@ udisks_linux_provider_start (UDisksProvider *_provider)
                     G_CALLBACK (crypttab_monitor_on_entry_removed),
                     provider);
 }
-
 
 static void
 udisks_linux_provider_class_init (UDisksLinuxProviderClass *klass)
@@ -448,11 +577,143 @@ perform_initial_housekeeping_for_drive (GIOSchedulerJob *job,
   return FALSE; /* job is complete */
 }
 
+/* ---------------------------------------------------------------------------------------------------- */
+
+/* called with lock held */
+
+static void
+maybe_remove_mdraid_object (UDisksLinuxProvider     *provider,
+                            UDisksLinuxMDRaidObject *object)
+{
+  gchar *object_uuid = NULL;
+  UDisksDaemon *daemon = NULL;
+
+  /* remove the object only if there are no devices left */
+  if (udisks_linux_mdraid_object_have_devices (object))
+    goto out;
+
+  daemon = udisks_provider_get_daemon (UDISKS_PROVIDER (provider));
+
+  object_uuid = g_strdup (udisks_linux_mdraid_object_get_uuid (object));
+  g_dbus_object_manager_server_unexport (udisks_daemon_get_object_manager (daemon),
+                                         g_dbus_object_get_object_path (G_DBUS_OBJECT (object)));
+  g_warn_if_fail (g_hash_table_remove (provider->uuid_to_mdraid, object_uuid));
+
+ out:
+  g_free (object_uuid);
+}
+
+static void
+handle_block_uevent_for_mdraid_with_uuid (UDisksLinuxProvider *provider,
+                                          const gchar         *action,
+                                          UDisksLinuxDevice   *device,
+                                          const gchar         *uuid,
+                                          gboolean             is_member)
+{
+  UDisksLinuxMDRaidObject *object;
+  UDisksDaemon *daemon;
+  const gchar *sysfs_path;
+
+  daemon = udisks_provider_get_daemon (UDISKS_PROVIDER (provider));
+  sysfs_path = g_udev_device_get_sysfs_path (device->udev_device);
+
+  /* if uuid is NULL or bogus, consider it a remove event */
+  if (uuid == NULL || g_strcmp0 (uuid, "00000000:00000000:00000000:00000000") == 0)
+    action = "remove";
+
+  if (g_strcmp0 (action, "remove") == 0)
+    {
+      /* first check if this device was a member */
+      object = g_hash_table_lookup (provider->sysfs_path_to_mdraid_members, sysfs_path);
+      if (object != NULL)
+        {
+          udisks_linux_mdraid_object_uevent (object, action, device, TRUE /* is_member */);
+          g_warn_if_fail (g_hash_table_remove (provider->sysfs_path_to_mdraid_members, sysfs_path));
+          maybe_remove_mdraid_object (provider, object);
+        }
+
+      /* then check if the device was the raid device */
+      object = g_hash_table_lookup (provider->sysfs_path_to_mdraid, sysfs_path);
+      if (object != NULL)
+        {
+          udisks_linux_mdraid_object_uevent (object, action, device, FALSE /* is_member */);
+          g_warn_if_fail (g_hash_table_remove (provider->sysfs_path_to_mdraid, sysfs_path));
+          maybe_remove_mdraid_object (provider, object);
+        }
+    }
+  else
+    {
+      if (uuid == NULL)
+        goto out;
+
+      object = g_hash_table_lookup (provider->uuid_to_mdraid, uuid);
+      if (object != NULL)
+        {
+          if (is_member)
+            {
+              if (g_hash_table_lookup (provider->sysfs_path_to_mdraid_members, sysfs_path) == NULL)
+                g_hash_table_insert (provider->sysfs_path_to_mdraid_members, g_strdup (sysfs_path), object);
+            }
+          else
+            {
+              if (g_hash_table_lookup (provider->sysfs_path_to_mdraid, sysfs_path) == NULL)
+                g_hash_table_insert (provider->sysfs_path_to_mdraid, g_strdup (sysfs_path), object);
+            }
+          udisks_linux_mdraid_object_uevent (object, action, device, is_member);
+        }
+      else
+        {
+          object = udisks_linux_mdraid_object_new (daemon, uuid);
+          udisks_linux_mdraid_object_uevent (object, action, device, is_member);
+          g_dbus_object_manager_server_export_uniquely (udisks_daemon_get_object_manager (daemon),
+                                                        G_DBUS_OBJECT_SKELETON (object));
+          g_hash_table_insert (provider->uuid_to_mdraid, g_strdup (uuid), object);
+          if (is_member)
+            g_hash_table_insert (provider->sysfs_path_to_mdraid_members, g_strdup (sysfs_path), object);
+          else
+            g_hash_table_insert (provider->sysfs_path_to_mdraid, g_strdup (sysfs_path), object);
+        }
+    }
+
+ out:
+  ;
+}
+
+static void
+handle_block_uevent_for_mdraid (UDisksLinuxProvider *provider,
+                                const gchar         *action,
+                                UDisksLinuxDevice   *device)
+{
+  const gchar *uuid;
+  const gchar *member_uuid;
+
+  /* For nested RAID levels, a device can be both a member of one
+   * array and the RAID device for another. Therefore we need to
+   * consider both UUIDs.
+   *
+   * For removal, we also need to consider the case where there is no
+   * UUID.
+   */
+  uuid = g_udev_device_get_property (device->udev_device, "UDISKS_MD_UUID");
+  member_uuid = g_udev_device_get_property (device->udev_device, "UDISKS_MD_MEMBER_UUID");
+
+  if (uuid != NULL)
+    handle_block_uevent_for_mdraid_with_uuid (provider, action, device, uuid, FALSE);
+
+  if (member_uuid != NULL)
+    handle_block_uevent_for_mdraid_with_uuid (provider, action, device, member_uuid, TRUE);
+
+  if (uuid == NULL && member_uuid == NULL)
+    handle_block_uevent_for_mdraid_with_uuid (provider, action, device, NULL, FALSE);
+}
+
+/* ---------------------------------------------------------------------------------------------------- */
+
 /* called with lock held */
 static void
 handle_block_uevent_for_drive (UDisksLinuxProvider *provider,
                                const gchar         *action,
-                               GUdevDevice         *device)
+                               UDisksLinuxDevice   *device)
 {
   UDisksLinuxDriveObject *object;
   UDisksDaemon *daemon;
@@ -461,7 +722,7 @@ handle_block_uevent_for_drive (UDisksLinuxProvider *provider,
 
   vpd = NULL;
   daemon = udisks_provider_get_daemon (UDISKS_PROVIDER (provider));
-  sysfs_path = g_udev_device_get_sysfs_path (device);
+  sysfs_path = g_udev_device_get_sysfs_path (device->udev_device);
 
   if (g_strcmp0 (action, "remove") == 0)
     {
@@ -495,7 +756,7 @@ handle_block_uevent_for_drive (UDisksLinuxProvider *provider,
       if (vpd == NULL)
         {
           udisks_debug ("Ignoring block device %s with no serial or WWN",
-                        g_udev_device_get_sysfs_path (device));
+                        g_udev_device_get_sysfs_path (device->udev_device));
           goto out;
         }
       object = g_hash_table_lookup (provider->vpd_to_drive, vpd);
@@ -533,18 +794,20 @@ handle_block_uevent_for_drive (UDisksLinuxProvider *provider,
   g_free (vpd);
 }
 
+/* ---------------------------------------------------------------------------------------------------- */
+
 /* called with lock held */
 static void
 handle_block_uevent_for_block (UDisksLinuxProvider *provider,
                                const gchar         *action,
-                               GUdevDevice         *device)
+                               UDisksLinuxDevice   *device)
 {
   const gchar *sysfs_path;
   UDisksLinuxBlockObject *object;
   UDisksDaemon *daemon;
 
   daemon = udisks_provider_get_daemon (UDISKS_PROVIDER (provider));
-  sysfs_path = g_udev_device_get_sysfs_path (device);
+  sysfs_path = g_udev_device_get_sysfs_path (device->udev_device);
 
   if (g_strcmp0 (action, "remove") == 0)
     {
@@ -573,24 +836,32 @@ handle_block_uevent_for_block (UDisksLinuxProvider *provider,
     }
 }
 
+/* ---------------------------------------------------------------------------------------------------- */
+
 /* called with lock held */
 static void
 handle_block_uevent (UDisksLinuxProvider *provider,
                      const gchar         *action,
-                     GUdevDevice         *device)
+                     UDisksLinuxDevice   *device)
 {
-  /* We use the sysfs block device for both UDisksLinuxDriveObject and
-   * UDisksLinuxBlockObject objects. Ensure that drive objects are
-   * added before and removed after block objects.
+  /* We use the sysfs block device for all of
+   *
+   *  - UDisksLinuxDriveObject
+   *  - UDisksLinuxMDRaidObject
+   *  - UDisksLinuxBlockObject
+   *
+   * objects. Ensure that drive and mdraid objects are added before
+   * and removed after block objects.
    */
   if (g_strcmp0 (action, "remove") == 0)
     {
       handle_block_uevent_for_block (provider, action, device);
       handle_block_uevent_for_drive (provider, action, device);
+      handle_block_uevent_for_mdraid (provider, action, device);
     }
   else
     {
-      if (g_udev_device_get_property_as_boolean (device, "DM_UDEV_DISABLE_OTHER_RULES_FLAG"))
+      if (g_udev_device_get_property_as_boolean (device->udev_device, "DM_UDEV_DISABLE_OTHER_RULES_FLAG"))
         {
           /* Ignore the uevent if the device-mapper layer requests
            * that other rules ignore this uevent
@@ -603,6 +874,7 @@ handle_block_uevent (UDisksLinuxProvider *provider,
         }
       else
         {
+          handle_block_uevent_for_mdraid (provider, action, device);
           handle_block_uevent_for_drive (provider, action, device);
           handle_block_uevent_for_block (provider, action, device);
         }
@@ -611,7 +883,7 @@ handle_block_uevent (UDisksLinuxProvider *provider,
   if (g_strcmp0 (action, "add") != 0)
     {
       /* Possibly need to clean up */
-      udisks_cleanup_check (udisks_daemon_get_cleanup (udisks_provider_get_daemon (UDISKS_PROVIDER (provider))));
+      udisks_state_check (udisks_daemon_get_state (udisks_provider_get_daemon (UDISKS_PROVIDER (provider))));
     }
 }
 
@@ -619,7 +891,7 @@ handle_block_uevent (UDisksLinuxProvider *provider,
 static void
 udisks_linux_provider_handle_uevent (UDisksLinuxProvider *provider,
                                      const gchar         *action,
-                                     GUdevDevice         *device)
+                                     UDisksLinuxDevice   *device)
 {
   const gchar *subsystem;
 
@@ -627,9 +899,9 @@ udisks_linux_provider_handle_uevent (UDisksLinuxProvider *provider,
 
   udisks_debug ("uevent %s %s",
                 action,
-                g_udev_device_get_sysfs_path (device));
+                g_udev_device_get_sysfs_path (device->udev_device));
 
-  subsystem = g_udev_device_get_subsystem (device);
+  subsystem = g_udev_device_get_subsystem (device->udev_device);
   if (g_strcmp0 (subsystem, "block") == 0)
     {
       handle_block_uevent (provider, action, device);

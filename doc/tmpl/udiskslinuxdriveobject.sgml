@@ -96,6 +96,15 @@ UDisksLinuxDriveObject
 @Returns: 
 
 
+<!-- ##### FUNCTION udisks_linux_drive_object_get_siblings ##### -->
+<para>
+
+</para>
+
+@object: 
+@Returns: 
+
+
 <!-- ##### FUNCTION udisks_linux_drive_object_housekeeping ##### -->
 <para>
 

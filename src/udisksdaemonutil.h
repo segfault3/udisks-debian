@@ -91,6 +91,10 @@ gboolean udisks_daemon_util_on_same_seat (UDisksDaemon          *daemon,
                                           UDisksObject          *object,
                                           pid_t                  process);
 
+gchar *udisks_daemon_util_get_free_mdraid_device (void);
+
+guint16 udisks_ata_identify_get_word (const guchar *identify_data, guint word_number);
+
 G_END_DECLS
 
 #endif /* __UDISKS_DAEMON_UTIL_H__ */

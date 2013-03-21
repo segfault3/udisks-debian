@@ -58,7 +58,7 @@
                                                          <em class="parameter"><code><span class="type">GError</span> **error</code></em>);
 <span class="returnvalue">void</span>                <a class="link" href="UDisksLinuxDriveAta.html#udisks-linux-drive-ata-apply-configuration" title="udisks_linux_drive_ata_apply_configuration ()">udisks_linux_drive_ata_apply_configuration</a>
                                                         (<em class="parameter"><code><a class="link" href="UDisksLinuxDriveAta.html" title="UDisksLinuxDriveAta"><span class="type">UDisksLinuxDriveAta</span></a> *drive</code></em>,
-                                                         <em class="parameter"><code><a href="http://www.freedesktop.org/software/systemd/gudev/GUdevDevice.html"><span class="type">GUdevDevice</span></a> *device</code></em>,
+                                                         <em class="parameter"><code><a class="link" href="UDisksLinuxDevice.html" title="UDisksLinuxDevice"><span class="type">UDisksLinuxDevice</span></a> *device</code></em>,
                                                          <em class="parameter"><code><span class="type">GVariant</span> *configuration</code></em>);
 <span class="returnvalue">gboolean</span>            <a class="link" href="UDisksLinuxDriveAta.html#udisks-linux-drive-ata-secure-erase-sync" title="udisks_linux_drive_ata_secure_erase_sync ()">udisks_linux_drive_ata_secure_erase_sync</a>
                                                         (<em class="parameter"><code><a class="link" href="UDisksLinuxDriveAta.html" title="UDisksLinuxDriveAta"><span class="type">UDisksLinuxDriveAta</span></a> *drive</code></em>,
@@ -259,7 +259,7 @@ command.
 <a name="udisks-linux-drive-ata-apply-configuration"></a><h3>udisks_linux_drive_ata_apply_configuration ()</h3>
 <pre class="programlisting"><span class="returnvalue">void</span>                udisks_linux_drive_ata_apply_configuration
                                                         (<em class="parameter"><code><a class="link" href="UDisksLinuxDriveAta.html" title="UDisksLinuxDriveAta"><span class="type">UDisksLinuxDriveAta</span></a> *drive</code></em>,
-                                                         <em class="parameter"><code><a href="http://www.freedesktop.org/software/systemd/gudev/GUdevDevice.html"><span class="type">GUdevDevice</span></a> *device</code></em>,
+                                                         <em class="parameter"><code><a class="link" href="UDisksLinuxDevice.html" title="UDisksLinuxDevice"><span class="type">UDisksLinuxDevice</span></a> *device</code></em>,
                                                          <em class="parameter"><code><span class="type">GVariant</span> *configuration</code></em>);</pre>
 <p>
 Spawns a thread to apply <em class="parameter"><code>configuration</code></em> to <em class="parameter"><code>drive</code></em>, if any. Does not
@@ -277,7 +277,7 @@ wait for the thread to terminate.
 </tr>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>device</code></em> :</span></p></td>
-<td>A <a href="http://www.freedesktop.org/software/systemd/gudev/GUdevDevice.html"><span class="type">GUdevDevice</span></a>
+<td>A <a class="link" href="UDisksLinuxDevice.html" title="UDisksLinuxDevice"><span class="type">UDisksLinuxDevice</span></a>
 </td>
 </tr>
 <tr>

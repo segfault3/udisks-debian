@@ -27,17 +27,17 @@
 #include "udiskslinuxprovider.h"
 #include "udisksmountmonitor.h"
 #include "udisksmount.h"
-#include "udiskspersistentstore.h"
 #include "udisksbasejob.h"
 #include "udisksspawnedjob.h"
 #include "udisksthreadedjob.h"
 #include "udiskssimplejob.h"
-#include "udiskscleanup.h"
+#include "udisksstate.h"
 #include "udisksfstabmonitor.h"
 #include "udisksfstabentry.h"
 #include "udiskscrypttabmonitor.h"
 #include "udiskscrypttabentry.h"
 #include "udiskslinuxblockobject.h"
+#include "udiskslinuxdevice.h"
 
 /**
  * SECTION:udisksdaemon
@@ -63,14 +63,12 @@ struct _UDisksDaemon
 
   UDisksMountMonitor *mount_monitor;
 
-  UDisksPersistentStore *persistent_store;
-
   UDisksLinuxProvider *linux_provider;
 
   /* may be NULL if polkit is masked */
   PolkitAuthority *authority;
 
-  UDisksCleanup *cleanup;
+  UDisksState *state;
 
   UDisksFstabMonitor *fstab_monitor;
 
@@ -99,11 +97,10 @@ udisks_daemon_finalize (GObject *object)
 {
   UDisksDaemon *daemon = UDISKS_DAEMON (object);
 
-  udisks_cleanup_stop (daemon->cleanup);
-  g_object_unref (daemon->cleanup);
+  udisks_state_stop_cleanup (daemon->state);
+  g_object_unref (daemon->state);
 
   g_clear_object (&daemon->authority);
-  g_object_unref (daemon->persistent_store);
   g_object_unref (daemon->object_manager);
   g_object_unref (daemon->linux_provider);
   g_object_unref (daemon->mount_monitor);
@@ -183,7 +180,7 @@ mount_monitor_on_mount_removed (UDisksMountMonitor *monitor,
                                 gpointer            user_data)
 {
   UDisksDaemon *daemon = UDISKS_DAEMON (user_data);
-  udisks_cleanup_check (daemon->cleanup);
+  udisks_state_check (daemon->state);
 }
 
 static void
@@ -221,10 +218,7 @@ udisks_daemon_constructed (GObject *object)
 
   daemon->mount_monitor = udisks_mount_monitor_new ();
 
-  daemon->persistent_store = udisks_persistent_store_new (PACKAGE_LOCALSTATE_DIR "/lib/udisks2",
-                                                          "/run/udisks2");
-
-  daemon->cleanup = udisks_cleanup_new (daemon);
+  daemon->state = udisks_state_new (daemon);
 
   g_signal_connect (daemon->mount_monitor,
                     "mount-removed",
@@ -243,8 +237,8 @@ udisks_daemon_constructed (GObject *object)
   g_dbus_object_manager_server_set_connection (daemon->object_manager, daemon->connection);
 
   /* Start cleaning up */
-  udisks_cleanup_start (daemon->cleanup);
-  udisks_cleanup_check (daemon->cleanup);
+  udisks_state_start_cleanup (daemon->state);
+  udisks_state_check (daemon->state);
 
   if (G_OBJECT_CLASS (udisks_daemon_parent_class)->constructed != NULL)
     G_OBJECT_CLASS (udisks_daemon_parent_class)->constructed (object);
@@ -415,21 +409,6 @@ udisks_daemon_get_linux_provider (UDisksDaemon *daemon)
 }
 
 /**
- * udisks_daemon_get_persistent_store:
- * @daemon: A #UDisksDaemon.
- *
- * Gets the object used to store persistent data
- *
- * Returns: A #UDisksPersistentStore. Do not free, the object is owned by @daemon.
- */
-UDisksPersistentStore *
-udisks_daemon_get_persistent_store (UDisksDaemon *daemon)
-{
-  g_return_val_if_fail (UDISKS_IS_DAEMON (daemon), NULL);
-  return daemon->persistent_store;
-}
-
-/**
  * udisks_daemon_get_authority:
  * @daemon: A #UDisksDaemon.
  *
@@ -447,18 +426,18 @@ udisks_daemon_get_authority (UDisksDaemon *daemon)
 }
 
 /**
- * udisks_daemon_get_cleanup:
+ * udisks_daemon_get_state:
  * @daemon: A #UDisksDaemon.
  *
- * Gets the cleanup object used by @daemon.
+ * Gets the state object used by @daemon.
  *
- * Returns: A #UDisksCleanup instance. Do not free, the object is owned by @daemon.
+ * Returns: A #UDisksState instance. Do not free, the object is owned by @daemon.
  */
-UDisksCleanup *
-udisks_daemon_get_cleanup (UDisksDaemon *daemon)
+UDisksState *
+udisks_daemon_get_state (UDisksDaemon *daemon)
 {
   g_return_val_if_fail (UDISKS_IS_DAEMON (daemon), NULL);
-  return daemon->cleanup;
+  return daemon->state;
 }
 
 /* ---------------------------------------------------------------------------------------------------- */
@@ -1059,7 +1038,7 @@ udisks_daemon_find_block_by_sysfs_path (UDisksDaemon *daemon,
   for (l = objects; l != NULL; l = l->next)
     {
       UDisksObject *object = UDISKS_OBJECT (l->data);
-      GUdevDevice *device;
+      UDisksLinuxDevice *device;
 
       if (!UDISKS_IS_LINUX_BLOCK_OBJECT (object))
         continue;
@@ -1068,7 +1047,7 @@ udisks_daemon_find_block_by_sysfs_path (UDisksDaemon *daemon,
       if (device == NULL)
         continue;
 
-      if (g_strcmp0 (g_udev_device_get_sysfs_path (device), sysfs_path) == 0)
+      if (g_strcmp0 (g_udev_device_get_sysfs_path (device->udev_device), sysfs_path) == 0)
         {
           g_object_unref (device);
           ret = g_object_ref (object);
@@ -1114,216 +1093,4 @@ udisks_daemon_get_objects (UDisksDaemon *daemon)
   return g_dbus_object_manager_get_objects (G_DBUS_OBJECT_MANAGER (daemon->object_manager));
 }
 
-
 /* ---------------------------------------------------------------------------------------------------- */
-
-#if 0
-
-/* ---------------------------------------------------------------------------------------------------- */
-
-/*
- * The 'mounted-fs' persistent value has type a{sa{sv}} and is a dict
- * from mount_point (e.g. /media/smallfs) into a set of details. Known
- * details include
- *
- *   block-device-file: a byte-string with the block device that is mounted at the given location
- *   mounted-by-uid:    an uint32 with the uid of the user who mounted the device
- */
-
-static gboolean
-mounted_fs_entry_is_valid (UDisksDaemon   *daemon,
-                           GVariant       *value)
-{
-  const gchar *mount_point;
-  GVariant *details = NULL;
-  GVariant *block_device_file_value = NULL;
-  const gchar *block_device_file;
-  gboolean ret;
-  gchar *s;
-  struct stat statbuf;
-  GList *mounts;
-  GList *l;
-  gboolean found_mount;
-
-  //udisks_daemon_log (daemon->daemon, UDISKS_LOG_LEVEL_DEBUG, "TODO: validate %s", g_variant_print (value, TRUE));
-
-  ret = FALSE;
-  g_variant_get (value,
-                 "{&s@a{sv}}",
-                 &mount_point,
-                 &details);
-
-  /* Don't consider entries being unmounted right now */
-  if (g_hash_table_lookup (daemon->currently_unmounting, mount_point) != NULL)
-    {
-      ret = TRUE;
-      goto out;
-    }
-
-  block_device_file_value = lookup_asv (details, "block-device-file");
-  if (block_device_file_value == NULL)
-    {
-      s = g_variant_print (value, TRUE);
-      udisks_info ("mounted-fs entry %s is invalid: no block-device-file key/value pair", s);
-      g_free (s);
-      goto out;
-    }
-
-  block_device_file = g_variant_get_bytestring (block_device_file_value);
-  if (stat (block_device_file, &statbuf) != 0)
-    {
-      s = g_variant_print (value, TRUE);
-      udisks_info ("mounted-fs entry %s is invalid: error statting block-device-file %s: %m",
-                   s, block_device_file);
-      g_free (s);
-      goto out;
-    }
-  if (!S_ISBLK (statbuf.st_mode))
-    {
-      s = g_variant_print (value, TRUE);
-      udisks_info ("mounted-fs entry %s is invalid: block-device-file %s is not a block device",
-                   s, block_device_file);
-      g_free (s);
-      goto out;
-    }
-
-  found_mount = FALSE;
-  mounts = udisks_mount_monitor_get_mounts_for_dev (daemon->mount_monitor, statbuf.st_rdev);
-  for (l = mounts; l != NULL; l = l->next)
-    {
-      UDisksMount *mount = UDISKS_MOUNT (l->data);
-      if (udisks_mount_get_mount_type (mount) == UDISKS_MOUNT_TYPE_FILESYSTEM &&
-          g_strcmp0 (udisks_mount_get_mount_path (mount), mount_point) == 0)
-        {
-          found_mount = TRUE;
-          break;
-        }
-    }
-  g_list_foreach (mounts, (GFunc) g_object_unref, NULL);
-  g_list_free (mounts);
-
-  if (!found_mount)
-    {
-      s = g_variant_print (value, TRUE);
-      udisks_info ("mounted-fs entry %s is invalid: block-device-file %s is not mounted at %s",
-                   s,
-                   block_device_file,
-                   mount_point);
-      g_free (s);
-      goto out;
-    }
-
-  /* OK, entry is valid */
-  ret = TRUE;
-
- out:
-  /* TODO:unmount (if still mounted) and clean up mount point if entry was invalid */
-  if (!ret)
-    {
-      g_assert (g_str_has_prefix (mount_point, "/media"));
-      /* but only if the directory actually exists (user might have manually cleaned it up etc.) */
-      if (g_file_test (mount_point, G_FILE_TEST_EXISTS | G_FILE_TEST_IS_DIR))
-        {
-          if (g_rmdir (mount_point) != 0)
-            {
-              udisks_error ("Error cleaning up mount point %s: Error removing directory: %m",
-                            mount_point);
-            }
-          else
-            {
-              udisks_notice ("Cleaned up mount point %s since %s is no longer mounted on it",
-                             mount_point, block_device_file);
-            }
-        }
-    }
-
-  if (block_device_file_value != NULL)
-    g_variant_unref (block_device_file_value);
-  if (details != NULL)
-    g_variant_unref (details);
-  return ret;
-}
-
-/**
- * udisks_daemon_mounted_fs_cleanup:
- * @daemon: A #UDisksDaemon.
- *
- * Cleans up stale entries and mount points.
- */
-void
-udisks_daemon_mounted_fs_cleanup (UDisksDaemon *daemon)
-{
-  gboolean changed;
-  GVariant *value;
-  GVariant *new_value;
-  GVariantBuilder builder;
-  GError *error;
-
-  udisks_debug ("Ensuring the mounted-fs file has no stale entries");
-
-  changed = FALSE;
-
-  /* load existing entries */
-  error = NULL;
-  value = udisks_persistent_store_get (daemon->persistent_store,
-                                       UDISKS_PERSISTENT_FLAGS_NORMAL_STORE,
-                                       "mounted-fs",
-                                       G_VARIANT_TYPE ("a{sa{sv}}"),
-                                       &error);
-  if (error != NULL)
-    {
-      udisks_warning ("Error getting mounted-fs: %s (%s, %d)",
-                      error->message, g_quark_to_string (error->domain), error->code);
-      g_error_free (error);
-      goto out;
-    }
-
-  /* include valid entries */
-  g_variant_builder_init (&builder, G_VARIANT_TYPE ("a{sa{sv}}"));
-  if (value != NULL)
-    {
-      GVariantIter iter;
-      GVariant *child;
-      g_variant_iter_init (&iter, value);
-      while ((child = g_variant_iter_next_value (&iter)) != NULL)
-        {
-          if (mounted_fs_entry_is_valid (daemon, child))
-            g_variant_builder_add_value (&builder, child);
-          else
-            changed = TRUE;
-          g_variant_unref (child);
-        }
-      g_variant_unref (value);
-    }
-
-  new_value = g_variant_builder_end (&builder);
-
-  /* save new entries */
-  if (changed)
-    {
-      error = NULL;
-      if (!udisks_persistent_store_set (daemon->persistent_store,
-                                        UDISKS_PERSISTENT_FLAGS_NORMAL_STORE,
-                                        "mounted-fs",
-                                        G_VARIANT_TYPE ("a{sa{sv}}"),
-                                        new_value, /* consumes new_value */
-                                        &error))
-        {
-          udisks_warning ("Error setting mounted-fs: %s (%s, %d)",
-                          error->message,
-                          g_quark_to_string (error->domain),
-                          error->code);
-          g_error_free (error);
-          goto out;
-        }
-    }
-  else
-    {
-      g_variant_unref (new_value);
-    }
-
- out:
-  ;
-}
-
-#endif

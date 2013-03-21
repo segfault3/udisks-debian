@@ -1,0 +1,371 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>UDisksObjectInfo</title>
+<meta name="generator" content="DocBook XSL Stylesheets V1.77.1">
+<link rel="home" href="index.html" title="UDisks Reference Manual">
+<link rel="up" href="ref-library.html" title="Part III. Library API Reference">
+<link rel="prev" href="UDisksClient.html" title="UDisksClient">
+<link rel="next" href="udisks2-UDisksError.html" title="UDisksError">
+<meta name="generator" content="GTK-Doc V1.18 (XML mode)">
+<link rel="stylesheet" href="style.css" type="text/css">
+</head>
+<body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
+<table class="navigation" id="top" width="100%" summary="Navigation header" cellpadding="2" cellspacing="2">
+<tr valign="middle">
+<td><a accesskey="p" href="UDisksClient.html"><img src="left.png" width="24" height="24" border="0" alt="Prev"></a></td>
+<td><a accesskey="u" href="ref-library.html"><img src="up.png" width="24" height="24" border="0" alt="Up"></a></td>
+<td><a accesskey="h" href="index.html"><img src="home.png" width="24" height="24" border="0" alt="Home"></a></td>
+<th width="100%" align="center">UDisks Reference Manual</th>
+<td><a accesskey="n" href="udisks2-UDisksError.html"><img src="right.png" width="24" height="24" border="0" alt="Next"></a></td>
+</tr>
+<tr><td colspan="5" class="shortcuts">
+<a href="#UDisksObjectInfo.synopsis" class="shortcut">Top</a>
+                   | 
+                  <a href="#UDisksObjectInfo.description" class="shortcut">Description</a>
+                   | 
+                  <a href="#UDisksObjectInfo.object-hierarchy" class="shortcut">Object Hierarchy</a>
+</td></tr>
+</table>
+<div class="refentry">
+<a name="UDisksObjectInfo"></a><div class="titlepage"></div>
+<div class="refnamediv"><table width="100%"><tr>
+<td valign="top">
+<h2><span class="refentrytitle"><a name="UDisksObjectInfo.top_of_page"></a>UDisksObjectInfo</span></h2>
+<p>UDisksObjectInfo — Detailed information about objects</p>
+</td>
+<td valign="top" align="right"></td>
+</tr></table></div>
+<div class="refsynopsisdiv">
+<a name="UDisksObjectInfo.synopsis"></a><h2>Synopsis</h2>
+<pre class="synopsis">                    <a class="link" href="UDisksObjectInfo.html#UDisksObjectInfo-struct" title="UDisksObjectInfo">UDisksObjectInfo</a>;
+<a class="link" href="UDisksObject.html" title="UDisksObject"><span class="returnvalue">UDisksObject</span></a> *      <a class="link" href="UDisksObjectInfo.html#udisks-object-info-get-object" title="udisks_object_info_get_object ()">udisks_object_info_get_object</a>       (<em class="parameter"><code><a class="link" href="UDisksObjectInfo.html" title="UDisksObjectInfo"><span class="type">UDisksObjectInfo</span></a> *info</code></em>);
+const <span class="returnvalue">gchar</span> *       <a class="link" href="UDisksObjectInfo.html#udisks-object-info-get-name" title="udisks_object_info_get_name ()">udisks_object_info_get_name</a>         (<em class="parameter"><code><a class="link" href="UDisksObjectInfo.html" title="UDisksObjectInfo"><span class="type">UDisksObjectInfo</span></a> *info</code></em>);
+const <span class="returnvalue">gchar</span> *       <a class="link" href="UDisksObjectInfo.html#udisks-object-info-get-description" title="udisks_object_info_get_description ()">udisks_object_info_get_description</a>  (<em class="parameter"><code><a class="link" href="UDisksObjectInfo.html" title="UDisksObjectInfo"><span class="type">UDisksObjectInfo</span></a> *info</code></em>);
+<span class="returnvalue">GIcon</span> *             <a class="link" href="UDisksObjectInfo.html#udisks-object-info-get-icon" title="udisks_object_info_get_icon ()">udisks_object_info_get_icon</a>         (<em class="parameter"><code><a class="link" href="UDisksObjectInfo.html" title="UDisksObjectInfo"><span class="type">UDisksObjectInfo</span></a> *info</code></em>);
+<span class="returnvalue">GIcon</span> *             <a class="link" href="UDisksObjectInfo.html#udisks-object-info-get-icon-symbolic" title="udisks_object_info_get_icon_symbolic ()">udisks_object_info_get_icon_symbolic</a>
+                                                        (<em class="parameter"><code><a class="link" href="UDisksObjectInfo.html" title="UDisksObjectInfo"><span class="type">UDisksObjectInfo</span></a> *info</code></em>);
+const <span class="returnvalue">gchar</span> *       <a class="link" href="UDisksObjectInfo.html#udisks-object-info-get-media-description" title="udisks_object_info_get_media_description ()">udisks_object_info_get_media_description</a>
+                                                        (<em class="parameter"><code><a class="link" href="UDisksObjectInfo.html" title="UDisksObjectInfo"><span class="type">UDisksObjectInfo</span></a> *info</code></em>);
+<span class="returnvalue">GIcon</span> *             <a class="link" href="UDisksObjectInfo.html#udisks-object-info-get-media-icon" title="udisks_object_info_get_media_icon ()">udisks_object_info_get_media_icon</a>   (<em class="parameter"><code><a class="link" href="UDisksObjectInfo.html" title="UDisksObjectInfo"><span class="type">UDisksObjectInfo</span></a> *info</code></em>);
+<span class="returnvalue">GIcon</span> *             <a class="link" href="UDisksObjectInfo.html#udisks-object-info-get-media-icon-symbolic" title="udisks_object_info_get_media_icon_symbolic ()">udisks_object_info_get_media_icon_symbolic</a>
+                                                        (<em class="parameter"><code><a class="link" href="UDisksObjectInfo.html" title="UDisksObjectInfo"><span class="type">UDisksObjectInfo</span></a> *info</code></em>);
+const <span class="returnvalue">gchar</span> *       <a class="link" href="UDisksObjectInfo.html#udisks-object-info-get-one-liner" title="udisks_object_info_get_one_liner ()">udisks_object_info_get_one_liner</a>    (<em class="parameter"><code><a class="link" href="UDisksObjectInfo.html" title="UDisksObjectInfo"><span class="type">UDisksObjectInfo</span></a> *info</code></em>);
+const <span class="returnvalue">gchar</span> *       <a class="link" href="UDisksObjectInfo.html#udisks-object-info-get-sort-key" title="udisks_object_info_get_sort_key ()">udisks_object_info_get_sort_key</a>     (<em class="parameter"><code><a class="link" href="UDisksObjectInfo.html" title="UDisksObjectInfo"><span class="type">UDisksObjectInfo</span></a> *info</code></em>);
+</pre>
+</div>
+<div class="refsect1">
+<a name="UDisksObjectInfo.object-hierarchy"></a><h2>Object Hierarchy</h2>
+<pre class="synopsis">
+  GObject
+   +----UDisksObjectInfo
+</pre>
+</div>
+<div class="refsect1">
+<a name="UDisksObjectInfo.description"></a><h2>Description</h2>
+<p>
+Detailed information about the D-Bus interfaces (such as
+<a class="link" href="UDisksBlock.html" title="UDisksBlock"><span class="type">UDisksBlock</span></a> and <a class="link" href="UDisksDrive.html" title="UDisksDrive"><span class="type">UDisksDrive</span></a>) on a <a class="link" href="UDisksObject.html" title="UDisksObject"><span class="type">UDisksObject</span></a> that is suitable
+to display in an user interface. Use
+<a class="link" href="UDisksClient.html#udisks-client-get-object-info" title="udisks_client_get_object_info ()"><code class="function">udisks_client_get_object_info()</code></a> to get <a class="link" href="UDisksObjectInfo.html" title="UDisksObjectInfo"><span class="type">UDisksObjectInfo</span></a> objects.
+Note that <a class="link" href="UDisksObjectInfo.html" title="UDisksObjectInfo"><span class="type">UDisksObjectInfo</span></a> is an immutable object; once it has
+been created it cannot be modified further.
+</p>
+<p>
+The <a class="link" href="gdbus-org.freedesktop.UDisks2.Block.html#gdbus-property-org-freedesktop-UDisks2-Block.HintName" title='The "HintName" property'>HintName</a>
+and/or <a class="link" href="gdbus-org.freedesktop.UDisks2.Block.html#gdbus-property-org-freedesktop-UDisks2-Block.HintName" title='The "HintName" property'>HintIconName</a>
+propreties on associated <a class="link" href="UDisksBlock.html" title="UDisksBlock"><span class="type">UDisksBlock</span></a> interfaces (if any) may
+influence what <a class="link" href="UDisksObjectInfo.html#udisks-object-info-get-icon" title="udisks_object_info_get_icon ()"><code class="function">udisks_object_info_get_icon()</code></a> and
+<a class="link" href="UDisksObjectInfo.html#udisks-object-info-get-media-icon" title="udisks_object_info_get_media_icon ()"><code class="function">udisks_object_info_get_media_icon()</code></a> returns.
+</p>
+<p>
+The value return by <a class="link" href="UDisksObjectInfo.html#udisks-object-info-get-one-liner" title="udisks_object_info_get_one_liner ()"><code class="function">udisks_object_info_get_one_liner()</code></a> is designed
+to contain enough information such that it is all that needs to be
+shown about the object. As a result for e.g.  block devices or
+drives it contains the special device device
+e.g. <code class="filename">/dev/sda</code>.
+</p>
+</div>
+<div class="refsect1">
+<a name="UDisksObjectInfo.details"></a><h2>Details</h2>
+<div class="refsect2">
+<a name="UDisksObjectInfo-struct"></a><h3>UDisksObjectInfo</h3>
+<pre class="programlisting">typedef struct _UDisksObjectInfo UDisksObjectInfo;</pre>
+<p>
+The <a class="link" href="UDisksObjectInfo.html" title="UDisksObjectInfo"><span class="type">UDisksObjectInfo</span></a> structure contains only private data and
+should only be accessed using the provided API.
+</p>
+<p class="since">Since 2.1</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="udisks-object-info-get-object"></a><h3>udisks_object_info_get_object ()</h3>
+<pre class="programlisting"><a class="link" href="UDisksObject.html" title="UDisksObject"><span class="returnvalue">UDisksObject</span></a> *      udisks_object_info_get_object       (<em class="parameter"><code><a class="link" href="UDisksObjectInfo.html" title="UDisksObjectInfo"><span class="type">UDisksObjectInfo</span></a> *info</code></em>);</pre>
+<p>
+Gets the <a class="link" href="UDisksObject.html" title="UDisksObject"><span class="type">UDisksObject</span></a> that <em class="parameter"><code>info</code></em> is for
+</p>
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
+<col align="left" valign="top">
+<col>
+</colgroup>
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>info</code></em> :</span></p></td>
+<td>A <a class="link" href="UDisksObjectInfo.html" title="UDisksObjectInfo"><span class="type">UDisksObjectInfo</span></a>.</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td>The object - do not free or unref, the reference belongs to <em class="parameter"><code>info</code></em>. <span class="annotation">[<a href="http://foldoc.org/transfer%20none"><span class="acronym">transfer none</span></a>]</span>
+</td>
+</tr>
+</tbody>
+</table></div>
+<p class="since">Since 2.1</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="udisks-object-info-get-name"></a><h3>udisks_object_info_get_name ()</h3>
+<pre class="programlisting">const <span class="returnvalue">gchar</span> *       udisks_object_info_get_name         (<em class="parameter"><code><a class="link" href="UDisksObjectInfo.html" title="UDisksObjectInfo"><span class="type">UDisksObjectInfo</span></a> *info</code></em>);</pre>
+<p>
+Gets the name.
+</p>
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
+<col align="left" valign="top">
+<col>
+</colgroup>
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>info</code></em> :</span></p></td>
+<td>A <a class="link" href="UDisksObjectInfo.html" title="UDisksObjectInfo"><span class="type">UDisksObjectInfo</span></a>.</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td>The value or <code class="literal">NULL</code>. Do not free or unref, the value belongs to <em class="parameter"><code>info</code></em>. <span class="annotation">[<a href="http://foldoc.org/transfer%20none"><span class="acronym">transfer none</span></a>]</span>
+</td>
+</tr>
+</tbody>
+</table></div>
+<p class="since">Since 2.1</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="udisks-object-info-get-description"></a><h3>udisks_object_info_get_description ()</h3>
+<pre class="programlisting">const <span class="returnvalue">gchar</span> *       udisks_object_info_get_description  (<em class="parameter"><code><a class="link" href="UDisksObjectInfo.html" title="UDisksObjectInfo"><span class="type">UDisksObjectInfo</span></a> *info</code></em>);</pre>
+<p>
+Gets the description.
+</p>
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
+<col align="left" valign="top">
+<col>
+</colgroup>
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>info</code></em> :</span></p></td>
+<td>A <a class="link" href="UDisksObjectInfo.html" title="UDisksObjectInfo"><span class="type">UDisksObjectInfo</span></a>.</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td>The value or <code class="literal">NULL</code>. Do not free or unref, the value belongs to <em class="parameter"><code>info</code></em>. <span class="annotation">[<a href="http://foldoc.org/transfer%20none"><span class="acronym">transfer none</span></a>]</span>
+</td>
+</tr>
+</tbody>
+</table></div>
+<p class="since">Since 2.1</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="udisks-object-info-get-icon"></a><h3>udisks_object_info_get_icon ()</h3>
+<pre class="programlisting"><span class="returnvalue">GIcon</span> *             udisks_object_info_get_icon         (<em class="parameter"><code><a class="link" href="UDisksObjectInfo.html" title="UDisksObjectInfo"><span class="type">UDisksObjectInfo</span></a> *info</code></em>);</pre>
+<p>
+Gets the icon.
+</p>
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
+<col align="left" valign="top">
+<col>
+</colgroup>
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>info</code></em> :</span></p></td>
+<td>A <a class="link" href="UDisksObjectInfo.html" title="UDisksObjectInfo"><span class="type">UDisksObjectInfo</span></a>.</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td>The value or <code class="literal">NULL</code>. Do not free or unref, the value belongs to <em class="parameter"><code>info</code></em>. <span class="annotation">[<a href="http://foldoc.org/transfer%20none"><span class="acronym">transfer none</span></a>]</span>
+</td>
+</tr>
+</tbody>
+</table></div>
+<p class="since">Since 2.1</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="udisks-object-info-get-icon-symbolic"></a><h3>udisks_object_info_get_icon_symbolic ()</h3>
+<pre class="programlisting"><span class="returnvalue">GIcon</span> *             udisks_object_info_get_icon_symbolic
+                                                        (<em class="parameter"><code><a class="link" href="UDisksObjectInfo.html" title="UDisksObjectInfo"><span class="type">UDisksObjectInfo</span></a> *info</code></em>);</pre>
+<p>
+Gets the symbolic icon.
+</p>
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
+<col align="left" valign="top">
+<col>
+</colgroup>
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>info</code></em> :</span></p></td>
+<td>A <a class="link" href="UDisksObjectInfo.html" title="UDisksObjectInfo"><span class="type">UDisksObjectInfo</span></a>.</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td>The value or <code class="literal">NULL</code>. Do not free or unref, the value belongs to <em class="parameter"><code>info</code></em>. <span class="annotation">[<a href="http://foldoc.org/transfer%20none"><span class="acronym">transfer none</span></a>]</span>
+</td>
+</tr>
+</tbody>
+</table></div>
+<p class="since">Since 2.1</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="udisks-object-info-get-media-description"></a><h3>udisks_object_info_get_media_description ()</h3>
+<pre class="programlisting">const <span class="returnvalue">gchar</span> *       udisks_object_info_get_media_description
+                                                        (<em class="parameter"><code><a class="link" href="UDisksObjectInfo.html" title="UDisksObjectInfo"><span class="type">UDisksObjectInfo</span></a> *info</code></em>);</pre>
+<p>
+Gets the media description.
+</p>
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
+<col align="left" valign="top">
+<col>
+</colgroup>
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>info</code></em> :</span></p></td>
+<td>A <a class="link" href="UDisksObjectInfo.html" title="UDisksObjectInfo"><span class="type">UDisksObjectInfo</span></a>.</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td>The value or <code class="literal">NULL</code>. Do not free or unref, the value belongs to <em class="parameter"><code>info</code></em>. <span class="annotation">[<a href="http://foldoc.org/transfer%20none"><span class="acronym">transfer none</span></a>]</span>
+</td>
+</tr>
+</tbody>
+</table></div>
+<p class="since">Since 2.1</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="udisks-object-info-get-media-icon"></a><h3>udisks_object_info_get_media_icon ()</h3>
+<pre class="programlisting"><span class="returnvalue">GIcon</span> *             udisks_object_info_get_media_icon   (<em class="parameter"><code><a class="link" href="UDisksObjectInfo.html" title="UDisksObjectInfo"><span class="type">UDisksObjectInfo</span></a> *info</code></em>);</pre>
+<p>
+Gets the media icon.
+</p>
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
+<col align="left" valign="top">
+<col>
+</colgroup>
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>info</code></em> :</span></p></td>
+<td>A <a class="link" href="UDisksObjectInfo.html" title="UDisksObjectInfo"><span class="type">UDisksObjectInfo</span></a>.</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td>The value or <code class="literal">NULL</code>. Do not free or unref, the value belongs to <em class="parameter"><code>info</code></em>. <span class="annotation">[<a href="http://foldoc.org/transfer%20none"><span class="acronym">transfer none</span></a>]</span>
+</td>
+</tr>
+</tbody>
+</table></div>
+<p class="since">Since 2.1</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="udisks-object-info-get-media-icon-symbolic"></a><h3>udisks_object_info_get_media_icon_symbolic ()</h3>
+<pre class="programlisting"><span class="returnvalue">GIcon</span> *             udisks_object_info_get_media_icon_symbolic
+                                                        (<em class="parameter"><code><a class="link" href="UDisksObjectInfo.html" title="UDisksObjectInfo"><span class="type">UDisksObjectInfo</span></a> *info</code></em>);</pre>
+<p>
+Gets the symbolic media icon.
+</p>
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
+<col align="left" valign="top">
+<col>
+</colgroup>
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>info</code></em> :</span></p></td>
+<td>A <a class="link" href="UDisksObjectInfo.html" title="UDisksObjectInfo"><span class="type">UDisksObjectInfo</span></a>.</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td>The value or <code class="literal">NULL</code>. Do not free or unref, the value belongs to <em class="parameter"><code>info</code></em>. <span class="annotation">[<a href="http://foldoc.org/transfer%20none"><span class="acronym">transfer none</span></a>]</span>
+</td>
+</tr>
+</tbody>
+</table></div>
+<p class="since">Since 2.1</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="udisks-object-info-get-one-liner"></a><h3>udisks_object_info_get_one_liner ()</h3>
+<pre class="programlisting">const <span class="returnvalue">gchar</span> *       udisks_object_info_get_one_liner    (<em class="parameter"><code><a class="link" href="UDisksObjectInfo.html" title="UDisksObjectInfo"><span class="type">UDisksObjectInfo</span></a> *info</code></em>);</pre>
+<p>
+Gets a one-line description.
+</p>
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
+<col align="left" valign="top">
+<col>
+</colgroup>
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>info</code></em> :</span></p></td>
+<td>A <a class="link" href="UDisksObjectInfo.html" title="UDisksObjectInfo"><span class="type">UDisksObjectInfo</span></a>.</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td>The value or <code class="literal">NULL</code>. Do not free or unref, the value belongs to <em class="parameter"><code>info</code></em>. <span class="annotation">[<a href="http://foldoc.org/transfer%20none"><span class="acronym">transfer none</span></a>]</span>
+</td>
+</tr>
+</tbody>
+</table></div>
+<p class="since">Since 2.1</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="udisks-object-info-get-sort-key"></a><h3>udisks_object_info_get_sort_key ()</h3>
+<pre class="programlisting">const <span class="returnvalue">gchar</span> *       udisks_object_info_get_sort_key     (<em class="parameter"><code><a class="link" href="UDisksObjectInfo.html" title="UDisksObjectInfo"><span class="type">UDisksObjectInfo</span></a> *info</code></em>);</pre>
+<p>
+Gets the sort-key for <em class="parameter"><code>info</code></em>. This can be used with <code class="function">g_strcmp0()</code> to
+sort objects.
+</p>
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
+<col align="left" valign="top">
+<col>
+</colgroup>
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>info</code></em> :</span></p></td>
+<td>A <a class="link" href="UDisksObjectInfo.html" title="UDisksObjectInfo"><span class="type">UDisksObjectInfo</span></a>.</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td>The sort key or <code class="literal">NULL</code>. Do not free or unref, the value belongs to <em class="parameter"><code>info</code></em>. <span class="annotation">[<a href="http://foldoc.org/transfer%20none"><span class="acronym">transfer none</span></a>]</span>
+</td>
+</tr>
+</tbody>
+</table></div>
+<p class="since">Since 2.1</p>
+</div>
+</div>
+</div>
+<div class="footer">
+<hr>
+          Generated by GTK-Doc V1.18</div>
+</body>
+</html>

@@ -93,6 +93,10 @@ typedef             <a class="link" href="udisks2-Utilities.html#UDisksInhibitCo
 <span class="returnvalue">gboolean</span>            <a class="link" href="udisks2-Utilities.html#udisks-daemon-util-on-same-seat" title="udisks_daemon_util_on_same_seat ()">udisks_daemon_util_on_same_seat</a>     (<em class="parameter"><code><a class="link" href="UDisksDaemon.html" title="UDisksDaemon"><span class="type">UDisksDaemon</span></a> *daemon</code></em>,
                                                          <em class="parameter"><code><a class="link" href="UDisksObject.html" title="UDisksObject"><span class="type">UDisksObject</span></a> *object</code></em>,
                                                          <em class="parameter"><code><span class="type">pid_t</span> process</code></em>);
+<span class="returnvalue">gchar</span> *             <a class="link" href="udisks2-Utilities.html#udisks-daemon-util-get-free-mdraid-device" title="udisks_daemon_util_get_free_mdraid_device ()">udisks_daemon_util_get_free_mdraid_device</a>
+                                                        (<em class="parameter"><code><span class="type">void</span></code></em>);
+<span class="returnvalue">guint16</span>             <a class="link" href="udisks2-Utilities.html#udisks-ata-identify-get-word" title="udisks_ata_identify_get_word ()">udisks_ata_identify_get_word</a>        (<em class="parameter"><code>const <span class="type">guchar</span> *identify_data</code></em>,
+                                                         <em class="parameter"><code><span class="type">guint</span> word_number</code></em>);
 </pre>
 </div>
 <div class="refsect1">
@@ -314,7 +318,7 @@ object.
 </tr>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>object</code></em> :</span></p></td>
-<td>The <span class="type">GDBusObject</span> that the call is on or <code class="literal">NULL</code>. <span class="annotation">[<a href="http://foldoc.org/allow-none"><span class="acronym">allow-none</span></a>]</span>
+<td>The <a href="/usr/share/gtk-doc/html/gen/GDBusObject.html"><span class="type">GDBusObject</span></a> that the call is on or <code class="literal">NULL</code>. <span class="annotation">[<a href="http://foldoc.org/allow-none"><span class="acronym">allow-none</span></a>]</span>
 </td>
 </tr>
 <tr>
@@ -473,7 +477,7 @@ setup by <em class="parameter"><code>user</code></em>.
 </tr>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>object</code></em> :</span></p></td>
-<td>The <span class="type">GDBusObject</span> that the call is on or <code class="literal">NULL</code>.</td>
+<td>The <a href="/usr/share/gtk-doc/html/gen/GDBusObject.html"><span class="type">GDBusObject</span></a> that the call is on or <code class="literal">NULL</code>.</td>
 </tr>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>user</code></em> :</span></p></td>
@@ -762,7 +766,7 @@ This works if <em class="parameter"><code>object</code></em> is a drive or a blo
 </tr>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>object</code></em> :</span></p></td>
-<td>The <span class="type">GDBusObject</span> that the call is on or <code class="literal">NULL</code>.</td>
+<td>The <a href="/usr/share/gtk-doc/html/gen/GDBusObject.html"><span class="type">GDBusObject</span></a> that the call is on or <code class="literal">NULL</code>.</td>
 </tr>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>process</code></em> :</span></p></td>
@@ -772,6 +776,57 @@ This works if <em class="parameter"><code>object</code></em> is a drive or a blo
 <td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
 <td>
 <code class="literal">TRUE</code> if <em class="parameter"><code>object</code></em> and <em class="parameter"><code>process</code></em> is on the same seat, <code class="literal">FALSE</code> otherwise.</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="udisks-daemon-util-get-free-mdraid-device"></a><h3>udisks_daemon_util_get_free_mdraid_device ()</h3>
+<pre class="programlisting"><span class="returnvalue">gchar</span> *             udisks_daemon_util_get_free_mdraid_device
+                                                        (<em class="parameter"><code><span class="type">void</span></code></em>);</pre>
+<p>
+Gets a free MD RAID device.
+</p>
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
+<col align="left" valign="top">
+<col>
+</colgroup>
+<tbody><tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td>A string of the form "/dev/mdNNN" that should be freed
+with <code class="function">g_free()</code> or <code class="literal">NULL</code> if no free device is available.</td>
+</tr></tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="udisks-ata-identify-get-word"></a><h3>udisks_ata_identify_get_word ()</h3>
+<pre class="programlisting"><span class="returnvalue">guint16</span>             udisks_ata_identify_get_word        (<em class="parameter"><code>const <span class="type">guchar</span> *identify_data</code></em>,
+                                                         <em class="parameter"><code><span class="type">guint</span> word_number</code></em>);</pre>
+<p>
+Gets a <span class="quote">“<span class="quote">word</span>”</span> from position <em class="parameter"><code>word_number</code></em> from
+<em class="parameter"><code>identify_data</code></em>.
+</p>
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
+<col align="left" valign="top">
+<col>
+</colgroup>
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>identify_data</code></em> :</span></p></td>
+<td>A 512-byte array containing ATA IDENTIFY or ATA IDENTIFY PACKET DEVICE data or <code class="literal">NULL</code>. <span class="annotation">[<a href="http://foldoc.org/allow-none"><span class="acronym">allow-none</span></a>]</span>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>word_number</code></em> :</span></p></td>
+<td>The word number to get - must be less than 256.</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td>The word at the specified position or 0 if <em class="parameter"><code>identify_data</code></em> is <code class="literal">NULL</code>.</td>
 </tr>
 </tbody>
 </table></div>

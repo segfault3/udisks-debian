@@ -33,8 +33,8 @@
 #include "udiskslinuxpartitiontable.h"
 #include "udiskslinuxblockobject.h"
 #include "udisksdaemon.h"
-#include "udiskscleanup.h"
 #include "udisksdaemonutil.h"
+#include "udiskslinuxdevice.h"
 
 /**
  * SECTION:udiskslinuxpartitiontable
@@ -110,11 +110,11 @@ udisks_linux_partition_table_update (UDisksLinuxPartitionTable  *table,
                                      UDisksLinuxBlockObject     *object)
 {
   const gchar *type = NULL;
-  GUdevDevice *device = NULL;;
+  UDisksLinuxDevice *device = NULL;;
 
   device = udisks_linux_block_object_get_device (object);
   if (device != NULL)
-    type = g_udev_device_get_property (device, "ID_PART_TABLE_TYPE");
+    type = g_udev_device_get_property (device->udev_device, "ID_PART_TABLE_TYPE");
 
   udisks_partition_table_set_type_ (UDISKS_PARTITION_TABLE (table), type);
 
@@ -216,6 +216,56 @@ have_partition_in_range (UDisksPartitionTable     *table,
   return ret;
 }
 
+static UDisksPartition *
+find_container_partition (UDisksPartitionTable     *table,
+                          UDisksObject             *object,
+                          guint64                   start,
+                          guint64                   end)
+{
+  UDisksPartition *ret = NULL;
+  UDisksDaemon *daemon = NULL;
+  GDBusObjectManager *object_manager = NULL;
+  const gchar *table_object_path;
+  GList *objects = NULL, *l;
+
+  daemon = udisks_linux_block_object_get_daemon (UDISKS_LINUX_BLOCK_OBJECT (object));
+  object_manager = G_DBUS_OBJECT_MANAGER (udisks_daemon_get_object_manager (daemon));
+
+  table_object_path = g_dbus_object_get_object_path (G_DBUS_OBJECT (object));
+
+  objects = g_dbus_object_manager_get_objects (object_manager);
+  for (l = objects; l != NULL; l = l->next)
+    {
+      UDisksObject *i_object = UDISKS_OBJECT (l->data);
+      UDisksPartition *i_partition = NULL;
+
+      i_partition = udisks_object_get_partition (i_object);
+
+      if (i_partition == NULL)
+        goto cont;
+
+      if (g_strcmp0 (udisks_partition_get_table (i_partition), table_object_path) != 0)
+        goto cont;
+
+      if (udisks_partition_get_is_container (i_partition)
+          && ranges_overlap (start, end - start,
+                             udisks_partition_get_offset (i_partition),
+                             udisks_partition_get_size (i_partition)))
+        {
+          ret = i_partition;
+          goto out;
+        }
+
+    cont:
+      g_clear_object (&i_partition);
+    }
+
+ out:
+  g_list_foreach (objects, (GFunc) g_object_unref, NULL);
+  g_list_free (objects);
+  return ret;
+}
+
 /* ---------------------------------------------------------------------------------------------------- */
 
 typedef struct
@@ -293,6 +343,7 @@ handle_create_partition (UDisksPartitionTable   *table,
   pid_t caller_pid;
   uid_t caller_uid;
   gid_t caller_gid;
+  gboolean do_wipe = TRUE;
   GError *error;
 
   error = NULL;
@@ -346,13 +397,16 @@ handle_create_partition (UDisksPartitionTable   *table,
    * will be replaced by the name of the drive/device in question
    */
   message = N_("Authentication is required to create a partition on $(drive)");
-  if (udisks_block_get_hint_system (block))
+  if (!udisks_daemon_util_setup_by_user (daemon, object, caller_uid))
     {
-      action_id = "org.freedesktop.udisks2.modify-device-system";
-    }
-  else if (!udisks_daemon_util_on_same_seat (daemon, object, caller_pid))
-    {
-      action_id = "org.freedesktop.udisks2.modify-device-system-other-seat";
+      if (udisks_block_get_hint_system (block))
+        {
+          action_id = "org.freedesktop.udisks2.modify-device-system";
+        }
+      else if (!udisks_daemon_util_on_same_seat (daemon, object, caller_pid))
+        {
+          action_id = "org.freedesktop.udisks2.modify-device-other-seat";
+        }
     }
 
   if (!udisks_daemon_util_check_authorization_sync (daemon,
@@ -371,10 +425,13 @@ handle_create_partition (UDisksPartitionTable   *table,
     {
       guint64 start_mib;
       guint64 end_bytes;
+      guint64 max_end_bytes;
       const gchar *part_type;
       char *endp;
       gint type_as_int;
       gboolean is_logical = FALSE;
+
+      max_end_bytes = udisks_block_get_size (block);
 
       if (strlen (name) > 0)
         {
@@ -389,6 +446,7 @@ handle_create_partition (UDisksPartitionTable   *table,
           (type_as_int == 0x05 || type_as_int == 0x0f || type_as_int == 0x85))
         {
           part_type = "extended";
+          do_wipe = FALSE;  // wiping an extended partition destroys it
           if (have_partition_in_range (table, object, offset, offset + size, FALSE))
             {
               g_dbus_method_invocation_return_error (invocation, UDISKS_ERROR, UDISKS_ERROR_FAILED,
@@ -408,8 +466,13 @@ handle_create_partition (UDisksPartitionTable   *table,
                 }
               else
                 {
+                  UDisksPartition *container = find_container_partition (table, object,
+                                                                         offset, offset + size);
+                  g_assert (container != NULL);
                   is_logical = TRUE;
                   part_type = "logical ext2";
+                  max_end_bytes = (udisks_partition_get_offset(container)
+                                   + udisks_partition_get_size(container));
                 }
             }
           else
@@ -433,7 +496,7 @@ handle_create_partition (UDisksPartitionTable   *table,
                                                                            object,
                                                                            start_mib * MIB_SIZE,
                                                                            end_bytes, is_logical) ||
-                                                  end_bytes > udisks_block_get_size (block)))
+                                                  end_bytes > max_end_bytes))
         {
           /* TODO: if end_bytes is sufficiently big this could be *a lot* of loop iterations
            *       and thus a potential DoS attack...
@@ -566,27 +629,31 @@ handle_create_partition (UDisksPartitionTable   *table,
 
   /* TODO: set partition type */
 
-  /* wipe the newly created partition */
-  if (!udisks_daemon_launch_spawned_job_sync (daemon,
-                                              partition_object,
-                                              "partition-create", caller_uid,
-                                              NULL, /* GCancellable */
-                                              0,    /* uid_t run_as_uid */
-                                              0,    /* uid_t run_as_euid */
-                                              NULL, /* gint *out_status */
-                                              &error_message,
-                                              NULL,  /* input_string */
-                                              "wipefs -a %s",
-                                              escaped_partition_device))
+  /* wipe the newly created partition if wanted */
+  if (do_wipe)
     {
-      g_dbus_method_invocation_return_error (invocation,
-                                             UDISKS_ERROR,
-                                             UDISKS_ERROR_FAILED,
-                                             "Error wiping newly created partition %s: %s",
-                                             udisks_block_get_device (partition_block),
-                                             error_message);
-      goto out;
+      if (!udisks_daemon_launch_spawned_job_sync (daemon,
+                                                  partition_object,
+                                                  "partition-create", caller_uid,
+                                                  NULL, /* GCancellable */
+                                                  0,    /* uid_t run_as_uid */
+                                                  0,    /* uid_t run_as_euid */
+                                                  NULL, /* gint *out_status */
+                                                  &error_message,
+                                                  NULL,  /* input_string */
+                                                  "wipefs -a %s",
+                                                  escaped_partition_device))
+        {
+          g_dbus_method_invocation_return_error (invocation,
+                                                 UDISKS_ERROR,
+                                                 UDISKS_ERROR_FAILED,
+                                                 "Error wiping newly created partition %s: %s",
+                                                 udisks_block_get_device (partition_block),
+                                                 error_message);
+          goto out;
+        }
     }
+
   /* this is sometimes needed because parted(8) does not generate the uevent itself */
   udisks_linux_block_object_trigger_uevent (UDISKS_LINUX_BLOCK_OBJECT (partition_object));
 

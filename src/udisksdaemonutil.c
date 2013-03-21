@@ -36,7 +36,7 @@
 
 #include "udisksdaemon.h"
 #include "udisksdaemonutil.h"
-#include "udiskscleanup.h"
+#include "udisksstate.h"
 #include "udiskslogging.h"
 #include "udiskslinuxblockobject.h"
 #include "udiskslinuxdriveobject.h"
@@ -258,10 +258,13 @@ udisks_daemon_util_resolve_link (const gchar *path,
   if (num != -1)
     {
       char *absolute_path;
+      gchar *full_path_dir;
 
       link_path[num] = '\0';
 
-      absolute_path = g_build_filename (path, link_path, NULL);
+      full_path_dir = g_path_get_dirname (full_path);
+      absolute_path = g_build_filename (full_path_dir, link_path, NULL);
+      g_free (full_path_dir);
       if (realpath (absolute_path, resolved_path) != NULL)
         {
           found_it = TRUE;
@@ -338,20 +341,20 @@ udisks_daemon_util_setup_by_user (UDisksDaemon *daemon,
   gboolean ret;
   UDisksBlock *block = NULL;
   UDisksPartition *partition = NULL;
-  UDisksCleanup *cleanup;
+  UDisksState *state;
   uid_t setup_by_user;
   UDisksObject *crypto_object;
 
   ret = FALSE;
 
-  cleanup = udisks_daemon_get_cleanup (daemon);
+  state = udisks_daemon_get_state (daemon);
   block = udisks_object_get_block (object);
   if (block == NULL)
     goto out;
   partition = udisks_object_get_partition (object);
 
   /* loop devices */
-  if (udisks_cleanup_has_loop (cleanup, udisks_block_get_device (block), &setup_by_user))
+  if (udisks_state_has_loop (state, udisks_block_get_device (block), &setup_by_user))
     {
       if (setup_by_user == user)
         {
@@ -383,9 +386,9 @@ udisks_daemon_util_setup_by_user (UDisksDaemon *daemon,
     {
       UDisksBlock *crypto_block;
       crypto_block = udisks_object_peek_block (crypto_object);
-      if (udisks_cleanup_find_unlocked_luks (cleanup,
-                                             udisks_block_get_device_number (crypto_block),
-                                             &setup_by_user))
+      if (udisks_state_find_unlocked_luks (state,
+                                           udisks_block_get_device_number (crypto_block),
+                                           &setup_by_user))
         {
           if (setup_by_user == user)
             {
@@ -395,6 +398,20 @@ udisks_daemon_util_setup_by_user (UDisksDaemon *daemon,
             }
         }
       g_object_unref (crypto_object);
+    }
+
+  /* MDRaid devices */
+  if (g_strcmp0 (udisks_block_get_mdraid (block), "/") != 0)
+    {
+      uid_t started_by_user;
+      if (udisks_state_has_mdraid (state, udisks_block_get_device_number (block), &started_by_user))
+        {
+          if (started_by_user == user)
+            {
+              ret = TRUE;
+              goto out;
+            }
+        }
     }
 
  out:
@@ -1379,5 +1396,66 @@ udisks_daemon_util_uninhibit_system_sync (UDisksInhibitCookie *cookie)
   /* non-systemd: check dummy pointer */
   g_warn_if_fail (cookie == (UDisksInhibitCookie* ) &udisks_daemon_util_inhibit_system_sync);
 #endif
+}
+
+/**
+ * udisks_daemon_util_get_free_mdraid_device:
+ *
+ * Gets a free MD RAID device.
+ *
+ * Returns: A string of the form "/dev/mdNNN" that should be freed
+ * with g_free() or %NULL if no free device is available.
+ */
+gchar *
+udisks_daemon_util_get_free_mdraid_device (void)
+{
+  gchar *ret = NULL;
+  gint n;
+  gchar buf[PATH_MAX];
+
+  /* Ideally we wouldn't need this racy function... but mdadm(8)
+   * insists that the user chooses a name. It should just choose one
+   * itself but that's not how things work right now.
+   */
+  for (n = 127; n >= 0; n--)
+    {
+      snprintf (buf, sizeof buf, "/sys/block/md%d", n);
+      if (!g_file_test (buf, G_FILE_TEST_EXISTS))
+        {
+          ret = g_strdup_printf ("/dev/md%d", n);
+          goto out;
+        }
+    }
+
+ out:
+  return ret;
+}
+
+
+/**
+ * udisks_ata_identify_get_word:
+ * @identify_data: (allow-none): A 512-byte array containing ATA IDENTIFY or ATA IDENTIFY PACKET DEVICE data or %NULL.
+ * @word_number: The word number to get - must be less than 256.
+ *
+ * Gets a <quote>word</quote> from position @word_number from
+ * @identify_data.
+ *
+ * Returns: The word at the specified position or 0 if @identify_data is %NULL.
+ */
+guint16
+udisks_ata_identify_get_word (const guchar *identify_data, guint word_number)
+{
+  const guint16 *words = (const guint16 *) identify_data;
+  guint16 ret = 0;
+
+  g_return_val_if_fail (word_number < 256, 0);
+
+  if (identify_data == NULL)
+    goto out;
+
+  ret = GUINT16_FROM_LE (words[word_number]);
+
+ out:
+  return ret;
 }
 

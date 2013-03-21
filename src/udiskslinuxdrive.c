@@ -22,6 +22,10 @@
 #include <glib/gi18n-lib.h>
 
 #include <sys/types.h>
+#include <sys/stat.h>
+#include <sys/ioctl.h>
+#include <fcntl.h>
+
 #include <pwd.h>
 #include <grp.h>
 #include <string.h>
@@ -37,8 +41,8 @@
 #include "udiskslinuxdrive.h"
 #include "udiskslinuxblockobject.h"
 #include "udisksdaemon.h"
-#include "udiskscleanup.h"
 #include "udisksdaemonutil.h"
+#include "udiskslinuxdevice.h"
 
 /**
  * SECTION:udiskslinuxdrive
@@ -206,10 +210,11 @@ typedef struct {
   const GVariantType *type;
 } VariantKeyfileMapping;
 
-static const VariantKeyfileMapping drive_configuration_mapping[3] = {
-  {"ata-pm-standby",  "ATA", "StandbyTimeout", G_VARIANT_TYPE_INT32},
-  {"ata-apm-level",   "ATA", "APMLevel",       G_VARIANT_TYPE_INT32},
-  {"ata-aam-level",   "ATA", "AAMLevel",       G_VARIANT_TYPE_INT32},
+static const VariantKeyfileMapping drive_configuration_mapping[4] = {
+  {"ata-pm-standby",          "ATA", "StandbyTimeout",    G_VARIANT_TYPE_INT32},
+  {"ata-apm-level",           "ATA", "APMLevel",          G_VARIANT_TYPE_INT32},
+  {"ata-aam-level",           "ATA", "AAMLevel",          G_VARIANT_TYPE_INT32},
+  {"ata-write-cache-enabled", "ATA", "WriteCacheEnabled", G_VARIANT_TYPE_BOOLEAN},
 };
 
 /* ---------------------------------------------------------------------------------------------------- */
@@ -284,6 +289,21 @@ update_configuration (UDisksLinuxDrive       *drive,
           else
             {
               g_variant_builder_add (&builder, "{sv}", mapping->asv_key, g_variant_new_int32 (int_value));
+            }
+        }
+      else if (mapping->type == G_VARIANT_TYPE_BOOLEAN)
+        {
+          gboolean bool_value = g_key_file_get_boolean (key_file, mapping->group, mapping->key, &error);
+          if (error != NULL)
+            {
+              udisks_error ("Error parsing boolean key %s in group %s in drive config file %s: %s (%s, %d)",
+                            mapping->key, mapping->group, path,
+                            error->message, g_quark_to_string (error->domain), error->code);
+              g_clear_error (&error);
+            }
+          else
+            {
+              g_variant_builder_add (&builder, "{sv}", mapping->asv_key, g_variant_new_boolean (bool_value));
             }
         }
       else
@@ -401,9 +421,9 @@ ptr_str_array_compare (const gchar **a,
 }
 
 static void
-set_media (UDisksDrive      *iface,
-           GUdevDevice      *device,
-           gboolean          is_pc_floppy_drive)
+set_media (UDisksDrive       *iface,
+           UDisksLinuxDevice *device,
+           gboolean           is_pc_floppy_drive)
 {
   guint n;
   GPtrArray *media_compat_array;
@@ -416,13 +436,13 @@ set_media (UDisksDrive      *iface,
   guint disc_track_count_data = 0;
   gboolean force_non_removable = FALSE;
   gboolean force_removable = FALSE;
-  gboolean ejectable;
-  gboolean removable;
+  gboolean ejectable = FALSE;
+  gboolean removable = FALSE;
 
   media_compat_array = g_ptr_array_new ();
   for (n = 0; drive_media_mapping[n].udev_property != NULL; n++)
     {
-      if (g_udev_device_get_property_as_boolean (device, drive_media_mapping[n].udev_property))
+      if (g_udev_device_get_property_as_boolean (device->udev_device, drive_media_mapping[n].udev_property))
         {
           g_ptr_array_add (media_compat_array, (gpointer) drive_media_mapping[n].media_name);
           if (drive_media_mapping[n].force_non_removable)
@@ -434,7 +454,7 @@ set_media (UDisksDrive      *iface,
   g_ptr_array_sort (media_compat_array, (GCompareFunc) ptr_str_array_compare);
   g_ptr_array_add (media_compat_array, NULL);
 
-  removable = ejectable = g_udev_device_get_sysfs_attr_as_boolean (device, "removable");
+  removable = ejectable = g_udev_device_get_sysfs_attr_as_boolean (device->udev_device, "removable");
   if (force_non_removable)
     removable = FALSE;
   if (force_removable)
@@ -449,7 +469,7 @@ set_media (UDisksDrive      *iface,
     {
       for (n = 0; media_mapping[n].udev_property != NULL; n++)
         {
-          if (g_udev_device_get_property_as_boolean (device, media_mapping[n].udev_property))
+          if (g_udev_device_get_property_as_boolean (device->udev_device, media_mapping[n].udev_property))
             {
               media_in_drive = media_mapping[n].media_name;
               break;
@@ -465,17 +485,17 @@ set_media (UDisksDrive      *iface,
   udisks_drive_set_media (iface, media_in_drive);
   g_ptr_array_free (media_compat_array, TRUE);
 
-  if (g_udev_device_get_property_as_boolean (device, "ID_CDROM_MEDIA"))
+  if (g_udev_device_get_property_as_boolean (device->udev_device, "ID_CDROM_MEDIA"))
     {
       const gchar *state;
       is_disc = TRUE;
-      state = g_udev_device_get_property (device, "ID_CDROM_MEDIA_STATE");
+      state = g_udev_device_get_property (device->udev_device, "ID_CDROM_MEDIA_STATE");
       if (g_strcmp0 (state, "blank") == 0)
         disc_is_blank = TRUE;
-      disc_session_count = g_udev_device_get_property_as_int (device, "ID_CDROM_MEDIA_SESSION_COUNT");
-      disc_track_count = g_udev_device_get_property_as_int (device, "ID_CDROM_MEDIA_TRACK_COUNT");
-      disc_track_count_audio = g_udev_device_get_property_as_int (device, "ID_CDROM_MEDIA_TRACK_COUNT_AUDIO");
-      disc_track_count_data = g_udev_device_get_property_as_int (device, "ID_CDROM_MEDIA_TRACK_COUNT_DATA");
+      disc_session_count = g_udev_device_get_property_as_int (device->udev_device, "ID_CDROM_MEDIA_SESSION_COUNT");
+      disc_track_count = g_udev_device_get_property_as_int (device->udev_device, "ID_CDROM_MEDIA_TRACK_COUNT");
+      disc_track_count_audio = g_udev_device_get_property_as_int (device->udev_device, "ID_CDROM_MEDIA_TRACK_COUNT_AUDIO");
+      disc_track_count_data = g_udev_device_get_property_as_int (device->udev_device, "ID_CDROM_MEDIA_TRACK_COUNT_DATA");
     }
   udisks_drive_set_optical (iface, is_disc);
   udisks_drive_set_optical_blank (iface, disc_is_blank);
@@ -486,43 +506,65 @@ set_media (UDisksDrive      *iface,
 }
 
 static void
-set_rotation_rate (UDisksDrive      *iface,
-                   GUdevDevice      *device)
+set_rotation_rate (UDisksDrive       *iface,
+                   UDisksLinuxDevice *device)
 {
   gint rate;
 
-  if (!g_udev_device_get_sysfs_attr_as_boolean (device, "queue/rotational"))
+  if (!g_udev_device_get_sysfs_attr_as_boolean (device->udev_device, "queue/rotational"))
     {
       rate = 0;
     }
   else
     {
       rate = -1;
-      if (g_udev_device_has_property (device, "ID_ATA_ROTATION_RATE_RPM"))
-        rate = g_udev_device_get_property_as_int (device, "ID_ATA_ROTATION_RATE_RPM");
+      if (device->ata_identify_device_data != NULL)
+        {
+          guint word_217 = 0;
+
+          /* ATA8: 7.16 IDENTIFY DEVICE - ECh, PIO Data-In - Table 29 IDENTIFY DEVICE data
+           *
+           * Table 37 - Nominal Media Rotation Rate:
+           *
+           *  0000h        Rate not reported
+           *  0001h        Non-rotating media (e.g., solid state device)
+           *  0002h-0400h  Reserved
+           *  0401h-FFFEh  Nominal media rotation rate in rotations per minute (rpm) (e.g., 7200 rpm = 1C20h)
+           *  FFFFh        Reserved
+           */
+          word_217 = udisks_ata_identify_get_word (device->ata_identify_device_data, 217);
+          if (word_217 == 0x0001)
+            rate = 0;
+          else if (word_217 >= 0x0401 && word_217 <= 0xfffe)
+            rate = word_217;
+        }
     }
   udisks_drive_set_rotation_rate (iface, rate);
 }
 
 static void
-set_connection_bus (UDisksDrive      *iface,
-                    GUdevDevice      *device)
+set_connection_bus (UDisksDrive       *iface,
+                    UDisksLinuxDevice *device)
 {
   GUdevDevice *parent;
+  gboolean can_power_off = FALSE;
+  gchar *sibling_id = NULL;
 
   /* note: @device may vary - it can be any path for drive */
 
   udisks_drive_set_connection_bus (iface, "");
-  parent = g_udev_device_get_parent_with_subsystem (device, "usb", "usb_interface");
+  parent = g_udev_device_get_parent_with_subsystem (device->udev_device, "usb", "usb_interface");
   if (parent != NULL)
     {
       /* TODO: should probably check that it's a storage interface */
       udisks_drive_set_connection_bus (iface, "usb");
+      sibling_id = g_strdup (g_udev_device_get_sysfs_path (parent));
       g_object_unref (parent);
+      can_power_off = TRUE;
       goto out;
     }
 
-  parent = g_udev_device_get_parent_with_subsystem (device, "firewire", NULL);
+  parent = g_udev_device_get_parent_with_subsystem (device->udev_device, "firewire", NULL);
   if (parent != NULL)
     {
       /* TODO: should probably check that it's a storage interface */
@@ -531,21 +573,26 @@ set_connection_bus (UDisksDrive      *iface,
       goto out;
     }
 
-  if (g_str_has_prefix (g_udev_device_get_name (device), "mmcblk"))
+  if (g_str_has_prefix (g_udev_device_get_name (device->udev_device), "mmcblk"))
     {
       udisks_drive_set_connection_bus (iface, "sdio");
       goto out;
     }
 
  out:
-  ;
+  /* Make it possible to override if a drive can be powered off */
+  if (g_udev_device_has_property (device->udev_device, "UDISKS_CAN_POWER_OFF"))
+    can_power_off = g_udev_device_get_property_as_boolean (device->udev_device, "UDISKS_CAN_POWER_OFF");
+  udisks_drive_set_can_power_off (iface, can_power_off);
+  udisks_drive_set_sibling_id (iface, sibling_id);
+  g_free (sibling_id);
 }
 
 static void
-set_media_time_detected (UDisksLinuxDrive *drive,
-                         GUdevDevice      *device,
-                         gboolean          is_pc_floppy_drive,
-                         gboolean          coldplug)
+set_media_time_detected (UDisksLinuxDrive  *drive,
+                         UDisksLinuxDevice *device,
+                         gboolean           is_pc_floppy_drive,
+                         gboolean           coldplug)
 {
   UDisksDrive *iface = UDISKS_DRIVE (drive);
   gint64 now;
@@ -557,7 +604,7 @@ set_media_time_detected (UDisksLinuxDrive *drive,
     {
       if (coldplug)
         {
-          drive->time_detected = now - g_udev_device_get_usec_since_initialized (device);
+          drive->time_detected = now - g_udev_device_get_usec_since_initialized (device->udev_device);
         }
       else
         {
@@ -565,7 +612,7 @@ set_media_time_detected (UDisksLinuxDrive *drive,
         }
     }
 
-  if (!g_udev_device_get_sysfs_attr_as_boolean (device, "removable") || is_pc_floppy_drive)
+  if (!g_udev_device_get_sysfs_attr_as_boolean (device->udev_device, "removable") || is_pc_floppy_drive)
     {
       drive->time_media_detected = drive->time_detected;
     }
@@ -636,7 +683,7 @@ udisks_linux_drive_update (UDisksLinuxDrive       *drive,
 {
   gboolean ret = FALSE;
   UDisksDrive *iface = UDISKS_DRIVE (drive);
-  GUdevDevice *device;
+  UDisksLinuxDevice *device;
   guint64 size;
   gboolean media_available;
   gboolean media_change_detected;
@@ -658,18 +705,19 @@ udisks_linux_drive_update (UDisksLinuxDrive       *drive,
       coldplug = udisks_linux_provider_get_coldplug (provider);
     }
 
-  if (g_udev_device_get_property_as_boolean (device, "ID_DRIVE_FLOPPY") ||
-      g_str_has_prefix (g_udev_device_get_name (device), "fd"))
+  if (g_udev_device_get_property_as_boolean (device->udev_device, "ID_DRIVE_FLOPPY") ||
+      g_str_has_prefix (g_udev_device_get_name (device->udev_device), "fd"))
     is_pc_floppy_drive = TRUE;
 
   /* this is the _almost_ the same for both ATA and SCSI devices (cf. udev's ata_id and scsi_id)
    * but we special case since there are subtle differences...
    */
-  if (g_udev_device_get_property_as_boolean (device, "ID_ATA"))
+  if (g_udev_device_get_property_as_boolean (device->udev_device, "ID_ATA"))
     {
       const gchar *model;
+      const gchar *serial;
 
-      model = g_udev_device_get_property (device, "ID_MODEL_ENC");
+      model = g_udev_device_get_property (device->udev_device, "ID_MODEL_ENC");
       if (model != NULL)
         {
           gchar *s;
@@ -679,17 +727,21 @@ udisks_linux_drive_update (UDisksLinuxDrive       *drive,
           g_free (s);
         }
 
-      udisks_drive_set_vendor (iface, g_udev_device_get_property (device, ""));
-      udisks_drive_set_revision (iface, g_udev_device_get_property (device, "ID_REVISION"));
-      udisks_drive_set_serial (iface, g_udev_device_get_property (device, "ID_SERIAL_SHORT"));
-      udisks_drive_set_wwn (iface, g_udev_device_get_property (device, "ID_WWN_WITH_EXTENSION"));
+      serial = g_udev_device_get_property (device->udev_device, "ID_SERIAL_SHORT");
+      if (serial == NULL)
+        serial = g_udev_device_get_property (device->udev_device, "ID_SERIAL");
+
+      udisks_drive_set_vendor (iface, "");
+      udisks_drive_set_revision (iface, g_udev_device_get_property (device->udev_device, "ID_REVISION"));
+      udisks_drive_set_serial (iface, serial);
+      udisks_drive_set_wwn (iface, g_udev_device_get_property (device->udev_device, "ID_WWN_WITH_EXTENSION"));
     }
-  else if (g_udev_device_get_property_as_boolean (device, "ID_SCSI"))
+  else if (g_udev_device_get_property_as_boolean (device->udev_device, "ID_SCSI"))
     {
       const gchar *vendor;
       const gchar *model;
 
-      vendor = g_udev_device_get_property (device, "ID_VENDOR_ENC");
+      vendor = g_udev_device_get_property (device->udev_device, "ID_VENDOR_ENC");
       if (vendor != NULL)
         {
           gchar *s;
@@ -699,7 +751,7 @@ udisks_linux_drive_update (UDisksLinuxDrive       *drive,
           g_free (s);
         }
 
-      model = g_udev_device_get_property (device, "ID_MODEL_ENC");
+      model = g_udev_device_get_property (device->udev_device, "ID_MODEL_ENC");
       if (model != NULL)
         {
           gchar *s;
@@ -709,15 +761,15 @@ udisks_linux_drive_update (UDisksLinuxDrive       *drive,
           g_free (s);
         }
 
-      udisks_drive_set_revision (iface, g_udev_device_get_property (device, "ID_REVISION"));
-      udisks_drive_set_serial (iface, g_udev_device_get_property (device, "ID_SCSI_SERIAL"));
-      udisks_drive_set_wwn (iface, g_udev_device_get_property (device, "ID_WWN_WITH_EXTENSION"));
+      udisks_drive_set_revision (iface, g_udev_device_get_property (device->udev_device, "ID_REVISION"));
+      udisks_drive_set_serial (iface, g_udev_device_get_property (device->udev_device, "ID_SCSI_SERIAL"));
+      udisks_drive_set_wwn (iface, g_udev_device_get_property (device->udev_device, "ID_WWN_WITH_EXTENSION"));
     }
-  else if (g_str_has_prefix (g_udev_device_get_name (device), "mmcblk"))
+  else if (g_str_has_prefix (g_udev_device_get_name (device->udev_device), "mmcblk"))
     {
       /* sigh, mmc is non-standard and using ID_NAME instead of ID_MODEL.. */
-      udisks_drive_set_model (iface, g_udev_device_get_property (device, "ID_NAME"));
-      udisks_drive_set_serial (iface, g_udev_device_get_property (device, "ID_SERIAL"));
+      udisks_drive_set_model (iface, g_udev_device_get_property (device->udev_device, "ID_NAME"));
+      udisks_drive_set_serial (iface, g_udev_device_get_property (device->udev_device, "ID_SERIAL"));
       /* TODO:
        *  - lookup Vendor from manfid and oemid in sysfs
        *  - lookup Revision from fwrev and hwrev in sysfs
@@ -728,11 +780,12 @@ udisks_linux_drive_update (UDisksLinuxDrive       *drive,
       const gchar *vendor;
       const gchar *model;
       const gchar *name;
+      const gchar *serial;
 
-      name = g_udev_device_get_name (device);
+      name = g_udev_device_get_name (device->udev_device);
 
       /* generic fallback... */
-      vendor = g_udev_device_get_property (device, "ID_VENDOR_ENC");
+      vendor = g_udev_device_get_property (device->udev_device, "ID_VENDOR_ENC");
       if (vendor != NULL)
         {
           gchar *s;
@@ -743,7 +796,7 @@ udisks_linux_drive_update (UDisksLinuxDrive       *drive,
         }
       else
         {
-          vendor = g_udev_device_get_property (device, "ID_VENDOR");
+          vendor = g_udev_device_get_property (device->udev_device, "ID_VENDOR");
           if (vendor != NULL)
             {
               udisks_drive_set_vendor (iface, vendor);
@@ -761,7 +814,7 @@ udisks_linux_drive_update (UDisksLinuxDrive       *drive,
             }
         }
 
-      model = g_udev_device_get_property (device, "ID_MODEL_ENC");
+      model = g_udev_device_get_property (device->udev_device, "ID_MODEL_ENC");
       if (model != NULL)
         {
           gchar *s;
@@ -772,7 +825,7 @@ udisks_linux_drive_update (UDisksLinuxDrive       *drive,
         }
       else
         {
-          model = g_udev_device_get_property (device, "ID_MODEL");
+          model = g_udev_device_get_property (device->udev_device, "ID_MODEL");
           if (model != NULL)
             {
               udisks_drive_set_model (iface, model);
@@ -789,16 +842,20 @@ udisks_linux_drive_update (UDisksLinuxDrive       *drive,
             }
         }
 
-      udisks_drive_set_revision (iface, g_udev_device_get_property (device, "ID_REVISION"));
-      udisks_drive_set_serial (iface, g_udev_device_get_property (device, "ID_SERIAL_SHORT"));
-      if (g_udev_device_has_property (device, "ID_WWN_WITH_EXTENSION"))
-        udisks_drive_set_wwn (iface, g_udev_device_get_property (device, "ID_WWN_WITH_EXTENSION"));
+      serial = g_udev_device_get_property (device->udev_device, "ID_SERIAL_SHORT");
+      if (serial == NULL)
+        serial = g_udev_device_get_property (device->udev_device, "ID_SERIAL");
+
+      udisks_drive_set_revision (iface, g_udev_device_get_property (device->udev_device, "ID_REVISION"));
+      udisks_drive_set_serial (iface, serial);
+      if (g_udev_device_has_property (device->udev_device, "ID_WWN_WITH_EXTENSION"))
+        udisks_drive_set_wwn (iface, g_udev_device_get_property (device->udev_device, "ID_WWN_WITH_EXTENSION"));
       else
-        udisks_drive_set_wwn (iface, g_udev_device_get_property (device, "ID_WWN"));
+        udisks_drive_set_wwn (iface, g_udev_device_get_property (device->udev_device, "ID_WWN"));
     }
 
   /* common bits go here */
-  size = udisks_daemon_util_block_get_size (device,
+  size = udisks_daemon_util_block_get_size (device->udev_device,
                                             &media_available,
                                             &media_change_detected);
   udisks_drive_set_size (iface, size);
@@ -815,7 +872,7 @@ udisks_linux_drive_update (UDisksLinuxDrive       *drive,
     removable_hint = TRUE;
   udisks_drive_set_removable (iface, removable_hint);
 
-  seat = g_udev_device_get_property (device, "ID_SEAT");
+  seat = g_udev_device_get_property (device->udev_device, "ID_SEAT");
   /* assume seat0 if not set */
   if (seat == NULL || strlen (seat) == 0)
     seat = "seat0";
@@ -830,7 +887,7 @@ udisks_linux_drive_update (UDisksLinuxDrive       *drive,
         {
           const gchar *device_name;
           /* TODO: adjust device_name for better sort order (so e.g. sdaa comes after sdz) */
-          device_name = g_udev_device_get_name (device);
+          device_name = g_udev_device_get_name (device->udev_device);
           if (udisks_drive_get_removable (iface))
             {
               /* make sure fd* BEFORE sr* BEFORE sd* */
@@ -871,8 +928,7 @@ udisks_linux_drive_update (UDisksLinuxDrive       *drive,
   ret = update_configuration (drive, object);
 
  out:
-  if (device != NULL)
-    g_object_unref (device);
+  g_clear_object (&device);
 
   return ret;
 }
@@ -1101,6 +1157,10 @@ handle_set_configuration (UDisksDrive           *_drive,
             {
               g_key_file_set_integer (key_file, mapping->group, mapping->key, g_variant_get_int32 (value));
             }
+          else if (mapping->type == G_VARIANT_TYPE_BOOLEAN)
+            {
+              g_key_file_set_boolean (key_file, mapping->group, mapping->key, g_variant_get_boolean (value));
+            }
           else
             {
               g_assert_not_reached ();
@@ -1132,9 +1192,241 @@ handle_set_configuration (UDisksDrive           *_drive,
 
 /* ---------------------------------------------------------------------------------------------------- */
 
+static gboolean
+handle_power_off (UDisksDrive           *_drive,
+                  GDBusMethodInvocation *invocation,
+                  GVariant              *options)
+{
+  UDisksLinuxDrive *drive = UDISKS_LINUX_DRIVE (_drive);
+  UDisksLinuxDevice *device = NULL;
+  gchar *remove_path = NULL;
+  FILE *f;
+  GUdevDevice *usb_device = NULL;
+  UDisksLinuxDriveObject *object;
+  UDisksLinuxBlockObject *block_object = NULL;
+  GList *blocks_to_sync = NULL;
+  UDisksBlock *block = NULL;
+  UDisksDaemon *daemon = NULL;
+  const gchar *action_id;
+  const gchar *message;
+  gchar *error_message = NULL;
+  GError *error = NULL;
+  gchar *escaped_device = NULL;
+  uid_t caller_uid;
+  gid_t caller_gid;
+  pid_t caller_pid;
+  GList *sibling_objects = NULL, *l;
+
+  object = udisks_daemon_util_dup_object (drive, &error);
+  if (object == NULL)
+    {
+      g_dbus_method_invocation_take_error (invocation, error);
+      goto out;
+    }
+
+  daemon = udisks_linux_drive_object_get_daemon (object);
+  block_object = udisks_linux_drive_object_get_block (object, FALSE);
+  if (block_object == NULL)
+    {
+      g_dbus_method_invocation_return_error (invocation,
+                                             UDISKS_ERROR,
+                                             UDISKS_ERROR_FAILED,
+                                             "Unable to find block device for drive");
+      goto out;
+    }
+  block = udisks_object_peek_block (UDISKS_OBJECT (block_object));
+  blocks_to_sync = g_list_prepend (blocks_to_sync, g_object_ref (block));
+
+  sibling_objects = udisks_linux_drive_object_get_siblings (object);
+
+  /* refuse if drive - or one of its siblings - appears to be in use */
+  if (!udisks_linux_drive_object_is_not_in_use (object, NULL, &error))
+    {
+      g_prefix_error (&error, "The drive in use: ");
+      g_dbus_method_invocation_take_error (invocation, error);
+      goto out;
+    }
+  for (l = sibling_objects; l != NULL; l = l->next)
+    {
+      UDisksLinuxDriveObject *sibling_object = UDISKS_LINUX_DRIVE_OBJECT (l->data);
+      UDisksLinuxBlockObject *sibling_block_object;
+
+      if (!udisks_linux_drive_object_is_not_in_use (sibling_object, NULL, &error))
+        {
+          g_prefix_error (&error, "A drive that is part of the same device is in use: ");
+          g_dbus_method_invocation_take_error (invocation, error);
+          goto out;
+        }
+
+      sibling_block_object = udisks_linux_drive_object_get_block (sibling_object, FALSE); /* get_hw */
+      if (sibling_block_object != NULL)
+        {
+          UDisksBlock *sibling_block = udisks_object_get_block (UDISKS_OBJECT (sibling_block_object));
+          if (sibling_block != NULL)
+            blocks_to_sync = g_list_prepend (blocks_to_sync, sibling_block);
+        }
+    }
+
+  error = NULL;
+  if (!udisks_daemon_util_get_caller_pid_sync (daemon,
+                                               invocation,
+                                               NULL /* GCancellable */,
+                                               &caller_pid,
+                                               &error))
+    {
+      g_dbus_method_invocation_return_gerror (invocation, error);
+      g_error_free (error);
+      goto out;
+    }
+
+  error = NULL;
+  if (!udisks_daemon_util_get_caller_uid_sync (daemon,
+                                               invocation,
+                                               NULL /* GCancellable */,
+                                               &caller_uid,
+                                               &caller_gid,
+                                               NULL,
+                                               &error))
+    {
+      g_dbus_method_invocation_return_gerror (invocation, error);
+      g_error_free (error);
+      goto out;
+    }
+
+  /* Translators: Shown in authentication dialog when the user
+   * requests ejecting media from a drive.
+   *
+   * Do not translate $(drive), it's a placeholder and
+   * will be replaced by the name of the drive/device in question
+   */
+  message = N_("Authentication is required to power off $(drive)");
+  action_id = "org.freedesktop.udisks2.power-off-drive";
+  if (udisks_block_get_hint_system (block))
+    {
+      action_id = "org.freedesktop.udisks2.power-off-drive-system";
+    }
+  else if (!udisks_daemon_util_on_same_seat (daemon, UDISKS_OBJECT (object), caller_pid))
+    {
+      action_id = "org.freedesktop.udisks2.power-off-drive-other-seat";
+    }
+
+  /* Check that the user is actually authorized */
+  if (!udisks_daemon_util_check_authorization_sync (daemon,
+                                                    UDISKS_OBJECT (block_object),
+                                                    action_id,
+                                                    options,
+                                                    message,
+                                                    invocation))
+    goto out;
+
+  /* sync all block devices */
+  for (l = blocks_to_sync; l != NULL ; l = l->next)
+    {
+      UDisksBlock *block_to_sync = UDISKS_BLOCK (l->data);
+      const gchar *device_file;
+      gint fd;
+      device_file = udisks_block_get_device (block_to_sync);
+      fd = open (device_file, O_RDONLY|O_NONBLOCK|O_EXCL);
+      if (fd == -1)
+        {
+          g_dbus_method_invocation_return_error (invocation,
+                                                 UDISKS_ERROR,
+                                                 UDISKS_ERROR_FAILED,
+                                                 "Error opening %s: %m",
+                                                 device_file);
+          goto out;
+        }
+      if (fsync (fd) != 0)
+        {
+          g_dbus_method_invocation_return_error (invocation,
+                                                 UDISKS_ERROR,
+                                                 UDISKS_ERROR_FAILED,
+                                                 "Error syncing  %s: %m",
+                                                 device_file);
+          goto out;
+        }
+      if (close (fd) != 0)
+        {
+          g_dbus_method_invocation_return_error (invocation,
+                                                 UDISKS_ERROR,
+                                                 UDISKS_ERROR_FAILED,
+                                                 "Error closing %s (after syncing): %m",
+                                                 device_file);
+          goto out;
+        }
+    }
+
+  escaped_device = udisks_daemon_util_escape_and_quote (udisks_block_get_device (block));
+
+  /* TODO: Send the eject? Send SCSI START STOP UNIT? */
+  device = udisks_linux_drive_object_get_device (object, TRUE /* get_hw */);
+  if (device == NULL)
+    {
+      g_dbus_method_invocation_return_error (invocation,
+                                             UDISKS_ERROR,
+                                             UDISKS_ERROR_FAILED,
+                                             "No device");
+      goto out;
+    }
+  usb_device = g_udev_device_get_parent_with_subsystem (device->udev_device, "usb", "usb_device");
+  if (usb_device == NULL)
+    {
+      g_dbus_method_invocation_return_error (invocation,
+                                             UDISKS_ERROR,
+                                             UDISKS_ERROR_FAILED,
+                                             "No usb device");
+      goto out;
+    }
+
+  /* http://git.kernel.org/?p=linux/kernel/git/torvalds/linux.git;a=commit;h=253e05724f9230910344357b1142ad8642ff9f5a */
+  remove_path = g_strdup_printf ("%s/remove", g_udev_device_get_sysfs_path (usb_device));
+  f = fopen (remove_path, "w");
+  if (f == NULL)
+    {
+      g_dbus_method_invocation_return_error (invocation,
+                                             UDISKS_ERROR,
+                                             UDISKS_ERROR_FAILED,
+                                             "Error opening %s: %m",
+                                             remove_path);
+      goto out;
+    }
+  else
+    {
+      gchar contents[1] = {'1'};
+      if (fwrite (contents, 1, 1, f) != 1)
+        {
+          g_dbus_method_invocation_return_error (invocation,
+                                                 UDISKS_ERROR,
+                                                 UDISKS_ERROR_FAILED,
+                                                 "Error writing to sysfs file %s: %m",
+                                                 remove_path);
+          fclose (f);
+          goto out;
+        }
+    }
+  fclose (f);
+
+  udisks_drive_complete_power_off (UDISKS_DRIVE (drive), invocation);
+
+ out:
+  g_list_free_full (blocks_to_sync, g_object_unref);
+  g_list_free_full (sibling_objects, g_object_unref);
+  g_free (remove_path);
+  g_clear_object (&usb_device);
+  g_clear_object (&device);
+  g_free (escaped_device);
+  g_clear_object (&block_object);
+  g_free (error_message);
+  g_clear_object (&object);
+  return TRUE; /* returning TRUE means that we handled the method invocation */
+}
+
+/* ---------------------------------------------------------------------------------------------------- */
+
 static void
 drive_iface_init (UDisksDriveIface *iface)
 {
   iface->handle_eject = handle_eject;
   iface->handle_set_configuration = handle_set_configuration;
+  iface->handle_power_off = handle_power_off;
 }

@@ -58,6 +58,8 @@ libudisks_daemon_la_SOURCES =						\
 	udiskslinuxdriveobject.h	udiskslinuxdriveobject.c	\
 	udiskslinuxdrive.h		udiskslinuxdrive.c		\
 	udiskslinuxdriveata.h		udiskslinuxdriveata.c		\
+	udiskslinuxmdraidobject.h	udiskslinuxmdraidobject.c	\
+	udiskslinuxmdraid.h		udiskslinuxmdraid.c		\
 	udiskslinuxmanager.h		udiskslinuxmanager.c		\
 	udiskslinuxfsinfo.h		udiskslinuxfsinfo.c		\
 	udisksbasejob.h			udisksbasejob.c			\
@@ -66,15 +68,16 @@ libudisks_daemon_la_SOURCES =						\
 	udiskssimplejob.h		udiskssimplejob.c		\
 	udisksmount.h			udisksmount.c			\
 	udisksmountmonitor.h		udisksmountmonitor.c		\
-	udiskspersistentstore.h		udiskspersistentstore.c		\
 	udisksdaemonutil.h		udisksdaemonutil.c		\
 	udiskslogging.h			udiskslogging.c			\
-	udiskscleanup.h			udiskscleanup.c			\
+	udisksstate.h			udisksstate.c			\
 	udisksprivate.h							\
 	udisksfstabentry.h		udisksfstabentry.c		\
 	udisksfstabmonitor.h		udisksfstabmonitor.c		\
 	udiskscrypttabentry.h		udiskscrypttabentry.c		\
 	udiskscrypttabmonitor.h		udiskscrypttabmonitor.c		\
+	udiskslinuxdevice.h		udiskslinuxdevice.c		\
+	udisksata.h			udisksata.c			\
 	$(BUILT_SOURCES)						\
 	$(NULL)
 

@@ -40,6 +40,20 @@ UDisksManager
 @arg4: 
 @Returns: 
 
+<!-- ##### SIGNAL UDisksManager::handle-mdraid-create ##### -->
+<para>
+
+</para>
+
+@udisksmanager: the object which received the signal.
+@arg1: 
+@arg2: 
+@arg3: 
+@arg4: 
+@arg5: 
+@arg6: 
+@Returns: 
+
 <!-- ##### ARG UDisksManager:version ##### -->
 <para>
 
@@ -53,6 +67,7 @@ UDisksManager
 @parent_iface: 
 @handle_loop_setup: 
 @get_version: 
+@handle_mdraid_create: 
 
 <!-- ##### FUNCTION udisks_manager_interface_info ##### -->
 <para>
@@ -152,6 +167,61 @@ UDisksManager
 @invocation: 
 @fd_list: 
 @resulting_device: 
+
+
+<!-- ##### FUNCTION udisks_manager_call_mdraid_create ##### -->
+<para>
+
+</para>
+
+@proxy: 
+@arg_blocks: 
+@arg_level: 
+@arg_name: 
+@arg_chunk: 
+@arg_options: 
+@cancellable: 
+@callback: 
+@user_data: 
+
+
+<!-- ##### FUNCTION udisks_manager_call_mdraid_create_finish ##### -->
+<para>
+
+</para>
+
+@proxy: 
+@out_resulting_array: 
+@res: 
+@error: 
+@Returns: 
+
+
+<!-- ##### FUNCTION udisks_manager_call_mdraid_create_sync ##### -->
+<para>
+
+</para>
+
+@proxy: 
+@arg_blocks: 
+@arg_level: 
+@arg_name: 
+@arg_chunk: 
+@arg_options: 
+@out_resulting_array: 
+@cancellable: 
+@error: 
+@Returns: 
+
+
+<!-- ##### FUNCTION udisks_manager_complete_mdraid_create ##### -->
+<para>
+
+</para>
+
+@object: 
+@invocation: 
+@resulting_array: 
 
 
 <!-- ##### STRUCT UDisksManagerProxy ##### -->

@@ -37,6 +37,9 @@ udisks_client_peek_object
 udisks_client_get_object_manager
 udisks_client_get_manager
 udisks_client_settle
+udisks_client_queue_changed
+udisks_client_get_jobs_for_object
+udisks_client_get_job_description
 udisks_client_get_block_for_dev
 udisks_client_get_block_for_label
 udisks_client_get_block_for_uuid
@@ -46,10 +49,14 @@ udisks_client_get_cleartext_block
 udisks_client_get_partition_table
 udisks_client_get_loop_for_block
 udisks_client_get_partitions
-udisks_client_get_jobs_for_object
-udisks_client_get_job_description
-<SUBSECTION>
+udisks_client_get_drive_siblings
+udisks_client_get_block_for_mdraid
+udisks_client_get_all_blocks_for_mdraid
+udisks_client_get_members_for_mdraid
+udisks_client_get_mdraid_for_block
+udisks_client_get_object_info
 udisks_client_get_drive_info
+<SUBSECTION>
 udisks_client_get_partition_info
 <SUBSECTION>
 udisks_client_get_size_for_display
@@ -72,8 +79,31 @@ UDISKS_IS_CLIENT
 UDISKS_TYPE_PARTITION_TYPE_INFO_FLAGS
 <SUBSECTION Private>
 udisks_client_get_type
+udisks_object_info_get_type
 udisks_partition_type_info_get_type
 udisks_partition_type_info_flags_get_type
+</SECTION>
+
+<SECTION>
+<FILE>udisksobjectinfo</FILE>
+<TITLE>UDisksObjectInfo</TITLE>
+UDisksObjectInfo
+udisks_object_info_get_object
+udisks_object_info_get_name
+udisks_object_info_get_description
+udisks_object_info_get_icon
+udisks_object_info_get_icon_symbolic
+udisks_object_info_get_media_description
+udisks_object_info_get_media_icon
+udisks_object_info_get_media_icon_symbolic
+udisks_object_info_get_one_liner
+udisks_object_info_get_sort_key
+<SUBSECTION Standard>
+UDISKS_TYPE_OBJECT_INFO
+UDISKS_OBJECT_INFO
+UDISKS_IS_OBJECT_INFO
+<SUBSECTION Private>
+udisks_object_info_get_type
 </SECTION>
 
 <SECTION>
@@ -87,9 +117,8 @@ udisks_daemon_get_mount_monitor
 udisks_daemon_get_fstab_monitor
 udisks_daemon_get_crypttab_monitor
 udisks_daemon_get_linux_provider
-udisks_daemon_get_persistent_store
 udisks_daemon_get_authority
-udisks_daemon_get_cleanup
+udisks_daemon_get_state
 UDisksDaemonWaitFunc
 udisks_daemon_wait_for_object_sync
 udisks_daemon_get_objects
@@ -187,6 +216,7 @@ udisks_linux_drive_object_get_daemon
 udisks_linux_drive_object_get_block
 udisks_linux_drive_object_get_device
 udisks_linux_drive_object_get_devices
+udisks_linux_drive_object_get_siblings
 udisks_linux_drive_object_housekeeping
 udisks_linux_drive_object_is_not_in_use
 <SUBSECTION Standard>
@@ -288,47 +318,54 @@ udisks_mount_monitor_get_type
 </SECTION>
 
 <SECTION>
-<FILE>udiskspersistentstore</FILE>
-<TITLE>UDisksPersistentStore</TITLE>
-UDisksPersistentStore
-udisks_persistent_store_new
-udisks_persistent_store_get_path
-udisks_persistent_store_get_temp_path
-UDisksPersistentFlags
-udisks_persistent_store_get
-udisks_persistent_store_set
+<FILE>udisksstate</FILE>
+<TITLE>UDisksState</TITLE>
+UDisksState
+udisks_state_new
+udisks_state_start_cleanup
+udisks_state_stop_cleanup
+udisks_state_check
+udisks_state_get_daemon
+<SUBSECTION>
+udisks_state_add_mounted_fs
+udisks_state_find_mounted_fs
+<SUBSECTION>
+udisks_state_add_unlocked_luks
+udisks_state_find_unlocked_luks
+<SUBSECTION>
+udisks_state_add_loop
+udisks_state_has_loop
+<SUBSECTION>
+udisks_state_add_mdraid
+udisks_state_has_mdraid
 <SUBSECTION Standard>
-UDISKS_TYPE_PERSISTENT_STORE
-UDISKS_PERSISTENT_STORE
-UDISKS_IS_PERSISTENT_STORE
+UDISKS_TYPE_STATE
+UDISKS_STATE
+UDISKS_IS_STATE
 <SUBSECTION Private>
-udisks_persistent_store_get_type
+udisks_state_get_type
 </SECTION>
 
 <SECTION>
-<FILE>udiskscleanup</FILE>
-<TITLE>UDisksCleanup</TITLE>
-UDisksCleanup
-udisks_cleanup_new
-udisks_cleanup_start
-udisks_cleanup_stop
-udisks_cleanup_check
-udisks_cleanup_get_daemon
-<SUBSECTION>
-udisks_cleanup_add_mounted_fs
-udisks_cleanup_find_mounted_fs
-<SUBSECTION>
-udisks_cleanup_add_unlocked_luks
-udisks_cleanup_find_unlocked_luks
-<SUBSECTION>
-udisks_cleanup_add_loop
-udisks_cleanup_has_loop
+<FILE>udisksata</FILE>
+UDisksAtaCommandProtocol
+UDisksAtaCommandInput
+UDisksAtaCommandOutput
+udisks_ata_send_command_sync
+</SECTION>
+
+<SECTION>
+<FILE>udiskslinuxdevice</FILE>
+<TITLE>UDisksLinuxDevice</TITLE>
+UDisksLinuxDevice
+udisks_linux_device_new_sync
+udisks_linux_device_reprobe_sync
 <SUBSECTION Standard>
-UDISKS_TYPE_CLEANUP
-UDISKS_CLEANUP
-UDISKS_IS_CLEANUP
+UDISKS_TYPE_LINUX_DEVICE
+UDISKS_LINUX_DEVICE
+UDISKS_IS_LINUX_DEVICE
 <SUBSECTION Private>
-udisks_cleanup_get_type
+udisks_linux_device_get_type
 </SECTION>
 
 <SECTION>
@@ -352,6 +389,8 @@ udisks_daemon_util_hexdump
 udisks_daemon_util_hexdump_debug
 udisks_daemon_util_file_set_contents
 udisks_daemon_util_on_same_seat
+udisks_daemon_util_get_free_mdraid_device
+udisks_ata_identify_get_word
 </SECTION>
 
 <SECTION>
@@ -453,6 +492,7 @@ udisks_object_get_loop
 udisks_object_get_manager
 udisks_object_get_partition
 udisks_object_get_partition_table
+udisks_object_get_mdraid
 udisks_object_peek_block
 udisks_object_peek_drive
 udisks_object_peek_drive_ata
@@ -464,6 +504,7 @@ udisks_object_peek_loop
 udisks_object_peek_manager
 udisks_object_peek_partition
 udisks_object_peek_partition_table
+udisks_object_peek_mdraid
 UDisksObjectProxy
 UDisksObjectProxyClass
 udisks_object_proxy_new
@@ -481,6 +522,7 @@ udisks_object_skeleton_set_loop
 udisks_object_skeleton_set_manager
 udisks_object_skeleton_set_partition
 udisks_object_skeleton_set_partition_table
+udisks_object_skeleton_set_mdraid
 <SUBSECTION Standard>
 udisks_object_get_type
 udisks_object_proxy_get_type
@@ -541,6 +583,10 @@ udisks_drive_call_set_configuration
 udisks_drive_call_set_configuration_finish
 udisks_drive_call_set_configuration_sync
 udisks_drive_complete_set_configuration
+udisks_drive_call_power_off
+udisks_drive_call_power_off_finish
+udisks_drive_call_power_off_sync
+udisks_drive_complete_power_off
 udisks_drive_get_connection_bus
 udisks_drive_get_removable
 udisks_drive_get_ejectable
@@ -568,6 +614,8 @@ udisks_drive_get_wwn
 udisks_drive_get_sort_key
 udisks_drive_get_configuration
 udisks_drive_get_id
+udisks_drive_get_can_power_off
+udisks_drive_get_sibling_id
 udisks_drive_dup_connection_bus
 udisks_drive_dup_seat
 udisks_drive_dup_media
@@ -580,6 +628,7 @@ udisks_drive_dup_wwn
 udisks_drive_dup_sort_key
 udisks_drive_dup_configuration
 udisks_drive_dup_id
+udisks_drive_dup_sibling_id
 udisks_drive_set_connection_bus
 udisks_drive_set_removable
 udisks_drive_set_ejectable
@@ -607,6 +656,8 @@ udisks_drive_set_wwn
 udisks_drive_set_sort_key
 udisks_drive_set_configuration
 udisks_drive_set_id
+udisks_drive_set_can_power_off
+udisks_drive_set_sibling_id
 UDisksDriveProxy
 UDisksDriveProxyClass
 udisks_drive_proxy_new
@@ -664,6 +715,10 @@ udisks_drive_ata_call_smart_selftest_start
 udisks_drive_ata_call_smart_selftest_start_finish
 udisks_drive_ata_call_smart_selftest_start_sync
 udisks_drive_ata_complete_smart_selftest_start
+udisks_drive_ata_call_smart_set_enabled
+udisks_drive_ata_call_smart_set_enabled_finish
+udisks_drive_ata_call_smart_set_enabled_sync
+udisks_drive_ata_complete_smart_set_enabled
 udisks_drive_ata_call_pm_get_state
 udisks_drive_ata_call_pm_get_state_finish
 udisks_drive_ata_call_pm_get_state_sync
@@ -699,6 +754,8 @@ udisks_drive_ata_get_apm_enabled
 udisks_drive_ata_get_apm_supported
 udisks_drive_ata_get_pm_enabled
 udisks_drive_ata_get_pm_supported
+udisks_drive_ata_get_write_cache_enabled
+udisks_drive_ata_get_write_cache_supported
 udisks_drive_ata_get_security_enhanced_erase_unit_minutes
 udisks_drive_ata_get_security_erase_unit_minutes
 udisks_drive_ata_get_security_frozen
@@ -720,6 +777,8 @@ udisks_drive_ata_set_apm_enabled
 udisks_drive_ata_set_apm_supported
 udisks_drive_ata_set_pm_enabled
 udisks_drive_ata_set_pm_supported
+udisks_drive_ata_set_write_cache_enabled
+udisks_drive_ata_set_write_cache_supported
 udisks_drive_ata_set_security_enhanced_erase_unit_minutes
 udisks_drive_ata_set_security_erase_unit_minutes
 udisks_drive_ata_set_security_frozen
@@ -771,6 +830,8 @@ udisks_job_complete_cancel
 udisks_job_emit_completed
 udisks_job_get_expected_end_time
 udisks_job_get_progress
+udisks_job_get_bytes
+udisks_job_get_rate
 udisks_job_get_start_time
 udisks_job_get_objects
 udisks_job_get_cancelable
@@ -781,6 +842,8 @@ udisks_job_dup_objects
 udisks_job_dup_operation
 udisks_job_set_expected_end_time
 udisks_job_set_progress
+udisks_job_set_bytes
+udisks_job_set_rate
 udisks_job_set_start_time
 udisks_job_set_objects
 udisks_job_set_cancelable
@@ -1035,6 +1098,7 @@ udisks_block_get_id_uuid
 udisks_block_get_id_version
 udisks_block_get_device_number
 udisks_block_get_preferred_device
+udisks_block_get_id
 udisks_block_get_size
 udisks_block_get_read_only
 udisks_block_get_symlinks
@@ -1044,6 +1108,9 @@ udisks_block_get_hint_ignore
 udisks_block_get_hint_auto
 udisks_block_get_hint_name
 udisks_block_get_hint_icon_name
+udisks_block_get_hint_symbolic_icon_name
+udisks_block_get_mdraid
+udisks_block_get_mdraid_member
 udisks_block_dup_configuration
 udisks_block_dup_crypto_backing_device
 udisks_block_dup_device
@@ -1054,9 +1121,13 @@ udisks_block_dup_id_usage
 udisks_block_dup_id_uuid
 udisks_block_dup_id_version
 udisks_block_dup_preferred_device
+udisks_block_dup_id
 udisks_block_dup_symlinks
 udisks_block_dup_hint_name
 udisks_block_dup_hint_icon_name
+udisks_block_dup_hint_symbolic_icon_name
+udisks_block_dup_mdraid
+udisks_block_dup_mdraid_member
 udisks_block_set_configuration
 udisks_block_set_crypto_backing_device
 udisks_block_set_device
@@ -1068,6 +1139,7 @@ udisks_block_set_id_uuid
 udisks_block_set_id_version
 udisks_block_set_device_number
 udisks_block_set_preferred_device
+udisks_block_set_id
 udisks_block_set_size
 udisks_block_set_read_only
 udisks_block_set_symlinks
@@ -1077,6 +1149,9 @@ udisks_block_set_hint_ignore
 udisks_block_set_hint_auto
 udisks_block_set_hint_name
 udisks_block_set_hint_icon_name
+udisks_block_set_hint_symbolic_icon_name
+udisks_block_set_mdraid
+udisks_block_set_mdraid_member
 UDisksBlockProxy
 UDisksBlockProxyClass
 udisks_block_proxy_new
@@ -1125,6 +1200,10 @@ udisks_manager_call_loop_setup
 udisks_manager_call_loop_setup_finish
 udisks_manager_call_loop_setup_sync
 udisks_manager_complete_loop_setup
+udisks_manager_call_mdraid_create
+udisks_manager_call_mdraid_create_finish
+udisks_manager_call_mdraid_create_sync
+udisks_manager_complete_mdraid_create
 UDisksManagerProxy
 UDisksManagerProxyClass
 udisks_manager_proxy_new
@@ -1414,6 +1493,7 @@ udisks_partition_table_skeleton_get_type
 UDisksLinuxPartition
 udisks_linux_partition_new
 udisks_linux_partition_update
+udisks_linux_partition_set_type_sync
 <SUBSECTION Standard>
 UDISKS_LINUX_PARTITION
 UDISKS_IS_LINUX_PARTITION
@@ -1433,4 +1513,132 @@ UDISKS_IS_LINUX_PARTITION_TABLE
 UDISKS_TYPE_LINUX_PARTITION_TABLE
 <SUBSECTION Private>
 udisks_linux_partition_table_get_type
+</SECTION>
+
+<SECTION>
+<FILE>udiskslinuxmdraidobject</FILE>
+UDisksLinuxMDRaidObject
+udisks_linux_mdraid_object_new
+udisks_linux_mdraid_object_uevent
+udisks_linux_mdraid_object_have_devices
+udisks_linux_mdraid_object_get_daemon
+udisks_linux_mdraid_object_get_device
+udisks_linux_mdraid_object_get_members
+udisks_linux_mdraid_object_get_uuid
+<SUBSECTION Standard>
+UDISKS_LINUX_MDRAID_OBJECT
+UDISKS_IS_LINUX_MDRAID_OBJECT
+UDISKS_TYPE_LINUX_MDRAID_OBJECT
+<SUBSECTION Private>
+udisks_linux_mdraid_object_get_type
+</SECTION>
+
+<SECTION>
+<FILE>udiskslinuxmdraid</FILE>
+UDisksLinuxMDRaid
+udisks_linux_mdraid_new
+udisks_linux_mdraid_update
+<SUBSECTION Standard>
+UDISKS_LINUX_MDRAID
+UDISKS_IS_LINUX_MDRAID
+UDISKS_TYPE_LINUX_MDRAID
+<SUBSECTION Private>
+udisks_linux_mdraid_get_type
+</SECTION>
+
+<SECTION>
+<FILE>UDisksMDRaid</FILE>
+UDisksMDRaid
+UDisksMDRaidIface
+udisks_mdraid_interface_info
+udisks_mdraid_override_properties
+udisks_mdraid_call_remove_device
+udisks_mdraid_call_remove_device_finish
+udisks_mdraid_call_remove_device_sync
+udisks_mdraid_complete_remove_device
+udisks_mdraid_call_add_device
+udisks_mdraid_call_add_device_finish
+udisks_mdraid_call_add_device_sync
+udisks_mdraid_complete_add_device
+udisks_mdraid_call_start
+udisks_mdraid_call_start_finish
+udisks_mdraid_call_start_sync
+udisks_mdraid_complete_start
+udisks_mdraid_call_stop
+udisks_mdraid_call_stop_finish
+udisks_mdraid_call_stop_sync
+udisks_mdraid_complete_stop
+udisks_mdraid_call_set_bitmap_location
+udisks_mdraid_call_set_bitmap_location_finish
+udisks_mdraid_call_set_bitmap_location_sync
+udisks_mdraid_complete_set_bitmap_location
+udisks_mdraid_call_request_sync_action
+udisks_mdraid_call_request_sync_action_finish
+udisks_mdraid_call_request_sync_action_sync
+udisks_mdraid_complete_request_sync_action
+udisks_mdraid_get_active_devices
+udisks_mdraid_get_bitmap_location
+udisks_mdraid_get_chunk_size
+udisks_mdraid_get_degraded
+udisks_mdraid_get_level
+udisks_mdraid_get_name
+udisks_mdraid_get_num_devices
+udisks_mdraid_get_size
+udisks_mdraid_get_sync_action
+udisks_mdraid_get_sync_completed
+udisks_mdraid_get_sync_rate
+udisks_mdraid_get_sync_remaining_time
+udisks_mdraid_get_uuid
+udisks_mdraid_dup_active_devices
+udisks_mdraid_dup_bitmap_location
+udisks_mdraid_dup_level
+udisks_mdraid_dup_name
+udisks_mdraid_dup_sync_action
+udisks_mdraid_dup_uuid
+udisks_mdraid_set_active_devices
+udisks_mdraid_set_bitmap_location
+udisks_mdraid_set_chunk_size
+udisks_mdraid_set_degraded
+udisks_mdraid_set_level
+udisks_mdraid_set_name
+udisks_mdraid_set_num_devices
+udisks_mdraid_set_size
+udisks_mdraid_set_sync_action
+udisks_mdraid_set_sync_completed
+udisks_mdraid_set_sync_rate
+udisks_mdraid_set_sync_remaining_time
+udisks_mdraid_set_uuid
+UDisksMDRaidProxy
+UDisksMDRaidProxyClass
+udisks_mdraid_proxy_new
+udisks_mdraid_proxy_new_finish
+udisks_mdraid_proxy_new_sync
+udisks_mdraid_proxy_new_for_bus
+udisks_mdraid_proxy_new_for_bus_finish
+udisks_mdraid_proxy_new_for_bus_sync
+UDisksMDRaidSkeleton
+UDisksMDRaidSkeletonClass
+udisks_mdraid_skeleton_new
+<SUBSECTION Standard>
+UDISKS_TYPE_MDRAID
+UDISKS_IS_MDRAID
+UDISKS_MDRAID
+UDISKS_MDRAID_GET_IFACE
+UDISKS_TYPE_MDRAID_PROXY
+UDISKS_IS_MDRAID_PROXY
+UDISKS_IS_MDRAID_PROXY_CLASS
+UDISKS_MDRAID_PROXY
+UDISKS_MDRAID_PROXY_CLASS
+UDISKS_MDRAID_PROXY_GET_CLASS
+UDISKS_TYPE_MDRAID_SKELETON
+UDISKS_IS_MDRAID_SKELETON
+UDISKS_IS_MDRAID_SKELETON_CLASS
+UDISKS_MDRAID_SKELETON
+UDISKS_MDRAID_SKELETON_CLASS
+UDISKS_MDRAID_SKELETON_GET_CLASS
+UDisksMDRaidProxyPrivate
+UDisksMDRaidSkeletonPrivate
+udisks_mdraid_get_type
+udisks_mdraid_proxy_get_type
+udisks_mdraid_skeleton_get_type
 </SECTION>

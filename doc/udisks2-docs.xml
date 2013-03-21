@@ -116,6 +116,24 @@
         </para>
       </sect1>
 
+      <sect1 id="ref-dbus-md-raid">
+        <title>The /org/freedesktop/UDisks2/mdraid/* objects</title>
+        <para>
+          Objects with object paths starting with
+          <literal>/org/freedesktop/UDisks2/mdraid/</literal>
+          represent <ulink url="https://raid.wiki.kernel.org/index.php/Linux_Raid">Linux Software RAID arrays</ulink>.
+          Such objects implement the
+          <link linkend="gdbus-interface-org-freedesktop-UDisks2-MDRaid.top_of_page">org.freedesktop.UDisks2.MDRaid</link>
+          D-Bus interface.
+        </para>
+        <para>
+          These objects should not to be confused with
+          <link linkend="ref-dbus-block-devices">block device</link>
+          objects (which are used for low-level block devices the OS
+          knows about).
+        </para>
+      </sect1>
+
       <sect1 id="ref-dbus-jobs">
         <title>The /org/freedesktop/UDisks2/jobs/* objects</title>
         <para>
@@ -324,6 +342,7 @@
       <xi:include href="../udisks/udisks-generated-doc-org.freedesktop.UDisks2.Manager.xml"/>
       <xi:include href="../udisks/udisks-generated-doc-org.freedesktop.UDisks2.Drive.xml"/>
       <xi:include href="../udisks/udisks-generated-doc-org.freedesktop.UDisks2.Drive.Ata.xml"/>
+      <xi:include href="../udisks/udisks-generated-doc-org.freedesktop.UDisks2.MDRaid.xml"/>
       <xi:include href="../udisks/udisks-generated-doc-org.freedesktop.UDisks2.Block.xml"/>
       <xi:include href="../udisks/udisks-generated-doc-org.freedesktop.UDisks2.Partition.xml"/>
       <xi:include href="../udisks/udisks-generated-doc-org.freedesktop.UDisks2.PartitionTable.xml"/>
@@ -338,6 +357,7 @@
   <part id="ref-library">
     <title>Library API Reference</title>
       <xi:include href="xml/udisksclient.xml"/>
+      <xi:include href="xml/udisksobjectinfo.xml"/>
       <xi:include href="xml/udiskserror.xml"/>
     <chapter id="ref-library-generated">
       <title>Generated Code</title>
@@ -346,6 +366,7 @@
       <xi:include href="xml/UDisksManager.xml"/>
       <xi:include href="xml/UDisksDrive.xml"/>
       <xi:include href="xml/UDisksDriveAta.xml"/>
+      <xi:include href="xml/UDisksMDRaid.xml"/>
       <xi:include href="xml/UDisksJob.xml"/>
       <xi:include href="xml/UDisksBlock.xml"/>
       <xi:include href="xml/UDisksPartition.xml"/>
@@ -365,8 +386,8 @@
       <xi:include href="xml/udiskslogging.xml"/>
       <xi:include href="xml/udisksdaemon.xml"/>
       <xi:include href="xml/udisksprovider.xml"/>
-      <xi:include href="xml/udiskscleanup.xml"/>
-      <xi:include href="xml/udiskspersistentstore.xml"/>
+      <xi:include href="xml/udisksstate.xml"/>
+      <xi:include href="xml/udisksata.xml"/>
     </chapter>
     <chapter id="ref-daemon-monitoring">
       <title>State and Configuration</title>
@@ -385,12 +406,18 @@
       <title>Linux-specific types</title>
       <xi:include href="xml/udiskslinuxmanager.xml"/>
       <xi:include href="xml/udiskslinuxprovider.xml"/>
+      <xi:include href="xml/udiskslinuxdevice.xml"/>
     </chapter>
     <chapter id="ref-daemon-drives">
       <title>Drives on Linux</title>
       <xi:include href="xml/udiskslinuxdrive.xml"/>
       <xi:include href="xml/udiskslinuxdriveata.xml"/>
       <xi:include href="xml/udiskslinuxdriveobject.xml"/>
+    </chapter>
+    <chapter id="ref-daemon-mdraid">
+      <title>Linux RAID</title>
+      <xi:include href="xml/udiskslinuxmdraid.xml"/>
+      <xi:include href="xml/udiskslinuxmdraidobject.xml"/>
     </chapter>
     <chapter id="ref-daemon-block-devices">
       <title>Block devices on Linux</title>
@@ -405,8 +432,18 @@
     </chapter>
   </part>
 
-  <index>
+  <index id="api-index">
     <title>Index</title>
+  </index>
+
+  <index id="api-index-deprecated" role="deprecated">
+    <title>Index of deprecated symbols</title>
+    <xi:include href="xml/api-index-deprecated.xml"><xi:fallback /></xi:include>
+  </index>
+
+  <index id="api-index-2.1" role="2.1">
+    <title>Index of new symbols in 2.1</title>
+    <xi:include href="xml/api-index-2.1.xml"><xi:fallback /></xi:include>
   </index>
 
   <chapter id="gio-hierarchy">

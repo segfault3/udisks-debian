@@ -45,6 +45,12 @@
 <a class="link" href="UDisksPartition.html" title="UDisksPartition"><span class="returnvalue">UDisksPartition</span></a> *   <a class="link" href="UDisksLinuxPartition.html#udisks-linux-partition-new" title="udisks_linux_partition_new ()">udisks_linux_partition_new</a>          (<em class="parameter"><code><span class="type">void</span></code></em>);
 <span class="returnvalue">void</span>                <a class="link" href="UDisksLinuxPartition.html#udisks-linux-partition-update" title="udisks_linux_partition_update ()">udisks_linux_partition_update</a>       (<em class="parameter"><code><a class="link" href="UDisksLinuxPartition.html" title="UDisksLinuxPartition"><span class="type">UDisksLinuxPartition</span></a> *partition</code></em>,
                                                          <em class="parameter"><code><a class="link" href="UDisksLinuxBlockObject.html" title="UDisksLinuxBlockObject"><span class="type">UDisksLinuxBlockObject</span></a> *object</code></em>);
+<span class="returnvalue">gboolean</span>            <a class="link" href="UDisksLinuxPartition.html#udisks-linux-partition-set-type-sync" title="udisks_linux_partition_set_type_sync ()">udisks_linux_partition_set_type_sync</a>
+                                                        (<em class="parameter"><code><a class="link" href="UDisksLinuxPartition.html" title="UDisksLinuxPartition"><span class="type">UDisksLinuxPartition</span></a> *partition</code></em>,
+                                                         <em class="parameter"><code>const <span class="type">gchar</span> *type</code></em>,
+                                                         <em class="parameter"><code><span class="type">uid_t</span> caller_uid</code></em>,
+                                                         <em class="parameter"><code><span class="type">GCancellable</span> *cancellable</code></em>,
+                                                         <em class="parameter"><code><span class="type">GError</span> **error</code></em>);
 </pre>
 </div>
 <div class="refsect1">
@@ -118,6 +124,53 @@ Updates the interface.
 <tr>
 <td><p><span class="term"><em class="parameter"><code>object</code></em> :</span></p></td>
 <td>The enclosing <a class="link" href="UDisksLinuxBlockObject.html" title="UDisksLinuxBlockObject"><span class="type">UDisksLinuxBlockObject</span></a> instance.</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="udisks-linux-partition-set-type-sync"></a><h3>udisks_linux_partition_set_type_sync ()</h3>
+<pre class="programlisting"><span class="returnvalue">gboolean</span>            udisks_linux_partition_set_type_sync
+                                                        (<em class="parameter"><code><a class="link" href="UDisksLinuxPartition.html" title="UDisksLinuxPartition"><span class="type">UDisksLinuxPartition</span></a> *partition</code></em>,
+                                                         <em class="parameter"><code>const <span class="type">gchar</span> *type</code></em>,
+                                                         <em class="parameter"><code><span class="type">uid_t</span> caller_uid</code></em>,
+                                                         <em class="parameter"><code><span class="type">GCancellable</span> *cancellable</code></em>,
+                                                         <em class="parameter"><code><span class="type">GError</span> **error</code></em>);</pre>
+<p>
+Sets the partition type. The calling thread is blocked while the
+operation is pending.
+</p>
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
+<col align="left" valign="top">
+<col>
+</colgroup>
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>partition</code></em> :</span></p></td>
+<td>A <a class="link" href="UDisksLinuxPartition.html" title="UDisksLinuxPartition"><span class="type">UDisksLinuxPartition</span></a>.</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>type</code></em> :</span></p></td>
+<td>The partition type to set.</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>caller_uid</code></em> :</span></p></td>
+<td>The uid of the process requesting this change or 0.</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>cancellable</code></em> :</span></p></td>
+<td>A <span class="type">GCancellable</span> or <code class="literal">NULL</code>.</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>error</code></em> :</span></p></td>
+<td>Return location for error or <code class="literal">NULL</code>.</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td>
+<code class="literal">TRUE</code> if the operation succeeded, <code class="literal">FALSE</code> if error is set.</td>
 </tr>
 </tbody>
 </table></div>

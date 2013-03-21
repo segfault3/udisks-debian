@@ -10,7 +10,9 @@ src/udiskslinuxencrypted.c
 src/udiskslinuxfilesystem.c
 src/udiskslinuxloop.c
 src/udiskslinuxmanager.c
+src/udiskslinuxmdraid.c
 src/udiskslinuxpartition.c
 src/udiskslinuxpartitiontable.c
 src/udiskslinuxswapspace.c
 udisks/udisksclient.c
+udisks/udisksobjectinfo.c

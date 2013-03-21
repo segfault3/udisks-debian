@@ -45,6 +45,7 @@ UDisksClient       *udisks_client_new_sync           (GCancellable        *cance
 GDBusObjectManager *udisks_client_get_object_manager (UDisksClient        *client);
 UDisksManager      *udisks_client_get_manager        (UDisksClient        *client);
 void                udisks_client_settle             (UDisksClient        *client);
+void                udisks_client_queue_changed      (UDisksClient        *client);
 
 UDisksObject       *udisks_client_get_object          (UDisksClient        *client,
                                                        const gchar         *object_path);
@@ -63,9 +64,19 @@ UDisksBlock        *udisks_client_get_block_for_drive (UDisksClient        *clie
                                                        gboolean             get_physical);
 UDisksDrive        *udisks_client_get_drive_for_block (UDisksClient        *client,
                                                        UDisksBlock         *block);
+UDisksMDRaid       *udisks_client_get_mdraid_for_block (UDisksClient        *client,
+                                                        UDisksBlock         *block);
 
 UDisksBlock        *udisks_client_get_cleartext_block (UDisksClient        *client,
                                                        UDisksBlock         *block);
+
+UDisksBlock        *udisks_client_get_block_for_mdraid (UDisksClient       *client,
+                                                        UDisksMDRaid       *raid);
+GList              *udisks_client_get_all_blocks_for_mdraid (UDisksClient  *client,
+                                                             UDisksMDRaid  *raid);
+
+GList              *udisks_client_get_members_for_mdraid (UDisksClient       *client,
+                                                          UDisksMDRaid       *raid);
 
 UDisksPartitionTable *udisks_client_get_partition_table (UDisksClient        *client,
                                                          UDisksPartition     *partition);
@@ -76,9 +87,13 @@ UDisksLoop         *udisks_client_get_loop_for_block  (UDisksClient  *client,
 GList              *udisks_client_get_partitions      (UDisksClient        *client,
                                                        UDisksPartitionTable *table);
 
+GList              *udisks_client_get_drive_siblings  (UDisksClient       *client,
+                                                       UDisksDrive        *drive);
+
 GList              *udisks_client_get_jobs_for_object (UDisksClient        *client,
                                                        UDisksObject        *object);
 
+G_DEPRECATED_FOR(udisks_client_get_object_info)
 void                udisks_client_get_drive_info      (UDisksClient        *client,
                                                        UDisksDrive         *drive,
                                                        gchar              **out_name,
@@ -86,6 +101,9 @@ void                udisks_client_get_drive_info      (UDisksClient        *clie
                                                        GIcon              **out_drive_icon,
                                                        gchar              **out_media_description,
                                                        GIcon              **out_media_icon);
+
+UDisksObjectInfo   *udisks_client_get_object_info     (UDisksClient        *client,
+                                                       UDisksObject        *object);
 
 gchar              *udisks_client_get_partition_info  (UDisksClient        *client,
                                                        UDisksPartition     *partition);
@@ -141,7 +159,8 @@ gchar *udisks_client_get_job_description (UDisksClient   *client,
  * @table_type into a logical subsets. It is typically only used in
  * user interfaces where the partition type is selected.
  *
- * This struct may grow in the future.
+ * This struct may grow in the future without it being considered an
+ * ABI break.
  */
 struct _UDisksPartitionTypeInfo
 {

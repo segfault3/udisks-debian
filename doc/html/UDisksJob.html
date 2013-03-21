@@ -6,7 +6,7 @@
 <meta name="generator" content="DocBook XSL Stylesheets V1.77.1">
 <link rel="home" href="index.html" title="UDisks Reference Manual">
 <link rel="up" href="ref-library-generated.html" title="Generated Code">
-<link rel="prev" href="UDisksDriveAta.html" title="UDisksDriveAta">
+<link rel="prev" href="UDisksMDRaid.html" title="UDisksMDRaid">
 <link rel="next" href="UDisksBlock.html" title="UDisksBlock">
 <meta name="generator" content="GTK-Doc V1.18 (XML mode)">
 <link rel="stylesheet" href="style.css" type="text/css">
@@ -14,7 +14,7 @@
 <body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
 <table class="navigation" id="top" width="100%" summary="Navigation header" cellpadding="2" cellspacing="2">
 <tr valign="middle">
-<td><a accesskey="p" href="UDisksDriveAta.html"><img src="left.png" width="24" height="24" border="0" alt="Prev"></a></td>
+<td><a accesskey="p" href="UDisksMDRaid.html"><img src="left.png" width="24" height="24" border="0" alt="Prev"></a></td>
 <td><a accesskey="u" href="ref-library-generated.html"><img src="up.png" width="24" height="24" border="0" alt="Up"></a></td>
 <td><a accesskey="h" href="index.html"><img src="home.png" width="24" height="24" border="0" alt="Home"></a></td>
 <th width="100%" align="center">UDisks Reference Manual</th>
@@ -73,6 +73,8 @@ struct              <a class="link" href="UDisksJob.html#UDisksJobIface" title="
                                                          <em class="parameter"><code>const <span class="type">gchar</span> *arg_message</code></em>);
 <span class="returnvalue">guint64</span>             <a class="link" href="UDisksJob.html#udisks-job-get-expected-end-time" title="udisks_job_get_expected_end_time ()">udisks_job_get_expected_end_time</a>    (<em class="parameter"><code><a class="link" href="UDisksJob.html" title="UDisksJob"><span class="type">UDisksJob</span></a> *object</code></em>);
 <span class="returnvalue">gdouble</span>             <a class="link" href="UDisksJob.html#udisks-job-get-progress" title="udisks_job_get_progress ()">udisks_job_get_progress</a>             (<em class="parameter"><code><a class="link" href="UDisksJob.html" title="UDisksJob"><span class="type">UDisksJob</span></a> *object</code></em>);
+<span class="returnvalue">guint64</span>             <a class="link" href="UDisksJob.html#udisks-job-get-bytes" title="udisks_job_get_bytes ()">udisks_job_get_bytes</a>                (<em class="parameter"><code><a class="link" href="UDisksJob.html" title="UDisksJob"><span class="type">UDisksJob</span></a> *object</code></em>);
+<span class="returnvalue">guint64</span>             <a class="link" href="UDisksJob.html#udisks-job-get-rate" title="udisks_job_get_rate ()">udisks_job_get_rate</a>                 (<em class="parameter"><code><a class="link" href="UDisksJob.html" title="UDisksJob"><span class="type">UDisksJob</span></a> *object</code></em>);
 <span class="returnvalue">guint64</span>             <a class="link" href="UDisksJob.html#udisks-job-get-start-time" title="udisks_job_get_start_time ()">udisks_job_get_start_time</a>           (<em class="parameter"><code><a class="link" href="UDisksJob.html" title="UDisksJob"><span class="type">UDisksJob</span></a> *object</code></em>);
 const <span class="returnvalue">gchar</span> *const * <a class="link" href="UDisksJob.html#udisks-job-get-objects" title="udisks_job_get_objects ()">udisks_job_get_objects</a>             (<em class="parameter"><code><a class="link" href="UDisksJob.html" title="UDisksJob"><span class="type">UDisksJob</span></a> *object</code></em>);
 <span class="returnvalue">gboolean</span>            <a class="link" href="UDisksJob.html#udisks-job-get-cancelable" title="udisks_job_get_cancelable ()">udisks_job_get_cancelable</a>           (<em class="parameter"><code><a class="link" href="UDisksJob.html" title="UDisksJob"><span class="type">UDisksJob</span></a> *object</code></em>);
@@ -85,6 +87,10 @@ const <span class="returnvalue">gchar</span> *       <a class="link" href="UDisk
                                                          <em class="parameter"><code><span class="type">guint64</span> value</code></em>);
 <span class="returnvalue">void</span>                <a class="link" href="UDisksJob.html#udisks-job-set-progress" title="udisks_job_set_progress ()">udisks_job_set_progress</a>             (<em class="parameter"><code><a class="link" href="UDisksJob.html" title="UDisksJob"><span class="type">UDisksJob</span></a> *object</code></em>,
                                                          <em class="parameter"><code><span class="type">gdouble</span> value</code></em>);
+<span class="returnvalue">void</span>                <a class="link" href="UDisksJob.html#udisks-job-set-bytes" title="udisks_job_set_bytes ()">udisks_job_set_bytes</a>                (<em class="parameter"><code><a class="link" href="UDisksJob.html" title="UDisksJob"><span class="type">UDisksJob</span></a> *object</code></em>,
+                                                         <em class="parameter"><code><span class="type">guint64</span> value</code></em>);
+<span class="returnvalue">void</span>                <a class="link" href="UDisksJob.html#udisks-job-set-rate" title="udisks_job_set_rate ()">udisks_job_set_rate</a>                 (<em class="parameter"><code><a class="link" href="UDisksJob.html" title="UDisksJob"><span class="type">UDisksJob</span></a> *object</code></em>,
+                                                         <em class="parameter"><code><span class="type">guint64</span> value</code></em>);
 <span class="returnvalue">void</span>                <a class="link" href="UDisksJob.html#udisks-job-set-start-time" title="udisks_job_set_start_time ()">udisks_job_set_start_time</a>           (<em class="parameter"><code><a class="link" href="UDisksJob.html" title="UDisksJob"><span class="type">UDisksJob</span></a> *object</code></em>,
                                                          <em class="parameter"><code><span class="type">guint64</span> value</code></em>);
 <span class="returnvalue">void</span>                <a class="link" href="UDisksJob.html#udisks-job-set-objects" title="udisks_job_set_objects ()">udisks_job_set_objects</a>              (<em class="parameter"><code><a class="link" href="UDisksJob.html" title="UDisksJob"><span class="type">UDisksJob</span></a> *object</code></em>,
@@ -176,12 +182,14 @@ UDisksJob is implemented by
 <div class="refsect1">
 <a name="UDisksJob.properties"></a><h2>Properties</h2>
 <pre class="synopsis">
+  "<a class="link" href="UDisksJob.html#UDisksJob--bytes" title='The "bytes" property'>bytes</a>"                    <span class="type">guint64</span>               : Read / Write
   "<a class="link" href="UDisksJob.html#UDisksJob--cancelable" title='The "cancelable" property'>cancelable</a>"               <span class="type">gboolean</span>              : Read / Write
   "<a class="link" href="UDisksJob.html#UDisksJob--expected-end-time" title='The "expected-end-time" property'>expected-end-time</a>"        <span class="type">guint64</span>               : Read / Write
   "<a class="link" href="UDisksJob.html#UDisksJob--objects" title='The "objects" property'>objects</a>"                  <span class="type">GStrv</span>                 : Read / Write
   "<a class="link" href="UDisksJob.html#UDisksJob--operation" title='The "operation" property'>operation</a>"                <span class="type">gchar</span>*                : Read / Write
   "<a class="link" href="UDisksJob.html#UDisksJob--progress" title='The "progress" property'>progress</a>"                 <span class="type">gdouble</span>               : Read / Write
   "<a class="link" href="UDisksJob.html#UDisksJob--progress-valid" title='The "progress-valid" property'>progress-valid</a>"           <span class="type">gboolean</span>              : Read / Write
+  "<a class="link" href="UDisksJob.html#UDisksJob--rate" title='The "rate" property'>rate</a>"                     <span class="type">guint64</span>               : Read / Write
   "<a class="link" href="UDisksJob.html#UDisksJob--start-time" title='The "start-time" property'>start-time</a>"               <span class="type">guint64</span>               : Read / Write
   "<a class="link" href="UDisksJob.html#UDisksJob--started-by-uid" title='The "started-by-uid" property'>started-by-uid</a>"           <span class="type">guint</span>                 : Read / Write
 </pre>
@@ -241,6 +249,10 @@ Abstract interface type for the D-Bus interface <a class="link" href="gdbus-org.
     UDisksJob *object,
     gboolean arg_success,
     const gchar *arg_message);
+
+  guint64  (*get_bytes) (UDisksJob *object);
+
+  guint64  (*get_rate) (UDisksJob *object);
 };
 </pre>
 <p>
@@ -295,6 +307,14 @@ Virtual table for the D-Bus interface <a class="link" href="gdbus-org.freedeskto
 <tr>
 <td><p><span class="term"><em class="structfield"><code><a name="UDisksJobIface.completed"></a>completed</code></em> ()</span></p></td>
 <td>Handler for the <a class="link" href="UDisksJob.html#UDisksJob-completed" title='The "completed" signal'><span class="type">"completed"</span></a> signal.</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="structfield"><code><a name="UDisksJobIface.get-bytes"></a>get_bytes</code></em> ()</span></p></td>
+<td>Getter for the <a class="link" href="UDisksJob.html#UDisksJob--bytes" title='The "bytes" property'><span class="type">"bytes"</span></a> property.</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="structfield"><code><a name="UDisksJobIface.get-rate"></a>get_rate</code></em> ()</span></p></td>
+<td>Getter for the <a class="link" href="UDisksJob.html#UDisksJob--rate" title='The "rate" property'><span class="type">"rate"</span></a> property.</td>
 </tr>
 </tbody>
 </table></div>
@@ -590,6 +610,62 @@ Since this D-Bus property is readable, it is meaningful to use this function on 
 </div>
 <hr>
 <div class="refsect2">
+<a name="udisks-job-get-bytes"></a><h3>udisks_job_get_bytes ()</h3>
+<pre class="programlisting"><span class="returnvalue">guint64</span>             udisks_job_get_bytes                (<em class="parameter"><code><a class="link" href="UDisksJob.html" title="UDisksJob"><span class="type">UDisksJob</span></a> *object</code></em>);</pre>
+<p>
+Gets the value of the <a class="link" href="gdbus-org.freedesktop.UDisks2.Job.html#gdbus-property-org-freedesktop-UDisks2-Job.Bytes" title='The "Bytes" property'>"Bytes"</a> D-Bus property.
+</p>
+<p>
+Since this D-Bus property is readable, it is meaningful to use this function on both the client- and service-side.
+</p>
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
+<col align="left" valign="top">
+<col>
+</colgroup>
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>object</code></em> :</span></p></td>
+<td>A <a class="link" href="UDisksJob.html" title="UDisksJob"><span class="type">UDisksJob</span></a>.</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td>The property value.</td>
+</tr>
+</tbody>
+</table></div>
+<p class="since">Since 2.1</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="udisks-job-get-rate"></a><h3>udisks_job_get_rate ()</h3>
+<pre class="programlisting"><span class="returnvalue">guint64</span>             udisks_job_get_rate                 (<em class="parameter"><code><a class="link" href="UDisksJob.html" title="UDisksJob"><span class="type">UDisksJob</span></a> *object</code></em>);</pre>
+<p>
+Gets the value of the <a class="link" href="gdbus-org.freedesktop.UDisks2.Job.html#gdbus-property-org-freedesktop-UDisks2-Job.Rate" title='The "Rate" property'>"Rate"</a> D-Bus property.
+</p>
+<p>
+Since this D-Bus property is readable, it is meaningful to use this function on both the client- and service-side.
+</p>
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
+<col align="left" valign="top">
+<col>
+</colgroup>
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>object</code></em> :</span></p></td>
+<td>A <a class="link" href="UDisksJob.html" title="UDisksJob"><span class="type">UDisksJob</span></a>.</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td>The property value.</td>
+</tr>
+</tbody>
+</table></div>
+<p class="since">Since 2.1</p>
+</div>
+<hr>
+<div class="refsect2">
 <a name="udisks-job-get-start-time"></a><h3>udisks_job_get_start_time ()</h3>
 <pre class="programlisting"><span class="returnvalue">guint64</span>             udisks_job_get_start_time           (<em class="parameter"><code><a class="link" href="UDisksJob.html" title="UDisksJob"><span class="type">UDisksJob</span></a> *object</code></em>);</pre>
 <p>
@@ -875,6 +951,64 @@ Since this D-Bus property is not writable, it is only meaningful to use this fun
 </tr>
 </tbody>
 </table></div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="udisks-job-set-bytes"></a><h3>udisks_job_set_bytes ()</h3>
+<pre class="programlisting"><span class="returnvalue">void</span>                udisks_job_set_bytes                (<em class="parameter"><code><a class="link" href="UDisksJob.html" title="UDisksJob"><span class="type">UDisksJob</span></a> *object</code></em>,
+                                                         <em class="parameter"><code><span class="type">guint64</span> value</code></em>);</pre>
+<p>
+Sets the <a class="link" href="gdbus-org.freedesktop.UDisks2.Job.html#gdbus-property-org-freedesktop-UDisks2-Job.Bytes" title='The "Bytes" property'>"Bytes"</a> D-Bus property to <em class="parameter"><code>value</code></em>.
+</p>
+<p>
+Since this D-Bus property is not writable, it is only meaningful to use this function on the service-side.
+</p>
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
+<col align="left" valign="top">
+<col>
+</colgroup>
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>object</code></em> :</span></p></td>
+<td>A <a class="link" href="UDisksJob.html" title="UDisksJob"><span class="type">UDisksJob</span></a>.</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>value</code></em> :</span></p></td>
+<td>The value to set.</td>
+</tr>
+</tbody>
+</table></div>
+<p class="since">Since 2.1</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="udisks-job-set-rate"></a><h3>udisks_job_set_rate ()</h3>
+<pre class="programlisting"><span class="returnvalue">void</span>                udisks_job_set_rate                 (<em class="parameter"><code><a class="link" href="UDisksJob.html" title="UDisksJob"><span class="type">UDisksJob</span></a> *object</code></em>,
+                                                         <em class="parameter"><code><span class="type">guint64</span> value</code></em>);</pre>
+<p>
+Sets the <a class="link" href="gdbus-org.freedesktop.UDisks2.Job.html#gdbus-property-org-freedesktop-UDisks2-Job.Rate" title='The "Rate" property'>"Rate"</a> D-Bus property to <em class="parameter"><code>value</code></em>.
+</p>
+<p>
+Since this D-Bus property is not writable, it is only meaningful to use this function on the service-side.
+</p>
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
+<col align="left" valign="top">
+<col>
+</colgroup>
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>object</code></em> :</span></p></td>
+<td>A <a class="link" href="UDisksJob.html" title="UDisksJob"><span class="type">UDisksJob</span></a>.</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>value</code></em> :</span></p></td>
+<td>The value to set.</td>
+</tr>
+</tbody>
+</table></div>
+<p class="since">Since 2.1</p>
 </div>
 <hr>
 <div class="refsect2">
@@ -1421,6 +1555,19 @@ Creates a skeleton object for the D-Bus interface <a class="link" href="gdbus-or
 <div class="refsect1">
 <a name="UDisksJob.property-details"></a><h2>Property Details</h2>
 <div class="refsect2">
+<a name="UDisksJob--bytes"></a><h3>The <code class="literal">"bytes"</code> property</h3>
+<pre class="programlisting">  "bytes"                    <span class="type">guint64</span>               : Read / Write</pre>
+<p>
+Represents the D-Bus property <a class="link" href="gdbus-org.freedesktop.UDisks2.Job.html#gdbus-property-org-freedesktop-UDisks2-Job.Bytes" title='The "Bytes" property'>"Bytes"</a>.
+</p>
+<p>
+Since the D-Bus property for this <span class="type">GObject</span> property is readable but not writable, it is meaningful to read from it on both the client- and service-side. It is only meaningful, however, to write to it on the service-side.
+</p>
+<p>Default value: 0</p>
+<p class="since">Since 2.1</p>
+</div>
+<hr>
+<div class="refsect2">
 <a name="UDisksJob--cancelable"></a><h3>The <code class="literal">"cancelable"</code> property</h3>
 <pre class="programlisting">  "cancelable"               <span class="type">gboolean</span>              : Read / Write</pre>
 <p>
@@ -1489,6 +1636,19 @@ Represents the D-Bus property <a class="link" href="gdbus-org.freedesktop.UDisks
 Since the D-Bus property for this <span class="type">GObject</span> property is readable but not writable, it is meaningful to read from it on both the client- and service-side. It is only meaningful, however, to write to it on the service-side.
 </p>
 <p>Default value: FALSE</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="UDisksJob--rate"></a><h3>The <code class="literal">"rate"</code> property</h3>
+<pre class="programlisting">  "rate"                     <span class="type">guint64</span>               : Read / Write</pre>
+<p>
+Represents the D-Bus property <a class="link" href="gdbus-org.freedesktop.UDisks2.Job.html#gdbus-property-org-freedesktop-UDisks2-Job.Rate" title='The "Rate" property'>"Rate"</a>.
+</p>
+<p>
+Since the D-Bus property for this <span class="type">GObject</span> property is readable but not writable, it is meaningful to read from it on both the client- and service-side. It is only meaningful, however, to write to it on the service-side.
+</p>
+<p>Default value: 0</p>
+<p class="since">Since 2.1</p>
 </div>
 <hr>
 <div class="refsect2">
