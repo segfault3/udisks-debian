@@ -1,3 +1,10 @@
+udisks2 (2.1.0-2) UNRELEASED; urgency=low
+
+  * debian/rules: Call dh_girepository to get correct dependencies of
+    gir1.2-udisks-2.0.
+
+ -- Martin Pitt <mpitt@debian.org>  Tue, 26 Mar 2013 07:58:06 +0100
+
 udisks2 (2.1.0-1) experimental; urgency=low
 
   * New upstream release.
