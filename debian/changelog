@@ -1,4 +1,4 @@
-udisks2 (2.1.0-2) UNRELEASED; urgency=low
+udisks2 (2.1.0-2) experimental; urgency=low
 
   * debian/rules: Call dh_girepository to get correct dependencies of
     gir1.2-udisks-2.0.
@@ -7,7 +7,7 @@ udisks2 (2.1.0-2) UNRELEASED; urgency=low
   * Add 00git_hide_smartware_partitions.patch: Fix hiding of "WD SmartWare"
     partitions. (LP: #732365)
 
- -- Martin Pitt <mpitt@debian.org>  Tue, 26 Mar 2013 07:58:06 +0100
+ -- Martin Pitt <mpitt@debian.org>  Tue, 26 Mar 2013 08:31:00 +0100
 
 udisks2 (2.1.0-1) experimental; urgency=low
 
