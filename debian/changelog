@@ -1,3 +1,10 @@
+udisks2 (2.1.0-3) UNRELEASED; urgency=low
+
+  * debian/rules: Simplify dh_girepository invocation by using the dh
+    sequencer.
+
+ -- Martin Pitt <mpitt@debian.org>  Tue, 26 Mar 2013 12:00:28 +0100
+
 udisks2 (2.1.0-2) experimental; urgency=low
 
   * debian/rules: Call dh_girepository to get correct dependencies of
