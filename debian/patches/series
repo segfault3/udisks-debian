@@ -1,4 +1,5 @@
 # Debian patches for udisks
+00git_firewire_removable.patch
 00git_logind_test.patch
 mount_in_media.patch
 unsupported_acls.patch
