@@ -13,7 +13,7 @@ Build-Depends: debhelper (>= 9),
  libgudev-1.0-dev (>= 165),
  libpolkit-gobject-1-dev (>= 0.97),
  libpolkit-agent-1-dev (>= 0.97),
- libacl1-dev | acl-dev,
+ libacl1-dev,
  libgirepository1.0-dev (>= 1.30),
  gobject-introspection (>= 1.30),
  libatasmart-dev (>= 0.17)
@@ -62,7 +62,7 @@ Section: libs
 Architecture: any
 Multi-Arch: same
 Pre-Depends: ${misc:Pre-Depends}
-Depends: ${shlibs:Depends}, 
+Depends: ${shlibs:Depends},
  ${misc:Depends}
 Description: GObject based library to access udisks2
  The udisks daemon serves as an interface to system block devices,
@@ -76,7 +76,7 @@ Description: GObject based library to access udisks2
 Package: libudisks2-dev
 Section: libdevel
 Architecture: any
-Depends: ${shlibs:Depends}, 
+Depends: ${shlibs:Depends},
  ${misc:Depends},
  gir1.2-udisks-2.0 (= ${binary:Version}),
  libudisks2-0 (= ${binary:Version})
