@@ -1,12 +1,12 @@
 #!/usr/bin/make -f
 
-DEB_HOST_MULTIARCH ?= $(shell dpkg-architecture -qDEB_HOST_MULTIARCH)
-
 %:
 	dh $@ --with gir
 
 override_dh_auto_configure:
-	dh_auto_configure -- -enable-gtk-doc --with-systemdsystemunitdir=/lib/systemd/system/
+	dh_auto_configure -- \
+		--enable-gtk-doc \
+		--with-systemdsystemunitdir=/lib/systemd/system
 
 override_dh_auto_build:
 	dh_auto_build
