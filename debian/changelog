@@ -1,4 +1,4 @@
-udisks2 (2.1.0-3) UNRELEASED; urgency=low
+udisks2 (2.1.0-3) unstable; urgency=low
 
   [ Martin Pitt ]
   * debian/rules: Simplify dh_girepository invocation by using the dh
@@ -10,7 +10,7 @@ udisks2 (2.1.0-3) UNRELEASED; urgency=low
   * Fix gtk-doc configure flag.
   * Drop unused acl-dev Build-Depends alternative.
 
- -- Martin Pitt <mpitt@debian.org>  Tue, 26 Mar 2013 12:00:28 +0100
+ -- Michael Biebl <biebl@debian.org>  Fri, 10 May 2013 02:13:24 +0200
 
 udisks2 (2.1.0-2) experimental; urgency=low
 
