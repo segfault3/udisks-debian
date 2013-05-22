@@ -1,0 +1,27 @@
+From 6997b4c67ff4db9e98d04197c0b6a71e4eec7545 Mon Sep 17 00:00:00 2001
+From: Martin Pitt <martinpitt@gnome.org>
+Date: Wed, 22 May 2013 15:13:05 +0200
+Subject: [PATCH 1/2] integration-test: Fix for nonexisting /run/udev/rules.d/
+
+If that directory does not yet exist, but /run/udev/ does, create it.
+---
+ src/tests/integration-test | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
+
+diff --git a/src/tests/integration-test b/src/tests/integration-test
+index be631f7..9ebd4b0 100755
+--- a/src/tests/integration-test
++++ b/src/tests/integration-test
+@@ -402,7 +402,8 @@ class UDisksTestCase(unittest.TestCase):
+         # work around scsi_debug not implementing CD-ROM SCSI commands, so that
+         # udev's cdrom_id does not recognize tracks
+         scsi_debug_rules = '/run/udev/rules.d/60-persistent-storage-scsi_debug.rules'
+-        if os.path.isdir('/run/udev/rules.d') and not os.path.exists(scsi_debug_rules):
++        if os.path.isdir('/run/udev') and not os.path.exists(scsi_debug_rules):
++            os.makedirs('/run/udev/rules.d', exist_ok=True)
+             with open(scsi_debug_rules, 'w') as f:
+                 f.write('''KERNEL=="sr*", ENV{DISK_EJECT_REQUEST}!="?*", ATTRS{model}=="scsi_debug*", ENV{ID_CDROM_MEDIA}=="?*", IMPORT{program}="/sbin/blkid -o udev -p -u noraid $tempnode"
+ ''')
+-- 
+1.8.1.2
+

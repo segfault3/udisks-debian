@@ -1,3 +1,10 @@
+udisks2 (2.1.0-4) UNRELEASED; urgency=low
+
+  * Add 00git_nonexisting_run_udev_rules.d.patch: integration-test: Fix for
+    nonexisting /run/udev/rules.d/.
+
+ -- Martin Pitt <mpitt@debian.org>  Wed, 22 May 2013 15:25:52 +0200
+
 udisks2 (2.1.0-3) unstable; urgency=low
 
   [ Martin Pitt ]
