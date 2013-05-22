@@ -1,0 +1,65 @@
+From 0a150d20a93109f5b3f8802376c0d03f10dc1545 Mon Sep 17 00:00:00 2001
+From: Martin Pitt <martinpitt@gnome.org>
+Date: Wed, 22 May 2013 14:53:45 +0200
+Subject: [PATCH 2/2] integration-test: For VFAT, ignore case for label
+ comparison
+
+Avoids errors like
+
+  AssertionError: 'TESTVFATTST' != 'testvfattst'
+---
+ src/tests/integration-test | 20 ++++++++++++++++----
+ 1 file changed, 16 insertions(+), 4 deletions(-)
+
+diff --git a/src/tests/integration-test b/src/tests/integration-test
+index 9ebd4b0..45d07e8 100755
+--- a/src/tests/integration-test
++++ b/src/tests/integration-test
+@@ -847,7 +847,10 @@ class FS(UDisksTestCase):
+         self.assertEqual(block.get_property('id-usage'), (type == 'swap') and 'other' or 'filesystem')
+ 
+         self.assertEqual(block.get_property('id-type'), type)
+-        self.assertEqual(block.get_property('id-label'), label or '')
++        l = block.get_property('id-label')
++        if type == 'vfat':
++            l = l.lower()  # VFAT is case insensitive
++        self.assertEqual(l, label or '')
+         self.assertEqual(block.get_property('hint-name'), '')
+         if type != 'minix':
+             self.assertEqual(block.get_property('id-uuid'), self.blkid()['ID_FS_UUID'])
+@@ -903,12 +906,18 @@ class FS(UDisksTestCase):
+         id = self.blkid()
+         self.assertEqual(id['ID_FS_USAGE'], type == 'swap' and 'other' or 'filesystem')
+         self.assertEqual(id['ID_FS_TYPE'], type)
+-        self.assertEqual(id.get('ID_FS_LABEL', ''), label or '')
++        l = id.get('ID_FS_LABEL', '')
++        if type == 'vfat':
++            l = l.lower()  # VFAT is case insensitive
++        self.assertEqual(l, label or '')
+ 
+         block = self.udisks_block()
+         self.assertEqual(block.get_property('id-usage'), (type == 'swap') and 'other' or 'filesystem')
+         self.assertEqual(block.get_property('id-type'), type)
+-        self.assertEqual(block.get_property('id-label'), label or '')
++        l = block.get_property('id-label')
++        if type == 'vfat':
++            l = l.lower()  # VFAT is case insensitive
++        self.assertEqual(l, label or '')
+ 
+         if type == 'swap':
+             return
+@@ -926,7 +935,10 @@ class FS(UDisksTestCase):
+ 
+         self.assertTrue('/media/' in mount_path)
+         if label:
+-            self.assertTrue(mount_path.endswith(label))
++            if type == 'vfat':
++                self.assertTrue(mount_path.lower().endswith(label))
++            else:
++                self.assertTrue(mount_path.endswith(label))
+ 
+         self.sync()
+         self.assertEqual(fs.get_property('mount-points'), [mount_path])
+-- 
+1.8.1.2
+
