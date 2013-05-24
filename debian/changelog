@@ -4,6 +4,8 @@ udisks2 (2.1.0-4) UNRELEASED; urgency=low
     nonexisting /run/udev/rules.d/.
   * Add 00git_vfat_test_case_insensitivity.patch: integration-test: For VFAT,
     ignore case for label comparison.
+  * dosfslabel.patch: Adjust to work with dosfstools 3.0.16, which now
+    enforces that labels must be uppercase. See upstream bug for details.
 
  -- Martin Pitt <mpitt@debian.org>  Wed, 22 May 2013 15:25:52 +0200
 

@@ -1,11 +1,67 @@
-Description: Use dosfstools instead of mtools
- We already require dosfstools for mkfs.vfat, so just also use it for
- changing the fs label.
-Author: Michael Biebl <biebl@debian.org>
+From 75284b7525c5353bd1f9e7a1b59348c8e4f2c189 Mon Sep 17 00:00:00 2001
+From: Michael Biebl <biebl@debian.org>
+Date: Fri, 24 May 2013 09:03:17 +0200
+Subject: [PATCH] Use dosfstools instead of mtools
+
+We already require dosfstools for mkfs.vfat, so just also use it for changing
+the fs label.
+
 Bug: https://bugs.freedesktop.org/show_bug.cgi?id=52332
 Bug-Debian: http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=680683
+
+Co-Authored-By: Martin Pitt <martin.pitt@ubuntu.com>
+---
+ src/udiskslinuxfilesystem.c | 13 +++++++++++--
+ src/udiskslinuxfsinfo.c     |  4 ++--
+ 2 files changed, 13 insertions(+), 4 deletions(-)
+
+diff --git a/src/udiskslinuxfilesystem.c b/src/udiskslinuxfilesystem.c
+index e87e272..31a5475 100644
+--- a/src/udiskslinuxfilesystem.c
++++ b/src/udiskslinuxfilesystem.c
+@@ -1819,6 +1819,7 @@ handle_set_label (UDisksFilesystem       *filesystem,
+   UDisksBaseJob *job;
+   const gchar *action_id;
+   const gchar *message;
++  gchar *real_label = NULL;
+   uid_t caller_uid;
+   gid_t caller_gid;
+   pid_t caller_pid;
+@@ -1893,8 +1894,9 @@ handle_set_label (UDisksFilesystem       *filesystem,
+       goto out;
+     }
+ 
+-  /* VFAT does not allow some characters; as mlabel hangs with interactive
+-   * question in this case, check in advance */
++  /* VFAT does not allow some characters; as dosfslabel does not enforce this,
++   * check in advance; also, VFAT only knows upper-case characters, dosfslabel
++   * enforces this */
+   if (g_strcmp0 (probed_fs_type, "vfat") == 0)
+     {
+       const gchar *forbidden = "\"*/:<>?\\|";
+@@ -1911,6 +1913,11 @@ handle_set_label (UDisksFilesystem       *filesystem,
+                goto out;
+             }
+         }
++
++      /* we need to remember that we make a copy, so assign it to a new
++       * variable, too */
++      real_label = g_ascii_strup (label, -1);
++      label = real_label;
+     }
+ 
+   /* Fail if the device is already mounted and the tools/drivers doesn't
+@@ -1988,6 +1995,8 @@ handle_set_label (UDisksFilesystem       *filesystem,
+                     invocation);
+ 
+  out:
++  /* for some FSes we need to copy and modify label; free our copy */
++  g_free (real_label);
+   g_free (command);
+   g_clear_object (&object);
+   return TRUE; /* returning TRUE means that we handled the method invocation */
 diff --git a/src/udiskslinuxfsinfo.c b/src/udiskslinuxfsinfo.c
-index 28b1ae5..97b414d 100644
+index 6cb623e..0a12208 100644
 --- a/src/udiskslinuxfsinfo.c
 +++ b/src/udiskslinuxfsinfo.c
 @@ -53,8 +53,8 @@ const FSInfo _fs_info[] =
@@ -19,3 +75,6 @@ index 28b1ae5..97b414d 100644
        FALSE, /* supports_online_label_rename */
        FALSE, /* supports_owners */
        "mkfs.vfat -I -n $LABEL $DEVICE",
+-- 
+1.8.1.2
+
