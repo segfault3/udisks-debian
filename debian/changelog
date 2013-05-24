@@ -1,4 +1,4 @@
-udisks2 (2.1.0-4) UNRELEASED; urgency=low
+udisks2 (2.1.0-4) unstable; urgency=low
 
   * Add 00git_nonexisting_run_udev_rules.d.patch: integration-test: Fix for
     nonexisting /run/udev/rules.d/.
@@ -7,7 +7,7 @@ udisks2 (2.1.0-4) UNRELEASED; urgency=low
   * dosfslabel.patch: Adjust to work with dosfstools 3.0.16, which now
     enforces that labels must be uppercase. See upstream bug for details.
 
- -- Martin Pitt <mpitt@debian.org>  Wed, 22 May 2013 15:25:52 +0200
+ -- Martin Pitt <mpitt@debian.org>  Fri, 24 May 2013 09:59:10 +0200
 
 udisks2 (2.1.0-3) unstable; urgency=low
 
