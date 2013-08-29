@@ -106,7 +106,7 @@
     <sub name="Object Hierarchy" link="gio-hierarchy.html"/>
   </chapters>
   <functions>
-    <keyword type="" name="ATA group" link="udisks.8.html#idp7554528"/>
+    <keyword type="" name="ATA group" link="udisks.8.html#id-1.2.2.6.3"/>
     <keyword type="method" name="The LoopSetup() method" link="gdbus-org.freedesktop.UDisks2.Manager.html#gdbus-method-org-freedesktop-UDisks2-Manager.LoopSetup"/>
     <keyword type="method" name="The MDRaidCreate() method" link="gdbus-org.freedesktop.UDisks2.Manager.html#gdbus-method-org-freedesktop-UDisks2-Manager.MDRaidCreate"/>
     <keyword type="property" name="The &quot;Version&quot; property" link="gdbus-org.freedesktop.UDisks2.Manager.html#gdbus-property-org-freedesktop-UDisks2-Manager.Version"/>
@@ -311,6 +311,7 @@
     <keyword type="function" name="udisks_client_get_partition_type_infos ()" link="UDisksClient.html#udisks-client-get-partition-type-infos"/>
     <keyword type="function" name="udisks_client_get_partition_table_subtypes ()" link="UDisksClient.html#udisks-client-get-partition-table-subtypes"/>
     <keyword type="function" name="udisks_client_get_partition_type_for_display ()" link="UDisksClient.html#udisks-client-get-partition-type-for-display"/>
+    <keyword type="function" name="udisks_client_get_partition_type_and_subtype_for_display ()" link="UDisksClient.html#udisks-client-get-partition-type-and-subtype-for-display" since="2.1.1"/>
     <keyword type="function" name="udisks_client_get_partition_table_type_for_display ()" link="UDisksClient.html#udisks-client-get-partition-table-type-for-display"/>
     <keyword type="function" name="udisks_client_get_partition_table_subtype_for_display ()" link="UDisksClient.html#udisks-client-get-partition-table-subtype-for-display"/>
     <keyword type="property" name="The &quot;manager&quot; property" link="UDisksClient.html#UDisksClient--manager"/>

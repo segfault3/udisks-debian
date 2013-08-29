@@ -3,12 +3,12 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>UDisksClient</title>
-<meta name="generator" content="DocBook XSL Stylesheets V1.77.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.78.1">
 <link rel="home" href="index.html" title="UDisks Reference Manual">
 <link rel="up" href="ref-library.html" title="Part III. Library API Reference">
 <link rel="prev" href="ref-library.html" title="Part III. Library API Reference">
 <link rel="next" href="UDisksObjectInfo.html" title="UDisksObjectInfo">
-<meta name="generator" content="GTK-Doc V1.18 (XML mode)">
+<meta name="generator" content="GTK-Doc V1.19 (XML mode)">
 <link rel="stylesheet" href="style.css" type="text/css">
 </head>
 <body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
@@ -63,7 +63,7 @@
                                                          <em class="parameter"><code>const <span class="type">gchar</span> *object_path</code></em>);
 <a class="link" href="UDisksObject.html" title="UDisksObject"><span class="returnvalue">UDisksObject</span></a> *      <a class="link" href="UDisksClient.html#udisks-client-peek-object" title="udisks_client_peek_object ()">udisks_client_peek_object</a>           (<em class="parameter"><code><a class="link" href="UDisksClient.html" title="UDisksClient"><span class="type">UDisksClient</span></a> *client</code></em>,
                                                          <em class="parameter"><code>const <span class="type">gchar</span> *object_path</code></em>);
-<a href="/usr/share/gtk-doc/html/gen/GDBusObjectManager.html"><span class="returnvalue">GDBusObjectManager</span></a> * <a class="link" href="UDisksClient.html#udisks-client-get-object-manager" title="udisks_client_get_object_manager ()">udisks_client_get_object_manager</a>   (<em class="parameter"><code><a class="link" href="UDisksClient.html" title="UDisksClient"><span class="type">UDisksClient</span></a> *client</code></em>);
+<span class="returnvalue">GDBusObjectManager</span> * <a class="link" href="UDisksClient.html#udisks-client-get-object-manager" title="udisks_client_get_object_manager ()">udisks_client_get_object_manager</a>   (<em class="parameter"><code><a class="link" href="UDisksClient.html" title="UDisksClient"><span class="type">UDisksClient</span></a> *client</code></em>);
 <a class="link" href="UDisksManager.html" title="UDisksManager"><span class="returnvalue">UDisksManager</span></a> *     <a class="link" href="UDisksClient.html#udisks-client-get-manager" title="udisks_client_get_manager ()">udisks_client_get_manager</a>           (<em class="parameter"><code><a class="link" href="UDisksClient.html" title="UDisksClient"><span class="type">UDisksClient</span></a> *client</code></em>);
 <span class="returnvalue">void</span>                <a class="link" href="UDisksClient.html#udisks-client-settle" title="udisks_client_settle ()">udisks_client_settle</a>                (<em class="parameter"><code><a class="link" href="UDisksClient.html" title="UDisksClient"><span class="type">UDisksClient</span></a> *client</code></em>);
 <span class="returnvalue">void</span>                <a class="link" href="UDisksClient.html#udisks-client-queue-changed" title="udisks_client_queue_changed ()">udisks_client_queue_changed</a>         (<em class="parameter"><code><a class="link" href="UDisksClient.html" title="UDisksClient"><span class="type">UDisksClient</span></a> *client</code></em>);
@@ -144,6 +144,11 @@ const <span class="returnvalue">gchar</span> *       <a class="link" href="UDisk
                                                         (<em class="parameter"><code><a class="link" href="UDisksClient.html" title="UDisksClient"><span class="type">UDisksClient</span></a> *client</code></em>,
                                                          <em class="parameter"><code>const <span class="type">gchar</span> *partition_table_type</code></em>,
                                                          <em class="parameter"><code>const <span class="type">gchar</span> *partition_type</code></em>);
+const <span class="returnvalue">gchar</span> *       <a class="link" href="UDisksClient.html#udisks-client-get-partition-type-and-subtype-for-display" title="udisks_client_get_partition_type_and_subtype_for_display ()">udisks_client_get_partition_type_and_subtype_for_display</a>
+                                                        (<em class="parameter"><code><a class="link" href="UDisksClient.html" title="UDisksClient"><span class="type">UDisksClient</span></a> *client</code></em>,
+                                                         <em class="parameter"><code>const <span class="type">gchar</span> *partition_table_type</code></em>,
+                                                         <em class="parameter"><code>const <span class="type">gchar</span> *partition_table_subtype</code></em>,
+                                                         <em class="parameter"><code>const <span class="type">gchar</span> *partition_type</code></em>);
 const <span class="returnvalue">gchar</span> *       <a class="link" href="UDisksClient.html#udisks-client-get-partition-table-type-for-display" title="udisks_client_get_partition_table_type_for_display ()">udisks_client_get_partition_table_type_for_display</a>
                                                         (<em class="parameter"><code><a class="link" href="UDisksClient.html" title="UDisksClient"><span class="type">UDisksClient</span></a> *client</code></em>,
                                                          <em class="parameter"><code>const <span class="type">gchar</span> *partition_table_type</code></em>);
@@ -178,7 +183,7 @@ UDisksClient implements
 <a name="UDisksClient.properties"></a><h2>Properties</h2>
 <pre class="synopsis">
   "<a class="link" href="UDisksClient.html#UDisksClient--manager" title='The "manager" property'>manager</a>"                  <a class="link" href="UDisksManager.html" title="UDisksManager"><span class="type">UDisksManager</span></a>*        : Read
-  "<a class="link" href="UDisksClient.html#UDisksClient--object-manager" title='The "object-manager" property'>object-manager</a>"           <a href="/usr/share/gtk-doc/html/gen/GDBusObjectManager.html"><span class="type">GDBusObjectManager</span></a>*   : Read
+  "<a class="link" href="UDisksClient.html#UDisksClient--object-manager" title='The "object-manager" property'>object-manager</a>"           <span class="type">GDBusObjectManager</span>*   : Read
 </pre>
 </div>
 <div class="refsect1">
@@ -216,7 +221,7 @@ The minor version of the libudisks2 header files.
 <hr>
 <div class="refsect2">
 <a name="UDISKS-MICRO-VERSION:CAPS"></a><h3>UDISKS_MICRO_VERSION</h3>
-<pre class="programlisting">#define UDISKS_MICRO_VERSION 0
+<pre class="programlisting">#define UDISKS_MICRO_VERSION 1
 </pre>
 <p>
 The micro version of the libudisks2 header files.
@@ -433,9 +438,9 @@ count on the returned <a class="link" href="UDisksObject.html" title="UDisksObje
 <hr>
 <div class="refsect2">
 <a name="udisks-client-get-object-manager"></a><h3>udisks_client_get_object_manager ()</h3>
-<pre class="programlisting"><a href="/usr/share/gtk-doc/html/gen/GDBusObjectManager.html"><span class="returnvalue">GDBusObjectManager</span></a> * udisks_client_get_object_manager   (<em class="parameter"><code><a class="link" href="UDisksClient.html" title="UDisksClient"><span class="type">UDisksClient</span></a> *client</code></em>);</pre>
+<pre class="programlisting"><span class="returnvalue">GDBusObjectManager</span> * udisks_client_get_object_manager   (<em class="parameter"><code><a class="link" href="UDisksClient.html" title="UDisksClient"><span class="type">UDisksClient</span></a> *client</code></em>);</pre>
 <p>
-Gets the <a href="/usr/share/gtk-doc/html/gen/GDBusObjectManager.html"><span class="type">GDBusObjectManager</span></a> used by <em class="parameter"><code>client</code></em>.
+Gets the <span class="type">GDBusObjectManager</span> used by <em class="parameter"><code>client</code></em>.
 </p>
 <div class="variablelist"><table border="0" class="variablelist">
 <colgroup>
@@ -449,7 +454,7 @@ Gets the <a href="/usr/share/gtk-doc/html/gen/GDBusObjectManager.html"><span cla
 </tr>
 <tr>
 <td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
-<td>A <a href="/usr/share/gtk-doc/html/gen/GDBusObjectManager.html"><span class="type">GDBusObjectManager</span></a>. Do not free, the
+<td>A <span class="type">GDBusObjectManager</span>. Do not free, the
 instance is owned by <em class="parameter"><code>client</code></em>. <span class="annotation">[<a href="http://foldoc.org/transfer%20none"><span class="acronym">transfer none</span></a>]</span>
 </td>
 </tr>
@@ -1553,6 +1558,50 @@ Gets a human readable localized string for <em class="parameter"><code>partiton_
 </div>
 <hr>
 <div class="refsect2">
+<a name="udisks-client-get-partition-type-and-subtype-for-display"></a><h3>udisks_client_get_partition_type_and_subtype_for_display ()</h3>
+<pre class="programlisting">const <span class="returnvalue">gchar</span> *       udisks_client_get_partition_type_and_subtype_for_display
+                                                        (<em class="parameter"><code><a class="link" href="UDisksClient.html" title="UDisksClient"><span class="type">UDisksClient</span></a> *client</code></em>,
+                                                         <em class="parameter"><code>const <span class="type">gchar</span> *partition_table_type</code></em>,
+                                                         <em class="parameter"><code>const <span class="type">gchar</span> *partition_table_subtype</code></em>,
+                                                         <em class="parameter"><code>const <span class="type">gchar</span> *partition_type</code></em>);</pre>
+<p>
+Like <a class="link" href="UDisksClient.html#udisks-client-get-partition-type-for-display" title="udisks_client_get_partition_type_for_display ()"><code class="function">udisks_client_get_partition_type_for_display()</code></a> but also takes
+the partition table subtype into account, if available. This is
+useful in scenarios where different subtypes is using the same
+partition type.
+</p>
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
+<col align="left" valign="top">
+<col>
+</colgroup>
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>client</code></em> :</span></p></td>
+<td>A <a class="link" href="UDisksClient.html" title="UDisksClient"><span class="type">UDisksClient</span></a>.</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>partition_table_type</code></em> :</span></p></td>
+<td>A partitioning type e.g. 'dos' or 'gpt'.</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>partition_table_subtype</code></em> :</span></p></td>
+<td>A partitioning subtype or <code class="literal">NULL</code>.</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>partition_type</code></em> :</span></p></td>
+<td>A partition type.</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td>A description of <em class="parameter"><code>partition_type</code></em> or <code class="literal">NULL</code> if unknown.</td>
+</tr>
+</tbody>
+</table></div>
+<p class="since">Since 2.1.1</p>
+</div>
+<hr>
+<div class="refsect2">
 <a name="udisks-client-get-partition-table-type-for-display"></a><h3>udisks_client_get_partition_table_type_for_display ()</h3>
 <pre class="programlisting">const <span class="returnvalue">gchar</span> *       udisks_client_get_partition_table_type_for_display
                                                         (<em class="parameter"><code><a class="link" href="UDisksClient.html" title="UDisksClient"><span class="type">UDisksClient</span></a> *client</code></em>,
@@ -1630,9 +1679,9 @@ The <a class="link" href="UDisksManager.html" title="UDisksManager"><span class=
 <hr>
 <div class="refsect2">
 <a name="UDisksClient--object-manager"></a><h3>The <code class="literal">"object-manager"</code> property</h3>
-<pre class="programlisting">  "object-manager"           <a href="/usr/share/gtk-doc/html/gen/GDBusObjectManager.html"><span class="type">GDBusObjectManager</span></a>*   : Read</pre>
+<pre class="programlisting">  "object-manager"           <span class="type">GDBusObjectManager</span>*   : Read</pre>
 <p>
-The <a href="/usr/share/gtk-doc/html/gen/GDBusObjectManager.html"><span class="type">GDBusObjectManager</span></a> used by the <a class="link" href="UDisksClient.html" title="UDisksClient"><span class="type">UDisksClient</span></a> instance.
+The <span class="type">GDBusObjectManager</span> used by the <a class="link" href="UDisksClient.html" title="UDisksClient"><span class="type">UDisksClient</span></a> instance.
 </p>
 </div>
 </div>
@@ -1682,6 +1731,6 @@ signals on the <a class="link" href="UDisksClient.html#UDisksClient--object-mana
 </div>
 <div class="footer">
 <hr>
-          Generated by GTK-Doc V1.18</div>
+          Generated by GTK-Doc V1.19</div>
 </body>
 </html>
