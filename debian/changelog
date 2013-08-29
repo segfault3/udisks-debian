@@ -1,11 +1,3 @@
-udisks2 (2.1.0-5) UNRELEASED; urgency=low
-
-  [ Michael Stapelberg]
-  * Use dh_systemd for proper stop/restart when running under systemd.
-    (Closes: #715247)
-
- -- Martin Pitt <mpitt@debian.org>  Wed, 10 Jul 2013 07:07:20 +0200
-
 udisks2 (2.1.0-4) unstable; urgency=low
 
   * Add 00git_nonexisting_run_udev_rules.d.patch: integration-test: Fix for
