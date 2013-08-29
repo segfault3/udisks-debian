@@ -452,6 +452,18 @@ UDisksClient
 @Returns: 
 
 
+<!-- ##### FUNCTION udisks_client_get_partition_type_and_subtype_for_display ##### -->
+<para>
+
+</para>
+
+@client: 
+@partition_table_type: 
+@partition_table_subtype: 
+@partition_type: 
+@Returns: 
+
+
 <!-- ##### FUNCTION udisks_client_get_partition_table_type_for_display ##### -->
 <para>
 

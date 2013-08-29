@@ -402,7 +402,8 @@ class UDisksTestCase(unittest.TestCase):
         # work around scsi_debug not implementing CD-ROM SCSI commands, so that
         # udev's cdrom_id does not recognize tracks
         scsi_debug_rules = '/run/udev/rules.d/60-persistent-storage-scsi_debug.rules'
-        if os.path.isdir('/run/udev/rules.d') and not os.path.exists(scsi_debug_rules):
+        if os.path.isdir('/run/udev') and not os.path.exists(scsi_debug_rules):
+            os.makedirs('/run/udev/rules.d', exist_ok=True)
             with open(scsi_debug_rules, 'w') as f:
                 f.write('''KERNEL=="sr*", ENV{DISK_EJECT_REQUEST}!="?*", ATTRS{model}=="scsi_debug*", ENV{ID_CDROM_MEDIA}=="?*", IMPORT{program}="/sbin/blkid -o udev -p -u noraid $tempnode"
 ''')
@@ -846,7 +847,10 @@ class FS(UDisksTestCase):
         self.assertEqual(block.get_property('id-usage'), (type == 'swap') and 'other' or 'filesystem')
 
         self.assertEqual(block.get_property('id-type'), type)
-        self.assertEqual(block.get_property('id-label'), label or '')
+        l = block.get_property('id-label')
+        if type == 'vfat':
+            l = l.lower()  # VFAT is case insensitive
+        self.assertEqual(l, label or '')
         self.assertEqual(block.get_property('hint-name'), '')
         if type != 'minix':
             self.assertEqual(block.get_property('id-uuid'), self.blkid()['ID_FS_UUID'])
@@ -902,12 +906,18 @@ class FS(UDisksTestCase):
         id = self.blkid()
         self.assertEqual(id['ID_FS_USAGE'], type == 'swap' and 'other' or 'filesystem')
         self.assertEqual(id['ID_FS_TYPE'], type)
-        self.assertEqual(id.get('ID_FS_LABEL', ''), label or '')
+        l = id.get('ID_FS_LABEL', '')
+        if type == 'vfat':
+            l = l.lower()  # VFAT is case insensitive
+        self.assertEqual(l, label or '')
 
         block = self.udisks_block()
         self.assertEqual(block.get_property('id-usage'), (type == 'swap') and 'other' or 'filesystem')
         self.assertEqual(block.get_property('id-type'), type)
-        self.assertEqual(block.get_property('id-label'), label or '')
+        l = block.get_property('id-label')
+        if type == 'vfat':
+            l = l.lower()  # VFAT is case insensitive
+        self.assertEqual(l, label or '')
 
         if type == 'swap':
             return
@@ -925,7 +935,10 @@ class FS(UDisksTestCase):
 
         self.assertTrue('/media/' in mount_path)
         if label:
-            self.assertTrue(mount_path.endswith(label))
+            if type == 'vfat':
+                self.assertTrue(mount_path.lower().endswith(label))
+            else:
+                self.assertTrue(mount_path.endswith(label))
 
         self.sync()
         self.assertEqual(fs.get_property('mount-points'), [mount_path])

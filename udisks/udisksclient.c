@@ -2210,6 +2210,7 @@ static const struct
   {"gpt", "generic",   "024dee41-33e7-11d3-9d69-0008c781f39f", NC_("part-type", "MBR Partition Scheme"), F_SYSTEM},
   {"gpt", "generic",   "c12a7328-f81f-11d2-ba4b-00a0c93ec93b", NC_("part-type", "EFI System"), F_SYSTEM},
   {"gpt", "generic",   "21686148-6449-6e6f-744e-656564454649", NC_("part-type", "BIOS Boot"), F_SYSTEM},
+  {"gpt", "generic",   "6a898cc3-1dd2-11b2-99a6-080020736631", NC_("part-type", "ZFS"), 0},   /* see also Apple, Sol. */
   /* Linux */
   {"gpt", "linux",     "0fc63daf-8483-4772-8e79-3d69d8477de4", NC_("part-type", "Linux Filesystem"), 0},
   {"gpt", "linux",     "a19d880f-05fc-4d3b-a006-743f0f84911e", NC_("part-type", "Linux RAID"), F_RAID},
@@ -2225,7 +2226,7 @@ static const struct
   /* Apple OS X */
   {"gpt", "apple",     "48465300-0000-11aa-aa11-00306543ecac", NC_("part-type", "Apple HFS/HFS+"), 0},
   {"gpt", "apple",     "55465300-0000-11aa-aa11-00306543ecac", NC_("part-type", "Apple UFS"), 0},
-  {"gpt", "apple",     "6a898cc3-1dd2-11b2-99a6-080020736631", NC_("part-type", "Apple ZFS"), 0}, /* same as Solaris /usr */
+  {"gpt", "apple",     "6a898cc3-1dd2-11b2-99a6-080020736631", NC_("part-type", "Apple ZFS"), 0}, /* same as ZFS */
   {"gpt", "apple",     "52414944-0000-11aa-aa11-00306543ecac", NC_("part-type", "Apple RAID"), F_RAID},
   {"gpt", "apple",     "52414944-5f4f-11aa-aa11-00306543ecac", NC_("part-type", "Apple RAID (offline)"), F_RAID},
   {"gpt", "apple",     "426f6f74-0000-11aa-aa11-00306543ecac", NC_("part-type", "Apple Boot"), F_SYSTEM},
@@ -2247,7 +2248,7 @@ static const struct
   {"gpt", "other",     "6a85cf4d-1dd2-11b2-99a6-080020736631", NC_("part-type", "Solaris Root"), 0},
   {"gpt", "other",     "6a87c46f-1dd2-11b2-99a6-080020736631", NC_("part-type", "Solaris Swap"), F_SWAP},
   {"gpt", "other",     "6a8b642b-1dd2-11b2-99a6-080020736631", NC_("part-type", "Solaris Backup"), 0},
-  {"gpt", "other",     "6a898cc3-1dd2-11b2-99a6-080020736631", NC_("part-type", "Solaris /usr"), 0}, /* same as Apple ZFS */
+  {"gpt", "other",     "6a898cc3-1dd2-11b2-99a6-080020736631", NC_("part-type", "Solaris /usr"), 0}, /* same as ZFS */
   {"gpt", "other",     "6a8ef2e9-1dd2-11b2-99a6-080020736631", NC_("part-type", "Solaris /var"), 0},
   {"gpt", "other",     "6a90ba39-1dd2-11b2-99a6-080020736631", NC_("part-type", "Solaris /home"), 0},
   {"gpt", "other",     "6a9283a5-1dd2-11b2-99a6-080020736631", NC_("part-type", "Solaris Alternate Sector"), 0},
@@ -2266,6 +2267,11 @@ static const struct
   /* VMWare, see http://blogs.vmware.com/vsphere/2011/08/vsphere-50-storage-features-part-7-gpt.html */
   {"gpt", "other",     "aa31e02a-400f-11db-9590-000c2911d1b8", NC_("part-type", "VMWare VMFS"), 0},
   {"gpt", "other",     "9d275380-40ad-11db-bf97-000c2911d1b8", NC_("part-type", "VMWare vmkcore"), 0},
+  /* ChromeOS, see http://www.chromium.org/chromium-os/chromiumos-design-docs/disk-format */
+  {"gpt", "other",     "cab6e88e-abf3-4102-a07a-d4bb9be3c1d3", NC_("part-type", "ChromeOS Firmware"), 0},
+  {"gpt", "other",     "fe3a2a5d-4f32-41a7-b725-accc3285a309", NC_("part-type", "ChromeOS Kernel"), 0},
+  {"gpt", "other",     "3cb8e202-3b7e-47dd-8a3c-7ff2a13cfcec", NC_("part-type", "ChromeOS Root Filesystem"), 0},
+  {"gpt", "other",     "2e0a753d-9e48-43b0-8337-b15192cb1b5e", NC_("part-type", "ChromeOS Reserved"), 0},
 
   /* see http://developer.apple.com/documentation/mac/devices/devices-126.html
    *     http://lists.apple.com/archives/Darwin-drivers/2003/May/msg00021.html */
@@ -2385,6 +2391,48 @@ udisks_client_get_partition_type_for_display (UDisksClient  *client,
       if (g_strcmp0 (known_partition_types[n].table_type, partition_table_type) == 0 &&
           g_strcmp0 (known_partition_types[n].type, partition_type) == 0)
         {
+          ret = g_dpgettext2 (GETTEXT_PACKAGE, "part-type", known_partition_types[n].name);
+          goto out;
+        }
+    }
+
+ out:
+  return ret;
+}
+
+/**
+ * udisks_client_get_partition_type_and_subtype_for_display:
+ * @client: A #UDisksClient.
+ * @partition_table_type: A partitioning type e.g. 'dos' or 'gpt'.
+ * @partition_table_subtype: A partitioning subtype or %NULL.
+ * @partition_type: A partition type.
+ *
+ * Like udisks_client_get_partition_type_for_display() but also takes
+ * the partition table subtype into account, if available. This is
+ * useful in scenarios where different subtypes is using the same
+ * partition type.
+ *
+ * Returns: A description of @partition_type or %NULL if unknown.
+ *
+ * Since: 2.1.1
+ */
+const gchar *
+udisks_client_get_partition_type_and_subtype_for_display (UDisksClient  *client,
+                                                          const gchar   *partition_table_type,
+                                                          const gchar   *partition_table_subtype,
+                                                          const gchar   *partition_type)
+{
+  const gchar *ret = NULL;
+  guint n;
+
+  for (n = 0; known_partition_types[n].name != NULL; n++)
+    {
+      if (g_strcmp0 (known_partition_types[n].table_type, partition_table_type) == 0 &&
+          g_strcmp0 (known_partition_types[n].type, partition_type) == 0)
+        {
+          if (partition_table_subtype != NULL &&
+              g_strcmp0 (known_partition_types[n].table_subtype, partition_table_subtype) != 0)
+            continue;
           ret = g_dpgettext2 (GETTEXT_PACKAGE, "part-type", known_partition_types[n].name);
           goto out;
         }

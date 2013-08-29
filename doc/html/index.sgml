@@ -270,6 +270,7 @@
 <ANCHOR id="udisks-client-get-partition-type-infos" href="udisks2/UDisksClient.html#udisks-client-get-partition-type-infos">
 <ANCHOR id="udisks-client-get-partition-table-subtypes" href="udisks2/UDisksClient.html#udisks-client-get-partition-table-subtypes">
 <ANCHOR id="udisks-client-get-partition-type-for-display" href="udisks2/UDisksClient.html#udisks-client-get-partition-type-for-display">
+<ANCHOR id="udisks-client-get-partition-type-and-subtype-for-display" href="udisks2/UDisksClient.html#udisks-client-get-partition-type-and-subtype-for-display">
 <ANCHOR id="udisks-client-get-partition-table-type-for-display" href="udisks2/UDisksClient.html#udisks-client-get-partition-table-type-for-display">
 <ANCHOR id="udisks-client-get-partition-table-subtype-for-display" href="udisks2/UDisksClient.html#udisks-client-get-partition-table-subtype-for-display">
 <ANCHOR id="UDisksClient.property-details" href="udisks2/UDisksClient.html#UDisksClient.property-details">
