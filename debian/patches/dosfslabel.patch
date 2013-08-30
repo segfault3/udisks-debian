@@ -15,11 +15,11 @@ Co-Authored-By: Martin Pitt <martin.pitt@ubuntu.com>
  src/udiskslinuxfsinfo.c     |  4 ++--
  2 files changed, 13 insertions(+), 4 deletions(-)
 
-diff --git a/src/udiskslinuxfilesystem.c b/src/udiskslinuxfilesystem.c
-index e87e272..31a5475 100644
---- a/src/udiskslinuxfilesystem.c
-+++ b/src/udiskslinuxfilesystem.c
-@@ -1819,6 +1819,7 @@ handle_set_label (UDisksFilesystem       *filesystem,
+Index: udisks2/src/udiskslinuxfilesystem.c
+===================================================================
+--- udisks2.orig/src/udiskslinuxfilesystem.c	2013-08-30 01:59:05.395481692 +0200
++++ udisks2/src/udiskslinuxfilesystem.c	2013-08-30 01:59:05.391481642 +0200
+@@ -1817,6 +1817,7 @@
    UDisksBaseJob *job;
    const gchar *action_id;
    const gchar *message;
@@ -27,7 +27,7 @@ index e87e272..31a5475 100644
    uid_t caller_uid;
    gid_t caller_gid;
    pid_t caller_pid;
-@@ -1893,8 +1894,9 @@ handle_set_label (UDisksFilesystem       *filesystem,
+@@ -1891,8 +1892,9 @@
        goto out;
      }
  
@@ -39,7 +39,7 @@ index e87e272..31a5475 100644
    if (g_strcmp0 (probed_fs_type, "vfat") == 0)
      {
        const gchar *forbidden = "\"*/:<>?\\|";
-@@ -1911,6 +1913,11 @@ handle_set_label (UDisksFilesystem       *filesystem,
+@@ -1909,6 +1911,11 @@
                 goto out;
              }
          }
@@ -51,7 +51,7 @@ index e87e272..31a5475 100644
      }
  
    /* Fail if the device is already mounted and the tools/drivers doesn't
-@@ -1988,6 +1995,8 @@ handle_set_label (UDisksFilesystem       *filesystem,
+@@ -1986,6 +1993,8 @@
                      invocation);
  
   out:
@@ -60,11 +60,11 @@ index e87e272..31a5475 100644
    g_free (command);
    g_clear_object (&object);
    return TRUE; /* returning TRUE means that we handled the method invocation */
-diff --git a/src/udiskslinuxfsinfo.c b/src/udiskslinuxfsinfo.c
-index 6cb623e..0a12208 100644
---- a/src/udiskslinuxfsinfo.c
-+++ b/src/udiskslinuxfsinfo.c
-@@ -53,8 +53,8 @@ const FSInfo _fs_info[] =
+Index: udisks2/src/udiskslinuxfsinfo.c
+===================================================================
+--- udisks2.orig/src/udiskslinuxfsinfo.c	2013-08-30 01:59:05.395481692 +0200
++++ udisks2/src/udiskslinuxfsinfo.c	2013-08-30 01:59:05.391481642 +0200
+@@ -53,8 +53,8 @@
      },
      {
        "vfat",
@@ -75,6 +75,3 @@ index 6cb623e..0a12208 100644
        FALSE, /* supports_online_label_rename */
        FALSE, /* supports_owners */
        "mkfs.vfat -I -n $LABEL $DEVICE",
--- 
-1.8.1.2
-
