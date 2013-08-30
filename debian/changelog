@@ -3,6 +3,7 @@ udisks2 (2.1.1-1) UNRELEASED; urgency=low
   * New upstream release.
   * Drop patches which have been merged upstream.
   * Refresh dosfslabel.patch.
+  * Update symbols file.
 
  -- Michael Biebl <biebl@debian.org>  Fri, 30 Aug 2013 01:57:51 +0200
 

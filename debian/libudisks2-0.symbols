@@ -138,6 +138,7 @@ libudisks2.so.0 libudisks2-0 #MINVER#
  udisks_client_get_partition_table_subtype_for_display@Base 2.0.0
  udisks_client_get_partition_table_subtypes@Base 2.0.0
  udisks_client_get_partition_table_type_for_display@Base 2.0.0
+ udisks_client_get_partition_type_and_subtype_for_display@Base 2.1.1
  udisks_client_get_partition_type_for_display@Base 2.0.0
  udisks_client_get_partition_type_infos@Base 2.0.0
  udisks_client_get_partitions@Base 2.0.0
