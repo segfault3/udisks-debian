@@ -1,9 +1,4 @@
 # Debian patches for udisks
-00git_firewire_removable.patch
-00git_logind_test.patch
-00git_hide_smartware_partitions.patch
-00git_nonexisting_run_udev_rules.d.patch
-00git_vfat_test_case_insensitivity.patch
 mount_in_media.patch
 unsupported_acls.patch
 dosfslabel.patch
