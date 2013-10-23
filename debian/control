@@ -26,7 +26,7 @@ XS-Testsuite: autopkgtest
 Package: udisks2
 Architecture: any
 Multi-Arch: foreign
-Depends: ${shlibs:Depends}, ${misc:Depends}, udev, dbus
+Depends: ${shlibs:Depends}, ${misc:Depends}, udev, dbus, parted
 Pre-Depends: ${misc:Pre-Depends}
 Recommends: policykit-1, dosfstools, ntfs-3g, eject
 Suggests: xfsprogs, reiserfsprogs, exfat-utils, btrfs-tools, mdadm, cryptsetup-bin
@@ -62,7 +62,7 @@ Section: libs
 Architecture: any
 Multi-Arch: same
 Pre-Depends: ${misc:Pre-Depends}
-Depends: ${shlibs:Depends}, ${misc:Depends}, parted
+Depends: ${shlibs:Depends}, ${misc:Depends}
 Description: GObject based library to access udisks2
  The udisks daemon serves as an interface to system block devices,
  implemented via D-Bus. It handles operations such as querying, mounting,
