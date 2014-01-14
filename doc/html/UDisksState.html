@@ -49,37 +49,37 @@
 <a class="link" href="UDisksDaemon.html" title="UDisksDaemon"><span class="returnvalue">UDisksDaemon</span></a> *      <a class="link" href="UDisksState.html#udisks-state-get-daemon" title="udisks_state_get_daemon ()">udisks_state_get_daemon</a>             (<em class="parameter"><code><a class="link" href="UDisksState.html" title="UDisksState"><span class="type">UDisksState</span></a> *state</code></em>);
 
 <span class="returnvalue">void</span>                <a class="link" href="UDisksState.html#udisks-state-add-mounted-fs" title="udisks_state_add_mounted_fs ()">udisks_state_add_mounted_fs</a>         (<em class="parameter"><code><a class="link" href="UDisksState.html" title="UDisksState"><span class="type">UDisksState</span></a> *state</code></em>,
-                                                         <em class="parameter"><code>const <span class="type">gchar</span> *mount_point</code></em>,
+                                                         <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *mount_point</code></em>,
                                                          <em class="parameter"><code><span class="type">dev_t</span> block_device</code></em>,
                                                          <em class="parameter"><code><span class="type">uid_t</span> uid</code></em>,
-                                                         <em class="parameter"><code><span class="type">gboolean</span> fstab_mount</code></em>);
-<span class="returnvalue">gchar</span> *             <a class="link" href="UDisksState.html#udisks-state-find-mounted-fs" title="udisks_state_find_mounted_fs ()">udisks_state_find_mounted_fs</a>        (<em class="parameter"><code><a class="link" href="UDisksState.html" title="UDisksState"><span class="type">UDisksState</span></a> *state</code></em>,
+                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"><span class="type">gboolean</span></a> fstab_mount</code></em>);
+<a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="returnvalue">gchar</span></a> *             <a class="link" href="UDisksState.html#udisks-state-find-mounted-fs" title="udisks_state_find_mounted_fs ()">udisks_state_find_mounted_fs</a>        (<em class="parameter"><code><a class="link" href="UDisksState.html" title="UDisksState"><span class="type">UDisksState</span></a> *state</code></em>,
                                                          <em class="parameter"><code><span class="type">dev_t</span> block_device</code></em>,
                                                          <em class="parameter"><code><span class="type">uid_t</span> *out_uid</code></em>,
-                                                         <em class="parameter"><code><span class="type">gboolean</span> *out_fstab_mount</code></em>);
+                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"><span class="type">gboolean</span></a> *out_fstab_mount</code></em>);
 
 <span class="returnvalue">void</span>                <a class="link" href="UDisksState.html#udisks-state-add-unlocked-luks" title="udisks_state_add_unlocked_luks ()">udisks_state_add_unlocked_luks</a>      (<em class="parameter"><code><a class="link" href="UDisksState.html" title="UDisksState"><span class="type">UDisksState</span></a> *state</code></em>,
                                                          <em class="parameter"><code><span class="type">dev_t</span> cleartext_device</code></em>,
                                                          <em class="parameter"><code><span class="type">dev_t</span> crypto_device</code></em>,
-                                                         <em class="parameter"><code>const <span class="type">gchar</span> *dm_uuid</code></em>,
+                                                         <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *dm_uuid</code></em>,
                                                          <em class="parameter"><code><span class="type">uid_t</span> uid</code></em>);
 <span class="returnvalue">dev_t</span>               <a class="link" href="UDisksState.html#udisks-state-find-unlocked-luks" title="udisks_state_find_unlocked_luks ()">udisks_state_find_unlocked_luks</a>     (<em class="parameter"><code><a class="link" href="UDisksState.html" title="UDisksState"><span class="type">UDisksState</span></a> *state</code></em>,
                                                          <em class="parameter"><code><span class="type">dev_t</span> crypto_device</code></em>,
                                                          <em class="parameter"><code><span class="type">uid_t</span> *out_uid</code></em>);
 
 <span class="returnvalue">void</span>                <a class="link" href="UDisksState.html#udisks-state-add-loop" title="udisks_state_add_loop ()">udisks_state_add_loop</a>               (<em class="parameter"><code><a class="link" href="UDisksState.html" title="UDisksState"><span class="type">UDisksState</span></a> *state</code></em>,
-                                                         <em class="parameter"><code>const <span class="type">gchar</span> *device_file</code></em>,
-                                                         <em class="parameter"><code>const <span class="type">gchar</span> *backing_file</code></em>,
+                                                         <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *device_file</code></em>,
+                                                         <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *backing_file</code></em>,
                                                          <em class="parameter"><code><span class="type">dev_t</span> backing_file_device</code></em>,
                                                          <em class="parameter"><code><span class="type">uid_t</span> uid</code></em>);
-<span class="returnvalue">gboolean</span>            <a class="link" href="UDisksState.html#udisks-state-has-loop" title="udisks_state_has_loop ()">udisks_state_has_loop</a>               (<em class="parameter"><code><a class="link" href="UDisksState.html" title="UDisksState"><span class="type">UDisksState</span></a> *state</code></em>,
-                                                         <em class="parameter"><code>const <span class="type">gchar</span> *device_file</code></em>,
+<a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>            <a class="link" href="UDisksState.html#udisks-state-has-loop" title="udisks_state_has_loop ()">udisks_state_has_loop</a>               (<em class="parameter"><code><a class="link" href="UDisksState.html" title="UDisksState"><span class="type">UDisksState</span></a> *state</code></em>,
+                                                         <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *device_file</code></em>,
                                                          <em class="parameter"><code><span class="type">uid_t</span> *out_uid</code></em>);
 
 <span class="returnvalue">void</span>                <a class="link" href="UDisksState.html#udisks-state-add-mdraid" title="udisks_state_add_mdraid ()">udisks_state_add_mdraid</a>             (<em class="parameter"><code><a class="link" href="UDisksState.html" title="UDisksState"><span class="type">UDisksState</span></a> *state</code></em>,
                                                          <em class="parameter"><code><span class="type">dev_t</span> raid_device</code></em>,
                                                          <em class="parameter"><code><span class="type">uid_t</span> uid</code></em>);
-<span class="returnvalue">gboolean</span>            <a class="link" href="UDisksState.html#udisks-state-has-mdraid" title="udisks_state_has_mdraid ()">udisks_state_has_mdraid</a>             (<em class="parameter"><code><a class="link" href="UDisksState.html" title="UDisksState"><span class="type">UDisksState</span></a> *state</code></em>,
+<a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>            <a class="link" href="UDisksState.html#udisks-state-has-mdraid" title="udisks_state_has_mdraid ()">udisks_state_has_mdraid</a>             (<em class="parameter"><code><a class="link" href="UDisksState.html" title="UDisksState"><span class="type">UDisksState</span></a> *state</code></em>,
                                                          <em class="parameter"><code><span class="type">dev_t</span> raid_device</code></em>,
                                                          <em class="parameter"><code><span class="type">uid_t</span> *out_uid</code></em>);
 </pre>
@@ -87,7 +87,7 @@
 <div class="refsect1">
 <a name="UDisksState.object-hierarchy"></a><h2>Object Hierarchy</h2>
 <pre class="synopsis">
-  GObject
+  <a href="http://library.gnome.org/devel/gobject/unstable/gobject-The-Base-Object-Type.html#GObject">GObject</a>
    +----UDisksState
 </pre>
 </div>
@@ -122,61 +122,61 @@ The following files are used:
 <tr>
 <td align="left"><code class="filename">/run/udisks2/mounted-fs</code></td>
 <td align="left">
-          A serialized 'a{sa{sv}}' <span class="type">GVariant</span> mapping from the
+          A serialized 'a{sa{sv}}' <a href="http://library.gnome.org/devel/glib/unstable/glib-GVariant.html#GVariant"><span class="type">GVariant</span></a> mapping from the
           mount point (e.g. <code class="filename">/media/EOS_DIGITAL</code>) into a set of details.
           Known details include
           <code class="literal">block-device</code>
-          (of type 't') that is the <span class="type">dev_t</span>
+          (of type <a href="http://library.gnome.org/devel/glib/unstable/glib-GVariantType.html#G-VARIANT-TYPE-UINT64:CAPS">'t'</a>) that is the <span class="type">dev_t</span>
           for the mounted device,
           <code class="literal">mounted-by-uid</code>
-          (of type 'u') that is the <span class="type">uid_t</span>
+          (of type <a href="http://library.gnome.org/devel/glib/unstable/glib-GVariantType.html#G-VARIANT-TYPE-UINT32:CAPS">'u'</a>) that is the <span class="type">uid_t</span>
           of the user who mounted the device, and
           <code class="literal">fstab-mount</code>
-          (of type 'b') that is <code class="literal">TRUE</code>
+          (of type <a href="http://library.gnome.org/devel/glib/unstable/glib-GVariantType.html#G-VARIANT-TYPE-BOOLEAN:CAPS">'b'</a>) that is <a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#TRUE:CAPS"><code class="literal">TRUE</code></a>
           if the device was mounted via an entry in /etc/fstab.
         </td>
 </tr>
 <tr>
 <td align="left"><code class="filename">/run/udisks2/unlocked-luks</code></td>
 <td align="left">
-          A serialized 'a{ta{sv}}' <span class="type">GVariant</span> mapping from the
+          A serialized 'a{ta{sv}}' <a href="http://library.gnome.org/devel/glib/unstable/glib-GVariant.html#GVariant"><span class="type">GVariant</span></a> mapping from the
           <span class="type">dev_t</span> of the clear-text device (e.g. <code class="filename">/dev/dm-0</code>) into a set of details.
           Known details include
           <code class="literal">crypto-device</code>
-          (of type 't') that is the <span class="type">dev_t</span>
+          (of type <a href="http://library.gnome.org/devel/glib/unstable/glib-GVariantType.html#G-VARIANT-TYPE-UINT64:CAPS">'t'</a>) that is the <span class="type">dev_t</span>
           for the crypto-text device,
           <code class="literal">dm-uuid</code>
-          (of type 'ay') that is the device mapper UUID
+          (of type <a href="http://library.gnome.org/devel/glib/unstable/glib-GVariantType.html#G-VARIANT-TYPE-ARRAY:CAPS">'ay'</a>) that is the device mapper UUID
           for the clear-text device and
           <code class="literal">unlocked-by-uid</code>
-          (of type 'u') that is the <span class="type">uid_t</span>
+          (of type <a href="http://library.gnome.org/devel/glib/unstable/glib-GVariantType.html#G-VARIANT-TYPE-UINT32:CAPS">'u'</a>) that is the <span class="type">uid_t</span>
           of the user who unlocked the device.
         </td>
 </tr>
 <tr>
 <td align="left"><code class="filename">/run/udisks2/loop</code></td>
 <td align="left">
-          A serialized 'a{sa{sv}}' <span class="type">GVariant</span> mapping from the
+          A serialized 'a{sa{sv}}' <a href="http://library.gnome.org/devel/glib/unstable/glib-GVariant.html#GVariant"><span class="type">GVariant</span></a> mapping from the
           loop device name (e.g. <code class="filename">/dev/loop0</code>) into a set of details.
           Known details include
           <code class="literal">backing-file</code>
-          (of type 'ay') for the name of the backing file and
+          (of type <a href="http://library.gnome.org/devel/glib/unstable/glib-GVariantType.html#G-VARIANT-TYPE-ARRAY:CAPS">'ay'</a>) for the name of the backing file and
           <code class="literal">backing-file-device</code>
-          (of type 't') for the <span class="type">dev_t</span>
+          (of type <a href="http://library.gnome.org/devel/glib/unstable/glib-GVariantType.html#G-VARIANT-TYPE-UINT64:CAPS">'t'</a>) for the <span class="type">dev_t</span>
           for of the device holding the backing file (or 0 if unknown) and
           <code class="literal">setup-by-uid</code>
-          (of type 'u') that is the <span class="type">uid_t</span>
+          (of type <a href="http://library.gnome.org/devel/glib/unstable/glib-GVariantType.html#G-VARIANT-TYPE-UINT32:CAPS">'u'</a>) that is the <span class="type">uid_t</span>
           of the user who set up the loop device.
         </td>
 </tr>
 <tr>
 <td align="left"><code class="filename">/run/udisks2/mdraid</code></td>
 <td align="left">
-          A serialized 'a{ta{sv}}' <span class="type">GVariant</span> mapping from the
+          A serialized 'a{ta{sv}}' <a href="http://library.gnome.org/devel/glib/unstable/glib-GVariant.html#GVariant"><span class="type">GVariant</span></a> mapping from the
           <span class="type">dev_t</span> of the raid device (e.g. <code class="filename">/dev/md127</code>) into a set of details.
           Known details include
           <code class="literal">started-by-uid</code>
-          (of type 'u') that is the <span class="type">uid_t</span>
+          (of type <a href="http://library.gnome.org/devel/glib/unstable/glib-GVariantType.html#G-VARIANT-TYPE-UINT32:CAPS">'u'</a>) that is the <span class="type">uid_t</span>
           of the user who started the array.
         </td>
 </tr>
@@ -228,7 +228,7 @@ Creates a new <a class="link" href="UDisksState.html" title="UDisksState"><span 
 </tr>
 <tr>
 <td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
-<td>A <a class="link" href="UDisksState.html" title="UDisksState"><span class="type">UDisksState</span></a> that should be freed with <code class="function">g_object_unref()</code>.</td>
+<td>A <a class="link" href="UDisksState.html" title="UDisksState"><span class="type">UDisksState</span></a> that should be freed with <a href="http://library.gnome.org/devel/gobject/unstable/gobject-The-Base-Object-Type.html#g-object-unref"><code class="function">g_object_unref()</code></a>.</td>
 </tr>
 </tbody>
 </table></div>
@@ -322,10 +322,10 @@ Gets the daemon used by <em class="parameter"><code>state</code></em>.
 <div class="refsect2">
 <a name="udisks-state-add-mounted-fs"></a><h3>udisks_state_add_mounted_fs ()</h3>
 <pre class="programlisting"><span class="returnvalue">void</span>                udisks_state_add_mounted_fs         (<em class="parameter"><code><a class="link" href="UDisksState.html" title="UDisksState"><span class="type">UDisksState</span></a> *state</code></em>,
-                                                         <em class="parameter"><code>const <span class="type">gchar</span> *mount_point</code></em>,
+                                                         <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *mount_point</code></em>,
                                                          <em class="parameter"><code><span class="type">dev_t</span> block_device</code></em>,
                                                          <em class="parameter"><code><span class="type">uid_t</span> uid</code></em>,
-                                                         <em class="parameter"><code><span class="type">gboolean</span> fstab_mount</code></em>);</pre>
+                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"><span class="type">gboolean</span></a> fstab_mount</code></em>);</pre>
 <p>
 Adds a new entry to the
 <code class="filename">/run/udisks2/mounted-fs</code> file.
@@ -355,7 +355,7 @@ Adds a new entry to the
 <tr>
 <td><p><span class="term"><em class="parameter"><code>fstab_mount</code></em> :</span></p></td>
 <td>
-<code class="literal">TRUE</code> if the device was mounted via /etc/fstab.</td>
+<a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#TRUE:CAPS"><code class="literal">TRUE</code></a> if the device was mounted via /etc/fstab.</td>
 </tr>
 </tbody>
 </table></div>
@@ -363,10 +363,10 @@ Adds a new entry to the
 <hr>
 <div class="refsect2">
 <a name="udisks-state-find-mounted-fs"></a><h3>udisks_state_find_mounted_fs ()</h3>
-<pre class="programlisting"><span class="returnvalue">gchar</span> *             udisks_state_find_mounted_fs        (<em class="parameter"><code><a class="link" href="UDisksState.html" title="UDisksState"><span class="type">UDisksState</span></a> *state</code></em>,
+<pre class="programlisting"><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="returnvalue">gchar</span></a> *             udisks_state_find_mounted_fs        (<em class="parameter"><code><a class="link" href="UDisksState.html" title="UDisksState"><span class="type">UDisksState</span></a> *state</code></em>,
                                                          <em class="parameter"><code><span class="type">dev_t</span> block_device</code></em>,
                                                          <em class="parameter"><code><span class="type">uid_t</span> *out_uid</code></em>,
-                                                         <em class="parameter"><code><span class="type">gboolean</span> *out_fstab_mount</code></em>);</pre>
+                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"><span class="type">gboolean</span></a> *out_fstab_mount</code></em>);</pre>
 <p>
 Gets the mount point for <em class="parameter"><code>block_device</code></em>, if it exists in the
 <code class="filename">/run/udisks2/mounted-fs</code> file.
@@ -387,15 +387,15 @@ Gets the mount point for <em class="parameter"><code>block_device</code></em>, i
 </tr>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>out_uid</code></em> :</span></p></td>
-<td>Return location for the user id who mounted the device or <code class="literal">NULL</code>.</td>
+<td>Return location for the user id who mounted the device or <a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a>.</td>
 </tr>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>out_fstab_mount</code></em> :</span></p></td>
-<td>Return location for whether the device was a fstab mount or <code class="literal">NULL</code>.</td>
+<td>Return location for whether the device was a fstab mount or <a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a>.</td>
 </tr>
 <tr>
 <td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
-<td>The mount point for <em class="parameter"><code>block_device</code></em> or <code class="literal">NULL</code> if not found.</td>
+<td>The mount point for <em class="parameter"><code>block_device</code></em> or <a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a> if not found.</td>
 </tr>
 </tbody>
 </table></div>
@@ -406,7 +406,7 @@ Gets the mount point for <em class="parameter"><code>block_device</code></em>, i
 <pre class="programlisting"><span class="returnvalue">void</span>                udisks_state_add_unlocked_luks      (<em class="parameter"><code><a class="link" href="UDisksState.html" title="UDisksState"><span class="type">UDisksState</span></a> *state</code></em>,
                                                          <em class="parameter"><code><span class="type">dev_t</span> cleartext_device</code></em>,
                                                          <em class="parameter"><code><span class="type">dev_t</span> crypto_device</code></em>,
-                                                         <em class="parameter"><code>const <span class="type">gchar</span> *dm_uuid</code></em>,
+                                                         <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *dm_uuid</code></em>,
                                                          <em class="parameter"><code><span class="type">uid_t</span> uid</code></em>);</pre>
 <p>
 Adds a new entry to the
@@ -467,7 +467,7 @@ Gets the clear-text device for <em class="parameter"><code>crypto_device</code><
 </tr>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>out_uid</code></em> :</span></p></td>
-<td>Return location for the user id who mounted the device or <code class="literal">NULL</code>.</td>
+<td>Return location for the user id who mounted the device or <a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a>.</td>
 </tr>
 <tr>
 <td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
@@ -480,8 +480,8 @@ Gets the clear-text device for <em class="parameter"><code>crypto_device</code><
 <div class="refsect2">
 <a name="udisks-state-add-loop"></a><h3>udisks_state_add_loop ()</h3>
 <pre class="programlisting"><span class="returnvalue">void</span>                udisks_state_add_loop               (<em class="parameter"><code><a class="link" href="UDisksState.html" title="UDisksState"><span class="type">UDisksState</span></a> *state</code></em>,
-                                                         <em class="parameter"><code>const <span class="type">gchar</span> *device_file</code></em>,
-                                                         <em class="parameter"><code>const <span class="type">gchar</span> *backing_file</code></em>,
+                                                         <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *device_file</code></em>,
+                                                         <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *backing_file</code></em>,
                                                          <em class="parameter"><code><span class="type">dev_t</span> backing_file_device</code></em>,
                                                          <em class="parameter"><code><span class="type">uid_t</span> uid</code></em>);</pre>
 <p>
@@ -520,8 +520,8 @@ file.
 <hr>
 <div class="refsect2">
 <a name="udisks-state-has-loop"></a><h3>udisks_state_has_loop ()</h3>
-<pre class="programlisting"><span class="returnvalue">gboolean</span>            udisks_state_has_loop               (<em class="parameter"><code><a class="link" href="UDisksState.html" title="UDisksState"><span class="type">UDisksState</span></a> *state</code></em>,
-                                                         <em class="parameter"><code>const <span class="type">gchar</span> *device_file</code></em>,
+<pre class="programlisting"><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>            udisks_state_has_loop               (<em class="parameter"><code><a class="link" href="UDisksState.html" title="UDisksState"><span class="type">UDisksState</span></a> *state</code></em>,
+                                                         <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *device_file</code></em>,
                                                          <em class="parameter"><code><span class="type">uid_t</span> *out_uid</code></em>);</pre>
 <p>
 Checks if <em class="parameter"><code>device_file</code></em> is set up via udisks.
@@ -543,12 +543,12 @@ Checks if <em class="parameter"><code>device_file</code></em> is set up via udis
 </tr>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>out_uid</code></em> :</span></p></td>
-<td>Return location for the user id who setup the loop device or <code class="literal">NULL</code>.</td>
+<td>Return location for the user id who setup the loop device or <a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a>.</td>
 </tr>
 <tr>
 <td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
 <td>
-<code class="literal">TRUE</code> if set up via udisks, otherwise <code class="literal">FALSE</code> or if <em class="parameter"><code>error</code></em> is set.</td>
+<a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#TRUE:CAPS"><code class="literal">TRUE</code></a> if set up via udisks, otherwise <a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#FALSE:CAPS"><code class="literal">FALSE</code></a> or if <em class="parameter"><code>error</code></em> is set.</td>
 </tr>
 </tbody>
 </table></div>
@@ -587,7 +587,7 @@ file.
 <hr>
 <div class="refsect2">
 <a name="udisks-state-has-mdraid"></a><h3>udisks_state_has_mdraid ()</h3>
-<pre class="programlisting"><span class="returnvalue">gboolean</span>            udisks_state_has_mdraid             (<em class="parameter"><code><a class="link" href="UDisksState.html" title="UDisksState"><span class="type">UDisksState</span></a> *state</code></em>,
+<pre class="programlisting"><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>            udisks_state_has_mdraid             (<em class="parameter"><code><a class="link" href="UDisksState.html" title="UDisksState"><span class="type">UDisksState</span></a> *state</code></em>,
                                                          <em class="parameter"><code><span class="type">dev_t</span> raid_device</code></em>,
                                                          <em class="parameter"><code><span class="type">uid_t</span> *out_uid</code></em>);</pre>
 <p>
@@ -610,12 +610,12 @@ Checks if <em class="parameter"><code>raid_device</code></em> is set up via udis
 </tr>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>out_uid</code></em> :</span></p></td>
-<td>Return location for the user id who setup the loop device or <code class="literal">NULL</code>.</td>
+<td>Return location for the user id who setup the loop device or <a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a>.</td>
 </tr>
 <tr>
 <td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
 <td>
-<code class="literal">TRUE</code> if set up via udisks, otherwise <code class="literal">FALSE</code> or if <em class="parameter"><code>error</code></em> is set.</td>
+<a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#TRUE:CAPS"><code class="literal">TRUE</code></a> if set up via udisks, otherwise <a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#FALSE:CAPS"><code class="literal">FALSE</code></a> or if <em class="parameter"><code>error</code></em> is set.</td>
 </tr>
 </tbody>
 </table></div>

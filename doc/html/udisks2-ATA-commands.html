@@ -40,12 +40,12 @@
 <pre class="synopsis">enum                <a class="link" href="udisks2-ATA-commands.html#UDisksAtaCommandProtocol" title="enum UDisksAtaCommandProtocol">UDisksAtaCommandProtocol</a>;
                     <a class="link" href="udisks2-ATA-commands.html#UDisksAtaCommandInput" title="UDisksAtaCommandInput">UDisksAtaCommandInput</a>;
                     <a class="link" href="udisks2-ATA-commands.html#UDisksAtaCommandOutput" title="UDisksAtaCommandOutput">UDisksAtaCommandOutput</a>;
-<span class="returnvalue">gboolean</span>            <a class="link" href="udisks2-ATA-commands.html#udisks-ata-send-command-sync" title="udisks_ata_send_command_sync ()">udisks_ata_send_command_sync</a>        (<em class="parameter"><code><span class="type">gint</span> fd</code></em>,
-                                                         <em class="parameter"><code><span class="type">gint</span> timeout_msec</code></em>,
+<a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>            <a class="link" href="udisks2-ATA-commands.html#udisks-ata-send-command-sync" title="udisks_ata_send_command_sync ()">udisks_ata_send_command_sync</a>        (<em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gint"><span class="type">gint</span></a> fd</code></em>,
+                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gint"><span class="type">gint</span></a> timeout_msec</code></em>,
                                                          <em class="parameter"><code><a class="link" href="udisks2-ATA-commands.html#UDisksAtaCommandProtocol" title="enum UDisksAtaCommandProtocol"><span class="type">UDisksAtaCommandProtocol</span></a> protocol</code></em>,
                                                          <em class="parameter"><code><a class="link" href="udisks2-ATA-commands.html#UDisksAtaCommandInput" title="UDisksAtaCommandInput"><span class="type">UDisksAtaCommandInput</span></a> *input</code></em>,
                                                          <em class="parameter"><code><a class="link" href="udisks2-ATA-commands.html#UDisksAtaCommandOutput" title="UDisksAtaCommandOutput"><span class="type">UDisksAtaCommandOutput</span></a> *output</code></em>,
-                                                         <em class="parameter"><code><span class="type">GError</span> **error</code></em>);
+                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Error-Reporting.html#GError"><span class="type">GError</span></a> **error</code></em>);
 </pre>
 </div>
 <div class="refsect1">
@@ -138,8 +138,8 @@ Struct used for input data when sending ATA commands.
 <td>Size of the <em class="parameter"><code>buffer</code></em> member or 0</td>
 </tr>
 <tr>
-<td><p><span class="term"><span class="type">guchar</span> *<em class="structfield"><code><a name="UDisksAtaCommandInput.buffer"></a>buffer</code></em>;</span></p></td>
-<td>Data to send to device or <code class="literal">NULL</code>
+<td><p><span class="term"><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#guchar"><span class="type">guchar</span></a> *<em class="structfield"><code><a name="UDisksAtaCommandInput.buffer"></a>buffer</code></em>;</span></p></td>
+<td>Data to send to device or <a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a>
 </td>
 </tr>
 </tbody>
@@ -192,8 +192,8 @@ Struct used for output data when sending ATA commands.
 <td>Size of the <em class="parameter"><code>buffer</code></em> member or 0</td>
 </tr>
 <tr>
-<td><p><span class="term"><span class="type">guchar</span> *<em class="structfield"><code><a name="UDisksAtaCommandOutput.buffer"></a>buffer</code></em>;</span></p></td>
-<td>Pointer to where to recieve data from the device or <code class="literal">NULL</code>
+<td><p><span class="term"><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#guchar"><span class="type">guchar</span></a> *<em class="structfield"><code><a name="UDisksAtaCommandOutput.buffer"></a>buffer</code></em>;</span></p></td>
+<td>Pointer to where to recieve data from the device or <a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a>
 </td>
 </tr>
 </tbody>
@@ -202,12 +202,12 @@ Struct used for output data when sending ATA commands.
 <hr>
 <div class="refsect2">
 <a name="udisks-ata-send-command-sync"></a><h3>udisks_ata_send_command_sync ()</h3>
-<pre class="programlisting"><span class="returnvalue">gboolean</span>            udisks_ata_send_command_sync        (<em class="parameter"><code><span class="type">gint</span> fd</code></em>,
-                                                         <em class="parameter"><code><span class="type">gint</span> timeout_msec</code></em>,
+<pre class="programlisting"><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>            udisks_ata_send_command_sync        (<em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gint"><span class="type">gint</span></a> fd</code></em>,
+                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gint"><span class="type">gint</span></a> timeout_msec</code></em>,
                                                          <em class="parameter"><code><a class="link" href="udisks2-ATA-commands.html#UDisksAtaCommandProtocol" title="enum UDisksAtaCommandProtocol"><span class="type">UDisksAtaCommandProtocol</span></a> protocol</code></em>,
                                                          <em class="parameter"><code><a class="link" href="udisks2-ATA-commands.html#UDisksAtaCommandInput" title="UDisksAtaCommandInput"><span class="type">UDisksAtaCommandInput</span></a> *input</code></em>,
                                                          <em class="parameter"><code><a class="link" href="udisks2-ATA-commands.html#UDisksAtaCommandOutput" title="UDisksAtaCommandOutput"><span class="type">UDisksAtaCommandOutput</span></a> *output</code></em>,
-                                                         <em class="parameter"><code><span class="type">GError</span> **error</code></em>);</pre>
+                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Error-Reporting.html#GError"><span class="type">GError</span></a> **error</code></em>);</pre>
 <p>
 Sends a command to an ATA device. Blocks the calling thread while the command is pending.
 </p>
@@ -239,12 +239,12 @@ Sends a command to an ATA device. Blocks the calling thread while the command is
 </tr>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>error</code></em> :</span></p></td>
-<td>Return location for error or <code class="literal">NULL</code>.</td>
+<td>Return location for error or <a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a>.</td>
 </tr>
 <tr>
 <td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
 <td>
-<code class="literal">TRUE</code> if the command succeded, <code class="literal">FALSE</code> if <em class="parameter"><code>error</code></em> is set.</td>
+<a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#TRUE:CAPS"><code class="literal">TRUE</code></a> if the command succeded, <a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#FALSE:CAPS"><code class="literal">FALSE</code></a> if <em class="parameter"><code>error</code></em> is set.</td>
 </tr>
 </tbody>
 </table></div>

@@ -302,6 +302,13 @@ static const gchar *udf_allow[] = { "iocharset=", "umask=", NULL };
 static const gchar *udf_allow_uid_self[] = { "uid=", NULL };
 static const gchar *udf_allow_gid_self[] = { "gid=", NULL };
 
+/* ---------------------- exfat -------------------- */
+
+static const gchar *exfat_defaults[] = { "uid=", "gid=", "iocharset=utf8", "namecase=0", "errors=remount-ro", "umask=0077", NULL };
+static const gchar *exfat_allow[] = { "dmask=", "errors=", "fmask=", "iocharset=", "namecase=", "umask=", NULL };
+static const gchar *exfat_allow_uid_self[] = { "uid=", NULL };
+static const gchar *exfat_allow_gid_self[] = { "gid=", NULL };
+
 /* ------------------------------------------------ */
 /* TODO: support context= */
 
@@ -313,6 +320,7 @@ static const FSMountOptions fs_mount_options[] =
     { "ntfs", ntfs_defaults, ntfs_allow, ntfs_allow_uid_self, ntfs_allow_gid_self },
     { "iso9660", iso9660_defaults, iso9660_allow, iso9660_allow_uid_self, iso9660_allow_gid_self },
     { "udf", udf_defaults, udf_allow, udf_allow_uid_self, udf_allow_gid_self },
+    { "exfat", exfat_defaults, exfat_allow, exfat_allow_uid_self, exfat_allow_gid_self },
   };
 
 /* ------------------------------------------------ */
@@ -1819,6 +1827,7 @@ handle_set_label (UDisksFilesystem       *filesystem,
   UDisksBaseJob *job;
   const gchar *action_id;
   const gchar *message;
+  gchar *real_label = NULL;
   uid_t caller_uid;
   gid_t caller_gid;
   pid_t caller_pid;
@@ -1893,8 +1902,9 @@ handle_set_label (UDisksFilesystem       *filesystem,
       goto out;
     }
 
-  /* VFAT does not allow some characters; as mlabel hangs with interactive
-   * question in this case, check in advance */
+  /* VFAT does not allow some characters; as dosfslabel does not enforce this,
+   * check in advance; also, VFAT only knows upper-case characters, dosfslabel
+   * enforces this */
   if (g_strcmp0 (probed_fs_type, "vfat") == 0)
     {
       const gchar *forbidden = "\"*/:<>?\\|";
@@ -1911,6 +1921,11 @@ handle_set_label (UDisksFilesystem       *filesystem,
                goto out;
             }
         }
+
+      /* we need to remember that we make a copy, so assign it to a new
+       * variable, too */
+      real_label = g_ascii_strup (label, -1);
+      label = real_label;
     }
 
   /* Fail if the device is already mounted and the tools/drivers doesn't
@@ -1988,6 +2003,8 @@ handle_set_label (UDisksFilesystem       *filesystem,
                     invocation);
 
  out:
+  /* for some FSes we need to copy and modify label; free our copy */
+  g_free (real_label);
   g_free (command);
   g_clear_object (&object);
   return TRUE; /* returning TRUE means that we handled the method invocation */

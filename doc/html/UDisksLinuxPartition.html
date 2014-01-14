@@ -45,19 +45,19 @@
 <a class="link" href="UDisksPartition.html" title="UDisksPartition"><span class="returnvalue">UDisksPartition</span></a> *   <a class="link" href="UDisksLinuxPartition.html#udisks-linux-partition-new" title="udisks_linux_partition_new ()">udisks_linux_partition_new</a>          (<em class="parameter"><code><span class="type">void</span></code></em>);
 <span class="returnvalue">void</span>                <a class="link" href="UDisksLinuxPartition.html#udisks-linux-partition-update" title="udisks_linux_partition_update ()">udisks_linux_partition_update</a>       (<em class="parameter"><code><a class="link" href="UDisksLinuxPartition.html" title="UDisksLinuxPartition"><span class="type">UDisksLinuxPartition</span></a> *partition</code></em>,
                                                          <em class="parameter"><code><a class="link" href="UDisksLinuxBlockObject.html" title="UDisksLinuxBlockObject"><span class="type">UDisksLinuxBlockObject</span></a> *object</code></em>);
-<span class="returnvalue">gboolean</span>            <a class="link" href="UDisksLinuxPartition.html#udisks-linux-partition-set-type-sync" title="udisks_linux_partition_set_type_sync ()">udisks_linux_partition_set_type_sync</a>
+<a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>            <a class="link" href="UDisksLinuxPartition.html#udisks-linux-partition-set-type-sync" title="udisks_linux_partition_set_type_sync ()">udisks_linux_partition_set_type_sync</a>
                                                         (<em class="parameter"><code><a class="link" href="UDisksLinuxPartition.html" title="UDisksLinuxPartition"><span class="type">UDisksLinuxPartition</span></a> *partition</code></em>,
-                                                         <em class="parameter"><code>const <span class="type">gchar</span> *type</code></em>,
+                                                         <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *type</code></em>,
                                                          <em class="parameter"><code><span class="type">uid_t</span> caller_uid</code></em>,
-                                                         <em class="parameter"><code><span class="type">GCancellable</span> *cancellable</code></em>,
-                                                         <em class="parameter"><code><span class="type">GError</span> **error</code></em>);
+                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/gio/unstable/GCancellable.html"><span class="type">GCancellable</span></a> *cancellable</code></em>,
+                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Error-Reporting.html#GError"><span class="type">GError</span></a> **error</code></em>);
 </pre>
 </div>
 <div class="refsect1">
 <a name="UDisksLinuxPartition.object-hierarchy"></a><h2>Object Hierarchy</h2>
 <pre class="synopsis">
-  GObject
-   +----GDBusInterfaceSkeleton
+  <a href="http://library.gnome.org/devel/gobject/unstable/gobject-The-Base-Object-Type.html#GObject">GObject</a>
+   +----<a href="http://library.gnome.org/devel/gio/unstable/GDBusInterfaceSkeleton.html">GDBusInterfaceSkeleton</a>
          +----<a class="link" href="UDisksPartition.html#UDisksPartitionSkeleton">UDisksPartitionSkeleton</a>
                +----UDisksLinuxPartition
 </pre>
@@ -66,7 +66,7 @@
 <a name="UDisksLinuxPartition.implemented-interfaces"></a><h2>Implemented Interfaces</h2>
 <p>
 UDisksLinuxPartition implements
- GDBusInterface and  <a class="link" href="UDisksPartition.html" title="UDisksPartition">UDisksPartition</a>.</p>
+ <a href="http://library.gnome.org/devel/gio/unstable/GDBusInterface.html">GDBusInterface</a> and  <a class="link" href="UDisksPartition.html" title="UDisksPartition">UDisksPartition</a>.</p>
 </div>
 <div class="refsect1">
 <a name="UDisksLinuxPartition.description"></a><h2>Description</h2>
@@ -99,7 +99,7 @@ Creates a new <a class="link" href="UDisksLinuxPartition.html" title="UDisksLinu
 </colgroup>
 <tbody><tr>
 <td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
-<td>A new <a class="link" href="UDisksLinuxPartition.html" title="UDisksLinuxPartition"><span class="type">UDisksLinuxPartition</span></a>. Free with <code class="function">g_object_unref()</code>.</td>
+<td>A new <a class="link" href="UDisksLinuxPartition.html" title="UDisksLinuxPartition"><span class="type">UDisksLinuxPartition</span></a>. Free with <a href="http://library.gnome.org/devel/gobject/unstable/gobject-The-Base-Object-Type.html#g-object-unref"><code class="function">g_object_unref()</code></a>.</td>
 </tr></tbody>
 </table></div>
 </div>
@@ -131,12 +131,12 @@ Updates the interface.
 <hr>
 <div class="refsect2">
 <a name="udisks-linux-partition-set-type-sync"></a><h3>udisks_linux_partition_set_type_sync ()</h3>
-<pre class="programlisting"><span class="returnvalue">gboolean</span>            udisks_linux_partition_set_type_sync
+<pre class="programlisting"><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>            udisks_linux_partition_set_type_sync
                                                         (<em class="parameter"><code><a class="link" href="UDisksLinuxPartition.html" title="UDisksLinuxPartition"><span class="type">UDisksLinuxPartition</span></a> *partition</code></em>,
-                                                         <em class="parameter"><code>const <span class="type">gchar</span> *type</code></em>,
+                                                         <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *type</code></em>,
                                                          <em class="parameter"><code><span class="type">uid_t</span> caller_uid</code></em>,
-                                                         <em class="parameter"><code><span class="type">GCancellable</span> *cancellable</code></em>,
-                                                         <em class="parameter"><code><span class="type">GError</span> **error</code></em>);</pre>
+                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/gio/unstable/GCancellable.html"><span class="type">GCancellable</span></a> *cancellable</code></em>,
+                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Error-Reporting.html#GError"><span class="type">GError</span></a> **error</code></em>);</pre>
 <p>
 Sets the partition type. The calling thread is blocked while the
 operation is pending.
@@ -161,16 +161,16 @@ operation is pending.
 </tr>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>cancellable</code></em> :</span></p></td>
-<td>A <span class="type">GCancellable</span> or <code class="literal">NULL</code>.</td>
+<td>A <a href="http://library.gnome.org/devel/gio/unstable/GCancellable.html"><span class="type">GCancellable</span></a> or <a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a>.</td>
 </tr>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>error</code></em> :</span></p></td>
-<td>Return location for error or <code class="literal">NULL</code>.</td>
+<td>Return location for error or <a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a>.</td>
 </tr>
 <tr>
 <td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
 <td>
-<code class="literal">TRUE</code> if the operation succeeded, <code class="literal">FALSE</code> if error is set.</td>
+<a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#TRUE:CAPS"><code class="literal">TRUE</code></a> if the operation succeeded, <a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#FALSE:CAPS"><code class="literal">FALSE</code></a> if error is set.</td>
 </tr>
 </tbody>
 </table></div>

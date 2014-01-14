@@ -43,15 +43,15 @@
 <a name="UDisksLinuxMDRaid.synopsis"></a><h2>Synopsis</h2>
 <pre class="synopsis">                    <a class="link" href="UDisksLinuxMDRaid.html#UDisksLinuxMDRaid-struct" title="UDisksLinuxMDRaid">UDisksLinuxMDRaid</a>;
 <a class="link" href="UDisksMDRaid.html" title="UDisksMDRaid"><span class="returnvalue">UDisksMDRaid</span></a> *      <a class="link" href="UDisksLinuxMDRaid.html#udisks-linux-mdraid-new" title="udisks_linux_mdraid_new ()">udisks_linux_mdraid_new</a>             (<em class="parameter"><code><span class="type">void</span></code></em>);
-<span class="returnvalue">gboolean</span>            <a class="link" href="UDisksLinuxMDRaid.html#udisks-linux-mdraid-update" title="udisks_linux_mdraid_update ()">udisks_linux_mdraid_update</a>          (<em class="parameter"><code><a class="link" href="UDisksLinuxMDRaid.html" title="UDisksLinuxMDRaid"><span class="type">UDisksLinuxMDRaid</span></a> *mdraid</code></em>,
+<a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>            <a class="link" href="UDisksLinuxMDRaid.html#udisks-linux-mdraid-update" title="udisks_linux_mdraid_update ()">udisks_linux_mdraid_update</a>          (<em class="parameter"><code><a class="link" href="UDisksLinuxMDRaid.html" title="UDisksLinuxMDRaid"><span class="type">UDisksLinuxMDRaid</span></a> *mdraid</code></em>,
                                                          <em class="parameter"><code><a class="link" href="UDisksLinuxMDRaidObject.html" title="UDisksLinuxMDRaidObject"><span class="type">UDisksLinuxMDRaidObject</span></a> *object</code></em>);
 </pre>
 </div>
 <div class="refsect1">
 <a name="UDisksLinuxMDRaid.object-hierarchy"></a><h2>Object Hierarchy</h2>
 <pre class="synopsis">
-  GObject
-   +----GDBusInterfaceSkeleton
+  <a href="http://library.gnome.org/devel/gobject/unstable/gobject-The-Base-Object-Type.html#GObject">GObject</a>
+   +----<a href="http://library.gnome.org/devel/gio/unstable/GDBusInterfaceSkeleton.html">GDBusInterfaceSkeleton</a>
          +----<a class="link" href="UDisksMDRaid.html#UDisksMDRaidSkeleton">UDisksMDRaidSkeleton</a>
                +----UDisksLinuxMDRaid
 </pre>
@@ -60,7 +60,7 @@
 <a name="UDisksLinuxMDRaid.implemented-interfaces"></a><h2>Implemented Interfaces</h2>
 <p>
 UDisksLinuxMDRaid implements
- GDBusInterface and  <a class="link" href="UDisksMDRaid.html" title="UDisksMDRaid">UDisksMDRaid</a>.</p>
+ <a href="http://library.gnome.org/devel/gio/unstable/GDBusInterface.html">GDBusInterface</a> and  <a class="link" href="UDisksMDRaid.html" title="UDisksMDRaid">UDisksMDRaid</a>.</p>
 </div>
 <div class="refsect1">
 <a name="UDisksLinuxMDRaid.description"></a><h2>Description</h2>
@@ -93,14 +93,14 @@ Creates a new <a class="link" href="UDisksLinuxMDRaid.html" title="UDisksLinuxMD
 </colgroup>
 <tbody><tr>
 <td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
-<td>A new <a class="link" href="UDisksLinuxMDRaid.html" title="UDisksLinuxMDRaid"><span class="type">UDisksLinuxMDRaid</span></a>. Free with <code class="function">g_object_unref()</code>.</td>
+<td>A new <a class="link" href="UDisksLinuxMDRaid.html" title="UDisksLinuxMDRaid"><span class="type">UDisksLinuxMDRaid</span></a>. Free with <a href="http://library.gnome.org/devel/gobject/unstable/gobject-The-Base-Object-Type.html#g-object-unref"><code class="function">g_object_unref()</code></a>.</td>
 </tr></tbody>
 </table></div>
 </div>
 <hr>
 <div class="refsect2">
 <a name="udisks-linux-mdraid-update"></a><h3>udisks_linux_mdraid_update ()</h3>
-<pre class="programlisting"><span class="returnvalue">gboolean</span>            udisks_linux_mdraid_update          (<em class="parameter"><code><a class="link" href="UDisksLinuxMDRaid.html" title="UDisksLinuxMDRaid"><span class="type">UDisksLinuxMDRaid</span></a> *mdraid</code></em>,
+<pre class="programlisting"><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>            udisks_linux_mdraid_update          (<em class="parameter"><code><a class="link" href="UDisksLinuxMDRaid.html" title="UDisksLinuxMDRaid"><span class="type">UDisksLinuxMDRaid</span></a> *mdraid</code></em>,
                                                          <em class="parameter"><code><a class="link" href="UDisksLinuxMDRaidObject.html" title="UDisksLinuxMDRaidObject"><span class="type">UDisksLinuxMDRaidObject</span></a> *object</code></em>);</pre>
 <p>
 Updates the interface.
@@ -122,7 +122,7 @@ Updates the interface.
 <tr>
 <td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
 <td>
-<code class="literal">TRUE</code> if configuration has changed, <code class="literal">FALSE</code> otherwise.</td>
+<a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#TRUE:CAPS"><code class="literal">TRUE</code></a> if configuration has changed, <a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#FALSE:CAPS"><code class="literal">FALSE</code></a> otherwise.</td>
 </tr>
 </tbody>
 </table></div>

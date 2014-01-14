@@ -46,27 +46,27 @@
 <pre class="synopsis">                    <a class="link" href="UDisksLinuxMDRaidObject.html#UDisksLinuxMDRaidObject-struct" title="UDisksLinuxMDRaidObject">UDisksLinuxMDRaidObject</a>;
 <a class="link" href="UDisksLinuxMDRaidObject.html" title="UDisksLinuxMDRaidObject"><span class="returnvalue">UDisksLinuxMDRaidObject</span></a> * <a class="link" href="UDisksLinuxMDRaidObject.html#udisks-linux-mdraid-object-new" title="udisks_linux_mdraid_object_new ()">udisks_linux_mdraid_object_new</a>
                                                         (<em class="parameter"><code><a class="link" href="UDisksDaemon.html" title="UDisksDaemon"><span class="type">UDisksDaemon</span></a> *daemon</code></em>,
-                                                         <em class="parameter"><code>const <span class="type">gchar</span> *uuid</code></em>);
+                                                         <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *uuid</code></em>);
 <span class="returnvalue">void</span>                <a class="link" href="UDisksLinuxMDRaidObject.html#udisks-linux-mdraid-object-uevent" title="udisks_linux_mdraid_object_uevent ()">udisks_linux_mdraid_object_uevent</a>   (<em class="parameter"><code><a class="link" href="UDisksLinuxMDRaidObject.html" title="UDisksLinuxMDRaidObject"><span class="type">UDisksLinuxMDRaidObject</span></a> *object</code></em>,
-                                                         <em class="parameter"><code>const <span class="type">gchar</span> *action</code></em>,
+                                                         <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *action</code></em>,
                                                          <em class="parameter"><code><a class="link" href="UDisksLinuxDevice.html" title="UDisksLinuxDevice"><span class="type">UDisksLinuxDevice</span></a> *device</code></em>,
-                                                         <em class="parameter"><code><span class="type">gboolean</span> is_member</code></em>);
-<span class="returnvalue">gboolean</span>            <a class="link" href="UDisksLinuxMDRaidObject.html#udisks-linux-mdraid-object-have-devices" title="udisks_linux_mdraid_object_have_devices ()">udisks_linux_mdraid_object_have_devices</a>
+                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"><span class="type">gboolean</span></a> is_member</code></em>);
+<a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>            <a class="link" href="UDisksLinuxMDRaidObject.html#udisks-linux-mdraid-object-have-devices" title="udisks_linux_mdraid_object_have_devices ()">udisks_linux_mdraid_object_have_devices</a>
                                                         (<em class="parameter"><code><a class="link" href="UDisksLinuxMDRaidObject.html" title="UDisksLinuxMDRaidObject"><span class="type">UDisksLinuxMDRaidObject</span></a> *object</code></em>);
 <a class="link" href="UDisksDaemon.html" title="UDisksDaemon"><span class="returnvalue">UDisksDaemon</span></a> *      <a class="link" href="UDisksLinuxMDRaidObject.html#udisks-linux-mdraid-object-get-daemon" title="udisks_linux_mdraid_object_get_daemon ()">udisks_linux_mdraid_object_get_daemon</a>
                                                         (<em class="parameter"><code><a class="link" href="UDisksLinuxMDRaidObject.html" title="UDisksLinuxMDRaidObject"><span class="type">UDisksLinuxMDRaidObject</span></a> *object</code></em>);
 <a class="link" href="UDisksLinuxDevice.html" title="UDisksLinuxDevice"><span class="returnvalue">UDisksLinuxDevice</span></a> * <a class="link" href="UDisksLinuxMDRaidObject.html#udisks-linux-mdraid-object-get-device" title="udisks_linux_mdraid_object_get_device ()">udisks_linux_mdraid_object_get_device</a>
                                                         (<em class="parameter"><code><a class="link" href="UDisksLinuxMDRaidObject.html" title="UDisksLinuxMDRaidObject"><span class="type">UDisksLinuxMDRaidObject</span></a> *object</code></em>);
-<span class="returnvalue">GList</span> *             <a class="link" href="UDisksLinuxMDRaidObject.html#udisks-linux-mdraid-object-get-members" title="udisks_linux_mdraid_object_get_members ()">udisks_linux_mdraid_object_get_members</a>
+<a href="http://library.gnome.org/devel/glib/unstable/glib-Doubly-Linked-Lists.html#GList"><span class="returnvalue">GList</span></a> *             <a class="link" href="UDisksLinuxMDRaidObject.html#udisks-linux-mdraid-object-get-members" title="udisks_linux_mdraid_object_get_members ()">udisks_linux_mdraid_object_get_members</a>
                                                         (<em class="parameter"><code><a class="link" href="UDisksLinuxMDRaidObject.html" title="UDisksLinuxMDRaidObject"><span class="type">UDisksLinuxMDRaidObject</span></a> *object</code></em>);
-const <span class="returnvalue">gchar</span> *       <a class="link" href="UDisksLinuxMDRaidObject.html#udisks-linux-mdraid-object-get-uuid" title="udisks_linux_mdraid_object_get_uuid ()">udisks_linux_mdraid_object_get_uuid</a> (<em class="parameter"><code><a class="link" href="UDisksLinuxMDRaidObject.html" title="UDisksLinuxMDRaidObject"><span class="type">UDisksLinuxMDRaidObject</span></a> *object</code></em>);
+const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="returnvalue">gchar</span></a> *       <a class="link" href="UDisksLinuxMDRaidObject.html#udisks-linux-mdraid-object-get-uuid" title="udisks_linux_mdraid_object_get_uuid ()">udisks_linux_mdraid_object_get_uuid</a> (<em class="parameter"><code><a class="link" href="UDisksLinuxMDRaidObject.html" title="UDisksLinuxMDRaidObject"><span class="type">UDisksLinuxMDRaidObject</span></a> *object</code></em>);
 </pre>
 </div>
 <div class="refsect1">
 <a name="UDisksLinuxMDRaidObject.object-hierarchy"></a><h2>Object Hierarchy</h2>
 <pre class="synopsis">
-  GObject
-   +----GDBusObjectSkeleton
+  <a href="http://library.gnome.org/devel/gobject/unstable/gobject-The-Base-Object-Type.html#GObject">GObject</a>
+   +----<a href="http://library.gnome.org/devel/gio/unstable/GDBusObjectSkeleton.html">GDBusObjectSkeleton</a>
          +----<a class="link" href="UDisksObject.html#UDisksObjectSkeleton">UDisksObjectSkeleton</a>
                +----UDisksLinuxMDRaidObject
 </pre>
@@ -75,13 +75,13 @@ const <span class="returnvalue">gchar</span> *       <a class="link" href="UDisk
 <a name="UDisksLinuxMDRaidObject.implemented-interfaces"></a><h2>Implemented Interfaces</h2>
 <p>
 UDisksLinuxMDRaidObject implements
- GDBusObject and  <a class="link" href="UDisksObject.html" title="UDisksObject">UDisksObject</a>.</p>
+ <a href="http://library.gnome.org/devel/gio/unstable/GDBusObject.html">GDBusObject</a> and  <a class="link" href="UDisksObject.html" title="UDisksObject">UDisksObject</a>.</p>
 </div>
 <div class="refsect1">
 <a name="UDisksLinuxMDRaidObject.properties"></a><h2>Properties</h2>
 <pre class="synopsis">
   "<a class="link" href="UDisksLinuxMDRaidObject.html#UDisksLinuxMDRaidObject--daemon" title='The "daemon" property'>daemon</a>"                   <a class="link" href="UDisksDaemon.html" title="UDisksDaemon"><span class="type">UDisksDaemon</span></a>*         : Read / Write / Construct Only
-  "<a class="link" href="UDisksLinuxMDRaidObject.html#UDisksLinuxMDRaidObject--uuid" title='The "uuid" property'>uuid</a>"                     <span class="type">gchar</span>*                : Write / Construct Only
+  "<a class="link" href="UDisksLinuxMDRaidObject.html#UDisksLinuxMDRaidObject--uuid" title='The "uuid" property'>uuid</a>"                     <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a>*                : Write / Construct Only
 </pre>
 </div>
 <div class="refsect1">
@@ -105,7 +105,7 @@ should only be accessed using the provided API.
 <a name="udisks-linux-mdraid-object-new"></a><h3>udisks_linux_mdraid_object_new ()</h3>
 <pre class="programlisting"><a class="link" href="UDisksLinuxMDRaidObject.html" title="UDisksLinuxMDRaidObject"><span class="returnvalue">UDisksLinuxMDRaidObject</span></a> * udisks_linux_mdraid_object_new
                                                         (<em class="parameter"><code><a class="link" href="UDisksDaemon.html" title="UDisksDaemon"><span class="type">UDisksDaemon</span></a> *daemon</code></em>,
-                                                         <em class="parameter"><code>const <span class="type">gchar</span> *uuid</code></em>);</pre>
+                                                         <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *uuid</code></em>);</pre>
 <p>
 Create a new MDRaid object.
 </p>
@@ -125,7 +125,7 @@ Create a new MDRaid object.
 </tr>
 <tr>
 <td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
-<td>A <a class="link" href="UDisksLinuxMDRaidObject.html" title="UDisksLinuxMDRaidObject"><span class="type">UDisksLinuxMDRaidObject</span></a> object. Free with <code class="function">g_object_unref()</code>.</td>
+<td>A <a class="link" href="UDisksLinuxMDRaidObject.html" title="UDisksLinuxMDRaidObject"><span class="type">UDisksLinuxMDRaidObject</span></a> object. Free with <a href="http://library.gnome.org/devel/gobject/unstable/gobject-The-Base-Object-Type.html#g-object-unref"><code class="function">g_object_unref()</code></a>.</td>
 </tr>
 </tbody>
 </table></div>
@@ -134,9 +134,9 @@ Create a new MDRaid object.
 <div class="refsect2">
 <a name="udisks-linux-mdraid-object-uevent"></a><h3>udisks_linux_mdraid_object_uevent ()</h3>
 <pre class="programlisting"><span class="returnvalue">void</span>                udisks_linux_mdraid_object_uevent   (<em class="parameter"><code><a class="link" href="UDisksLinuxMDRaidObject.html" title="UDisksLinuxMDRaidObject"><span class="type">UDisksLinuxMDRaidObject</span></a> *object</code></em>,
-                                                         <em class="parameter"><code>const <span class="type">gchar</span> *action</code></em>,
+                                                         <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *action</code></em>,
                                                          <em class="parameter"><code><a class="link" href="UDisksLinuxDevice.html" title="UDisksLinuxDevice"><span class="type">UDisksLinuxDevice</span></a> *device</code></em>,
-                                                         <em class="parameter"><code><span class="type">gboolean</span> is_member</code></em>);</pre>
+                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"><span class="type">gboolean</span></a> is_member</code></em>);</pre>
 <p>
 Updates all information on interfaces on <em class="parameter"><code>mdraid</code></em>.
 </p>
@@ -152,17 +152,17 @@ Updates all information on interfaces on <em class="parameter"><code>mdraid</cod
 </tr>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>action</code></em> :</span></p></td>
-<td>Uevent action or <code class="literal">NULL</code>
+<td>Uevent action or <a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a>
 </td>
 </tr>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>device</code></em> :</span></p></td>
-<td>A <a class="link" href="UDisksLinuxDevice.html" title="UDisksLinuxDevice"><span class="type">UDisksLinuxDevice</span></a> device object or <code class="literal">NULL</code> if the device hasn't changed.</td>
+<td>A <a class="link" href="UDisksLinuxDevice.html" title="UDisksLinuxDevice"><span class="type">UDisksLinuxDevice</span></a> device object or <a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a> if the device hasn't changed.</td>
 </tr>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>is_member</code></em> :</span></p></td>
 <td>
-<code class="literal">TRUE</code> if <em class="parameter"><code>device</code></em> is a member, <code class="literal">FALSE</code> if it's the raid device.</td>
+<a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#TRUE:CAPS"><code class="literal">TRUE</code></a> if <em class="parameter"><code>device</code></em> is a member, <a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#FALSE:CAPS"><code class="literal">FALSE</code></a> if it's the raid device.</td>
 </tr>
 </tbody>
 </table></div>
@@ -170,7 +170,7 @@ Updates all information on interfaces on <em class="parameter"><code>mdraid</cod
 <hr>
 <div class="refsect2">
 <a name="udisks-linux-mdraid-object-have-devices"></a><h3>udisks_linux_mdraid_object_have_devices ()</h3>
-<pre class="programlisting"><span class="returnvalue">gboolean</span>            udisks_linux_mdraid_object_have_devices
+<pre class="programlisting"><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>            udisks_linux_mdraid_object_have_devices
                                                         (<em class="parameter"><code><a class="link" href="UDisksLinuxMDRaidObject.html" title="UDisksLinuxMDRaidObject"><span class="type">UDisksLinuxMDRaidObject</span></a> *object</code></em>);</pre>
 <p>
 Checks if there are any devices associated with <em class="parameter"><code>object</code></em> at
@@ -189,7 +189,7 @@ all. This includes both member devices and the raid device.
 <tr>
 <td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
 <td>
-<code class="literal">TRUE</code> if at least one device is associated with <em class="parameter"><code>object</code></em>, <code class="literal">FALSE</code> otherwise.</td>
+<a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#TRUE:CAPS"><code class="literal">TRUE</code></a> if at least one device is associated with <em class="parameter"><code>object</code></em>, <a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#FALSE:CAPS"><code class="literal">FALSE</code></a> otherwise.</td>
 </tr>
 </tbody>
 </table></div>
@@ -240,7 +240,7 @@ Gets the current <a class="link" href="UDisksLinuxDevice.html" title="UDisksLinu
 </tr>
 <tr>
 <td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
-<td>A <a class="link" href="UDisksLinuxDevice.html" title="UDisksLinuxDevice"><span class="type">UDisksLinuxDevice</span></a> or <code class="literal">NULL</code>. Free with <code class="function">g_object_unref()</code>. <span class="annotation">[<a href="http://foldoc.org/transfer%20full"><span class="acronym">transfer full</span></a>]</span>
+<td>A <a class="link" href="UDisksLinuxDevice.html" title="UDisksLinuxDevice"><span class="type">UDisksLinuxDevice</span></a> or <a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a>. Free with <a href="http://library.gnome.org/devel/gobject/unstable/gobject-The-Base-Object-Type.html#g-object-unref"><code class="function">g_object_unref()</code></a>. <span class="annotation">[<a href="http://foldoc.org/transfer%20full"><span class="acronym">transfer full</span></a>]</span>
 </td>
 </tr>
 </tbody>
@@ -249,7 +249,7 @@ Gets the current <a class="link" href="UDisksLinuxDevice.html" title="UDisksLinu
 <hr>
 <div class="refsect2">
 <a name="udisks-linux-mdraid-object-get-members"></a><h3>udisks_linux_mdraid_object_get_members ()</h3>
-<pre class="programlisting"><span class="returnvalue">GList</span> *             udisks_linux_mdraid_object_get_members
+<pre class="programlisting"><a href="http://library.gnome.org/devel/glib/unstable/glib-Doubly-Linked-Lists.html#GList"><span class="returnvalue">GList</span></a> *             udisks_linux_mdraid_object_get_members
                                                         (<em class="parameter"><code><a class="link" href="UDisksLinuxMDRaidObject.html" title="UDisksLinuxMDRaidObject"><span class="type">UDisksLinuxMDRaidObject</span></a> *object</code></em>);</pre>
 <p>
 Gets the current <a class="link" href="UDisksLinuxDevice.html" title="UDisksLinuxDevice"><span class="type">UDisksLinuxDevice</span></a> objects for the RAID members associated with <em class="parameter"><code>object</code></em>.
@@ -267,7 +267,7 @@ Gets the current <a class="link" href="UDisksLinuxDevice.html" title="UDisksLinu
 <tr>
 <td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
 <td>A list of <a class="link" href="UDisksLinuxDevice.html" title="UDisksLinuxDevice"><span class="type">UDisksLinuxDevice</span></a> objects. Free each element with
-<code class="function">g_object_unref()</code>, then free the list with <code class="function">g_list_free()</code>.</td>
+<a href="http://library.gnome.org/devel/gobject/unstable/gobject-The-Base-Object-Type.html#g-object-unref"><code class="function">g_object_unref()</code></a>, then free the list with <a href="http://library.gnome.org/devel/glib/unstable/glib-Doubly-Linked-Lists.html#g-list-free"><code class="function">g_list_free()</code></a>.</td>
 </tr>
 </tbody>
 </table></div>
@@ -275,7 +275,7 @@ Gets the current <a class="link" href="UDisksLinuxDevice.html" title="UDisksLinu
 <hr>
 <div class="refsect2">
 <a name="udisks-linux-mdraid-object-get-uuid"></a><h3>udisks_linux_mdraid_object_get_uuid ()</h3>
-<pre class="programlisting">const <span class="returnvalue">gchar</span> *       udisks_linux_mdraid_object_get_uuid (<em class="parameter"><code><a class="link" href="UDisksLinuxMDRaidObject.html" title="UDisksLinuxMDRaidObject"><span class="type">UDisksLinuxMDRaidObject</span></a> *object</code></em>);</pre>
+<pre class="programlisting">const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="returnvalue">gchar</span></a> *       udisks_linux_mdraid_object_get_uuid (<em class="parameter"><code><a class="link" href="UDisksLinuxMDRaidObject.html" title="UDisksLinuxMDRaidObject"><span class="type">UDisksLinuxMDRaidObject</span></a> *object</code></em>);</pre>
 <p>
 Gets the UUID for <em class="parameter"><code>object</code></em>.
 </p>
@@ -310,7 +310,7 @@ The <a class="link" href="UDisksDaemon.html" title="UDisksDaemon"><span class="t
 <hr>
 <div class="refsect2">
 <a name="UDisksLinuxMDRaidObject--uuid"></a><h3>The <code class="literal">"uuid"</code> property</h3>
-<pre class="programlisting">  "uuid"                     <span class="type">gchar</span>*                : Write / Construct Only</pre>
+<pre class="programlisting">  "uuid"                     <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a>*                : Write / Construct Only</pre>
 <p>
 The UUID for the array.
 </p>

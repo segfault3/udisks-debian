@@ -120,6 +120,14 @@
 <td align="left">If the object is a drive (or a block device that is part of a drive), this is set to the string <span class="quote">“<span class="quote">true</span>”</span> only if the value of the <a class="link" href="gdbus-org.freedesktop.UDisks2.Drive.html#gdbus-property-org-freedesktop-UDisks2-Drive.Removable" title='The "Removable" property'>Drive:Removable</a> property is <code class="constant">TRUE</code>.</td>
 </tr>
 <tr>
+<td align="left"><em class="parameter"><code>drive.removable.bus</code></em></td>
+<td align="left">If the object is a drive (or a block device that is part of a drive), this is set to the value of the <a class="link" href="gdbus-org.freedesktop.UDisks2.Drive.html#gdbus-property-org-freedesktop-UDisks2-Drive.ConnectionBus" title='The "ConnectionBus" property'>Drive:ConnectionBus</a> property. This variable is set only if the value of the <a class="link" href="gdbus-org.freedesktop.UDisks2.Drive.html#gdbus-property-org-freedesktop-UDisks2-Drive.Removable" title='The "Removable" property'>Drive:Removable</a> property is <code class="constant">TRUE</code>.</td>
+</tr>
+<tr>
+<td align="left"><em class="parameter"><code>drive.removable.media</code></em></td>
+<td align="left">If the object is a drive (or a block device that is part of a drive), this is set to the value of the <a class="link" href="gdbus-org.freedesktop.UDisks2.Drive.html#gdbus-property-org-freedesktop-UDisks2-Drive.MediaCompatibility" title='The "MediaCompatibility" property'>Drive:MediaCompatibility</a> property. This variable is set only if the value of the <a class="link" href="gdbus-org.freedesktop.UDisks2.Drive.html#gdbus-property-org-freedesktop-UDisks2-Drive.Removable" title='The "Removable" property'>Drive:Removable</a> property is <code class="constant">TRUE</code>.</td>
+</tr>
+<tr>
 <td align="left"><em class="parameter"><code>id.type</code></em></td>
 <td align="left">If the object is a block device, this property is set to the value of the <a class="link" href="gdbus-org.freedesktop.UDisks2.Block.html#gdbus-property-org-freedesktop-UDisks2-Block.IdType" title='The "IdType" property'>Block:IdType</a> property.</td>
 </tr>
@@ -163,7 +171,7 @@
 </table></div>
 </div>
 <br class="table-break"><p>
-          For reference, the polkit actions defined by udisks 2.1.1
+          For reference, the polkit actions defined by udisks 2.1.2
 
           are included here:
           </p>

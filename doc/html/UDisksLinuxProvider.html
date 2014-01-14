@@ -43,13 +43,13 @@
 <a class="link" href="UDisksLinuxProvider.html" title="UDisksLinuxProvider"><span class="returnvalue">UDisksLinuxProvider</span></a> * <a class="link" href="UDisksLinuxProvider.html#udisks-linux-provider-new" title="udisks_linux_provider_new ()">udisks_linux_provider_new</a>         (<em class="parameter"><code><a class="link" href="UDisksDaemon.html" title="UDisksDaemon"><span class="type">UDisksDaemon</span></a> *daemon</code></em>);
 <a href="http://www.freedesktop.org/software/systemd/gudev/GUdevClient.html"><span class="returnvalue">GUdevClient</span></a> *       <a class="link" href="UDisksLinuxProvider.html#udisks-linux-provider-get-udev-client" title="udisks_linux_provider_get_udev_client ()">udisks_linux_provider_get_udev_client</a>
                                                         (<em class="parameter"><code><a class="link" href="UDisksLinuxProvider.html" title="UDisksLinuxProvider"><span class="type">UDisksLinuxProvider</span></a> *provider</code></em>);
-<span class="returnvalue">gboolean</span>            <a class="link" href="UDisksLinuxProvider.html#udisks-linux-provider-get-coldplug" title="udisks_linux_provider_get_coldplug ()">udisks_linux_provider_get_coldplug</a>  (<em class="parameter"><code><a class="link" href="UDisksLinuxProvider.html" title="UDisksLinuxProvider"><span class="type">UDisksLinuxProvider</span></a> *provider</code></em>);
+<a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>            <a class="link" href="UDisksLinuxProvider.html#udisks-linux-provider-get-coldplug" title="udisks_linux_provider_get_coldplug ()">udisks_linux_provider_get_coldplug</a>  (<em class="parameter"><code><a class="link" href="UDisksLinuxProvider.html" title="UDisksLinuxProvider"><span class="type">UDisksLinuxProvider</span></a> *provider</code></em>);
 </pre>
 </div>
 <div class="refsect1">
 <a name="UDisksLinuxProvider.object-hierarchy"></a><h2>Object Hierarchy</h2>
 <pre class="synopsis">
-  GObject
+  <a href="http://library.gnome.org/devel/gobject/unstable/gobject-The-Base-Object-Type.html#GObject">GObject</a>
    +----<a class="link" href="UDisksProvider.html" title="UDisksProvider">UDisksProvider</a>
          +----UDisksLinuxProvider
 </pre>
@@ -90,7 +90,7 @@ Create a new provider object for Linux-specific objects / functionality.
 </tr>
 <tr>
 <td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
-<td>A <a class="link" href="UDisksLinuxProvider.html" title="UDisksLinuxProvider"><span class="type">UDisksLinuxProvider</span></a> object. Free with <code class="function">g_object_unref()</code>.</td>
+<td>A <a class="link" href="UDisksLinuxProvider.html" title="UDisksLinuxProvider"><span class="type">UDisksLinuxProvider</span></a> object. Free with <a href="http://library.gnome.org/devel/gobject/unstable/gobject-The-Base-Object-Type.html#g-object-unref"><code class="function">g_object_unref()</code></a>.</td>
 </tr>
 </tbody>
 </table></div>
@@ -123,7 +123,7 @@ Gets the <a href="http://www.freedesktop.org/software/systemd/gudev/GUdevClient.
 <hr>
 <div class="refsect2">
 <a name="udisks-linux-provider-get-coldplug"></a><h3>udisks_linux_provider_get_coldplug ()</h3>
-<pre class="programlisting"><span class="returnvalue">gboolean</span>            udisks_linux_provider_get_coldplug  (<em class="parameter"><code><a class="link" href="UDisksLinuxProvider.html" title="UDisksLinuxProvider"><span class="type">UDisksLinuxProvider</span></a> *provider</code></em>);</pre>
+<pre class="programlisting"><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>            udisks_linux_provider_get_coldplug  (<em class="parameter"><code><a class="link" href="UDisksLinuxProvider.html" title="UDisksLinuxProvider"><span class="type">UDisksLinuxProvider</span></a> *provider</code></em>);</pre>
 <p>
 Gets whether <em class="parameter"><code>provider</code></em> is in the coldplug phase.
 </p>
@@ -140,7 +140,7 @@ Gets whether <em class="parameter"><code>provider</code></em> is in the coldplug
 <tr>
 <td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
 <td>
-<code class="literal">TRUE</code> if in the coldplug phase, <code class="literal">FALSE</code> otherwise.</td>
+<a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#TRUE:CAPS"><code class="literal">TRUE</code></a> if in the coldplug phase, <a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#FALSE:CAPS"><code class="literal">FALSE</code></a> otherwise.</td>
 </tr>
 </tbody>
 </table></div>

@@ -43,53 +43,53 @@
 <a name="UDisksObjectManagerClient.synopsis"></a><h2>Synopsis</h2>
 <pre class="synopsis">struct              <a class="link" href="UDisksObjectManagerClient.html#UDisksObjectManagerClient-struct" title="struct UDisksObjectManagerClient">UDisksObjectManagerClient</a>;
 struct              <a class="link" href="UDisksObjectManagerClient.html#UDisksObjectManagerClientClass" title="struct UDisksObjectManagerClientClass">UDisksObjectManagerClientClass</a>;
-<span class="returnvalue">GType</span>               <a class="link" href="UDisksObjectManagerClient.html#udisks-object-manager-client-get-proxy-type" title="udisks_object_manager_client_get_proxy_type ()">udisks_object_manager_client_get_proxy_type</a>
-                                                        (<em class="parameter"><code><span class="type">GDBusObjectManagerClient</span> *manager</code></em>,
-                                                         <em class="parameter"><code>const <span class="type">gchar</span> *object_path</code></em>,
-                                                         <em class="parameter"><code>const <span class="type">gchar</span> *interface_name</code></em>,
-                                                         <em class="parameter"><code><span class="type">gpointer</span> user_data</code></em>);
-<span class="returnvalue">void</span>                <a class="link" href="UDisksObjectManagerClient.html#udisks-object-manager-client-new" title="udisks_object_manager_client_new ()">udisks_object_manager_client_new</a>    (<em class="parameter"><code><span class="type">GDBusConnection</span> *connection</code></em>,
-                                                         <em class="parameter"><code><span class="type">GDBusObjectManagerClientFlags</span> flags</code></em>,
-                                                         <em class="parameter"><code>const <span class="type">gchar</span> *name</code></em>,
-                                                         <em class="parameter"><code>const <span class="type">gchar</span> *object_path</code></em>,
-                                                         <em class="parameter"><code><span class="type">GCancellable</span> *cancellable</code></em>,
-                                                         <em class="parameter"><code><span class="type">GAsyncReadyCallback</span> callback</code></em>,
-                                                         <em class="parameter"><code><span class="type">gpointer</span> user_data</code></em>);
-<span class="returnvalue">GDBusObjectManager</span> * <a class="link" href="UDisksObjectManagerClient.html#udisks-object-manager-client-new-finish" title="udisks_object_manager_client_new_finish ()">udisks_object_manager_client_new_finish</a>
-                                                        (<em class="parameter"><code><span class="type">GAsyncResult</span> *res</code></em>,
-                                                         <em class="parameter"><code><span class="type">GError</span> **error</code></em>);
+<a href="http://library.gnome.org/devel/gobject/unstable/gobject-Type-Information.html#GType"><span class="returnvalue">GType</span></a>               <a class="link" href="UDisksObjectManagerClient.html#udisks-object-manager-client-get-proxy-type" title="udisks_object_manager_client_get_proxy_type ()">udisks_object_manager_client_get_proxy_type</a>
+                                                        (<em class="parameter"><code><a href="http://library.gnome.org/devel/gio/unstable/GDBusObjectManagerClient.html"><span class="type">GDBusObjectManagerClient</span></a> *manager</code></em>,
+                                                         <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *object_path</code></em>,
+                                                         <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *interface_name</code></em>,
+                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gpointer"><span class="type">gpointer</span></a> user_data</code></em>);
+<span class="returnvalue">void</span>                <a class="link" href="UDisksObjectManagerClient.html#udisks-object-manager-client-new" title="udisks_object_manager_client_new ()">udisks_object_manager_client_new</a>    (<em class="parameter"><code><a href="http://library.gnome.org/devel/gio/unstable/GDBusConnection.html"><span class="type">GDBusConnection</span></a> *connection</code></em>,
+                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/gio/unstable/GDBusObjectManagerClient.html#GDBusObjectManagerClientFlags"><span class="type">GDBusObjectManagerClientFlags</span></a> flags</code></em>,
+                                                         <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *name</code></em>,
+                                                         <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *object_path</code></em>,
+                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/gio/unstable/GCancellable.html"><span class="type">GCancellable</span></a> *cancellable</code></em>,
+                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/gio/unstable/GAsyncResult.html#GAsyncReadyCallback"><span class="type">GAsyncReadyCallback</span></a> callback</code></em>,
+                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gpointer"><span class="type">gpointer</span></a> user_data</code></em>);
+<a href="http://library.gnome.org/devel/gio/unstable/GDBusObjectManager.html"><span class="returnvalue">GDBusObjectManager</span></a> * <a class="link" href="UDisksObjectManagerClient.html#udisks-object-manager-client-new-finish" title="udisks_object_manager_client_new_finish ()">udisks_object_manager_client_new_finish</a>
+                                                        (<em class="parameter"><code><a href="http://library.gnome.org/devel/gio/unstable/GAsyncResult.html"><span class="type">GAsyncResult</span></a> *res</code></em>,
+                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Error-Reporting.html#GError"><span class="type">GError</span></a> **error</code></em>);
 <span class="returnvalue">void</span>                <a class="link" href="UDisksObjectManagerClient.html#udisks-object-manager-client-new-for-bus" title="udisks_object_manager_client_new_for_bus ()">udisks_object_manager_client_new_for_bus</a>
-                                                        (<em class="parameter"><code><span class="type">GBusType</span> bus_type</code></em>,
-                                                         <em class="parameter"><code><span class="type">GDBusObjectManagerClientFlags</span> flags</code></em>,
-                                                         <em class="parameter"><code>const <span class="type">gchar</span> *name</code></em>,
-                                                         <em class="parameter"><code>const <span class="type">gchar</span> *object_path</code></em>,
-                                                         <em class="parameter"><code><span class="type">GCancellable</span> *cancellable</code></em>,
-                                                         <em class="parameter"><code><span class="type">GAsyncReadyCallback</span> callback</code></em>,
-                                                         <em class="parameter"><code><span class="type">gpointer</span> user_data</code></em>);
-<span class="returnvalue">GDBusObjectManager</span> * <a class="link" href="UDisksObjectManagerClient.html#udisks-object-manager-client-new-for-bus-finish" title="udisks_object_manager_client_new_for_bus_finish ()">udisks_object_manager_client_new_for_bus_finish</a>
-                                                        (<em class="parameter"><code><span class="type">GAsyncResult</span> *res</code></em>,
-                                                         <em class="parameter"><code><span class="type">GError</span> **error</code></em>);
-<span class="returnvalue">GDBusObjectManager</span> * <a class="link" href="UDisksObjectManagerClient.html#udisks-object-manager-client-new-for-bus-sync" title="udisks_object_manager_client_new_for_bus_sync ()">udisks_object_manager_client_new_for_bus_sync</a>
-                                                        (<em class="parameter"><code><span class="type">GBusType</span> bus_type</code></em>,
-                                                         <em class="parameter"><code><span class="type">GDBusObjectManagerClientFlags</span> flags</code></em>,
-                                                         <em class="parameter"><code>const <span class="type">gchar</span> *name</code></em>,
-                                                         <em class="parameter"><code>const <span class="type">gchar</span> *object_path</code></em>,
-                                                         <em class="parameter"><code><span class="type">GCancellable</span> *cancellable</code></em>,
-                                                         <em class="parameter"><code><span class="type">GError</span> **error</code></em>);
-<span class="returnvalue">GDBusObjectManager</span> * <a class="link" href="UDisksObjectManagerClient.html#udisks-object-manager-client-new-sync" title="udisks_object_manager_client_new_sync ()">udisks_object_manager_client_new_sync</a>
-                                                        (<em class="parameter"><code><span class="type">GDBusConnection</span> *connection</code></em>,
-                                                         <em class="parameter"><code><span class="type">GDBusObjectManagerClientFlags</span> flags</code></em>,
-                                                         <em class="parameter"><code>const <span class="type">gchar</span> *name</code></em>,
-                                                         <em class="parameter"><code>const <span class="type">gchar</span> *object_path</code></em>,
-                                                         <em class="parameter"><code><span class="type">GCancellable</span> *cancellable</code></em>,
-                                                         <em class="parameter"><code><span class="type">GError</span> **error</code></em>);
+                                                        (<em class="parameter"><code><a href="http://library.gnome.org/devel/gio/unstable/GDBusConnection.html#GBusType"><span class="type">GBusType</span></a> bus_type</code></em>,
+                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/gio/unstable/GDBusObjectManagerClient.html#GDBusObjectManagerClientFlags"><span class="type">GDBusObjectManagerClientFlags</span></a> flags</code></em>,
+                                                         <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *name</code></em>,
+                                                         <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *object_path</code></em>,
+                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/gio/unstable/GCancellable.html"><span class="type">GCancellable</span></a> *cancellable</code></em>,
+                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/gio/unstable/GAsyncResult.html#GAsyncReadyCallback"><span class="type">GAsyncReadyCallback</span></a> callback</code></em>,
+                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gpointer"><span class="type">gpointer</span></a> user_data</code></em>);
+<a href="http://library.gnome.org/devel/gio/unstable/GDBusObjectManager.html"><span class="returnvalue">GDBusObjectManager</span></a> * <a class="link" href="UDisksObjectManagerClient.html#udisks-object-manager-client-new-for-bus-finish" title="udisks_object_manager_client_new_for_bus_finish ()">udisks_object_manager_client_new_for_bus_finish</a>
+                                                        (<em class="parameter"><code><a href="http://library.gnome.org/devel/gio/unstable/GAsyncResult.html"><span class="type">GAsyncResult</span></a> *res</code></em>,
+                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Error-Reporting.html#GError"><span class="type">GError</span></a> **error</code></em>);
+<a href="http://library.gnome.org/devel/gio/unstable/GDBusObjectManager.html"><span class="returnvalue">GDBusObjectManager</span></a> * <a class="link" href="UDisksObjectManagerClient.html#udisks-object-manager-client-new-for-bus-sync" title="udisks_object_manager_client_new_for_bus_sync ()">udisks_object_manager_client_new_for_bus_sync</a>
+                                                        (<em class="parameter"><code><a href="http://library.gnome.org/devel/gio/unstable/GDBusConnection.html#GBusType"><span class="type">GBusType</span></a> bus_type</code></em>,
+                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/gio/unstable/GDBusObjectManagerClient.html#GDBusObjectManagerClientFlags"><span class="type">GDBusObjectManagerClientFlags</span></a> flags</code></em>,
+                                                         <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *name</code></em>,
+                                                         <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *object_path</code></em>,
+                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/gio/unstable/GCancellable.html"><span class="type">GCancellable</span></a> *cancellable</code></em>,
+                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Error-Reporting.html#GError"><span class="type">GError</span></a> **error</code></em>);
+<a href="http://library.gnome.org/devel/gio/unstable/GDBusObjectManager.html"><span class="returnvalue">GDBusObjectManager</span></a> * <a class="link" href="UDisksObjectManagerClient.html#udisks-object-manager-client-new-sync" title="udisks_object_manager_client_new_sync ()">udisks_object_manager_client_new_sync</a>
+                                                        (<em class="parameter"><code><a href="http://library.gnome.org/devel/gio/unstable/GDBusConnection.html"><span class="type">GDBusConnection</span></a> *connection</code></em>,
+                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/gio/unstable/GDBusObjectManagerClient.html#GDBusObjectManagerClientFlags"><span class="type">GDBusObjectManagerClientFlags</span></a> flags</code></em>,
+                                                         <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *name</code></em>,
+                                                         <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *object_path</code></em>,
+                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/gio/unstable/GCancellable.html"><span class="type">GCancellable</span></a> *cancellable</code></em>,
+                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Error-Reporting.html#GError"><span class="type">GError</span></a> **error</code></em>);
 </pre>
 </div>
 <div class="refsect1">
 <a name="UDisksObjectManagerClient.object-hierarchy"></a><h2>Object Hierarchy</h2>
 <pre class="synopsis">
-  GObject
-   +----GDBusObjectManagerClient
+  <a href="http://library.gnome.org/devel/gobject/unstable/gobject-The-Base-Object-Type.html#GObject">GObject</a>
+   +----<a href="http://library.gnome.org/devel/gio/unstable/GDBusObjectManagerClient.html">GDBusObjectManagerClient</a>
          +----UDisksObjectManagerClient
 </pre>
 </div>
@@ -97,12 +97,12 @@ struct              <a class="link" href="UDisksObjectManagerClient.html#UDisksO
 <a name="UDisksObjectManagerClient.implemented-interfaces"></a><h2>Implemented Interfaces</h2>
 <p>
 UDisksObjectManagerClient implements
- GInitable,  GAsyncInitable and  GDBusObjectManager.</p>
+ <a href="http://library.gnome.org/devel/gio/unstable/GInitable.html">GInitable</a>,  <a href="http://library.gnome.org/devel/gio/unstable/GAsyncInitable.html">GAsyncInitable</a> and  <a href="http://library.gnome.org/devel/gio/unstable/GDBusObjectManager.html">GDBusObjectManager</a>.</p>
 </div>
 <div class="refsect1">
 <a name="UDisksObjectManagerClient.description"></a><h2>Description</h2>
 <p>
-This section contains a <span class="type">GDBusObjectManagerClient</span> that uses <a class="link" href="UDisksObjectManagerClient.html#udisks-object-manager-client-get-proxy-type" title="udisks_object_manager_client_get_proxy_type ()"><code class="function">udisks_object_manager_client_get_proxy_type()</code></a> as the <span class="type">GDBusProxyTypeFunc</span>.
+This section contains a <a href="http://library.gnome.org/devel/gio/unstable/GDBusObjectManagerClient.html"><span class="type">GDBusObjectManagerClient</span></a> that uses <a class="link" href="UDisksObjectManagerClient.html#udisks-object-manager-client-get-proxy-type" title="udisks_object_manager_client_get_proxy_type ()"><code class="function">udisks_object_manager_client_get_proxy_type()</code></a> as the <a href="http://library.gnome.org/devel/gio/unstable/GDBusObjectManagerClient.html#GDBusProxyTypeFunc"><span class="type">GDBusProxyTypeFunc</span></a>.
 </p>
 </div>
 <div class="refsect1">
@@ -130,7 +130,7 @@ Class structure for <a class="link" href="UDisksObjectManagerClient.html" title=
 <col>
 </colgroup>
 <tbody><tr>
-<td><p><span class="term"><span class="type">GDBusObjectManagerClientClass</span> <em class="structfield"><code><a name="UDisksObjectManagerClientClass.parent-class"></a>parent_class</code></em>;</span></p></td>
+<td><p><span class="term"><a href="http://library.gnome.org/devel/gio/unstable/GDBusObjectManagerClient.html#GDBusObjectManagerClientClass"><span class="type">GDBusObjectManagerClientClass</span></a> <em class="structfield"><code><a name="UDisksObjectManagerClientClass.parent-class"></a>parent_class</code></em>;</span></p></td>
 <td>The parent class.</td>
 </tr></tbody>
 </table></div>
@@ -138,13 +138,13 @@ Class structure for <a class="link" href="UDisksObjectManagerClient.html" title=
 <hr>
 <div class="refsect2">
 <a name="udisks-object-manager-client-get-proxy-type"></a><h3>udisks_object_manager_client_get_proxy_type ()</h3>
-<pre class="programlisting"><span class="returnvalue">GType</span>               udisks_object_manager_client_get_proxy_type
-                                                        (<em class="parameter"><code><span class="type">GDBusObjectManagerClient</span> *manager</code></em>,
-                                                         <em class="parameter"><code>const <span class="type">gchar</span> *object_path</code></em>,
-                                                         <em class="parameter"><code>const <span class="type">gchar</span> *interface_name</code></em>,
-                                                         <em class="parameter"><code><span class="type">gpointer</span> user_data</code></em>);</pre>
+<pre class="programlisting"><a href="http://library.gnome.org/devel/gobject/unstable/gobject-Type-Information.html#GType"><span class="returnvalue">GType</span></a>               udisks_object_manager_client_get_proxy_type
+                                                        (<em class="parameter"><code><a href="http://library.gnome.org/devel/gio/unstable/GDBusObjectManagerClient.html"><span class="type">GDBusObjectManagerClient</span></a> *manager</code></em>,
+                                                         <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *object_path</code></em>,
+                                                         <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *interface_name</code></em>,
+                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gpointer"><span class="type">gpointer</span></a> user_data</code></em>);</pre>
 <p>
-A <span class="type">GDBusProxyTypeFunc</span> that maps <em class="parameter"><code>interface_name</code></em> to the generated <span class="type">GDBusObjectProxy</span>- and <span class="type">GDBusProxy</span>-derived types.
+A <a href="http://library.gnome.org/devel/gio/unstable/GDBusObjectManagerClient.html#GDBusProxyTypeFunc"><span class="type">GDBusProxyTypeFunc</span></a> that maps <em class="parameter"><code>interface_name</code></em> to the generated <a href="http://library.gnome.org/devel/gio/unstable/GDBusObjectProxy.html"><span class="type">GDBusObjectProxy</span></a>- and <a href="http://library.gnome.org/devel/gio/unstable/GDBusProxy.html"><span class="type">GDBusProxy</span></a>-derived types.
 </p>
 <div class="variablelist"><table border="0" class="variablelist">
 <colgroup>
@@ -154,7 +154,7 @@ A <span class="type">GDBusProxyTypeFunc</span> that maps <em class="parameter"><
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>manager</code></em> :</span></p></td>
-<td>A <span class="type">GDBusObjectManagerClient</span>.</td>
+<td>A <a href="http://library.gnome.org/devel/gio/unstable/GDBusObjectManagerClient.html"><span class="type">GDBusObjectManagerClient</span></a>.</td>
 </tr>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>object_path</code></em> :</span></p></td>
@@ -162,7 +162,7 @@ A <span class="type">GDBusProxyTypeFunc</span> that maps <em class="parameter"><
 </tr>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>interface_name</code></em> :</span></p></td>
-<td>Interface name of the remote object or <code class="literal">NULL</code> to get the object proxy <span class="type">GType</span>. <span class="annotation">[<a href="http://foldoc.org/allow-none"><span class="acronym">allow-none</span></a>]</span>
+<td>Interface name of the remote object or <a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a> to get the object proxy <a href="http://library.gnome.org/devel/gobject/unstable/gobject-Type-Information.html#GType"><span class="type">GType</span></a>. <span class="annotation">[<a href="http://foldoc.org/allow-none"><span class="acronym">allow-none</span></a>]</span>
 </td>
 </tr>
 <tr>
@@ -171,7 +171,7 @@ A <span class="type">GDBusProxyTypeFunc</span> that maps <em class="parameter"><
 </tr>
 <tr>
 <td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
-<td>A <span class="type">GDBusProxy</span>-derived <span class="type">GType</span> if <em class="parameter"><code>interface_name</code></em> is not <code class="literal">NULL</code>, otherwise the <span class="type">GType</span> for <a class="link" href="UDisksObject.html#UDisksObjectProxy"><span class="type">UDisksObjectProxy</span></a>.</td>
+<td>A <a href="http://library.gnome.org/devel/gio/unstable/GDBusProxy.html"><span class="type">GDBusProxy</span></a>-derived <a href="http://library.gnome.org/devel/gobject/unstable/gobject-Type-Information.html#GType"><span class="type">GType</span></a> if <em class="parameter"><code>interface_name</code></em> is not <a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a>, otherwise the <a href="http://library.gnome.org/devel/gobject/unstable/gobject-Type-Information.html#GType"><span class="type">GType</span></a> for <a class="link" href="UDisksObject.html#UDisksObjectProxy"><span class="type">UDisksObjectProxy</span></a>.</td>
 </tr>
 </tbody>
 </table></div>
@@ -179,18 +179,18 @@ A <span class="type">GDBusProxyTypeFunc</span> that maps <em class="parameter"><
 <hr>
 <div class="refsect2">
 <a name="udisks-object-manager-client-new"></a><h3>udisks_object_manager_client_new ()</h3>
-<pre class="programlisting"><span class="returnvalue">void</span>                udisks_object_manager_client_new    (<em class="parameter"><code><span class="type">GDBusConnection</span> *connection</code></em>,
-                                                         <em class="parameter"><code><span class="type">GDBusObjectManagerClientFlags</span> flags</code></em>,
-                                                         <em class="parameter"><code>const <span class="type">gchar</span> *name</code></em>,
-                                                         <em class="parameter"><code>const <span class="type">gchar</span> *object_path</code></em>,
-                                                         <em class="parameter"><code><span class="type">GCancellable</span> *cancellable</code></em>,
-                                                         <em class="parameter"><code><span class="type">GAsyncReadyCallback</span> callback</code></em>,
-                                                         <em class="parameter"><code><span class="type">gpointer</span> user_data</code></em>);</pre>
+<pre class="programlisting"><span class="returnvalue">void</span>                udisks_object_manager_client_new    (<em class="parameter"><code><a href="http://library.gnome.org/devel/gio/unstable/GDBusConnection.html"><span class="type">GDBusConnection</span></a> *connection</code></em>,
+                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/gio/unstable/GDBusObjectManagerClient.html#GDBusObjectManagerClientFlags"><span class="type">GDBusObjectManagerClientFlags</span></a> flags</code></em>,
+                                                         <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *name</code></em>,
+                                                         <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *object_path</code></em>,
+                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/gio/unstable/GCancellable.html"><span class="type">GCancellable</span></a> *cancellable</code></em>,
+                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/gio/unstable/GAsyncResult.html#GAsyncReadyCallback"><span class="type">GAsyncReadyCallback</span></a> callback</code></em>,
+                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gpointer"><span class="type">gpointer</span></a> user_data</code></em>);</pre>
 <p>
-Asynchronously creates <span class="type">GDBusObjectManagerClient</span> using <a class="link" href="UDisksObjectManagerClient.html#udisks-object-manager-client-get-proxy-type" title="udisks_object_manager_client_get_proxy_type ()"><code class="function">udisks_object_manager_client_get_proxy_type()</code></a> as the <span class="type">GDBusProxyTypeFunc</span>. See <code class="function">g_dbus_object_manager_client_new()</code> for more details.
+Asynchronously creates <a href="http://library.gnome.org/devel/gio/unstable/GDBusObjectManagerClient.html"><span class="type">GDBusObjectManagerClient</span></a> using <a class="link" href="UDisksObjectManagerClient.html#udisks-object-manager-client-get-proxy-type" title="udisks_object_manager_client_get_proxy_type ()"><code class="function">udisks_object_manager_client_get_proxy_type()</code></a> as the <a href="http://library.gnome.org/devel/gio/unstable/GDBusObjectManagerClient.html#GDBusProxyTypeFunc"><span class="type">GDBusProxyTypeFunc</span></a>. See <a href="http://library.gnome.org/devel/gio/unstable/GDBusObjectManagerClient.html#g-dbus-object-manager-client-new"><code class="function">g_dbus_object_manager_client_new()</code></a> for more details.
 </p>
 <p>
-When the operation is finished, <em class="parameter"><code>callback</code></em> will be invoked in the thread-default main loop of the thread you are calling this method from.
+When the operation is finished, <em class="parameter"><code>callback</code></em> will be invoked in the <a href="http://library.gnome.org/devel/glib/unstable/glib-The-Main-Event-Loop.html#g-main-context-push-thread-default">thread-default main loop</a> of the thread you are calling this method from.
 You can then call <a class="link" href="UDisksObjectManagerClient.html#udisks-object-manager-client-new-finish" title="udisks_object_manager_client_new_finish ()"><code class="function">udisks_object_manager_client_new_finish()</code></a> to get the result of the operation.
 </p>
 <p>
@@ -204,15 +204,15 @@ See <a class="link" href="UDisksObjectManagerClient.html#udisks-object-manager-c
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>connection</code></em> :</span></p></td>
-<td>A <span class="type">GDBusConnection</span>.</td>
+<td>A <a href="http://library.gnome.org/devel/gio/unstable/GDBusConnection.html"><span class="type">GDBusConnection</span></a>.</td>
 </tr>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>flags</code></em> :</span></p></td>
-<td>Flags from the <span class="type">GDBusObjectManagerClientFlags</span> enumeration.</td>
+<td>Flags from the <a href="http://library.gnome.org/devel/gio/unstable/GDBusObjectManagerClient.html#GDBusObjectManagerClientFlags"><span class="type">GDBusObjectManagerClientFlags</span></a> enumeration.</td>
 </tr>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>name</code></em> :</span></p></td>
-<td>A bus name (well-known or unique) or <code class="literal">NULL</code> if <em class="parameter"><code>connection</code></em> is not a message bus connection. <span class="annotation">[<a href="http://foldoc.org/allow-none"><span class="acronym">allow-none</span></a>]</span>
+<td>A bus name (well-known or unique) or <a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a> if <em class="parameter"><code>connection</code></em> is not a message bus connection. <span class="annotation">[<a href="http://foldoc.org/allow-none"><span class="acronym">allow-none</span></a>]</span>
 </td>
 </tr>
 <tr>
@@ -221,12 +221,12 @@ See <a class="link" href="UDisksObjectManagerClient.html#udisks-object-manager-c
 </tr>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>cancellable</code></em> :</span></p></td>
-<td>A <span class="type">GCancellable</span> or <code class="literal">NULL</code>. <span class="annotation">[<a href="http://foldoc.org/allow-none"><span class="acronym">allow-none</span></a>]</span>
+<td>A <a href="http://library.gnome.org/devel/gio/unstable/GCancellable.html"><span class="type">GCancellable</span></a> or <a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a>. <span class="annotation">[<a href="http://foldoc.org/allow-none"><span class="acronym">allow-none</span></a>]</span>
 </td>
 </tr>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>callback</code></em> :</span></p></td>
-<td>A <span class="type">GAsyncReadyCallback</span> to call when the request is satisfied.</td>
+<td>A <a href="http://library.gnome.org/devel/gio/unstable/GAsyncResult.html#GAsyncReadyCallback"><span class="type">GAsyncReadyCallback</span></a> to call when the request is satisfied.</td>
 </tr>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>user_data</code></em> :</span></p></td>
@@ -238,9 +238,9 @@ See <a class="link" href="UDisksObjectManagerClient.html#udisks-object-manager-c
 <hr>
 <div class="refsect2">
 <a name="udisks-object-manager-client-new-finish"></a><h3>udisks_object_manager_client_new_finish ()</h3>
-<pre class="programlisting"><span class="returnvalue">GDBusObjectManager</span> * udisks_object_manager_client_new_finish
-                                                        (<em class="parameter"><code><span class="type">GAsyncResult</span> *res</code></em>,
-                                                         <em class="parameter"><code><span class="type">GError</span> **error</code></em>);</pre>
+<pre class="programlisting"><a href="http://library.gnome.org/devel/gio/unstable/GDBusObjectManager.html"><span class="returnvalue">GDBusObjectManager</span></a> * udisks_object_manager_client_new_finish
+                                                        (<em class="parameter"><code><a href="http://library.gnome.org/devel/gio/unstable/GAsyncResult.html"><span class="type">GAsyncResult</span></a> *res</code></em>,
+                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Error-Reporting.html#GError"><span class="type">GError</span></a> **error</code></em>);</pre>
 <p>
 Finishes an operation started with <a class="link" href="UDisksObjectManagerClient.html#udisks-object-manager-client-new" title="udisks_object_manager_client_new ()"><code class="function">udisks_object_manager_client_new()</code></a>.
 </p>
@@ -252,16 +252,16 @@ Finishes an operation started with <a class="link" href="UDisksObjectManagerClie
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>res</code></em> :</span></p></td>
-<td>The <span class="type">GAsyncResult</span> obtained from the <span class="type">GAsyncReadyCallback</span> passed to <a class="link" href="UDisksObjectManagerClient.html#udisks-object-manager-client-new" title="udisks_object_manager_client_new ()"><code class="function">udisks_object_manager_client_new()</code></a>.</td>
+<td>The <a href="http://library.gnome.org/devel/gio/unstable/GAsyncResult.html"><span class="type">GAsyncResult</span></a> obtained from the <a href="http://library.gnome.org/devel/gio/unstable/GAsyncResult.html#GAsyncReadyCallback"><span class="type">GAsyncReadyCallback</span></a> passed to <a class="link" href="UDisksObjectManagerClient.html#udisks-object-manager-client-new" title="udisks_object_manager_client_new ()"><code class="function">udisks_object_manager_client_new()</code></a>.</td>
 </tr>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>error</code></em> :</span></p></td>
-<td>Return location for error or <code class="literal">NULL</code>
+<td>Return location for error or <a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a>
 </td>
 </tr>
 <tr>
 <td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
-<td>The constructed object manager client or <code class="literal">NULL</code> if <em class="parameter"><code>error</code></em> is set. <span class="annotation">[<a href="http://foldoc.org/transfer%20full"><span class="acronym">transfer full</span></a>][<a href="http://foldoc.org/type"><span class="acronym">type</span></a> UDisksObjectManagerClient]</span>
+<td>The constructed object manager client or <a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a> if <em class="parameter"><code>error</code></em> is set. <span class="annotation">[<a href="http://foldoc.org/transfer%20full"><span class="acronym">transfer full</span></a>][<a href="http://foldoc.org/type"><span class="acronym">type</span></a> UDisksObjectManagerClient]</span>
 </td>
 </tr>
 </tbody>
@@ -271,18 +271,18 @@ Finishes an operation started with <a class="link" href="UDisksObjectManagerClie
 <div class="refsect2">
 <a name="udisks-object-manager-client-new-for-bus"></a><h3>udisks_object_manager_client_new_for_bus ()</h3>
 <pre class="programlisting"><span class="returnvalue">void</span>                udisks_object_manager_client_new_for_bus
-                                                        (<em class="parameter"><code><span class="type">GBusType</span> bus_type</code></em>,
-                                                         <em class="parameter"><code><span class="type">GDBusObjectManagerClientFlags</span> flags</code></em>,
-                                                         <em class="parameter"><code>const <span class="type">gchar</span> *name</code></em>,
-                                                         <em class="parameter"><code>const <span class="type">gchar</span> *object_path</code></em>,
-                                                         <em class="parameter"><code><span class="type">GCancellable</span> *cancellable</code></em>,
-                                                         <em class="parameter"><code><span class="type">GAsyncReadyCallback</span> callback</code></em>,
-                                                         <em class="parameter"><code><span class="type">gpointer</span> user_data</code></em>);</pre>
+                                                        (<em class="parameter"><code><a href="http://library.gnome.org/devel/gio/unstable/GDBusConnection.html#GBusType"><span class="type">GBusType</span></a> bus_type</code></em>,
+                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/gio/unstable/GDBusObjectManagerClient.html#GDBusObjectManagerClientFlags"><span class="type">GDBusObjectManagerClientFlags</span></a> flags</code></em>,
+                                                         <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *name</code></em>,
+                                                         <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *object_path</code></em>,
+                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/gio/unstable/GCancellable.html"><span class="type">GCancellable</span></a> *cancellable</code></em>,
+                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/gio/unstable/GAsyncResult.html#GAsyncReadyCallback"><span class="type">GAsyncReadyCallback</span></a> callback</code></em>,
+                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gpointer"><span class="type">gpointer</span></a> user_data</code></em>);</pre>
 <p>
-Like <a class="link" href="UDisksObjectManagerClient.html#udisks-object-manager-client-new" title="udisks_object_manager_client_new ()"><code class="function">udisks_object_manager_client_new()</code></a> but takes a <span class="type">GBusType</span> instead of a <span class="type">GDBusConnection</span>.
+Like <a class="link" href="UDisksObjectManagerClient.html#udisks-object-manager-client-new" title="udisks_object_manager_client_new ()"><code class="function">udisks_object_manager_client_new()</code></a> but takes a <a href="http://library.gnome.org/devel/gio/unstable/GDBusConnection.html#GBusType"><span class="type">GBusType</span></a> instead of a <a href="http://library.gnome.org/devel/gio/unstable/GDBusConnection.html"><span class="type">GDBusConnection</span></a>.
 </p>
 <p>
-When the operation is finished, <em class="parameter"><code>callback</code></em> will be invoked in the thread-default main loop of the thread you are calling this method from.
+When the operation is finished, <em class="parameter"><code>callback</code></em> will be invoked in the <a href="http://library.gnome.org/devel/glib/unstable/glib-The-Main-Event-Loop.html#g-main-context-push-thread-default">thread-default main loop</a> of the thread you are calling this method from.
 You can then call <a class="link" href="UDisksObjectManagerClient.html#udisks-object-manager-client-new-for-bus-finish" title="udisks_object_manager_client_new_for_bus_finish ()"><code class="function">udisks_object_manager_client_new_for_bus_finish()</code></a> to get the result of the operation.
 </p>
 <p>
@@ -296,11 +296,11 @@ See <a class="link" href="UDisksObjectManagerClient.html#udisks-object-manager-c
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>bus_type</code></em> :</span></p></td>
-<td>A <span class="type">GBusType</span>.</td>
+<td>A <a href="http://library.gnome.org/devel/gio/unstable/GDBusConnection.html#GBusType"><span class="type">GBusType</span></a>.</td>
 </tr>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>flags</code></em> :</span></p></td>
-<td>Flags from the <span class="type">GDBusObjectManagerClientFlags</span> enumeration.</td>
+<td>Flags from the <a href="http://library.gnome.org/devel/gio/unstable/GDBusObjectManagerClient.html#GDBusObjectManagerClientFlags"><span class="type">GDBusObjectManagerClientFlags</span></a> enumeration.</td>
 </tr>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>name</code></em> :</span></p></td>
@@ -312,12 +312,12 @@ See <a class="link" href="UDisksObjectManagerClient.html#udisks-object-manager-c
 </tr>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>cancellable</code></em> :</span></p></td>
-<td>A <span class="type">GCancellable</span> or <code class="literal">NULL</code>. <span class="annotation">[<a href="http://foldoc.org/allow-none"><span class="acronym">allow-none</span></a>]</span>
+<td>A <a href="http://library.gnome.org/devel/gio/unstable/GCancellable.html"><span class="type">GCancellable</span></a> or <a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a>. <span class="annotation">[<a href="http://foldoc.org/allow-none"><span class="acronym">allow-none</span></a>]</span>
 </td>
 </tr>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>callback</code></em> :</span></p></td>
-<td>A <span class="type">GAsyncReadyCallback</span> to call when the request is satisfied.</td>
+<td>A <a href="http://library.gnome.org/devel/gio/unstable/GAsyncResult.html#GAsyncReadyCallback"><span class="type">GAsyncReadyCallback</span></a> to call when the request is satisfied.</td>
 </tr>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>user_data</code></em> :</span></p></td>
@@ -329,9 +329,9 @@ See <a class="link" href="UDisksObjectManagerClient.html#udisks-object-manager-c
 <hr>
 <div class="refsect2">
 <a name="udisks-object-manager-client-new-for-bus-finish"></a><h3>udisks_object_manager_client_new_for_bus_finish ()</h3>
-<pre class="programlisting"><span class="returnvalue">GDBusObjectManager</span> * udisks_object_manager_client_new_for_bus_finish
-                                                        (<em class="parameter"><code><span class="type">GAsyncResult</span> *res</code></em>,
-                                                         <em class="parameter"><code><span class="type">GError</span> **error</code></em>);</pre>
+<pre class="programlisting"><a href="http://library.gnome.org/devel/gio/unstable/GDBusObjectManager.html"><span class="returnvalue">GDBusObjectManager</span></a> * udisks_object_manager_client_new_for_bus_finish
+                                                        (<em class="parameter"><code><a href="http://library.gnome.org/devel/gio/unstable/GAsyncResult.html"><span class="type">GAsyncResult</span></a> *res</code></em>,
+                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Error-Reporting.html#GError"><span class="type">GError</span></a> **error</code></em>);</pre>
 <p>
 Finishes an operation started with <a class="link" href="UDisksObjectManagerClient.html#udisks-object-manager-client-new-for-bus" title="udisks_object_manager_client_new_for_bus ()"><code class="function">udisks_object_manager_client_new_for_bus()</code></a>.
 </p>
@@ -343,16 +343,16 @@ Finishes an operation started with <a class="link" href="UDisksObjectManagerClie
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>res</code></em> :</span></p></td>
-<td>The <span class="type">GAsyncResult</span> obtained from the <span class="type">GAsyncReadyCallback</span> passed to <a class="link" href="UDisksObjectManagerClient.html#udisks-object-manager-client-new-for-bus" title="udisks_object_manager_client_new_for_bus ()"><code class="function">udisks_object_manager_client_new_for_bus()</code></a>.</td>
+<td>The <a href="http://library.gnome.org/devel/gio/unstable/GAsyncResult.html"><span class="type">GAsyncResult</span></a> obtained from the <a href="http://library.gnome.org/devel/gio/unstable/GAsyncResult.html#GAsyncReadyCallback"><span class="type">GAsyncReadyCallback</span></a> passed to <a class="link" href="UDisksObjectManagerClient.html#udisks-object-manager-client-new-for-bus" title="udisks_object_manager_client_new_for_bus ()"><code class="function">udisks_object_manager_client_new_for_bus()</code></a>.</td>
 </tr>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>error</code></em> :</span></p></td>
-<td>Return location for error or <code class="literal">NULL</code>
+<td>Return location for error or <a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a>
 </td>
 </tr>
 <tr>
 <td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
-<td>The constructed object manager client or <code class="literal">NULL</code> if <em class="parameter"><code>error</code></em> is set. <span class="annotation">[<a href="http://foldoc.org/transfer%20full"><span class="acronym">transfer full</span></a>][<a href="http://foldoc.org/type"><span class="acronym">type</span></a> UDisksObjectManagerClient]</span>
+<td>The constructed object manager client or <a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a> if <em class="parameter"><code>error</code></em> is set. <span class="annotation">[<a href="http://foldoc.org/transfer%20full"><span class="acronym">transfer full</span></a>][<a href="http://foldoc.org/type"><span class="acronym">type</span></a> UDisksObjectManagerClient]</span>
 </td>
 </tr>
 </tbody>
@@ -361,15 +361,15 @@ Finishes an operation started with <a class="link" href="UDisksObjectManagerClie
 <hr>
 <div class="refsect2">
 <a name="udisks-object-manager-client-new-for-bus-sync"></a><h3>udisks_object_manager_client_new_for_bus_sync ()</h3>
-<pre class="programlisting"><span class="returnvalue">GDBusObjectManager</span> * udisks_object_manager_client_new_for_bus_sync
-                                                        (<em class="parameter"><code><span class="type">GBusType</span> bus_type</code></em>,
-                                                         <em class="parameter"><code><span class="type">GDBusObjectManagerClientFlags</span> flags</code></em>,
-                                                         <em class="parameter"><code>const <span class="type">gchar</span> *name</code></em>,
-                                                         <em class="parameter"><code>const <span class="type">gchar</span> *object_path</code></em>,
-                                                         <em class="parameter"><code><span class="type">GCancellable</span> *cancellable</code></em>,
-                                                         <em class="parameter"><code><span class="type">GError</span> **error</code></em>);</pre>
+<pre class="programlisting"><a href="http://library.gnome.org/devel/gio/unstable/GDBusObjectManager.html"><span class="returnvalue">GDBusObjectManager</span></a> * udisks_object_manager_client_new_for_bus_sync
+                                                        (<em class="parameter"><code><a href="http://library.gnome.org/devel/gio/unstable/GDBusConnection.html#GBusType"><span class="type">GBusType</span></a> bus_type</code></em>,
+                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/gio/unstable/GDBusObjectManagerClient.html#GDBusObjectManagerClientFlags"><span class="type">GDBusObjectManagerClientFlags</span></a> flags</code></em>,
+                                                         <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *name</code></em>,
+                                                         <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *object_path</code></em>,
+                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/gio/unstable/GCancellable.html"><span class="type">GCancellable</span></a> *cancellable</code></em>,
+                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Error-Reporting.html#GError"><span class="type">GError</span></a> **error</code></em>);</pre>
 <p>
-Like <a class="link" href="UDisksObjectManagerClient.html#udisks-object-manager-client-new-sync" title="udisks_object_manager_client_new_sync ()"><code class="function">udisks_object_manager_client_new_sync()</code></a> but takes a <span class="type">GBusType</span> instead of a <span class="type">GDBusConnection</span>.
+Like <a class="link" href="UDisksObjectManagerClient.html#udisks-object-manager-client-new-sync" title="udisks_object_manager_client_new_sync ()"><code class="function">udisks_object_manager_client_new_sync()</code></a> but takes a <a href="http://library.gnome.org/devel/gio/unstable/GDBusConnection.html#GBusType"><span class="type">GBusType</span></a> instead of a <a href="http://library.gnome.org/devel/gio/unstable/GDBusConnection.html"><span class="type">GDBusConnection</span></a>.
 </p>
 <p>
 The calling thread is blocked until a reply is received.
@@ -385,11 +385,11 @@ See <a class="link" href="UDisksObjectManagerClient.html#udisks-object-manager-c
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>bus_type</code></em> :</span></p></td>
-<td>A <span class="type">GBusType</span>.</td>
+<td>A <a href="http://library.gnome.org/devel/gio/unstable/GDBusConnection.html#GBusType"><span class="type">GBusType</span></a>.</td>
 </tr>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>flags</code></em> :</span></p></td>
-<td>Flags from the <span class="type">GDBusObjectManagerClientFlags</span> enumeration.</td>
+<td>Flags from the <a href="http://library.gnome.org/devel/gio/unstable/GDBusObjectManagerClient.html#GDBusObjectManagerClientFlags"><span class="type">GDBusObjectManagerClientFlags</span></a> enumeration.</td>
 </tr>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>name</code></em> :</span></p></td>
@@ -401,17 +401,17 @@ See <a class="link" href="UDisksObjectManagerClient.html#udisks-object-manager-c
 </tr>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>cancellable</code></em> :</span></p></td>
-<td>A <span class="type">GCancellable</span> or <code class="literal">NULL</code>. <span class="annotation">[<a href="http://foldoc.org/allow-none"><span class="acronym">allow-none</span></a>]</span>
+<td>A <a href="http://library.gnome.org/devel/gio/unstable/GCancellable.html"><span class="type">GCancellable</span></a> or <a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a>. <span class="annotation">[<a href="http://foldoc.org/allow-none"><span class="acronym">allow-none</span></a>]</span>
 </td>
 </tr>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>error</code></em> :</span></p></td>
-<td>Return location for error or <code class="literal">NULL</code>
+<td>Return location for error or <a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a>
 </td>
 </tr>
 <tr>
 <td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
-<td>The constructed object manager client or <code class="literal">NULL</code> if <em class="parameter"><code>error</code></em> is set. <span class="annotation">[<a href="http://foldoc.org/transfer%20full"><span class="acronym">transfer full</span></a>][<a href="http://foldoc.org/type"><span class="acronym">type</span></a> UDisksObjectManagerClient]</span>
+<td>The constructed object manager client or <a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a> if <em class="parameter"><code>error</code></em> is set. <span class="annotation">[<a href="http://foldoc.org/transfer%20full"><span class="acronym">transfer full</span></a>][<a href="http://foldoc.org/type"><span class="acronym">type</span></a> UDisksObjectManagerClient]</span>
 </td>
 </tr>
 </tbody>
@@ -420,15 +420,15 @@ See <a class="link" href="UDisksObjectManagerClient.html#udisks-object-manager-c
 <hr>
 <div class="refsect2">
 <a name="udisks-object-manager-client-new-sync"></a><h3>udisks_object_manager_client_new_sync ()</h3>
-<pre class="programlisting"><span class="returnvalue">GDBusObjectManager</span> * udisks_object_manager_client_new_sync
-                                                        (<em class="parameter"><code><span class="type">GDBusConnection</span> *connection</code></em>,
-                                                         <em class="parameter"><code><span class="type">GDBusObjectManagerClientFlags</span> flags</code></em>,
-                                                         <em class="parameter"><code>const <span class="type">gchar</span> *name</code></em>,
-                                                         <em class="parameter"><code>const <span class="type">gchar</span> *object_path</code></em>,
-                                                         <em class="parameter"><code><span class="type">GCancellable</span> *cancellable</code></em>,
-                                                         <em class="parameter"><code><span class="type">GError</span> **error</code></em>);</pre>
+<pre class="programlisting"><a href="http://library.gnome.org/devel/gio/unstable/GDBusObjectManager.html"><span class="returnvalue">GDBusObjectManager</span></a> * udisks_object_manager_client_new_sync
+                                                        (<em class="parameter"><code><a href="http://library.gnome.org/devel/gio/unstable/GDBusConnection.html"><span class="type">GDBusConnection</span></a> *connection</code></em>,
+                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/gio/unstable/GDBusObjectManagerClient.html#GDBusObjectManagerClientFlags"><span class="type">GDBusObjectManagerClientFlags</span></a> flags</code></em>,
+                                                         <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *name</code></em>,
+                                                         <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *object_path</code></em>,
+                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/gio/unstable/GCancellable.html"><span class="type">GCancellable</span></a> *cancellable</code></em>,
+                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Error-Reporting.html#GError"><span class="type">GError</span></a> **error</code></em>);</pre>
 <p>
-Synchronously creates <span class="type">GDBusObjectManagerClient</span> using <a class="link" href="UDisksObjectManagerClient.html#udisks-object-manager-client-get-proxy-type" title="udisks_object_manager_client_get_proxy_type ()"><code class="function">udisks_object_manager_client_get_proxy_type()</code></a> as the <span class="type">GDBusProxyTypeFunc</span>. See <code class="function">g_dbus_object_manager_client_new_sync()</code> for more details.
+Synchronously creates <a href="http://library.gnome.org/devel/gio/unstable/GDBusObjectManagerClient.html"><span class="type">GDBusObjectManagerClient</span></a> using <a class="link" href="UDisksObjectManagerClient.html#udisks-object-manager-client-get-proxy-type" title="udisks_object_manager_client_get_proxy_type ()"><code class="function">udisks_object_manager_client_get_proxy_type()</code></a> as the <a href="http://library.gnome.org/devel/gio/unstable/GDBusObjectManagerClient.html#GDBusProxyTypeFunc"><span class="type">GDBusProxyTypeFunc</span></a>. See <a href="http://library.gnome.org/devel/gio/unstable/GDBusObjectManagerClient.html#g-dbus-object-manager-client-new-sync"><code class="function">g_dbus_object_manager_client_new_sync()</code></a> for more details.
 </p>
 <p>
 The calling thread is blocked until a reply is received.
@@ -444,15 +444,15 @@ See <a class="link" href="UDisksObjectManagerClient.html#udisks-object-manager-c
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>connection</code></em> :</span></p></td>
-<td>A <span class="type">GDBusConnection</span>.</td>
+<td>A <a href="http://library.gnome.org/devel/gio/unstable/GDBusConnection.html"><span class="type">GDBusConnection</span></a>.</td>
 </tr>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>flags</code></em> :</span></p></td>
-<td>Flags from the <span class="type">GDBusObjectManagerClientFlags</span> enumeration.</td>
+<td>Flags from the <a href="http://library.gnome.org/devel/gio/unstable/GDBusObjectManagerClient.html#GDBusObjectManagerClientFlags"><span class="type">GDBusObjectManagerClientFlags</span></a> enumeration.</td>
 </tr>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>name</code></em> :</span></p></td>
-<td>A bus name (well-known or unique) or <code class="literal">NULL</code> if <em class="parameter"><code>connection</code></em> is not a message bus connection. <span class="annotation">[<a href="http://foldoc.org/allow-none"><span class="acronym">allow-none</span></a>]</span>
+<td>A bus name (well-known or unique) or <a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a> if <em class="parameter"><code>connection</code></em> is not a message bus connection. <span class="annotation">[<a href="http://foldoc.org/allow-none"><span class="acronym">allow-none</span></a>]</span>
 </td>
 </tr>
 <tr>
@@ -461,17 +461,17 @@ See <a class="link" href="UDisksObjectManagerClient.html#udisks-object-manager-c
 </tr>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>cancellable</code></em> :</span></p></td>
-<td>A <span class="type">GCancellable</span> or <code class="literal">NULL</code>. <span class="annotation">[<a href="http://foldoc.org/allow-none"><span class="acronym">allow-none</span></a>]</span>
+<td>A <a href="http://library.gnome.org/devel/gio/unstable/GCancellable.html"><span class="type">GCancellable</span></a> or <a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a>. <span class="annotation">[<a href="http://foldoc.org/allow-none"><span class="acronym">allow-none</span></a>]</span>
 </td>
 </tr>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>error</code></em> :</span></p></td>
-<td>Return location for error or <code class="literal">NULL</code>
+<td>Return location for error or <a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a>
 </td>
 </tr>
 <tr>
 <td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
-<td>The constructed object manager client or <code class="literal">NULL</code> if <em class="parameter"><code>error</code></em> is set. <span class="annotation">[<a href="http://foldoc.org/transfer%20full"><span class="acronym">transfer full</span></a>][<a href="http://foldoc.org/type"><span class="acronym">type</span></a> UDisksObjectManagerClient]</span>
+<td>The constructed object manager client or <a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a> if <em class="parameter"><code>error</code></em> is set. <span class="annotation">[<a href="http://foldoc.org/transfer%20full"><span class="acronym">transfer full</span></a>][<a href="http://foldoc.org/type"><span class="acronym">type</span></a> UDisksObjectManagerClient]</span>
 </td>
 </tr>
 </tbody>
