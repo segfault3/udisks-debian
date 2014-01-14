@@ -10,6 +10,7 @@ udisks2 (2.1.2-1) UNRELEASED; urgency=low
   * Drop dosfslabel.patch, fixed upstream.
   * Add Recommends: gdisk, as we need it for manipulating GPT partition tables
     through sgdisk. (LP: #1080745)
+  * Bump Standards-Version to 3.9.5. No changes necessary.
 
   [ Colin Watson ]
   * Use dh-autoreconf to update libtool macros for new ports.

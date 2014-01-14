@@ -18,7 +18,7 @@ Build-Depends: debhelper (>= 9),
  gobject-introspection (>= 1.30),
  libatasmart-dev (>= 0.17),
  dh-autoreconf
-Standards-Version: 3.9.4
+Standards-Version: 3.9.5
 Vcs-Git: git://git.debian.org/git/pkg-utopia/udisks2.git
 Vcs-Browser: http://git.debian.org/?p=pkg-utopia/udisks2.git;a=summary
 Homepage: http://www.freedesktop.org/wiki/Software/udisks
