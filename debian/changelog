@@ -1,6 +1,12 @@
-udisks2 (2.1.1-2) UNRELEASED; urgency=low
+udisks2 (2.1.2-1) UNRELEASED; urgency=low
 
   [ Martin Pitt ]
+  * New upstream release:
+    - Add exfat support (Closes: #720695)
+    - Fix crash when waiting for loop device (LP: #1128275)
+    - Use dosfstools instead of mtools
+    - Add polkit authorization variables for removable media
+    - Hide more rescue partitions
   * Add Recommends: gdisk, as we need it for manipulating GPT partition tables
     through sgdisk. (LP: #1080745)
 
