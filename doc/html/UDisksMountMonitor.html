@@ -45,15 +45,15 @@
 enum                <a class="link" href="UDisksMountMonitor.html#UDisksMountType" title="enum UDisksMountType">UDisksMountType</a>;
 <span class="returnvalue">dev_t</span>               <a class="link" href="UDisksMountMonitor.html#udisks-mount-get-dev" title="udisks_mount_get_dev ()">udisks_mount_get_dev</a>                (<em class="parameter"><code><a class="link" href="UDisksMountMonitor.html#UDisksMount"><span class="type">UDisksMount</span></a> *mount</code></em>);
 <a class="link" href="UDisksMountMonitor.html#UDisksMountType" title="enum UDisksMountType"><span class="returnvalue">UDisksMountType</span></a>     <a class="link" href="UDisksMountMonitor.html#udisks-mount-get-mount-type" title="udisks_mount_get_mount_type ()">udisks_mount_get_mount_type</a>         (<em class="parameter"><code><a class="link" href="UDisksMountMonitor.html#UDisksMount"><span class="type">UDisksMount</span></a> *mount</code></em>);
-const <span class="returnvalue">gchar</span> *       <a class="link" href="UDisksMountMonitor.html#udisks-mount-get-mount-path" title="udisks_mount_get_mount_path ()">udisks_mount_get_mount_path</a>         (<em class="parameter"><code><a class="link" href="UDisksMountMonitor.html#UDisksMount"><span class="type">UDisksMount</span></a> *mount</code></em>);
-<span class="returnvalue">gint</span>                <a class="link" href="UDisksMountMonitor.html#udisks-mount-compare" title="udisks_mount_compare ()">udisks_mount_compare</a>                (<em class="parameter"><code><a class="link" href="UDisksMountMonitor.html#UDisksMount"><span class="type">UDisksMount</span></a> *mount</code></em>,
+const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="returnvalue">gchar</span></a> *       <a class="link" href="UDisksMountMonitor.html#udisks-mount-get-mount-path" title="udisks_mount_get_mount_path ()">udisks_mount_get_mount_path</a>         (<em class="parameter"><code><a class="link" href="UDisksMountMonitor.html#UDisksMount"><span class="type">UDisksMount</span></a> *mount</code></em>);
+<a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gint"><span class="returnvalue">gint</span></a>                <a class="link" href="UDisksMountMonitor.html#udisks-mount-compare" title="udisks_mount_compare ()">udisks_mount_compare</a>                (<em class="parameter"><code><a class="link" href="UDisksMountMonitor.html#UDisksMount"><span class="type">UDisksMount</span></a> *mount</code></em>,
                                                          <em class="parameter"><code><a class="link" href="UDisksMountMonitor.html#UDisksMount"><span class="type">UDisksMount</span></a> *other_mount</code></em>);
                     <a class="link" href="UDisksMountMonitor.html#UDisksMountMonitor-struct" title="UDisksMountMonitor">UDisksMountMonitor</a>;
 <a class="link" href="UDisksMountMonitor.html" title="UDisksMountMonitor"><span class="returnvalue">UDisksMountMonitor</span></a> * <a class="link" href="UDisksMountMonitor.html#udisks-mount-monitor-new" title="udisks_mount_monitor_new ()">udisks_mount_monitor_new</a>           (<em class="parameter"><code><span class="type">void</span></code></em>);
-<span class="returnvalue">GList</span> *             <a class="link" href="UDisksMountMonitor.html#udisks-mount-monitor-get-mounts-for-dev" title="udisks_mount_monitor_get_mounts_for_dev ()">udisks_mount_monitor_get_mounts_for_dev</a>
+<a href="http://library.gnome.org/devel/glib/unstable/glib-Doubly-Linked-Lists.html#GList"><span class="returnvalue">GList</span></a> *             <a class="link" href="UDisksMountMonitor.html#udisks-mount-monitor-get-mounts-for-dev" title="udisks_mount_monitor_get_mounts_for_dev ()">udisks_mount_monitor_get_mounts_for_dev</a>
                                                         (<em class="parameter"><code><a class="link" href="UDisksMountMonitor.html" title="UDisksMountMonitor"><span class="type">UDisksMountMonitor</span></a> *monitor</code></em>,
                                                          <em class="parameter"><code><span class="type">dev_t</span> dev</code></em>);
-<span class="returnvalue">gboolean</span>            <a class="link" href="UDisksMountMonitor.html#udisks-mount-monitor-is-dev-in-use" title="udisks_mount_monitor_is_dev_in_use ()">udisks_mount_monitor_is_dev_in_use</a>  (<em class="parameter"><code><a class="link" href="UDisksMountMonitor.html" title="UDisksMountMonitor"><span class="type">UDisksMountMonitor</span></a> *monitor</code></em>,
+<a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>            <a class="link" href="UDisksMountMonitor.html#udisks-mount-monitor-is-dev-in-use" title="udisks_mount_monitor_is_dev_in_use ()">udisks_mount_monitor_is_dev_in_use</a>  (<em class="parameter"><code><a class="link" href="UDisksMountMonitor.html" title="UDisksMountMonitor"><span class="type">UDisksMountMonitor</span></a> *monitor</code></em>,
                                                          <em class="parameter"><code><span class="type">dev_t</span> dev</code></em>,
                                                          <em class="parameter"><code><a class="link" href="UDisksMountMonitor.html#UDisksMountType" title="enum UDisksMountType"><span class="type">UDisksMountType</span></a> *out_type</code></em>);
 </pre>
@@ -61,19 +61,19 @@ const <span class="returnvalue">gchar</span> *       <a class="link" href="UDisk
 <div class="refsect1">
 <a name="UDisksMountMonitor.object-hierarchy"></a><h2>Object Hierarchy</h2>
 <pre class="synopsis">
-  GObject
+  <a href="http://library.gnome.org/devel/gobject/unstable/gobject-The-Base-Object-Type.html#GObject">GObject</a>
    +----UDisksMount
 </pre>
 <pre class="synopsis">
-  GObject
+  <a href="http://library.gnome.org/devel/gobject/unstable/gobject-The-Base-Object-Type.html#GObject">GObject</a>
    +----UDisksMountMonitor
 </pre>
 </div>
 <div class="refsect1">
 <a name="UDisksMountMonitor.signals"></a><h2>Signals</h2>
 <pre class="synopsis">
-  "<a class="link" href="UDisksMountMonitor.html#UDisksMountMonitor-mount-added" title='The "mount-added" signal'>mount-added</a>"                                    : <code class="literal">Has Details</code>
-  "<a class="link" href="UDisksMountMonitor.html#UDisksMountMonitor-mount-removed" title='The "mount-removed" signal'>mount-removed</a>"                                  : <code class="literal">Has Details</code>
+  "<a class="link" href="UDisksMountMonitor.html#UDisksMountMonitor-mount-added" title='The "mount-added" signal'>mount-added</a>"                                    : <a href="http://library.gnome.org/devel/gobject/unstable/gobject-Signals.html#G-SIGNAL-DETAILED:CAPS"><code class="literal">Has Details</code></a>
+  "<a class="link" href="UDisksMountMonitor.html#UDisksMountMonitor-mount-removed" title='The "mount-removed" signal'>mount-removed</a>"                                  : <a href="http://library.gnome.org/devel/gobject/unstable/gobject-Signals.html#G-SIGNAL-DETAILED:CAPS"><code class="literal">Has Details</code></a>
 </pre>
 </div>
 <div class="refsect1">
@@ -176,7 +176,7 @@ Gets the <a class="link" href="UDisksMountMonitor.html#UDisksMountType" title="e
 <hr>
 <div class="refsect2">
 <a name="udisks-mount-get-mount-path"></a><h3>udisks_mount_get_mount_path ()</h3>
-<pre class="programlisting">const <span class="returnvalue">gchar</span> *       udisks_mount_get_mount_path         (<em class="parameter"><code><a class="link" href="UDisksMountMonitor.html#UDisksMount"><span class="type">UDisksMount</span></a> *mount</code></em>);</pre>
+<pre class="programlisting">const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="returnvalue">gchar</span></a> *       udisks_mount_get_mount_path         (<em class="parameter"><code><a class="link" href="UDisksMountMonitor.html#UDisksMount"><span class="type">UDisksMount</span></a> *mount</code></em>);</pre>
 <p>
 Gets the mount path for a <a class="link" href="UDisksMountMonitor.html#UDISKS-MOUNT-TYPE-FILESYSTEM:CAPS"><span class="type">UDISKS_MOUNT_TYPE_FILESYSTEM</span></a>-type mount.
 </p>
@@ -204,7 +204,7 @@ It is a programming error to call this on any other type of <a class="link" href
 <hr>
 <div class="refsect2">
 <a name="udisks-mount-compare"></a><h3>udisks_mount_compare ()</h3>
-<pre class="programlisting"><span class="returnvalue">gint</span>                udisks_mount_compare                (<em class="parameter"><code><a class="link" href="UDisksMountMonitor.html#UDisksMount"><span class="type">UDisksMount</span></a> *mount</code></em>,
+<pre class="programlisting"><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gint"><span class="returnvalue">gint</span></a>                udisks_mount_compare                (<em class="parameter"><code><a class="link" href="UDisksMountMonitor.html#UDisksMount"><span class="type">UDisksMount</span></a> *mount</code></em>,
                                                          <em class="parameter"><code><a class="link" href="UDisksMountMonitor.html#UDisksMount"><span class="type">UDisksMount</span></a> *other_mount</code></em>);</pre>
 <p>
 Comparison function for comparing two <a class="link" href="UDisksMountMonitor.html#UDisksMount"><span class="type">UDisksMount</span></a> objects.
@@ -258,14 +258,14 @@ loop</GTKDOCLINK> that this function is called from.
 </colgroup>
 <tbody><tr>
 <td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
-<td>A <a class="link" href="UDisksMountMonitor.html" title="UDisksMountMonitor"><span class="type">UDisksMountMonitor</span></a>. Free with <code class="function">g_object_unref()</code>.</td>
+<td>A <a class="link" href="UDisksMountMonitor.html" title="UDisksMountMonitor"><span class="type">UDisksMountMonitor</span></a>. Free with <a href="http://library.gnome.org/devel/gobject/unstable/gobject-The-Base-Object-Type.html#g-object-unref"><code class="function">g_object_unref()</code></a>.</td>
 </tr></tbody>
 </table></div>
 </div>
 <hr>
 <div class="refsect2">
 <a name="udisks-mount-monitor-get-mounts-for-dev"></a><h3>udisks_mount_monitor_get_mounts_for_dev ()</h3>
-<pre class="programlisting"><span class="returnvalue">GList</span> *             udisks_mount_monitor_get_mounts_for_dev
+<pre class="programlisting"><a href="http://library.gnome.org/devel/glib/unstable/glib-Doubly-Linked-Lists.html#GList"><span class="returnvalue">GList</span></a> *             udisks_mount_monitor_get_mounts_for_dev
                                                         (<em class="parameter"><code><a class="link" href="UDisksMountMonitor.html" title="UDisksMountMonitor"><span class="type">UDisksMountMonitor</span></a> *monitor</code></em>,
                                                          <em class="parameter"><code><span class="type">dev_t</span> dev</code></em>);</pre>
 <p>
@@ -287,9 +287,9 @@ Gets all <a class="link" href="UDisksMountMonitor.html#UDisksMount"><span class=
 </tr>
 <tr>
 <td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
-<td>A <span class="type">GList</span> of <a class="link" href="UDisksMountMonitor.html#UDisksMount"><span class="type">UDisksMount</span></a> objects. The returned list must
-be freed with <code class="function">g_list_free()</code> after each element has been freed with
-<code class="function">g_object_unref()</code>.</td>
+<td>A <a href="http://library.gnome.org/devel/glib/unstable/glib-Doubly-Linked-Lists.html#GList"><span class="type">GList</span></a> of <a class="link" href="UDisksMountMonitor.html#UDisksMount"><span class="type">UDisksMount</span></a> objects. The returned list must
+be freed with <a href="http://library.gnome.org/devel/glib/unstable/glib-Doubly-Linked-Lists.html#g-list-free"><code class="function">g_list_free()</code></a> after each element has been freed with
+<a href="http://library.gnome.org/devel/gobject/unstable/gobject-The-Base-Object-Type.html#g-object-unref"><code class="function">g_object_unref()</code></a>.</td>
 </tr>
 </tbody>
 </table></div>
@@ -297,7 +297,7 @@ be freed with <code class="function">g_list_free()</code> after each element has
 <hr>
 <div class="refsect2">
 <a name="udisks-mount-monitor-is-dev-in-use"></a><h3>udisks_mount_monitor_is_dev_in_use ()</h3>
-<pre class="programlisting"><span class="returnvalue">gboolean</span>            udisks_mount_monitor_is_dev_in_use  (<em class="parameter"><code><a class="link" href="UDisksMountMonitor.html" title="UDisksMountMonitor"><span class="type">UDisksMountMonitor</span></a> *monitor</code></em>,
+<pre class="programlisting"><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>            udisks_mount_monitor_is_dev_in_use  (<em class="parameter"><code><a class="link" href="UDisksMountMonitor.html" title="UDisksMountMonitor"><span class="type">UDisksMountMonitor</span></a> *monitor</code></em>,
                                                          <em class="parameter"><code><span class="type">dev_t</span> dev</code></em>,
                                                          <em class="parameter"><code><a class="link" href="UDisksMountMonitor.html#UDisksMountType" title="enum UDisksMountType"><span class="type">UDisksMountType</span></a> *out_type</code></em>);</pre>
 <p>
@@ -319,13 +319,13 @@ Checks if <em class="parameter"><code>dev</code></em> is in use (e.g. mounted or
 </tr>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>out_type</code></em> :</span></p></td>
-<td>Return location for mount type, if in use or <code class="literal">NULL</code>. <span class="annotation">[<a href="http://foldoc.org/out"><span class="acronym">out</span></a> allow-none]</span>
+<td>Return location for mount type, if in use or <a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a>. <span class="annotation">[<a href="http://foldoc.org/out"><span class="acronym">out</span></a> allow-none]</span>
 </td>
 </tr>
 <tr>
 <td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
 <td>
-<code class="literal">TRUE</code> if in use, <code class="literal">FALSE</code> otherwise.</td>
+<a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#TRUE:CAPS"><code class="literal">TRUE</code></a> if in use, <a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#FALSE:CAPS"><code class="literal">FALSE</code></a> otherwise.</td>
 </tr>
 </tbody>
 </table></div>
@@ -337,13 +337,13 @@ Checks if <em class="parameter"><code>dev</code></em> is in use (e.g. mounted or
 <a name="UDisksMountMonitor-mount-added"></a><h3>The <code class="literal">"mount-added"</code> signal</h3>
 <pre class="programlisting"><span class="returnvalue">void</span>                user_function                      (<a class="link" href="UDisksMountMonitor.html" title="UDisksMountMonitor"><span class="type">UDisksMountMonitor</span></a> *monitor,
                                                         <a class="link" href="UDisksMountMonitor.html#UDisksMount"><span class="type">UDisksMount</span></a>        *mount,
-                                                        <span class="type">gpointer</span>            user_data)      : <code class="literal">Has Details</code></pre>
+                                                        <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gpointer"><span class="type">gpointer</span></a>            user_data)      : <a href="http://library.gnome.org/devel/gobject/unstable/gobject-Signals.html#G-SIGNAL-DETAILED:CAPS"><code class="literal">Has Details</code></a></pre>
 <p>
 Emitted when a mount is added.
 </p>
 <p>
 This signal is emitted in the
-thread-default main loop
+<a href="http://library.gnome.org/devel/glib/unstable/glib-The-Main-Event-Loop.html#g-main-context-push-thread-default">thread-default main loop</a>
 that <em class="parameter"><code>monitor</code></em> was created in.
 </p>
 <div class="variablelist"><table border="0" class="variablelist">
@@ -372,13 +372,13 @@ that <em class="parameter"><code>monitor</code></em> was created in.
 <a name="UDisksMountMonitor-mount-removed"></a><h3>The <code class="literal">"mount-removed"</code> signal</h3>
 <pre class="programlisting"><span class="returnvalue">void</span>                user_function                      (<a class="link" href="UDisksMountMonitor.html" title="UDisksMountMonitor"><span class="type">UDisksMountMonitor</span></a> *monitor,
                                                         <a class="link" href="UDisksMountMonitor.html#UDisksMount"><span class="type">UDisksMount</span></a>        *mount,
-                                                        <span class="type">gpointer</span>            user_data)      : <code class="literal">Has Details</code></pre>
+                                                        <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gpointer"><span class="type">gpointer</span></a>            user_data)      : <a href="http://library.gnome.org/devel/gobject/unstable/gobject-Signals.html#G-SIGNAL-DETAILED:CAPS"><code class="literal">Has Details</code></a></pre>
 <p>
 Emitted when a mount is removed.
 </p>
 <p>
 This signal is emitted in the
-thread-default main loop
+<a href="http://library.gnome.org/devel/glib/unstable/glib-The-Main-Event-Loop.html#g-main-context-push-thread-default">thread-default main loop</a>
 that <em class="parameter"><code>monitor</code></em> was created in.
 </p>
 <div class="variablelist"><table border="0" class="variablelist">

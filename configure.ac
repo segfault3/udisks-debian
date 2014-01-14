@@ -1,7 +1,7 @@
 
 m4_define([udisks_major_version], [2])
 m4_define([udisks_minor_version], [1])
-m4_define([udisks_micro_version], [1])
+m4_define([udisks_micro_version], [2])
 
 m4_define([udisks_version], [udisks_major_version.udisks_minor_version.udisks_micro_version])
 
@@ -17,6 +17,7 @@ AC_SUBST(UDISKS_MICRO_VERSION)
 AC_SUBST(UDISKS_VERSION)
 
 AM_INIT_AUTOMAKE([1.9 foreign dist-bzip2 no-dist-gzip])
+AC_CONFIG_MACRO_DIR([m4])
 AC_CONFIG_SRCDIR([src])
 AC_CONFIG_HEADERS([config.h])
 

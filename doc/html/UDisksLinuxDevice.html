@@ -41,15 +41,15 @@
 <a name="UDisksLinuxDevice.synopsis"></a><h2>Synopsis</h2>
 <pre class="synopsis">                    <a class="link" href="UDisksLinuxDevice.html#UDisksLinuxDevice-struct" title="UDisksLinuxDevice">UDisksLinuxDevice</a>;
 <a class="link" href="UDisksLinuxDevice.html" title="UDisksLinuxDevice"><span class="returnvalue">UDisksLinuxDevice</span></a> * <a class="link" href="UDisksLinuxDevice.html#udisks-linux-device-new-sync" title="udisks_linux_device_new_sync ()">udisks_linux_device_new_sync</a>        (<em class="parameter"><code><a href="http://www.freedesktop.org/software/systemd/gudev/GUdevDevice.html"><span class="type">GUdevDevice</span></a> *udev_device</code></em>);
-<span class="returnvalue">gboolean</span>            <a class="link" href="UDisksLinuxDevice.html#udisks-linux-device-reprobe-sync" title="udisks_linux_device_reprobe_sync ()">udisks_linux_device_reprobe_sync</a>    (<em class="parameter"><code><a class="link" href="UDisksLinuxDevice.html" title="UDisksLinuxDevice"><span class="type">UDisksLinuxDevice</span></a> *device</code></em>,
-                                                         <em class="parameter"><code><span class="type">GCancellable</span> *cancellable</code></em>,
-                                                         <em class="parameter"><code><span class="type">GError</span> **error</code></em>);
+<a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>            <a class="link" href="UDisksLinuxDevice.html#udisks-linux-device-reprobe-sync" title="udisks_linux_device_reprobe_sync ()">udisks_linux_device_reprobe_sync</a>    (<em class="parameter"><code><a class="link" href="UDisksLinuxDevice.html" title="UDisksLinuxDevice"><span class="type">UDisksLinuxDevice</span></a> *device</code></em>,
+                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/gio/unstable/GCancellable.html"><span class="type">GCancellable</span></a> *cancellable</code></em>,
+                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Error-Reporting.html#GError"><span class="type">GError</span></a> **error</code></em>);
 </pre>
 </div>
 <div class="refsect1">
 <a name="UDisksLinuxDevice.object-hierarchy"></a><h2>Object Hierarchy</h2>
 <pre class="synopsis">
-  GObject
+  <a href="http://library.gnome.org/devel/gobject/unstable/gobject-The-Base-Object-Type.html#GObject">GObject</a>
    +----UDisksLinuxDevice
 </pre>
 </div>
@@ -87,12 +87,12 @@ and uevent "change" time.
 <td>A <a href="http://www.freedesktop.org/software/systemd/gudev/GUdevDevice.html"><span class="type">GUdevDevice</span></a>.</td>
 </tr>
 <tr>
-<td><p><span class="term"><span class="type">guchar</span> *<em class="structfield"><code><a name="UDisksLinuxDevice-struct.ata-identify-device-data"></a>ata_identify_device_data</code></em>;</span></p></td>
-<td>512-byte array containing the result of the IDENTIY DEVICE command or <code class="literal">NULL</code>.</td>
+<td><p><span class="term"><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#guchar"><span class="type">guchar</span></a> *<em class="structfield"><code><a name="UDisksLinuxDevice-struct.ata-identify-device-data"></a>ata_identify_device_data</code></em>;</span></p></td>
+<td>512-byte array containing the result of the IDENTIY DEVICE command or <a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a>.</td>
 </tr>
 <tr>
-<td><p><span class="term"><span class="type">guchar</span> *<em class="structfield"><code><a name="UDisksLinuxDevice-struct.ata-identify-packet-device-data"></a>ata_identify_packet_device_data</code></em>;</span></p></td>
-<td>512-byte array containing the result of the IDENTIY PACKET DEVICE command or <code class="literal">NULL</code>.</td>
+<td><p><span class="term"><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#guchar"><span class="type">guchar</span></a> *<em class="structfield"><code><a name="UDisksLinuxDevice-struct.ata-identify-packet-device-data"></a>ata_identify_packet_device_data</code></em>;</span></p></td>
+<td>512-byte array containing the result of the IDENTIY PACKET DEVICE command or <a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a>.</td>
 </tr>
 </tbody>
 </table></div>
@@ -129,9 +129,9 @@ while the probing is underway.
 <hr>
 <div class="refsect2">
 <a name="udisks-linux-device-reprobe-sync"></a><h3>udisks_linux_device_reprobe_sync ()</h3>
-<pre class="programlisting"><span class="returnvalue">gboolean</span>            udisks_linux_device_reprobe_sync    (<em class="parameter"><code><a class="link" href="UDisksLinuxDevice.html" title="UDisksLinuxDevice"><span class="type">UDisksLinuxDevice</span></a> *device</code></em>,
-                                                         <em class="parameter"><code><span class="type">GCancellable</span> *cancellable</code></em>,
-                                                         <em class="parameter"><code><span class="type">GError</span> **error</code></em>);</pre>
+<pre class="programlisting"><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>            udisks_linux_device_reprobe_sync    (<em class="parameter"><code><a class="link" href="UDisksLinuxDevice.html" title="UDisksLinuxDevice"><span class="type">UDisksLinuxDevice</span></a> *device</code></em>,
+                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/gio/unstable/GCancellable.html"><span class="type">GCancellable</span></a> *cancellable</code></em>,
+                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Error-Reporting.html#GError"><span class="type">GError</span></a> **error</code></em>);</pre>
 <p>
 Forcibly reprobe information on <em class="parameter"><code>device</code></em>. The calling thread may be
 blocked for a non-trivial amount of time while the probing is
@@ -149,17 +149,17 @@ underway.
 </tr>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>cancellable</code></em> :</span></p></td>
-<td>A <span class="type">GCancellable</span> or <code class="literal">NULL</code>. <span class="annotation">[<a href="http://foldoc.org/allow-none"><span class="acronym">allow-none</span></a>]</span>
+<td>A <a href="http://library.gnome.org/devel/gio/unstable/GCancellable.html"><span class="type">GCancellable</span></a> or <a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a>. <span class="annotation">[<a href="http://foldoc.org/allow-none"><span class="acronym">allow-none</span></a>]</span>
 </td>
 </tr>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>error</code></em> :</span></p></td>
-<td>Return location for error or <code class="literal">NULL</code>.</td>
+<td>Return location for error or <a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a>.</td>
 </tr>
 <tr>
 <td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
 <td>
-<code class="literal">TRUE</code> if reprobing succeeded, <code class="literal">FALSE</code> otherwise.</td>
+<a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#TRUE:CAPS"><code class="literal">TRUE</code></a> if reprobing succeeded, <a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#FALSE:CAPS"><code class="literal">FALSE</code></a> otherwise.</td>
 </tr>
 </tbody>
 </table></div>
