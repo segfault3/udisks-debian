@@ -7,6 +7,7 @@ udisks2 (2.1.2-1) UNRELEASED; urgency=low
     - Use dosfstools instead of mtools
     - Add polkit authorization variables for removable media
     - Hide more rescue partitions
+  * Drop dosfslabel.patch, fixed upstream.
   * Add Recommends: gdisk, as we need it for manipulating GPT partition tables
     through sgdisk. (LP: #1080745)
 

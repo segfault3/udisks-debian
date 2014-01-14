@@ -1,4 +1,3 @@
 # Debian patches for udisks
 mount_in_media.patch
 unsupported_acls.patch
-dosfslabel.patch
