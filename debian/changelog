@@ -4,6 +4,10 @@ udisks2 (2.1.1-2) UNRELEASED; urgency=low
   * Add Recommends: gdisk, as we need it for manipulating GPT partition tables
     through sgdisk. (LP: #1080745)
 
+  [ Colin Watson ]
+  * Use dh-autoreconf to update libtool macros for new ports.
+    (Closes: #732287)
+
   [ Andreas Henriksson ]
   * Add parted dependency. (Closes: #720491)
 
