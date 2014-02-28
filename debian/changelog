@@ -1,3 +1,10 @@
+udisks2 (2.1.2-2) UNRELEASED; urgency=medium
+
+  * Add "isolation-machine" autopkgtest restriction, this test does not work
+    in schroot or LXC.
+
+ -- Martin Pitt <mpitt@debian.org>  Fri, 28 Feb 2014 11:38:49 +0100
+
 udisks2 (2.1.2-1) unstable; urgency=low
 
   [ Martin Pitt ]
