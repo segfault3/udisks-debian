@@ -830,7 +830,7 @@ udisks_daemon_util_get_caller_uid_sync (UDisksDaemon            *daemon,
     {
       struct passwd pwstruct;
       gchar pwbuf[8192];
-      static struct passwd *pw;
+      struct passwd *pw = NULL;
       int rc;
 
       rc = getpwuid_r (uid, &pwstruct, pwbuf, sizeof pwbuf, &pw);
@@ -840,6 +840,7 @@ udisks_daemon_util_get_caller_uid_sync (UDisksDaemon            *daemon,
                        UDISKS_ERROR,
                        UDISKS_ERROR_FAILED,
                        "User with uid %d does not exist", (gint) uid);
+          goto out;
         }
       else if (pw == NULL)
         {
