@@ -1,5 +1,7 @@
-udisks2 (2.1.2-2) UNRELEASED; urgency=medium
+udisks2 (2.1.3-1) UNRELEASED; urgency=medium
 
+  * New upstream security/bug fix release. Fixes buffer overflow in mount path
+    parsing. (CVE-2014-0004, LP: #1288226)
   * Add "isolation-machine" autopkgtest restriction, this test does not work
     in schroot or LXC.
 
