@@ -19,8 +19,8 @@ Build-Depends: debhelper (>= 9),
  libatasmart-dev (>= 0.17),
  dh-autoreconf
 Standards-Version: 3.9.5
-Vcs-Git: git://git.debian.org/git/pkg-utopia/udisks2.git
-Vcs-Browser: http://git.debian.org/?p=pkg-utopia/udisks2.git;a=summary
+Vcs-Git: git://anonscm.debian.org/pkg-utopia/udisks2.git
+Vcs-Browser: http://anonscm.debian.org/gitweb/?p=pkg-utopia/udisks2.git;a=summary
 Homepage: http://www.freedesktop.org/wiki/Software/udisks
 XS-Testsuite: autopkgtest
 
