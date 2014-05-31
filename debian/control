@@ -29,7 +29,7 @@ XS-Testsuite: autopkgtest
 Package: udisks2
 Architecture: linux-any
 Multi-Arch: foreign
-Depends: ${shlibs:Depends}, ${misc:Depends}, udev, dbus, parted
+Depends: ${shlibs:Depends}, ${misc:Depends}, udev, dbus, parted, libpam-systemd
 Pre-Depends: ${misc:Pre-Depends}
 Recommends: policykit-1, dosfstools, ntfs-3g, eject, gdisk
 Suggests: xfsprogs, reiserfsprogs, exfat-utils, btrfs-tools, mdadm, cryptsetup-bin

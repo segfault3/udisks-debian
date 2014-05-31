@@ -4,8 +4,10 @@ udisks2 (2.1.3-2) UNRELEASED; urgency=medium
   * debian/control: Add build-dependency against libsystemd-login-dev and
     libsystemd-daemon-dev, this is enabling seat detection and inhibition
   * debian/control: Mark all the packages as linux-any instead of any
+  * debian/control: Add dependecy against libpam-systemd, we need to be sure a
+    logind session is registered for seat detection and system inhibitors
 
- -- Laurent Bigonville <bigon@debian.org>  Sat, 31 May 2014 22:27:47 +0200
+ -- Laurent Bigonville <bigon@debian.org>  Sat, 31 May 2014 22:30:24 +0200
 
 udisks2 (2.1.3-1) unstable; urgency=high
 
