@@ -1,0 +1,29 @@
+From f9c060bddd108e1f0612174504729e5c1bc9ce82 Mon Sep 17 00:00:00 2001
+From: Martin Pitt <martin.pitt@ubuntu.com>
+Date: Tue, 3 Jun 2014 14:24:00 +0200
+Subject: [PATCH] integration-test: Update for logind
+
+When logind seat tracking is enabled, the test bed may not have a currently
+active seat. Thus allow the filesystem-mount-other-seat action in the
+Polkit.test_removable_fs() test as well.
+---
+ src/tests/integration-test | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
+
+diff --git a/src/tests/integration-test b/src/tests/integration-test
+index 7596258..215e20f 100755
+--- a/src/tests/integration-test
++++ b/src/tests/integration-test
+@@ -1326,7 +1326,8 @@ class Polkit(UDisksTestCase, test_polkitd.PolkitTestCase):
+     def test_removable_fs(self):
+         '''Create FS on removable drive (allowed)'''
+ 
+-        self.start_polkitd(['org.freedesktop.udisks2.filesystem-mount'])
++        self.start_polkitd(['org.freedesktop.udisks2.filesystem-mount',
++                            'org.freedesktop.udisks2.filesystem-mount-other-seat'])
+ 
+         # the scsi_debug CD drive content is the same as for the HD drive, but
+         # udev does not know about this; so give it a nudge to re-probe
+-- 
+2.0.0
+
