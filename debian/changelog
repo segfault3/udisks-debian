@@ -2,6 +2,9 @@ udisks2 (2.1.3-3) UNRELEASED; urgency=medium
 
   * Add 00git_test_update_for_logind.patch: Update integration-test for logind
     seat tracking.
+  * Add 00git_tests_sync.patch: In tests's sync(), also sync the file systems.
+    This mitigates a race condition with changing labels, which particularly
+    surfaces with the NTFS tests.
 
  -- Martin Pitt <mpitt@debian.org>  Tue, 03 Jun 2014 14:26:34 +0200
 

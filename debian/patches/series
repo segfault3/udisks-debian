@@ -1,4 +1,5 @@
 00git_test_update_for_logind.patch
+00git_tests_sync.patch
 # Debian patches for udisks
 mount_in_media.patch
 unsupported_acls.patch
