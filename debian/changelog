@@ -1,7 +1,11 @@
 udisks2 (2.1.3-4) UNRELEASED; urgency=medium
 
+  [ Martin Pitt ]
   * Pull in latest integration-test from upstream head, to fix race conditions
     in property checks.
+
+  [ Michael Biebl ]
+  * Build against libsystemd-dev.
 
  -- Martin Pitt <mpitt@debian.org>  Wed, 20 Aug 2014 12:07:25 +0200
 
