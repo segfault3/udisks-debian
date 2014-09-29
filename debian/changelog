@@ -6,6 +6,8 @@ udisks2 (2.1.3-4) UNRELEASED; urgency=medium
 
   [ Michael Biebl ]
   * Build against libsystemd-dev.
+  * Use multiarch libdir for typelib files following the latest changes in
+    gobject-introspection. (Closes: #763241)
 
  -- Martin Pitt <mpitt@debian.org>  Wed, 20 Aug 2014 12:07:25 +0200
 
