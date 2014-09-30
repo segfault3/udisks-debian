@@ -77,6 +77,7 @@ Description: GObject based library to access udisks2
 Package: libudisks2-dev
 Section: libdevel
 Architecture: linux-any
+Multi-Arch: same
 Depends: ${shlibs:Depends},
  ${misc:Depends},
  gir1.2-udisks-2.0 (= ${binary:Version}),
@@ -93,6 +94,7 @@ Description: GObject based library to access udisks2 - development files
 Package: gir1.2-udisks-2.0
 Section: introspection
 Architecture: linux-any
+Multi-Arch: same
 Depends: ${gir:Depends},
  ${shlibs:Depends},
  ${misc:Depends}
