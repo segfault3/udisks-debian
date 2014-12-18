@@ -6,9 +6,6 @@
 /* gettext domain */
 #undef GETTEXT_PACKAGE
 
-/* Enable additional debugging at the expense of performance and size */
-#undef GNOME_ENABLE_DEBUG
-
 /* Define to 1 if you have the <acl/libacl.h> header file. */
 #undef HAVE_ACL_LIBACL_H
 
@@ -66,6 +63,9 @@
 /* Define to the sub-directory in which libtool stores uninstalled libraries.
    */
 #undef LT_OBJDIR
+
+/* Define if debugging is disabled */
+#undef NDEBUG
 
 /* Name of package */
 #undef PACKAGE

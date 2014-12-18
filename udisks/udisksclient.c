@@ -1904,7 +1904,7 @@ static const struct
   {"filesystem", "vfat",              "FAT12", NC_("fs-type", "FAT (12-bit version)"),              NC_("fs-type", "FAT")},
   {"filesystem", "vfat",              "FAT16", NC_("fs-type", "FAT (16-bit version)"),              NC_("fs-type", "FAT")},
   {"filesystem", "vfat",              "FAT32", NC_("fs-type", "FAT (32-bit version)"),              NC_("fs-type", "FAT")},
-  {"filesystem", "ntfs",              "*",     NC_("fs-type", "FAT (version %s)"),                  NC_("fs-type", "FAT")},
+  {"filesystem", "vfat",              "*",     NC_("fs-type", "FAT (version %s)"),                  NC_("fs-type", "FAT")},
   {"filesystem", "vfat",              NULL,    NC_("fs-type", "FAT"),                               NC_("fs-type", "FAT")},
   {"filesystem", "ntfs",              "*",     NC_("fs-type", "NTFS (version %s)"),                 NC_("fs-type", "NTFS")},
   {"filesystem", "ntfs",              NULL,    NC_("fs-type", "NTFS"),                              NC_("fs-type", "NTFS")},
@@ -1936,8 +1936,8 @@ static const struct
   {"raid",       "linux_raid_member", NULL,    NC_("fs-type", "Linux RAID Member"),                 NC_("fs-type", "Linux RAID Member")},
   {"raid",       "zfs_member",        "*",     NC_("fs-type", "ZFS Device (ZPool version %s)"),     NC_("fs-type", "ZFS (v%s)")},
   {"raid",       "zfs_member",        NULL,    NC_("fs-type", "ZFS Device"),                        NC_("fs-type", "ZFS")},
-  {"raid",       "isw_raid_member",   "*",     NC_("fs-type", "Intel Matrix RAID Member (version %s)"), NC_("fs-type", "IMSM RAID Member (%s)")},
-  {"raid",       "isw_raid_member",   NULL,    NC_("fs-type", "Intel Matrix RAID Member"),          NC_("fs-type", "IMSM RAID")},
+  {"raid",       "isw_raid_member",   "*",     NC_("fs-type", "Intel Rapid Storage Technology enterprise RAID Member (version %s)"), NC_("fs-type", "Intel RSTe RAID Member (%s)")},
+  {"raid",       "isw_raid_member",   NULL,    NC_("fs-type", "Intel Rapid Storage Technology enterprise RAID Member"),          NC_("fs-type", "Intel RSTe RAID Member")},
   {"crypto",     "crypto_LUKS",       "*",     NC_("fs-type", "LUKS Encryption (version %s)"),      NC_("fs-type", "LUKS")},
   {"crypto",     "crypto_LUKS",       NULL,    NC_("fs-type", "LUKS Encryption"),                   NC_("fs-type", "LUKS")},
   {"filesystem", "VMFS",              "*",     NC_("fs-type", "VMFS (version %s)"),                 NC_("fs-type", "VMFS (v%s)")},
@@ -1988,8 +1988,8 @@ udisks_client_get_id_for_display (UDisksClient *client,
                    (g_strcmp0 (id_type[n].version, "*") == 0 && strlen (version) > 0))
             {
               /* we know better than the compiler here */
-#ifdef __GNUC_PREREQ
-# if __GNUC_PREREQ(4,6)
+#if defined( __GNUC_PREREQ) || defined(__clang__)
+# if __GNUC_PREREQ(4,6) || __clang__
 #  pragma GCC diagnostic push
 #  pragma GCC diagnostic ignored "-Wformat-nonliteral"
 # endif
@@ -1999,8 +1999,8 @@ udisks_client_get_id_for_display (UDisksClient *client,
               else
                 ret = g_strdup_printf (g_dpgettext2 (GETTEXT_PACKAGE, "fs-type", id_type[n].short_name), version);
               goto out;
-#ifdef __GNUC_PREREQ
-# if __GNUC_PREREQ(4,6)
+#if defined( __GNUC_PREREQ) || defined(__clang__)
+# if __GNUC_PREREQ(4,6) || __clang__
 #  pragma GCC diagnostic pop
 # endif
 #endif
@@ -2210,11 +2210,19 @@ static const struct
   {"gpt", "generic",   "024dee41-33e7-11d3-9d69-0008c781f39f", NC_("part-type", "MBR Partition Scheme"), F_SYSTEM},
   {"gpt", "generic",   "c12a7328-f81f-11d2-ba4b-00a0c93ec93b", NC_("part-type", "EFI System"), F_SYSTEM},
   {"gpt", "generic",   "21686148-6449-6e6f-744e-656564454649", NC_("part-type", "BIOS Boot"), F_SYSTEM},
-  {"gpt", "generic",   "6a898cc3-1dd2-11b2-99a6-080020736631", NC_("part-type", "ZFS"), 0},   /* see also Apple, Sol. */
+  /* This is also defined in the Apple and Solaris section */
+  {"gpt", "generic",   "6a898cc3-1dd2-11b2-99a6-080020736631", NC_("part-type", "ZFS"), 0},
+  /* Extended Boot Partition, see http://www.freedesktop.org/wiki/Specifications/BootLoaderSpec/ */
+  {"gpt", "generic",   "bc13c2ff-59e6-4262-a352-b275fd6f7172", NC_("part-type", "Extended Boot Partition"), 0},
+  /* Discoverable Linux Partitions, see http://www.freedesktop.org/wiki/Specifications/DiscoverablePartitionsSpec */
+  {"gpt", "linux",     "44479540-f297-41b2-9af7-d131d5f0458a", NC_("part-type", "Linux Root Partition (x86)"), 0},
+  {"gpt", "linux",     "4f68bce3-e8cd-4db1-96e7-fbcaf984b709", NC_("part-type", "Linux Root Partition (x86_64)"), 0},
+  {"gpt", "linux",     "933ac7e1-2eb4-4f13-b844-0e14e2aef915", NC_("part-type", "Linux Home Partition"), 0},
+  {"gpt", "linux",     "3b8f8425-20e0-4f3b-907f-1a25a76f98e8", NC_("part-type", "Linux Server Data Partition"), 0},
   /* Linux */
+  {"gpt", "linux",     "0657fd6d-a4ab-43c4-84e5-0933c84b4f4f", NC_("part-type", "Linux Swap"), F_SWAP},
   {"gpt", "linux",     "0fc63daf-8483-4772-8e79-3d69d8477de4", NC_("part-type", "Linux Filesystem"), 0},
   {"gpt", "linux",     "a19d880f-05fc-4d3b-a006-743f0f84911e", NC_("part-type", "Linux RAID"), F_RAID},
-  {"gpt", "linux",     "0657fd6d-a4ab-43c4-84e5-0933c84b4f4f", NC_("part-type", "Linux Swap"), F_SWAP},
   {"gpt", "linux",     "e6d6d379-f507-44c2-a23c-238f2a3df928", NC_("part-type", "Linux LVM"), F_RAID},
   {"gpt", "linux",     "8da63339-0007-60c0-c436-083ac8230908", NC_("part-type", "Linux Reserved"), 0},
   /* Microsoft */
@@ -2272,6 +2280,10 @@ static const struct
   {"gpt", "other",     "fe3a2a5d-4f32-41a7-b725-accc3285a309", NC_("part-type", "ChromeOS Kernel"), 0},
   {"gpt", "other",     "3cb8e202-3b7e-47dd-8a3c-7ff2a13cfcec", NC_("part-type", "ChromeOS Root Filesystem"), 0},
   {"gpt", "other",     "2e0a753d-9e48-43b0-8337-b15192cb1b5e", NC_("part-type", "ChromeOS Reserved"), 0},
+  /* Intel Partition Types */
+  /*     FFS = Fast Flash Standby, aka Intel Rapid start  */
+  /*     http://downloadmirror.intel.com/22647/eng/Intel%20Rapid%20Start%20Technology%20Deployment%20Guide%20v1.0.pdf */
+  {"gpt", "other",     "d3bfe2de-3daf-11df-ba40-e3a556d89593", NC_("part-type", "Intel FFS Reserved"), 0},
 
   /* see http://developer.apple.com/documentation/mac/devices/devices-126.html
    *     http://lists.apple.com/archives/Darwin-drivers/2003/May/msg00021.html */
