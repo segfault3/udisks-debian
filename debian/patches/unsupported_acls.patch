@@ -3,9 +3,9 @@ Bug-Ubuntu: https://launchpad.net/bugs/1048059
 
 Index: udisks2/src/udiskslinuxfilesystem.c
 ===================================================================
---- udisks2.orig/src/udiskslinuxfilesystem.c	2013-03-21 07:45:01.404209172 +0100
-+++ udisks2/src/udiskslinuxfilesystem.c	2013-03-21 07:45:01.400209172 +0100
-@@ -802,12 +802,10 @@
+--- udisks2.orig/src/udiskslinuxfilesystem.c
++++ udisks2/src/udiskslinuxfilesystem.c
+@@ -817,12 +817,10 @@ add_acl (const gchar  *path,
        acl_calc_mask (&acl) == -1 ||
        acl_set_file (path, ACL_TYPE_ACCESS, acl) == -1)
      {
