@@ -1,7 +1,7 @@
 
 m4_define([udisks_major_version], [2])
 m4_define([udisks_minor_version], [1])
-m4_define([udisks_micro_version], [3])
+m4_define([udisks_micro_version], [4])
 
 m4_define([udisks_version], [udisks_major_version.udisks_minor_version.udisks_micro_version])
 
@@ -16,30 +16,27 @@ AC_SUBST(UDISKS_MINOR_VERSION)
 AC_SUBST(UDISKS_MICRO_VERSION)
 AC_SUBST(UDISKS_VERSION)
 
-AM_INIT_AUTOMAKE([1.9 foreign dist-bzip2 no-dist-gzip])
 AC_CONFIG_MACRO_DIR([m4])
 AC_CONFIG_SRCDIR([src])
 AC_CONFIG_HEADERS([config.h])
+AC_CONFIG_AUX_DIR([build-aux])
 
+AM_INIT_AUTOMAKE([1.11 foreign silent-rules dist-bzip2 no-dist-gzip])
 AM_MAINTAINER_MODE
+AM_SILENT_RULES([yes])
+
+AX_CHECK_ENABLE_DEBUG
 
 AC_PROG_CC
 AC_ISC_POSIX
 AC_HEADER_STDC
 AC_PROG_LIBTOOL
 
-m4_ifdef([AM_SILENT_RULES], [AM_SILENT_RULES([yes])])
-
-# Initialization
-#
-
-GNOME_COMMON_INIT
-GNOME_DEBUG_CHECK
-GNOME_COMPILE_WARNINGS([maximum])
-GNOME_MAINTAINER_MODE_DEFINES
 
 # Compilation
 #
+
+GNOME_COMPILE_WARNINGS([maximum])
 
 CC_CHECK_CFLAGS_APPEND([                          \
         -Waggregate-return                        \
@@ -125,19 +122,19 @@ PKG_CHECK_MODULES(GUDEV, [gudev-1.0 >= 165])
 AC_SUBST(GUDEV_CFLAGS)
 AC_SUBST(GUDEV_LIBS)
 
-PKG_CHECK_MODULES(GLIB, [glib-2.0 >= 2.31.13])
+PKG_CHECK_MODULES(GLIB, [glib-2.0 >= 2.36])
 AC_SUBST(GLIB_CFLAGS)
 AC_SUBST(GLIB_LIBS)
 
-PKG_CHECK_MODULES(GIO, [gio-unix-2.0 >= 2.31.13])
+PKG_CHECK_MODULES(GIO, [gio-unix-2.0 >= 2.36])
 AC_SUBST(GIO_CFLAGS)
 AC_SUBST(GIO_LIBS)
 
-PKG_CHECK_MODULES(POLKIT_GOBJECT_1, [polkit-gobject-1 >= 0.92])
+PKG_CHECK_MODULES(POLKIT_GOBJECT_1, [polkit-gobject-1 >= 0.102])
 AC_SUBST(POLKIT_GOBJECT_1_CFLAGS)
 AC_SUBST(POLKIT_GOBJECT_1_LIBS)
 
-PKG_CHECK_MODULES(POLKIT_AGENT_1, [polkit-agent-1 >= 0.92])
+PKG_CHECK_MODULES(POLKIT_AGENT_1, [polkit-agent-1 >= 0.102])
 AC_SUBST(POLKIT_AGENT_1_CFLAGS)
 AC_SUBST(POLKIT_AGENT_1_LIBS)
 
@@ -145,10 +142,10 @@ PKG_CHECK_MODULES(LIBATASMART, [libatasmart >= 0.17])
 AC_SUBST(LIBATASMART_CFLAGS)
 AC_SUBST(LIBATASMART_LIBS)
 
-PKG_CHECK_MODULES(LIBSYSTEMD_LOGIN,
-                  [libsystemd-login >= 44 libsystemd-daemon],
-                  have_libsystemd_login=yes,
-                  have_libsystemd_login=no)
+PKG_CHECK_MODULES(LIBSYSTEMD_LOGIN, [libsystemd >= 209], [have_libsystemd_login=yes],
+                  [PKG_CHECK_MODULES(LIBSYSTEMD_LOGIN, [libsystemd-login >= 44 libsystemd-daemon],
+                  [have_libsystemd_login=yes],
+                  [have_libsystemd_login=no])])
 AM_CONDITIONAL(HAVE_LIBSYSTEMD_LOGIN, test x$have_libsystemd_login = xyes)
 if test "x$have_libsystemd_login" = "xyes"; then
   AC_DEFINE([HAVE_LIBSYSTEMD_LOGIN], 1, [Define to 1 if libsystemd-login is available])

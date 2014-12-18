@@ -81,6 +81,7 @@ host_triplet = @host@
 @ENABLE_MAN_TRUE@	udisksctl.1			\
 @ENABLE_MAN_TRUE@	udisksd.8			\
 @ENABLE_MAN_TRUE@	udisks.8			\
+@ENABLE_MAN_TRUE@	umount.udisks2.8		\
 @ENABLE_MAN_TRUE@	$(NULL)
 
 subdir = doc/man
@@ -151,7 +152,6 @@ MANS = $(man_MANS)
 am__tagged_files = $(HEADERS) $(SOURCES) $(TAGS_FILES) $(LISP)
 DISTFILES = $(DIST_COMMON) $(DIST_SOURCES) $(TEXINFOS) $(EXTRA_DIST)
 ACLOCAL = @ACLOCAL@
-ACLOCAL_AMFLAGS = @ACLOCAL_AMFLAGS@
 ACL_CFLAGS = @ACL_CFLAGS@
 ACL_LIBS = @ACL_LIBS@
 ALL_LINGUAS = @ALL_LINGUAS@
@@ -173,7 +173,6 @@ CYGPATH_W = @CYGPATH_W@
 DATADIRNAME = @DATADIRNAME@
 DEFS = @DEFS@
 DEPDIR = @DEPDIR@
-DISABLE_DEPRECATED = @DISABLE_DEPRECATED@
 DLLTOOL = @DLLTOOL@
 DSYMUTIL = @DSYMUTIL@
 DUMPBIN = @DUMPBIN@
@@ -345,6 +344,7 @@ EXTRA_DIST = \
 	udisksctl.xml			\
 	udisksd.xml			\
 	udisks.xml             		\
+	umount.udisks2.xml		\
 	$(NULL)
 
 all: all-am
@@ -637,6 +637,9 @@ udisksd.8 : udisksd.xml
 	$(XSLTPROC) -path "$(builddir)/.." -nonet http://docbook.sourceforge.net/release/xsl/current/manpages/docbook.xsl $<
 
 udisks.8 : udisks.xml
+	$(XSLTPROC) -path "$(builddir)/.." -nonet http://docbook.sourceforge.net/release/xsl/current/manpages/docbook.xsl $<
+
+umount.udisks2.8 : umount.udisks2.xml
 	$(XSLTPROC) -path "$(builddir)/.." -nonet http://docbook.sourceforge.net/release/xsl/current/manpages/docbook.xsl $<
 
 clean-local:

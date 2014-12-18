@@ -294,7 +294,6 @@
 <ANCHOR id="udisks2-UDisksError" href="udisks2/udisks2-UDisksError.html">
 <ANCHOR id="udisks2-UDisksError.functions" href="udisks2/udisks2-UDisksError.html#udisks2-UDisksError.functions">
 <ANCHOR id="udisks2-UDisksError.other" href="udisks2/udisks2-UDisksError.html#udisks2-UDisksError.other">
-<ANCHOR id="udisks2-UDisksError.object-hierarchy" href="udisks2/udisks2-UDisksError.html#udisks2-UDisksError.object-hierarchy">
 <ANCHOR id="udisks2-UDisksError.description" href="udisks2/udisks2-UDisksError.html#udisks2-UDisksError.description">
 <ANCHOR id="udisks2-UDisksError.functions_details" href="udisks2/udisks2-UDisksError.html#udisks2-UDisksError.functions_details">
 <ANCHOR id="UDISKS-ERROR:CAPS" href="udisks2/udisks2-UDisksError.html#UDISKS-ERROR:CAPS">
@@ -1356,7 +1355,6 @@
 <ANCHOR id="udisks2-Utilities" href="udisks2/udisks2-Utilities.html">
 <ANCHOR id="udisks2-Utilities.functions" href="udisks2/udisks2-Utilities.html#udisks2-Utilities.functions">
 <ANCHOR id="udisks2-Utilities.other" href="udisks2/udisks2-Utilities.html#udisks2-Utilities.other">
-<ANCHOR id="udisks2-Utilities.object-hierarchy" href="udisks2/udisks2-Utilities.html#udisks2-Utilities.object-hierarchy">
 <ANCHOR id="udisks2-Utilities.description" href="udisks2/udisks2-Utilities.html#udisks2-Utilities.description">
 <ANCHOR id="udisks2-Utilities.functions_details" href="udisks2/udisks2-Utilities.html#udisks2-Utilities.functions_details">
 <ANCHOR id="udisks-decode-udev-string" href="udisks2/udisks2-Utilities.html#udisks-decode-udev-string">
@@ -1384,7 +1382,6 @@
 <ANCHOR id="udisks2-Logging" href="udisks2/udisks2-Logging.html">
 <ANCHOR id="udisks2-Logging.functions" href="udisks2/udisks2-Logging.html#udisks2-Logging.functions">
 <ANCHOR id="udisks2-Logging.other" href="udisks2/udisks2-Logging.html#udisks2-Logging.other">
-<ANCHOR id="udisks2-Logging.object-hierarchy" href="udisks2/udisks2-Logging.html#udisks2-Logging.object-hierarchy">
 <ANCHOR id="udisks2-Logging.description" href="udisks2/udisks2-Logging.html#udisks2-Logging.description">
 <ANCHOR id="udisks2-Logging.functions_details" href="udisks2/udisks2-Logging.html#udisks2-Logging.functions_details">
 <ANCHOR id="udisks-log" href="udisks2/udisks2-Logging.html#udisks-log">
@@ -1469,7 +1466,6 @@
 <ANCHOR id="udisks2-ATA-commands" href="udisks2/udisks2-ATA-commands.html">
 <ANCHOR id="udisks2-ATA-commands.functions" href="udisks2/udisks2-ATA-commands.html#udisks2-ATA-commands.functions">
 <ANCHOR id="udisks2-ATA-commands.other" href="udisks2/udisks2-ATA-commands.html#udisks2-ATA-commands.other">
-<ANCHOR id="udisks2-ATA-commands.object-hierarchy" href="udisks2/udisks2-ATA-commands.html#udisks2-ATA-commands.object-hierarchy">
 <ANCHOR id="udisks2-ATA-commands.description" href="udisks2/udisks2-ATA-commands.html#udisks2-ATA-commands.description">
 <ANCHOR id="udisks2-ATA-commands.functions_details" href="udisks2/udisks2-ATA-commands.html#udisks2-ATA-commands.functions_details">
 <ANCHOR id="udisks-ata-send-command-sync" href="udisks2/udisks2-ATA-commands.html#udisks-ata-send-command-sync">

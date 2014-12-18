@@ -22,6 +22,7 @@
 #include <glib/gi18n-lib.h>
 
 #include <sys/types.h>
+#include <sys/wait.h>
 #include <pwd.h>
 #include <grp.h>
 #include <string.h>
@@ -899,19 +900,16 @@ calculate_mount_point (UDisksDaemon              *daemon,
       if (!g_file_test (mount_dir, G_FILE_TEST_EXISTS))
         {
           /* First ensure that /run/media exists */
-          if (!g_file_test ("/run/media", G_FILE_TEST_EXISTS))
+          if (g_mkdir ("/run/media", 0755) != 0 && errno != EEXIST)
             {
-              if (g_mkdir ("/run/media", 0755) != 0)
-                {
-                  g_set_error (error,
-                               UDISKS_ERROR,
-                               UDISKS_ERROR_FAILED,
-                               "Error creating directory /run/media: %m");
-                  goto out;
-                }
+              g_set_error (error,
+                           UDISKS_ERROR,
+                           UDISKS_ERROR_FAILED,
+                           "Error creating directory /run/media: %m");
+              goto out;
             }
           /* Then create the per-user /run/media/$USER */
-          if (g_mkdir (mount_dir, 0700) != 0)
+          if (g_mkdir (mount_dir, 0700) != 0 && errno != EEXIST)
             {
               g_set_error (error,
                            UDISKS_ERROR,
@@ -1558,7 +1556,7 @@ handle_unmount (UDisksFilesystem       *filesystem,
   GError *error;
   uid_t mounted_by_uid;
   uid_t caller_uid;
-  gint status;
+  gint status = 0;
   gchar *error_message;
   const gchar *const *mount_points;
   gboolean opt_force;

@@ -74,7 +74,7 @@ setup_local_polkit_agent (void)
   if (local_polkit_agent != NULL)
     goto out;
 
-  subject = polkit_unix_process_new (getpid ());
+  subject = polkit_unix_process_new_for_owner (getpid (), 0, getuid ());
 
   error = NULL;
   /* this will fail if we can't find a controlling terminal */
@@ -668,7 +668,6 @@ handle_command_mount_unmount (gint        *argc,
           gboolean is_mounted;
 
           object = UDISKS_OBJECT (l->data);
-          block = udisks_object_peek_block (object);
           filesystem = udisks_object_peek_filesystem (object);
 
           if (filesystem == NULL)
@@ -890,6 +889,7 @@ read_passphrase (void)
   gchar *ret;
 
   ret = NULL;
+  str = NULL;
 
   tty_name = ctermid (NULL);
   if (tty_name == NULL)
@@ -1146,7 +1146,6 @@ handle_command_unlock_lock (gint        *argc,
           gboolean is_unlocked;
 
           object = UDISKS_OBJECT (l->data);
-          block = udisks_object_peek_block (object);
           encrypted = udisks_object_peek_encrypted (object);
 
           if (encrypted == NULL)
@@ -1178,7 +1177,6 @@ handle_command_unlock_lock (gint        *argc,
             {
               gboolean is_unlocked;
 
-              is_unlocked = FALSE;
               is_unlocked = encrypted_is_unlocked (object);
 
               if ((is_unlock && !is_unlocked) || (!is_unlock && is_unlocked))
@@ -1536,7 +1534,6 @@ handle_command_loop (gint        *argc,
               for (l = objects; l != NULL; l = l->next)
                 {
                   object = UDISKS_OBJECT (l->data);
-                  block = udisks_object_peek_block (object);
                   if (udisks_object_peek_loop (object) != NULL)
                     {
                       object_path = g_dbus_object_get_object_path (G_DBUS_OBJECT (object));
@@ -3150,6 +3147,12 @@ pick_word_at (const gchar  *s,
 {
   gint begin;
   gint end;
+  size_t len = strlen(s);
+
+  if (cursor < 0)
+    cursor = 0;
+  else if ((size_t) cursor >= len)
+    cursor = len - 1;
 
   if (s[0] == '\0')
     {
@@ -3201,7 +3204,6 @@ main (int argc,
   completion_prev = NULL;
   loop = NULL;
 
-  g_type_init ();
   _color_init ();
 
   setlocale (LC_ALL, "");
