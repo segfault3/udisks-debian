@@ -6,6 +6,8 @@ udisks2 (2.1.4-1) UNRELEASED; urgency=medium
     - Drop 00git_test_fixes.patch and libsystemd.patch, included upstream.
   * Bump Standards-Version to 3.9.6 (no changes necessary).
   * Add missing python3-dbus autopkgtest dependency.
+  * integration-test: Skip double mount check for NTFS. Patch cherry-picked
+    from upstream git.
 
  -- Martin Pitt <mpitt@debian.org>  Thu, 18 Dec 2014 13:16:26 +0100
 
