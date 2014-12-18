@@ -4,6 +4,7 @@ udisks2 (2.1.4-1) UNRELEASED; urgency=medium
     - Avoids waking up disks from standby through SMART updates.
       (LP: #1281588)
     - Drop 00git_test_fixes.patch and libsystemd.patch, included upstream.
+  * Bump Standards-Version to 3.9.6 (no changes necessary).
 
  -- Martin Pitt <mpitt@debian.org>  Thu, 18 Dec 2014 13:16:26 +0100
 
