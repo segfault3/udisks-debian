@@ -1,0 +1,35 @@
+From 1ddc25d4c980b6bf03013149808dc453c6b59552 Mon Sep 17 00:00:00 2001
+From: Martin Pitt <martin.pitt@ubuntu.com>
+Date: Tue, 30 Dec 2014 21:55:50 +0100
+Subject: [PATCH 2/2] integration-tests: Avoid udev lockup
+
+Running umount of ntfs-3g mounts in a different cpu controller cgroup than udev
+causes uninterruptible lockups: https://launchpad.net/bugs/1398859
+
+Avoid those by ensuring that we run in the root cgroup.
+---
+ src/tests/integration-test | 8 ++++++++
+ 1 file changed, 8 insertions(+)
+
+diff --git a/src/tests/integration-test b/src/tests/integration-test
+index 9ccd65a..88c2256 100755
+--- a/src/tests/integration-test
++++ b/src/tests/integration-test
+@@ -1352,6 +1352,14 @@ if __name__ == '__main__':
+                            help='name of test class or method (e. g. "Drive", "FS.test_ext2")')
+     args = argparser.parse_args()
+ 
++    # don't run commands in a different cpu cgroup than udev, otherwise we get
++    # strange hangs (https://launchpad.net/bugs/1398859)
++    try:
++        with open('/sys/fs/cgroup/cpu,cpuacct/tasks', 'w') as f:
++            f.write(str(os.getpid()))
++    except IOError:
++        pass
++
+     UDisksTestCase.init(logfile=args.logfile)
+     if args.testname:
+         tests = unittest.TestLoader().loadTestsFromNames(
+-- 
+2.1.3
+

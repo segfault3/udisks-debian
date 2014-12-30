@@ -1,5 +1,6 @@
 # cherry-picked from upstream
 integration-test-Skip-double-mount-check-for-NTFS.patch
+integration-tests-Avoid-udev-lockup.patch
 
 # Debian patches for udisks
 mount_in_media.patch
