@@ -2,6 +2,8 @@ udisks2 (2.1.4-2) UNRELEASED; urgency=medium
 
   * debian/tests/upstream-system: Work around eternal udev BLKRRPART ioctl
     hang with ntfs-3g (LP: #1398859)
+  * udisks2-inhibit: Don't use mount --move, as it doesn't work under shared
+    mounts (i. e. under systemd). (LP: #1410851)
 
  -- Martin Pitt <mpitt@debian.org>  Fri, 02 Jan 2015 17:02:45 +0100
 

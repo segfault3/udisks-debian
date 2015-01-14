@@ -36,7 +36,8 @@ mkdir -p /run/udisks2/inhibit-polkit
 mount -t tmpfs tmpfs /run/udisks2/inhibit-polkit
 find "$DIR" -mindepth 1 -exec cp -a '{}' /run/udisks2/inhibit-polkit \;
 echo "$RULE" > /run/udisks2/inhibit-polkit/udisks2-inhibit.pkla
-mount --move /run/udisks2/inhibit-polkit "$DIR"
+mount --bind /run/udisks2/inhibit-polkit "$DIR"
+umount /run/udisks2/inhibit-polkit
 trap "umount $DIR; pkill --signal HUP polkitd" 0 HUP INT QUIT ILL ABRT FPE KILL SEGV PIPE ALRM TERM BUS
 rmdir /run/udisks2/inhibit-polkit
 pkill --signal HUP polkitd || :
