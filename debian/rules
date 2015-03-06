@@ -6,6 +6,7 @@
 override_dh_auto_configure:
 	dh_auto_configure -- \
 		--enable-gtk-doc \
+		--enable-fhs-media \
 		--with-systemdsystemunitdir=/lib/systemd/system
 
 override_dh_auto_build:
