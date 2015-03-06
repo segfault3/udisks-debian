@@ -3,7 +3,7 @@ set -e
 
 # work around eternal udev BLKRRPART ioctl hang with ntfs-3g
 # (https://launchpad.net/bugs/1398859)
-if [ -d /sys/fs/cgroup/cpu,cpuacct/tasks ]; then
+if [ -f /sys/fs/cgroup/cpu,cpuacct/tasks ]; then
     echo $$ > /sys/fs/cgroup/cpu,cpuacct/tasks
 elif [ -e /sys/fs/cgroup/cgmanager/sock ]; then
     gdbus call -a unix:path=/sys/fs/cgroup/cgmanager/sock -o /org/linuxcontainers/cgmanager -m org.linuxcontainers.cgmanager0_0.MovePidAbs 'cpu,cpuacct' '/' $$
