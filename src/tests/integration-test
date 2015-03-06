@@ -98,7 +98,7 @@ class UDisksTestCase(unittest.TestCase):
             sys.exit(0)
 
         # run from local build tree if we are in one, otherwise use system instance
-        klass.daemon_path = os.path.join(srcdir, 'src', 'udisksd')
+        klass.daemon_path = os.path.join(srcdir, 'src', '.libs', 'udisksd')
         if (os.access(klass.daemon_path, os.X_OK)):
             print('Testing binaries from local build tree')
             klass.check_build_tree_config()
@@ -477,7 +477,10 @@ class UDisksTestCase(unittest.TestCase):
             time.sleep(0.1)
             self.sync()
 
-        self.assertEqual(fn(), value)
+        if isinstance(value, set):
+            self.assertEqual(set(fn()), value)
+        else:
+            self.assertEqual(fn(), value)
 
     def assertProperty(self, obj, name, value):
         '''Check that an object's property is eventually equal to value'''
@@ -884,12 +887,16 @@ class FS(UDisksTestCase):
             return
         self.assertEqual(ret, 0)
 
-        subprocess.check_call([mount_prog, self.device, mount_b])
+        self.assertProperty(fs, 'mount-points', [mount_a])
 
-        self.assertProperty(fs, 'mount-points', [mount_a, mount_b])
+        if type != 'ntfs':
+            # ntfs-3g does not support multiple mounts
+            subprocess.check_call([mount_prog, self.device, mount_b])
+            self.assertProperty(fs, 'mount-points', set([mount_a, mount_b]))
+            subprocess.call(['umount', mount_b])
 
         # unmount it
-        subprocess.call(['umount', mount_a, mount_b])
+        subprocess.call(['umount', mount_a])
         self.assertProperty(fs, 'mount-points', [])
 
     def _do_udisks_check(self, type, label=None):
@@ -1064,6 +1071,111 @@ class FS(UDisksTestCase):
         self.assertTrue(os.access(f, os.R_OK))
         self.assertTrue(os.access(f, os.W_OK))
         self.assertTrue(os.access(f, os.X_OK))
+
+
+# ----------------------------------------------------------------------------
+
+class Fstab(UDisksTestCase):
+    '''Test /etc/fstab custom options'''
+
+    @classmethod
+    def setUpClass(kls):
+        kls.orig_fstab = '/etc/fstab.udiskstest'
+        shutil.copy2('/etc/fstab', kls.orig_fstab)
+
+        # create one partition
+        subprocess.check_call(
+            ['parted', '-s', kls.device, 'mklabel', 'gpt'],
+            stdout=subprocess.PIPE)
+        subprocess.check_call(
+            ['parted', '-s', kls.device, 'mkpart', 'primary', '0', '64'],
+            stdout=subprocess.PIPE)
+        kls.p1label = 'udtestp1'
+        subprocess.check_call(
+            ['parted', '-s', kls.device, 'name', '1', kls.p1label],
+            stdout=subprocess.PIPE)
+        kls.sync()
+        blkid = subprocess.check_output(
+            ['blkid', '-oudev', '-p', kls.devname(1)], universal_newlines=True).splitlines()
+        for line in blkid:
+            if line.startswith('ID_PART_ENTRY_UUID='):
+                kls.p1uuid = line.split('=', 1)[1]
+                break
+        else:
+            raise SystemError('blkid does not contain partition UUID')
+
+        kls.mkfs('ext2', partition=1, label='udtestfst')
+        kls.mountpoint = tempfile.mkdtemp()
+        kls.block = kls.udisks_block(partition=1)
+        kls.fs = kls.udisks_filesystem(partition=1)
+
+    @classmethod
+    def tearDownClass(kls):
+        os.rmdir(kls.mountpoint)
+        os.unlink(kls.orig_fstab)
+
+    def tearDown(self):
+        shutil.copy2(self.orig_fstab, '/etc/fstab')
+        self.retry_busy(self.fs.call_unmount_sync, no_options, None)
+
+    def test_devname(self):
+        '''by device name'''
+
+        with open('/etc/fstab', 'a') as f:
+            f.write('%s %s ext4 defaults,nosuid,noexec 0 0\n' %
+                    (self.devname(partition=1), self.mountpoint))
+        os.sync()
+        self.do_test()
+
+    def test_label(self):
+        '''by label'''
+
+        with open('/etc/fstab', 'a') as f:
+            f.write('LABEL=udtestfst %s ext4 defaults,nosuid,noexec 0 0\n' %
+                    self.mountpoint)
+        os.sync()
+        self.do_test()
+
+    def test_uuid(self):
+        '''by UUID'''
+
+        with open('/etc/fstab', 'a') as f:
+            f.write('UUID=%s %s ext4 defaults,nosuid,noexec 0 0\n' %
+                    (self.block.get_property('id-uuid'), self.mountpoint))
+        os.sync()
+        self.do_test()
+
+    def test_partuuid(self):
+        '''by PARTUUID'''
+
+        with open('/etc/fstab', 'a') as f:
+            f.write('PARTUUID=%s %s ext4 defaults,nosuid,noexec 0 0\n' %
+                    (self.p1uuid, self.mountpoint))
+        os.sync()
+        self.do_test()
+
+    def test_partlabel(self):
+        '''by PARTLABEL'''
+
+        with open('/etc/fstab', 'a') as f:
+            f.write('PARTLABEL=%s %s ext4 defaults,nosuid,noexec 0 0\n' %
+                    (self.p1label, self.mountpoint))
+        os.sync()
+        self.do_test()
+
+    def do_test(self):
+        self.assertEqual(self.fs.get_property('mount-points'), [])
+        mount_path = self.fs.call_mount_sync(no_options, None)
+        self.assertEqual(mount_path, self.mountpoint)
+        with open('/proc/self/mounts') as f:
+            for line in f:
+                if line.startswith(self.devname()):
+                    options = line.split()[3].split(',')
+                    break
+            else:
+                self.fail('%s not mounted' % self.devname())
+        self.assertIn('noexec', options)
+        self.assertIn('nosuid', options)
 
 
 # ----------------------------------------------------------------------------

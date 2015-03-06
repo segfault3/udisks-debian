@@ -679,17 +679,17 @@ udisks_state_check_mounted_fs_entry (UDisksState  *state,
     {
       if (!device_exists)
         {
-          udisks_notice ("Cleaning up mount point %s (device %d:%d no longer exist)",
+          udisks_notice ("Cleaning up mount point %s (device %u:%u no longer exist)",
                          mount_point, major (block_device), minor (block_device));
         }
       else if (device_to_be_cleaned)
         {
-          udisks_notice ("Cleaning up mount point %s (device %d:%d is about to be cleaned up)",
+          udisks_notice ("Cleaning up mount point %s (device %u:%u is about to be cleaned up)",
                          mount_point, major (block_device), minor (block_device));
         }
       else if (!is_mounted)
         {
-          udisks_notice ("Cleaning up mount point %s (device %d:%d is not mounted)",
+          udisks_notice ("Cleaning up mount point %s (device %u:%u is not mounted)",
                          mount_point, major (block_device), minor (block_device));
         }
 
@@ -1182,7 +1182,7 @@ udisks_state_check_unlocked_luks_entry (UDisksState  *state,
           gchar *escaped_device_file;
           gchar *error_message;
 
-          udisks_notice ("Cleaning up LUKS device %s (backing device %d:%d no longer exist)",
+          udisks_notice ("Cleaning up LUKS device %s (backing device %u:%u no longer exist)",
                          device_file_cleartext,
                          major (crypto_device), minor (crypto_device));
 
@@ -1213,7 +1213,7 @@ udisks_state_check_unlocked_luks_entry (UDisksState  *state,
         }
       else
         {
-          udisks_notice ("LUKS device %d:%d was manually removed",
+          udisks_notice ("LUKS device %u:%u was manually removed",
                          major (cleartext_device), minor (cleartext_device));
         }
     }
@@ -1911,13 +1911,13 @@ udisks_state_check_mdraid_entry (UDisksState  *state,
   device = g_udev_client_query_by_device_number (udev_client, G_UDEV_DEVICE_TYPE_BLOCK, raid_device);
   if (device == NULL)
     {
-      udisks_info ("no udev device for raid device %d:%d", major (raid_device), minor (raid_device));
+      udisks_info ("no udev device for raid device %u:%u", major (raid_device), minor (raid_device));
       goto out;
     }
   array_state = g_udev_device_get_sysfs_attr (device, "md/array_state");
   if (array_state == NULL)
     {
-      udisks_info ("raid device %d:%d is not setup  (no md/array_state sysfs file)",
+      udisks_info ("raid device %u:%u is not setup  (no md/array_state sysfs file)",
                    major (raid_device), minor (raid_device));
       goto out;
     }
@@ -1945,7 +1945,7 @@ udisks_state_check_mdraid_entry (UDisksState  *state,
 
   if (!keep)
     {
-      udisks_notice ("No longer watching mdraid device %d:%d", major (raid_device), minor (raid_device));
+      udisks_notice ("No longer watching mdraid device %u:%u", major (raid_device), minor (raid_device));
     }
 
  out2:
@@ -2082,7 +2082,7 @@ udisks_state_add_mdraid (UDisksState   *state,
           /* Skip/remove stale entries */
           if (entry_raid_device == raid_device)
             {
-              udisks_warning ("Removing stale entry for raid device %d:%d in /run/udisks2/mdraid file",
+              udisks_warning ("Removing stale entry for raid device %u:%u in /run/udisks2/mdraid file",
                               major (raid_device), minor (raid_device));
             }
           else
@@ -2235,7 +2235,14 @@ udisks_state_get (UDisksState           *state,
    * - could also mmap the file
    */
 
-  path = g_strdup_printf ("/run/udisks2/%s", key);
+#ifdef HAVE_FHS_MEDIA
+  /* /media usually isn't on a tmpfs, so we need to make this persistant */
+  if (strcmp (key, "mounted-fs") == 0)
+    path = g_strdup_printf (PACKAGE_LOCALSTATE_DIR "/lib/udisks2/%s", key);
+  else
+#endif
+    path = g_strdup_printf ("/run/udisks2/%s", key);
+
 
   /* see if it's already in the cache */
   ret = g_hash_table_lookup (state->cache, path);
@@ -2301,7 +2308,13 @@ udisks_state_set (UDisksState          *state,
   data = g_malloc (size);
   g_variant_store (normalized, data);
 
-  path = g_strdup_printf ("/run/udisks2/%s", key);
+#ifdef HAVE_FHS_MEDIA
+  /* /media usually isn't on a tmpfs, so we need to make this persistant */
+  if (strcmp (key, "mounted-fs") == 0)
+    path = g_strdup_printf (PACKAGE_LOCALSTATE_DIR "/lib/udisks2/%s", key);
+  else
+#endif
+    path = g_strdup_printf ("/run/udisks2/%s", key);
 
   g_hash_table_insert (state->cache, g_strdup (path), g_variant_ref (value));
 

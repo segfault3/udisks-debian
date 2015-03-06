@@ -1,7 +1,7 @@
 
 m4_define([udisks_major_version], [2])
 m4_define([udisks_minor_version], [1])
-m4_define([udisks_micro_version], [4])
+m4_define([udisks_micro_version], [5])
 
 m4_define([udisks_version], [udisks_major_version.udisks_minor_version.udisks_micro_version])
 
@@ -95,7 +95,7 @@ if test -z "$XSLTPROC"; then
   AC_MSG_ERROR([xsltproc is needed])
 fi
 
-GTK_DOC_CHECK([1.3])
+GTK_DOC_CHECK([1.3],[--flavour no-tmpl])
 
 AC_ARG_ENABLE(man,
               [AS_HELP_STRING([--enable-man],
@@ -114,6 +114,18 @@ AS_IF([test "$enable_man" != no], [
 AM_CONDITIONAL(ENABLE_MAN, test "$enable_man" != no)
 
 GOBJECT_INTROSPECTION_CHECK([0.6.2])
+
+# Behavior
+#
+
+AC_ARG_ENABLE(fhs-media,
+              [AS_HELP_STRING([--enable-fhs-media],
+                              [Mount devices in /media instead of /run/media [default=no]])],
+              fhs_media=yes,
+              fhs_media=no)
+if test "x$fhs_media" = "xyes"; then
+  AC_DEFINE([HAVE_FHS_MEDIA], 1, [Define to 1 to use /media for mounting])
+fi
 
 # Libraries
 #
@@ -229,6 +241,7 @@ echo "
         udevdir:                    ${udevdir}
         systemdsystemunitdir:       ${systemdsystemunitdir}
         using libsystemd-login:     ${have_libsystemd_login}
+        use /media for mounting:    ${fhs_media}
 
         compiler:                   ${CC}
         cflags:                     ${CFLAGS}

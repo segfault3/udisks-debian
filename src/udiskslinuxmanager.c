@@ -642,7 +642,7 @@ handle_mdraid_create (UDisksManager         *_object,
           g_dbus_method_invocation_return_error (invocation,
                                                  UDISKS_ERROR,
                                                  UDISKS_ERROR_FAILED,
-                                                 "Invalid object path %s at index %d",
+                                                 "Invalid object path %s at index %u",
                                                  arg_blocks[n], n);
           goto out;
         }
@@ -653,7 +653,7 @@ handle_mdraid_create (UDisksManager         *_object,
           g_dbus_method_invocation_return_error (invocation,
                                                  UDISKS_ERROR,
                                                  UDISKS_ERROR_FAILED,
-                                                 "Object path %s for index %d is not a block device",
+                                                 "Object path %s for index %u is not a block device",
                                                  arg_blocks[n], n);
           goto out;
         }
@@ -736,7 +736,7 @@ handle_mdraid_create (UDisksManager         *_object,
   g_string_append_printf (str, " --level %s", arg_level);
   if (strlen (arg_name) > 0)
     g_string_append_printf (str, " --name \"%s\"", escaped_name);
-  g_string_append_printf (str, " --raid-devices %d", num_devices);
+  g_string_append_printf (str, " --raid-devices %u", num_devices);
   for (l = blocks; l != NULL; l = l->next)
     {
       UDisksBlock *block = UDISKS_BLOCK (l->data);
