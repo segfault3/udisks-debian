@@ -1,4 +1,4 @@
-udisks2 (2.1.5-1) UNRELEASED; urgency=medium
+udisks2 (2.1.5-1) experimental; urgency=medium
 
   [ Martin Pitt ]
   * New upstream release:
@@ -15,7 +15,7 @@ udisks2 (2.1.5-1) UNRELEASED; urgency=medium
   [ Michael Biebl ]
   * Update Vcs-Browser URL to use cgit and https.
 
- -- Martin Pitt <mpitt@debian.org>  Fri, 02 Jan 2015 17:02:45 +0100
+ -- Martin Pitt <mpitt@debian.org>  Fri, 06 Mar 2015 09:29:30 +0100
 
 udisks2 (2.1.4-1) experimental; urgency=medium
 
