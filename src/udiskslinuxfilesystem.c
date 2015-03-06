@@ -79,6 +79,12 @@ static void filesystem_iface_init (UDisksFilesystemIface *iface);
 G_DEFINE_TYPE_WITH_CODE (UDisksLinuxFilesystem, udisks_linux_filesystem, UDISKS_TYPE_FILESYSTEM_SKELETON,
                          G_IMPLEMENT_INTERFACE (UDISKS_TYPE_FILESYSTEM, filesystem_iface_init));
 
+#ifdef HAVE_FHS_MEDIA
+#  define MOUNT_BASE "/media"
+#else
+#  define MOUNT_BASE "/run/media"
+#endif
+
 /* ---------------------------------------------------------------------------------------------------- */
 
 static void
@@ -276,7 +282,7 @@ typedef struct
 
 /* ---------------------- vfat -------------------- */
 
-static const gchar *vfat_defaults[] = { "uid=", "gid=", "shortname=mixed", "dmask=0077", "utf8=1", "showexec", "flush", NULL };
+static const gchar *vfat_defaults[] = { "uid=", "gid=", "shortname=mixed", "utf8=1", "showexec", "flush", NULL };
 static const gchar *vfat_allow[] = { "flush", "utf8=", "shortname=", "umask=", "dmask=", "fmask=", "codepage=", "iocharset=", "usefree", "showexec", NULL };
 static const gchar *vfat_allow_uid_self[] = { "uid=", NULL };
 static const gchar *vfat_allow_gid_self[] = { "gid=", NULL };
@@ -284,7 +290,7 @@ static const gchar *vfat_allow_gid_self[] = { "gid=", NULL };
 /* ---------------------- ntfs -------------------- */
 /* this is assuming that ntfs-3g is used */
 
-static const gchar *ntfs_defaults[] = { "uid=", "gid=", "dmask=0077", "fmask=0177", NULL };
+static const gchar *ntfs_defaults[] = { "uid=", "gid=", NULL };
 static const gchar *ntfs_allow[] = { "umask=", "dmask=", "fmask=", "locale=", "norecover", "ignore_case", "windows_names", "compression", "nocompression", NULL };
 static const gchar *ntfs_allow_uid_self[] = { "uid=", NULL };
 static const gchar *ntfs_allow_gid_self[] = { "gid=", NULL };
@@ -360,7 +366,7 @@ find_primary_gid (uid_t uid)
   rc = getpwuid_r (uid, &pwstruct, pwbuf, sizeof pwbuf, &pw);
   if (rc != 0 || pw == NULL)
     {
-      udisks_warning ("Error looking up uid %d: %m", uid);
+      udisks_warning ("Error looking up uid %u: %m", uid);
       goto out;
     }
   gid = pw->pw_gid;
@@ -389,7 +395,7 @@ is_uid_in_gid (uid_t uid,
   rc = getpwuid_r (uid, &pwstruct, pwbuf, sizeof pwbuf, &pw);
   if (rc != 0 || pw == NULL)
     {
-      udisks_warning ("Error looking up uid %d: %m", uid);
+      udisks_warning ("Error looking up uid %u: %m", uid);
       goto out;
     }
   if (pw->pw_gid == gid)
@@ -400,7 +406,7 @@ is_uid_in_gid (uid_t uid,
 
   if (getgrouplist (pw->pw_name, pw->pw_gid, supplementary_groups, &num_supplementary_groups) < 0)
     {
-      udisks_warning ("Error getting supplementary groups for uid %d: %m", uid);
+      udisks_warning ("Error getting supplementary groups for uid %u: %m", uid);
       goto out;
     }
 
@@ -548,7 +554,7 @@ prepend_default_mount_options (const FSMountOptions *fsmo,
 
           if (strcmp (option, "uid=") == 0)
             {
-              s = g_strdup_printf ("uid=%d", caller_uid);
+              s = g_strdup_printf ("uid=%u", caller_uid);
               g_ptr_array_add (options, s);
             }
           else if (strcmp (option, "gid=") == 0)
@@ -556,7 +562,7 @@ prepend_default_mount_options (const FSMountOptions *fsmo,
               gid = find_primary_gid (caller_uid);
               if (gid != (gid_t) - 1)
                 {
-                  s = g_strdup_printf ("gid=%d", gid);
+                  s = g_strdup_printf ("gid=%u", gid);
                   g_ptr_array_add (options, s);
                 }
             }
@@ -817,17 +823,14 @@ add_acl (const gchar  *path,
       acl_calc_mask (&acl) == -1 ||
       acl_set_file (path, ACL_TYPE_ACCESS, acl) == -1)
     {
-      g_set_error (error,
-                   G_IO_ERROR,
-                   g_io_error_from_errno (errno),
+      udisks_warning(
                    "Adding read ACL for uid %d to `%s' failed: %m",
                    (gint) uid, path);
-      goto out;
+      chown(path, uid, -1);
     }
 
   ret = TRUE;
 
- out:
   if (acl != NULL)
     acl_free (acl);
   return ret;
@@ -892,23 +895,23 @@ calculate_mount_point (UDisksDaemon              *daemon,
     }
 
   /* If we know the user-name and it doesn't have any '/' character in
-   * it, mount in /run/media/$USER
+   * it, mount in MOUNT_BASE/$USER
    */
   if (!fs_shared && (user_name != NULL && strstr (user_name, "/") == NULL))
     {
-      mount_dir = g_strdup_printf ("/run/media/%s", user_name);
+      mount_dir = g_strdup_printf (MOUNT_BASE "/%s", user_name);
       if (!g_file_test (mount_dir, G_FILE_TEST_EXISTS))
         {
-          /* First ensure that /run/media exists */
-          if (g_mkdir ("/run/media", 0755) != 0 && errno != EEXIST)
+          /* First ensure that MOUNT_BASE exists */
+          if (g_mkdir (MOUNT_BASE, 0755) != 0 && errno != EEXIST)
             {
               g_set_error (error,
                            UDISKS_ERROR,
                            UDISKS_ERROR_FAILED,
-                           "Error creating directory /run/media: %m");
+                           "Error creating directory " MOUNT_BASE ": %m");
               goto out;
             }
-          /* Then create the per-user /run/media/$USER */
+          /* Then create the per-user MOUNT_BASE/$USER */
           if (g_mkdir (mount_dir, 0700) != 0 && errno != EEXIST)
             {
               g_set_error (error,
@@ -985,7 +988,7 @@ calculate_mount_point (UDisksDaemon              *daemon,
       else
         {
           g_free (mount_point);
-          mount_point = g_strdup_printf ("%s%d", orig_mount_point, n++);
+          mount_point = g_strdup_printf ("%s%u", orig_mount_point, n++);
         }
     }
   g_free (orig_mount_point);
@@ -1055,6 +1058,14 @@ is_in_fstab (UDisksBlock        *block,
       else if (g_str_has_prefix (m->mnt_fsname, "LABEL="))
         {
           device = g_strdup_printf ("/dev/disk/by-label/%s", m->mnt_fsname + 6);
+        }
+      else if (g_str_has_prefix (m->mnt_fsname, "PARTUUID="))
+        {
+          device = g_strdup_printf ("/dev/disk/by-partuuid/%s", m->mnt_fsname + 9);
+        }
+      else if (g_str_has_prefix (m->mnt_fsname, "PARTLABEL="))
+        {
+          device = g_strdup_printf ("/dev/disk/by-partlabel/%s", m->mnt_fsname + 10);
         }
       else if (g_str_has_prefix (m->mnt_fsname, "/dev"))
         {
@@ -1334,7 +1345,7 @@ handle_mount (UDisksFilesystem       *filesystem,
                                                  error_message);
           goto out;
         }
-      udisks_notice ("Mounted %s (system) at %s on behalf of uid %d",
+      udisks_notice ("Mounted %s (system) at %s on behalf of uid %u",
                      udisks_block_get_device (block),
                      mount_point_to_use,
                      caller_uid);
@@ -1501,7 +1512,7 @@ handle_mount (UDisksFilesystem       *filesystem,
                                caller_uid,
                                FALSE); /* fstab_mounted */
 
-  udisks_notice ("Mounted %s at %s on behalf of uid %d",
+  udisks_notice ("Mounted %s at %s on behalf of uid %u",
                  udisks_block_get_device (block),
                  mount_point_to_use,
                  caller_uid);
@@ -1681,7 +1692,7 @@ handle_unmount (UDisksFilesystem       *filesystem,
                                                  error_message);
           goto out;
         }
-      udisks_notice ("Unmounted %s (system) from %s on behalf of uid %d",
+      udisks_notice ("Unmounted %s (system) from %s on behalf of uid %u",
                      udisks_block_get_device (block),
                      mount_point,
                      caller_uid);
@@ -1773,7 +1784,7 @@ handle_unmount (UDisksFilesystem       *filesystem,
 
   /* OK, filesystem unmounted.. the state/cleanup routines will remove the mountpoint for us */
 
-  udisks_notice ("Unmounted %s on behalf of uid %d",
+  udisks_notice ("Unmounted %s on behalf of uid %u",
                  udisks_block_get_device (block),
                  caller_uid);
 

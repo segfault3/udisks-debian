@@ -75,8 +75,8 @@
 </div>
 <div class="refsect1">
 <a name="UDisksLinuxPartitionTable.object-hierarchy"></a><h2>Object Hierarchy</h2>
-<pre class="screen">    <a href="https://developer.gnome.org/gobject/unstable/gobject-The-Base-Object-Type.html#GObject">GObject</a>
-    <span class="lineart">╰──</span> <a href="https://developer.gnome.org/gio/unstable/GDBusInterfaceSkeleton.html">GDBusInterfaceSkeleton</a>
+<pre class="screen">    GObject
+    <span class="lineart">╰──</span> GDBusInterfaceSkeleton
         <span class="lineart">╰──</span> <a class="link" href="UDisksPartitionTable.html#UDisksPartitionTableSkeleton">UDisksPartitionTableSkeleton</a>
             <span class="lineart">╰──</span> UDisksLinuxPartitionTable
 </pre>
@@ -85,7 +85,7 @@
 <a name="UDisksLinuxPartitionTable.implemented-interfaces"></a><h2>Implemented Interfaces</h2>
 <p>
 UDisksLinuxPartitionTable implements
- <a href="https://developer.gnome.org/gio/unstable/GDBusInterface.html">GDBusInterface</a> and  <a class="link" href="UDisksPartitionTable.html" title="UDisksPartitionTable">UDisksPartitionTable</a>.</p>
+ GDBusInterface and  <a class="link" href="UDisksPartitionTable.html" title="UDisksPartitionTable">UDisksPartitionTable</a>.</p>
 </div>
 <div class="refsect1">
 <a name="UDisksLinuxPartitionTable.description"></a><h2>Description</h2>
@@ -101,7 +101,7 @@ udisks_linux_partition_table_new (<em class="parameter"><code><span class="type"
 <p>Creates a new <a class="link" href="UDisksLinuxPartitionTable.html" title="UDisksLinuxPartitionTable"><span class="type">UDisksLinuxPartitionTable</span></a> instance.</p>
 <div class="refsect3">
 <a name="id-1.5.8.4.8.2.5"></a><h4>Returns</h4>
-<p> A new <a class="link" href="UDisksLinuxPartitionTable.html" title="UDisksLinuxPartitionTable"><span class="type">UDisksLinuxPartitionTable</span></a>. Free with <a href="https://developer.gnome.org/gobject/unstable/gobject-The-Base-Object-Type.html#g-object-unref"><code class="function">g_object_unref()</code></a>.</p>
+<p> A new <a class="link" href="UDisksLinuxPartitionTable.html" title="UDisksLinuxPartitionTable"><span class="type">UDisksLinuxPartitionTable</span></a>. Free with <code class="function">g_object_unref()</code>.</p>
 <p></p>
 </div>
 </div>

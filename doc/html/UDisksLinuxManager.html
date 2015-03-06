@@ -92,8 +92,8 @@
 </div>
 <div class="refsect1">
 <a name="UDisksLinuxManager.object-hierarchy"></a><h2>Object Hierarchy</h2>
-<pre class="screen">    <a href="https://developer.gnome.org/gobject/unstable/gobject-The-Base-Object-Type.html#GObject">GObject</a>
-    <span class="lineart">╰──</span> <a href="https://developer.gnome.org/gio/unstable/GDBusInterfaceSkeleton.html">GDBusInterfaceSkeleton</a>
+<pre class="screen">    GObject
+    <span class="lineart">╰──</span> GDBusInterfaceSkeleton
         <span class="lineart">╰──</span> <a class="link" href="UDisksManager.html#UDisksManagerSkeleton">UDisksManagerSkeleton</a>
             <span class="lineart">╰──</span> UDisksLinuxManager
 </pre>
@@ -102,7 +102,7 @@
 <a name="UDisksLinuxManager.implemented-interfaces"></a><h2>Implemented Interfaces</h2>
 <p>
 UDisksLinuxManager implements
- <a href="https://developer.gnome.org/gio/unstable/GDBusInterface.html">GDBusInterface</a> and  <a class="link" href="UDisksManager.html" title="UDisksManager">UDisksManager</a>.</p>
+ GDBusInterface and  <a class="link" href="UDisksManager.html" title="UDisksManager">UDisksManager</a>.</p>
 </div>
 <div class="refsect1">
 <a name="UDisksLinuxManager.description"></a><h2>Description</h2>
@@ -133,7 +133,7 @@ udisks_linux_manager_new (<em class="parameter"><code><a class="link" href="UDis
 </div>
 <div class="refsect3">
 <a name="id-1.5.5.2.9.2.6"></a><h4>Returns</h4>
-<p> A new <a class="link" href="UDisksLinuxManager.html" title="UDisksLinuxManager"><span class="type">UDisksLinuxManager</span></a>. Free with <a href="https://developer.gnome.org/gobject/unstable/gobject-The-Base-Object-Type.html#g-object-unref"><code class="function">g_object_unref()</code></a>.</p>
+<p> A new <a class="link" href="UDisksLinuxManager.html" title="UDisksLinuxManager"><span class="type">UDisksLinuxManager</span></a>. Free with <code class="function">g_object_unref()</code>.</p>
 <p></p>
 </div>
 </div>

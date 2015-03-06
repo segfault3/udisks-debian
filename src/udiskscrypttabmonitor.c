@@ -396,7 +396,7 @@ udisks_crypttab_monitor_ensure (UDisksCrypttabMonitor *monitor)
       num_tokens = g_strv_length (tokens);
       if (num_tokens < 2)
         {
-          udisks_warning ("Line %d of /etc/crypttab only contains %d tokens", n, num_tokens);
+          udisks_warning ("Line %u of /etc/crypttab only contains %u tokens", n, num_tokens);
           goto continue_loop;
         }
 

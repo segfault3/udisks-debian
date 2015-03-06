@@ -133,22 +133,26 @@ udisks_client_finalize (GObject *object)
   if (client->initialization_error != NULL)
     g_error_free (client->initialization_error);
 
-  g_signal_handlers_disconnect_by_func (client->object_manager,
-                                        G_CALLBACK (on_object_added),
-                                        client);
-  g_signal_handlers_disconnect_by_func (client->object_manager,
-                                        G_CALLBACK (on_object_removed),
-                                        client);
-  g_signal_handlers_disconnect_by_func (client->object_manager,
-                                        G_CALLBACK (on_interface_added),
-                                        client);
-  g_signal_handlers_disconnect_by_func (client->object_manager,
-                                        G_CALLBACK (on_interface_removed),
-                                        client);
-  g_signal_handlers_disconnect_by_func (client->object_manager,
-                                        G_CALLBACK (on_interface_proxy_properties_changed),
-                                        client);
-  g_object_unref (client->object_manager);
+  /* might be NULL if failing early in the constructor */
+  if (client->object_manager != NULL)
+    {
+      g_signal_handlers_disconnect_by_func (client->object_manager,
+                                            G_CALLBACK (on_object_added),
+                                            client);
+      g_signal_handlers_disconnect_by_func (client->object_manager,
+                                            G_CALLBACK (on_object_removed),
+                                            client);
+      g_signal_handlers_disconnect_by_func (client->object_manager,
+                                            G_CALLBACK (on_interface_added),
+                                            client);
+      g_signal_handlers_disconnect_by_func (client->object_manager,
+                                            G_CALLBACK (on_interface_removed),
+                                            client);
+      g_signal_handlers_disconnect_by_func (client->object_manager,
+                                            G_CALLBACK (on_interface_proxy_properties_changed),
+                                            client);
+      g_object_unref (client->object_manager);
+    }
 
   if (client->context != NULL)
     g_main_context_unref (client->context);
@@ -1606,27 +1610,31 @@ get_pow2_size (guint64 size)
   gchar *str;
   gdouble displayed_size;
   const gchar *unit;
-  guint digits;
+  gint digits;
 
   if (size < MEBIBYTE_FACTOR)
     {
       displayed_size = (double) size / KIBIBYTE_FACTOR;
-      unit = "KiB";
+      /* Translators: SI prefix and standard unit symbol, translate cautiously (or not at all) */
+      unit = C_("byte-size-pow2", "KiB");
     }
   else if (size < GIBIBYTE_FACTOR)
     {
       displayed_size = (double) size / MEBIBYTE_FACTOR;
-      unit = "MiB";
+      /* Translators: SI prefix and standard unit symbol, translate cautiously (or not at all) */
+      unit = C_("byte-size-pow2", "MiB");
     }
   else if (size < TEBIBYTE_FACTOR)
     {
       displayed_size = (double) size / GIBIBYTE_FACTOR;
-      unit = "GiB";
+      /* Translators: SI prefix and standard unit symbol, translate cautiously (or not at all) */
+      unit = C_("byte-size-pow2", "GiB");
     }
   else
     {
       displayed_size = (double) size / TEBIBYTE_FACTOR;
-      unit = "TiB";
+      /* Translators: SI prefix and standard unit symbol, translate cautiously (or not at all) */
+      unit = C_("byte-size-pow2", "TiB");
     }
 
   if (displayed_size < 10.0)
@@ -1645,27 +1653,31 @@ get_pow10_size (guint64 size)
   gchar *str;
   gdouble displayed_size;
   const gchar *unit;
-  guint digits;
+  gint digits;
 
   if (size < MEGABYTE_FACTOR)
     {
       displayed_size = (double) size / KILOBYTE_FACTOR;
-      unit = "KB";
+      /* Translators: SI prefix and standard unit symbol, translate cautiously (or not at all) */
+      unit = C_("byte-size-pow10", "KB");
     }
   else if (size < GIGABYTE_FACTOR)
     {
       displayed_size = (double) size / MEGABYTE_FACTOR;
-      unit = "MB";
+      /* Translators: SI prefix and standard unit symbol, translate cautiously (or not at all) */
+      unit = C_("byte-size-pow10", "MB");
     }
   else if (size < TERABYTE_FACTOR)
     {
       displayed_size = (double) size / GIGABYTE_FACTOR;
-      unit = "GB";
+      /* Translators: SI prefix and standard unit symbol, translate cautiously (or not at all) */
+      unit = C_("byte-size-pow10", "GB");
     }
   else
     {
       displayed_size = (double) size / TERABYTE_FACTOR;
-      unit = "TB";
+      /* Translators: SI prefix and standard unit symbol, translate cautiously (or not at all) */
+      unit = C_("byte-size-pow10", "TB");
     }
 
   if (displayed_size < 10.0)
@@ -1700,7 +1712,7 @@ udisks_client_get_size_for_display (UDisksClient  *client,
   if (long_string)
     {
       gchar *size_str;
-      size_str = g_strdup_printf ("%'" G_GINT64_FORMAT, size);
+      size_str = g_strdup_printf ("%'" G_GUINT64_FORMAT, size);
       if (use_pow2)
         {
           gchar *pow2_str;

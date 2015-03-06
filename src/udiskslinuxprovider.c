@@ -454,7 +454,7 @@ udisks_linux_provider_start (UDisksProvider *_provider)
   /* do two coldplug runs to handle dependencies between devices */
   for (n = 0; n < 2; n++)
     {
-      udisks_info ("Initialization (coldplug %d/2)", n + 1);
+      udisks_info ("Initialization (coldplug %u/2)", n + 1);
       for (l = udisks_devices; l != NULL; l = l->next)
         {
           UDisksLinuxDevice *device = l->data;
@@ -966,7 +966,7 @@ housekeeping_thread_func (GIOSchedulerJob *job,
     secs_since_last = now - provider->housekeeping_last;
   provider->housekeeping_last = now;
 
-  udisks_info ("Housekeeping initiated (%d seconds since last housekeeping)", secs_since_last);
+  udisks_info ("Housekeeping initiated (%u seconds since last housekeeping)", secs_since_last);
 
   housekeeping_all_drives (provider, secs_since_last);
 
