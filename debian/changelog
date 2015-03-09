@@ -1,3 +1,15 @@
+udisks2 (2.1.5-2) UNRELEASED; urgency=medium
+
+  * Treat devices as "on the same seat" if the requesting uid owns
+    the active login session on the device's seat. This means that shared
+    services run by the user's `systemd --user`, such as the dbus-daemon
+    run by dbus-user-session and the D-Bus or systemd services that
+    it starts, can manipulate the user's devices even though those are
+    not associated with any particular login session or seat.
+    (Closes: #780004)
+
+ -- Simon McVittie <smcv@debian.org>  Mon, 09 Mar 2015 13:09:34 +0000
+
 udisks2 (2.1.5-1) experimental; urgency=medium
 
   [ Martin Pitt ]
