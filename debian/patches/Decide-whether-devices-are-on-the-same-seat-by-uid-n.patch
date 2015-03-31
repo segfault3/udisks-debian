@@ -58,6 +58,8 @@ has other callers for the old semantics; if it was not renamed,
 passing a pid_t where a uid_t was expected would have compiled,
 but silently produced wrong results.
 
+Forwarded: yes
+Bug: https://bugs.freedesktop.org/show_bug.cgi?id=89501
 Bug-Debian: https://bugs.debian.org/780004
 ---
  doc/udisks2-sections.txt        |  2 +-
