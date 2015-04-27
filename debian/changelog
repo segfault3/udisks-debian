@@ -1,9 +1,9 @@
-udisks2 (2.1.5-3) UNRELEASED; urgency=medium
+udisks2 (2.1.5-3) unstable; urgency=medium
 
   * debian/control: Drop obsolete XS-Testsuite: field, dpkg adds this
     automatically now.
 
- -- Martin Pitt <mpitt@debian.org>  Mon, 27 Apr 2015 10:02:02 +0200
+ -- Martin Pitt <mpitt@debian.org>  Mon, 27 Apr 2015 10:03:57 +0200
 
 udisks2 (2.1.5-2) experimental; urgency=medium
 
