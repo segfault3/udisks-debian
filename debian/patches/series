@@ -1,4 +1,3 @@
 # cherry-picked from upstream
 
 # Debian patches for udisks
-Decide-whether-devices-are-on-the-same-seat-by-uid-n.patch

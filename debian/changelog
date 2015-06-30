@@ -1,5 +1,11 @@
-udisks2 (2.1.5-4) UNRELEASED; urgency=medium
+udisks2 (2.1.6-1) UNRELEASED; urgency=medium
 
+  [ Martin Pitt ]
+  * New upstream release.
+    - Drop Decide-whether-devices-are-on-the-same-seat-by-uid-n.patch,
+      included upstream.
+
+  [ Simon McVittie ]
   * Disable Automake "silent rules" for more useful buildd logs
 
  -- Simon McVittie <smcv@debian.org>  Mon, 18 May 2015 14:51:31 +0100
