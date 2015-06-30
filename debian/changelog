@@ -4,6 +4,8 @@ udisks2 (2.1.6-1) UNRELEASED; urgency=medium
   * New upstream release.
     - Drop Decide-whether-devices-are-on-the-same-seat-by-uid-n.patch,
       included upstream.
+  * debian/rules: Configure with explicit --libexecdir, as that's where the
+    daemon gets installed now.
 
   [ Simon McVittie ]
   * Disable Automake "silent rules" for more useful buildd logs
