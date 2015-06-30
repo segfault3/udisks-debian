@@ -1,4 +1,4 @@
-udisks2 (2.1.6-1) UNRELEASED; urgency=medium
+udisks2 (2.1.6-1) unstable; urgency=medium
 
   [ Martin Pitt ]
   * New upstream release.
@@ -10,7 +10,7 @@ udisks2 (2.1.6-1) UNRELEASED; urgency=medium
   [ Simon McVittie ]
   * Disable Automake "silent rules" for more useful buildd logs
 
- -- Simon McVittie <smcv@debian.org>  Mon, 18 May 2015 14:51:31 +0100
+ -- Martin Pitt <mpitt@debian.org>  Tue, 30 Jun 2015 10:41:32 +0200
 
 udisks2 (2.1.5-3) unstable; urgency=medium
 
