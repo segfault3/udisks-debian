@@ -193,7 +193,7 @@ class UDisksTestCase(unittest.TestCase):
             time.sleep(0.1)
             timeout -= 1
         if timeout <= 0:
-            sys.stderr.write('[wait timeout!] ')
+            self.write_stderr('[wait timeout!] ')
 
     @classmethod
     def zero_device(klass):
@@ -281,6 +281,7 @@ class UDisksTestCase(unittest.TestCase):
                  'ntfs': 'mkntfs'}
         label_opt = {'vfat': '-n',
                      'exfat': '-n',
+                     'f2fs': '-l',
                      'reiserfs': '-l'}
         extra_opt = {'vfat': ['-I', '-F', '32'],
                      'swap': ['-f'],
@@ -324,7 +325,7 @@ class UDisksTestCase(unittest.TestCase):
             except GLib.GError as e:
                 if 'UDisks2.Error.DeviceBusy' not in e.message:
                     raise
-                sys.stderr.write('[busy] ')
+                self.write_stderr('[busy] ')
                 time.sleep(0.3)
                 timeout -= 1
 
@@ -487,6 +488,11 @@ class UDisksTestCase(unittest.TestCase):
 
         self.assertEventually(lambda: obj.get_property(name), value)
 
+    def write_stderr(self, msg):
+        '''Write to stderr without buffering'''
+        sys.stderr.write(msg)
+        sys.stderr.flush()
+
 
 # ----------------------------------------------------------------------------
 
@@ -602,7 +608,7 @@ class FS(UDisksTestCase):
 
     def tearDown(self):
         if subprocess.call(['umount', self.device], stderr=subprocess.PIPE) == 0:
-            sys.stderr.write('[cleanup unmount] ')
+            self.write_stderr('[cleanup unmount] ')
         shutil.rmtree(self.workdir)
 
     def test_zero(self):
@@ -637,6 +643,10 @@ class FS(UDisksTestCase):
     def test_btrfs(self):
         '''fs: btrfs'''
         self._do_fs_check('btrfs')
+
+    def test_f2fs(self):
+        '''fs: f2fs'''
+        self._do_fs_check('f2fs')
 
     def test_minix(self):
         '''fs: minix'''
@@ -802,7 +812,7 @@ class FS(UDisksTestCase):
 
         if type != 'swap' and subprocess.call(['which', mkfs],
                                               stdout=subprocess.PIPE) != 0:
-            sys.stderr.write('[no %s, skip] ' % mkfs)
+            self.write_stderr('[no %s, skip] ' % mkfs)
 
             # check correct D-Bus exception
             try:
@@ -813,8 +823,7 @@ class FS(UDisksTestCase):
             return
 
         # do checks with command line tools (mkfs/mount/umount)
-        sys.stderr.write('[cli] ')
-        sys.stderr.flush()
+        self.write_stderr('[cli] ')
 
         self._do_cli_check(type)
         if type != 'minix':
@@ -829,7 +838,7 @@ class FS(UDisksTestCase):
             self.mkfs('ext3')
 
         # do checks with udisks operations
-        sys.stderr.write('[ud] ')
+        self.write_stderr('[ud] ')
         self._do_udisks_check(type)
         if type != 'minix':
             self._do_udisks_check(type, 'test%stst' % type)
@@ -883,7 +892,7 @@ class FS(UDisksTestCase):
         ret = subprocess.call([mount_prog, self.device, mount_a])
         if ret == 32:
             # missing fs driver
-            sys.stderr.write('[missing kernel driver, skip] ')
+            self.write_stderr('[missing kernel driver, skip] ')
             return
         self.assertEqual(ret, 0)
 
@@ -988,7 +997,7 @@ class FS(UDisksTestCase):
         except GLib.GError as e:
             if 'UDisks2.Error.NotSupported' in e.message:
                 # these fses are known to not support relabeling
-                self.assertIn(type, ['minix', 'btrfs'])
+                self.assertIn(type, ['minix', 'btrfs', 'f2fs'])
                 supported = False
             else:
                 raise
@@ -1191,7 +1200,7 @@ class Smart(UDisksTestCase):
         hd = '/dev/sda'
 
         if not os.path.exists(hd):
-            sys.stderr.write('[skip] ')
+            self.write_stderr('[skip] ')
             return
 
         has_smart = subprocess.call(['skdump', '--can-smart', hd],
@@ -1205,21 +1214,24 @@ class Smart(UDisksTestCase):
         self.assertEqual(ata is not None, has_smart)
 
         if has_smart:
-            sys.stderr.write('[avail] ')
+            self.write_stderr('[avail] ')
             self.assertEqual(ata.get_property('smart-supported'), True)
             self.assertEqual(ata.get_property('smart-enabled'), True)
 
             # wait for SMART data to be read
             while ata.get_property('smart-updated') == 0:
-                sys.stderr.write('[wait for data] ')
+                self.write_stderr('[wait for data] ')
+                self.client.settle()
                 time.sleep(0.5)
 
             # this is of course not truly correct for a test suite, but let's
             # consider it a courtesy for developers :-)
             self.assertEqual(ata.get_property('smart-failing'), False)
-            self.assertIn(ata.get_property('smart-selftest-status'), ['success', 'inprogress'])
+            self.assertIn(ata.get_property('smart-selftest-status'),
+                                           ['success', 'inprogress', 'aborted',
+                                           'interrupted'])
         else:
-            sys.stderr.write('[N/A] ')
+            self.write_stderr('[N/A] ')
 
 
 # ----------------------------------------------------------------------------
@@ -1236,7 +1248,7 @@ class Luks(UDisksTestCase):
             if encrypted:
                 try:
                     encrypted.call_lock_sync(no_options, None)
-                    sys.stderr.write('[cleanup lock] ')
+                    self.write_stderr('[cleanup lock] ')
                 except GLib.GError:
                     pass
 

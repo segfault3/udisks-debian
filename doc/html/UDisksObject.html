@@ -2,13 +2,13 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>UDisks Reference Manual: UDisksObject</title>
+<title>UDisksObject: UDisks Reference Manual</title>
 <meta name="generator" content="DocBook XSL Stylesheets V1.78.1">
 <link rel="home" href="index.html" title="UDisks Reference Manual">
 <link rel="up" href="ref-library-generated.html" title="Generated Code">
 <link rel="prev" href="ref-library-generated.html" title="Generated Code">
 <link rel="next" href="UDisksObjectManagerClient.html" title="UDisksObjectManagerClient">
-<meta name="generator" content="GTK-Doc V1.21 (XML mode)">
+<meta name="generator" content="GTK-Doc V1.24 (XML mode)">
 <link rel="stylesheet" href="style.css" type="text/css">
 </head>
 <body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
@@ -472,12 +472,12 @@
 </div>
 <div class="refsect1">
 <a name="UDisksObject.object-hierarchy"></a><h2>Object Hierarchy</h2>
-<pre class="screen">    GInterface
+<pre class="screen">    <a href="https://developer.gnome.org/gobject/unstable/GTypeModule.html">GInterface</a>
     <span class="lineart">╰──</span> UDisksObject
-    GObject
-    <span class="lineart">├──</span> GDBusObjectProxy
+    <a href="https://developer.gnome.org/gobject/unstable/gobject-The-Base-Object-Type.html#GObject">GObject</a>
+    <span class="lineart">├──</span> <a href="https://developer.gnome.org/gio/unstable/GDBusObjectProxy.html">GDBusObjectProxy</a>
     <span class="lineart">│</span>   <span class="lineart">╰──</span> UDisksObjectProxy
-    <span class="lineart">╰──</span> GDBusObjectSkeleton
+    <span class="lineart">╰──</span> <a href="https://developer.gnome.org/gio/unstable/GDBusObjectSkeleton.html">GDBusObjectSkeleton</a>
         <span class="lineart">╰──</span> UDisksObjectSkeleton
             <span class="lineart">├──</span> <a class="link" href="UDisksLinuxBlockObject.html" title="UDisksLinuxBlockObject">UDisksLinuxBlockObject</a>
             <span class="lineart">├──</span> <a class="link" href="UDisksLinuxDriveObject.html" title="UDisksLinuxDriveObject">UDisksLinuxDriveObject</a>
@@ -488,16 +488,16 @@
 <a name="UDisksObject.prerequisites"></a><h2>Prerequisites</h2>
 <p>
 UDisksObject requires
- GDBusObject and  GObject.</p>
+ <a href="https://developer.gnome.org/gio/unstable/GDBusObject.html">GDBusObject</a> and  <a href="https://developer.gnome.org/gobject/unstable/gobject-The-Base-Object-Type.html#GObject">GObject</a>.</p>
 </div>
 <div class="refsect1">
 <a name="UDisksObject.implemented-interfaces"></a><h2>Implemented Interfaces</h2>
 <p>
 UDisksObjectProxy implements
- GDBusObject and  <a class="link" href="UDisksObject.html" title="UDisksObject">UDisksObject</a>.</p>
+ <a href="https://developer.gnome.org/gio/unstable/GDBusObject.html">GDBusObject</a> and  <a class="link" href="UDisksObject.html" title="UDisksObject">UDisksObject</a>.</p>
 <p>
 UDisksObjectSkeleton implements
- GDBusObject and  <a class="link" href="UDisksObject.html" title="UDisksObject">UDisksObject</a>.</p>
+ <a href="https://developer.gnome.org/gio/unstable/GDBusObject.html">GDBusObject</a> and  <a class="link" href="UDisksObject.html" title="UDisksObject">UDisksObject</a>.</p>
 </div>
 <div class="refsect1">
 <a name="UDisksObject.implementations"></a><h2>Known Implementations</h2>
@@ -534,7 +534,7 @@ udisks_object_get_block (<em class="parameter"><code><a class="link" href="UDisk
 </div>
 <div class="refsect3">
 <a name="id-1.4.5.2.13.2.6"></a><h4>Returns</h4>
-<p> A <a class="link" href="UDisksBlock.html" title="UDisksBlock"><span class="type">UDisksBlock</span></a> that must be freed with <code class="function">g_object_unref()</code> or <code class="literal">NULL</code> if <em class="parameter"><code>object</code></em>
+<p> A <a class="link" href="UDisksBlock.html" title="UDisksBlock"><span class="type">UDisksBlock</span></a> that must be freed with <a href="https://developer.gnome.org/gobject/unstable/gobject-The-Base-Object-Type.html#g-object-unref"><code class="function">g_object_unref()</code></a> or <a href="https://developer.gnome.org/glib/unstable/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a> if <em class="parameter"><code>object</code></em>
 does not implement the interface. </p>
 <p><span class="annotation">[<acronym title="Free data after the code is done."><span class="acronym">transfer full</span></acronym>]</span></p>
 </div>
@@ -563,7 +563,7 @@ udisks_object_get_drive (<em class="parameter"><code><a class="link" href="UDisk
 </div>
 <div class="refsect3">
 <a name="id-1.4.5.2.13.3.6"></a><h4>Returns</h4>
-<p> A <a class="link" href="UDisksDrive.html" title="UDisksDrive"><span class="type">UDisksDrive</span></a> that must be freed with <code class="function">g_object_unref()</code> or <code class="literal">NULL</code> if <em class="parameter"><code>object</code></em>
+<p> A <a class="link" href="UDisksDrive.html" title="UDisksDrive"><span class="type">UDisksDrive</span></a> that must be freed with <a href="https://developer.gnome.org/gobject/unstable/gobject-The-Base-Object-Type.html#g-object-unref"><code class="function">g_object_unref()</code></a> or <a href="https://developer.gnome.org/glib/unstable/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a> if <em class="parameter"><code>object</code></em>
 does not implement the interface. </p>
 <p><span class="annotation">[<acronym title="Free data after the code is done."><span class="acronym">transfer full</span></acronym>]</span></p>
 </div>
@@ -592,7 +592,7 @@ udisks_object_get_drive_ata (<em class="parameter"><code><a class="link" href="U
 </div>
 <div class="refsect3">
 <a name="id-1.4.5.2.13.4.6"></a><h4>Returns</h4>
-<p> A <a class="link" href="UDisksDriveAta.html" title="UDisksDriveAta"><span class="type">UDisksDriveAta</span></a> that must be freed with <code class="function">g_object_unref()</code> or <code class="literal">NULL</code> if <em class="parameter"><code>object</code></em>
+<p> A <a class="link" href="UDisksDriveAta.html" title="UDisksDriveAta"><span class="type">UDisksDriveAta</span></a> that must be freed with <a href="https://developer.gnome.org/gobject/unstable/gobject-The-Base-Object-Type.html#g-object-unref"><code class="function">g_object_unref()</code></a> or <a href="https://developer.gnome.org/glib/unstable/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a> if <em class="parameter"><code>object</code></em>
 does not implement the interface. </p>
 <p><span class="annotation">[<acronym title="Free data after the code is done."><span class="acronym">transfer full</span></acronym>]</span></p>
 </div>
@@ -621,7 +621,7 @@ udisks_object_get_filesystem (<em class="parameter"><code><a class="link" href="
 </div>
 <div class="refsect3">
 <a name="id-1.4.5.2.13.5.6"></a><h4>Returns</h4>
-<p> A <a class="link" href="UDisksFilesystem.html" title="UDisksFilesystem"><span class="type">UDisksFilesystem</span></a> that must be freed with <code class="function">g_object_unref()</code> or <code class="literal">NULL</code> if <em class="parameter"><code>object</code></em>
+<p> A <a class="link" href="UDisksFilesystem.html" title="UDisksFilesystem"><span class="type">UDisksFilesystem</span></a> that must be freed with <a href="https://developer.gnome.org/gobject/unstable/gobject-The-Base-Object-Type.html#g-object-unref"><code class="function">g_object_unref()</code></a> or <a href="https://developer.gnome.org/glib/unstable/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a> if <em class="parameter"><code>object</code></em>
 does not implement the interface. </p>
 <p><span class="annotation">[<acronym title="Free data after the code is done."><span class="acronym">transfer full</span></acronym>]</span></p>
 </div>
@@ -650,7 +650,7 @@ udisks_object_get_job (<em class="parameter"><code><a class="link" href="UDisksO
 </div>
 <div class="refsect3">
 <a name="id-1.4.5.2.13.6.6"></a><h4>Returns</h4>
-<p> A <a class="link" href="UDisksJob.html" title="UDisksJob"><span class="type">UDisksJob</span></a> that must be freed with <code class="function">g_object_unref()</code> or <code class="literal">NULL</code> if <em class="parameter"><code>object</code></em>
+<p> A <a class="link" href="UDisksJob.html" title="UDisksJob"><span class="type">UDisksJob</span></a> that must be freed with <a href="https://developer.gnome.org/gobject/unstable/gobject-The-Base-Object-Type.html#g-object-unref"><code class="function">g_object_unref()</code></a> or <a href="https://developer.gnome.org/glib/unstable/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a> if <em class="parameter"><code>object</code></em>
 does not implement the interface. </p>
 <p><span class="annotation">[<acronym title="Free data after the code is done."><span class="acronym">transfer full</span></acronym>]</span></p>
 </div>
@@ -679,7 +679,7 @@ udisks_object_get_swapspace (<em class="parameter"><code><a class="link" href="U
 </div>
 <div class="refsect3">
 <a name="id-1.4.5.2.13.7.6"></a><h4>Returns</h4>
-<p> A <a class="link" href="UDisksSwapspace.html" title="UDisksSwapspace"><span class="type">UDisksSwapspace</span></a> that must be freed with <code class="function">g_object_unref()</code> or <code class="literal">NULL</code> if <em class="parameter"><code>object</code></em>
+<p> A <a class="link" href="UDisksSwapspace.html" title="UDisksSwapspace"><span class="type">UDisksSwapspace</span></a> that must be freed with <a href="https://developer.gnome.org/gobject/unstable/gobject-The-Base-Object-Type.html#g-object-unref"><code class="function">g_object_unref()</code></a> or <a href="https://developer.gnome.org/glib/unstable/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a> if <em class="parameter"><code>object</code></em>
 does not implement the interface. </p>
 <p><span class="annotation">[<acronym title="Free data after the code is done."><span class="acronym">transfer full</span></acronym>]</span></p>
 </div>
@@ -708,7 +708,7 @@ udisks_object_get_encrypted (<em class="parameter"><code><a class="link" href="U
 </div>
 <div class="refsect3">
 <a name="id-1.4.5.2.13.8.6"></a><h4>Returns</h4>
-<p> A <a class="link" href="UDisksEncrypted.html" title="UDisksEncrypted"><span class="type">UDisksEncrypted</span></a> that must be freed with <code class="function">g_object_unref()</code> or <code class="literal">NULL</code> if <em class="parameter"><code>object</code></em>
+<p> A <a class="link" href="UDisksEncrypted.html" title="UDisksEncrypted"><span class="type">UDisksEncrypted</span></a> that must be freed with <a href="https://developer.gnome.org/gobject/unstable/gobject-The-Base-Object-Type.html#g-object-unref"><code class="function">g_object_unref()</code></a> or <a href="https://developer.gnome.org/glib/unstable/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a> if <em class="parameter"><code>object</code></em>
 does not implement the interface. </p>
 <p><span class="annotation">[<acronym title="Free data after the code is done."><span class="acronym">transfer full</span></acronym>]</span></p>
 </div>
@@ -737,7 +737,7 @@ udisks_object_get_loop (<em class="parameter"><code><a class="link" href="UDisks
 </div>
 <div class="refsect3">
 <a name="id-1.4.5.2.13.9.6"></a><h4>Returns</h4>
-<p> A <a class="link" href="UDisksLoop.html" title="UDisksLoop"><span class="type">UDisksLoop</span></a> that must be freed with <code class="function">g_object_unref()</code> or <code class="literal">NULL</code> if <em class="parameter"><code>object</code></em>
+<p> A <a class="link" href="UDisksLoop.html" title="UDisksLoop"><span class="type">UDisksLoop</span></a> that must be freed with <a href="https://developer.gnome.org/gobject/unstable/gobject-The-Base-Object-Type.html#g-object-unref"><code class="function">g_object_unref()</code></a> or <a href="https://developer.gnome.org/glib/unstable/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a> if <em class="parameter"><code>object</code></em>
 does not implement the interface. </p>
 <p><span class="annotation">[<acronym title="Free data after the code is done."><span class="acronym">transfer full</span></acronym>]</span></p>
 </div>
@@ -766,7 +766,7 @@ udisks_object_get_manager (<em class="parameter"><code><a class="link" href="UDi
 </div>
 <div class="refsect3">
 <a name="id-1.4.5.2.13.10.6"></a><h4>Returns</h4>
-<p> A <a class="link" href="UDisksManager.html" title="UDisksManager"><span class="type">UDisksManager</span></a> that must be freed with <code class="function">g_object_unref()</code> or <code class="literal">NULL</code> if <em class="parameter"><code>object</code></em>
+<p> A <a class="link" href="UDisksManager.html" title="UDisksManager"><span class="type">UDisksManager</span></a> that must be freed with <a href="https://developer.gnome.org/gobject/unstable/gobject-The-Base-Object-Type.html#g-object-unref"><code class="function">g_object_unref()</code></a> or <a href="https://developer.gnome.org/glib/unstable/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a> if <em class="parameter"><code>object</code></em>
 does not implement the interface. </p>
 <p><span class="annotation">[<acronym title="Free data after the code is done."><span class="acronym">transfer full</span></acronym>]</span></p>
 </div>
@@ -795,7 +795,7 @@ udisks_object_get_partition (<em class="parameter"><code><a class="link" href="U
 </div>
 <div class="refsect3">
 <a name="id-1.4.5.2.13.11.6"></a><h4>Returns</h4>
-<p> A <a class="link" href="UDisksPartition.html" title="UDisksPartition"><span class="type">UDisksPartition</span></a> that must be freed with <code class="function">g_object_unref()</code> or <code class="literal">NULL</code> if <em class="parameter"><code>object</code></em>
+<p> A <a class="link" href="UDisksPartition.html" title="UDisksPartition"><span class="type">UDisksPartition</span></a> that must be freed with <a href="https://developer.gnome.org/gobject/unstable/gobject-The-Base-Object-Type.html#g-object-unref"><code class="function">g_object_unref()</code></a> or <a href="https://developer.gnome.org/glib/unstable/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a> if <em class="parameter"><code>object</code></em>
 does not implement the interface. </p>
 <p><span class="annotation">[<acronym title="Free data after the code is done."><span class="acronym">transfer full</span></acronym>]</span></p>
 </div>
@@ -824,7 +824,7 @@ udisks_object_get_partition_table (<em class="parameter"><code><a class="link" h
 </div>
 <div class="refsect3">
 <a name="id-1.4.5.2.13.12.6"></a><h4>Returns</h4>
-<p> A <a class="link" href="UDisksPartitionTable.html" title="UDisksPartitionTable"><span class="type">UDisksPartitionTable</span></a> that must be freed with <code class="function">g_object_unref()</code> or <code class="literal">NULL</code> if <em class="parameter"><code>object</code></em>
+<p> A <a class="link" href="UDisksPartitionTable.html" title="UDisksPartitionTable"><span class="type">UDisksPartitionTable</span></a> that must be freed with <a href="https://developer.gnome.org/gobject/unstable/gobject-The-Base-Object-Type.html#g-object-unref"><code class="function">g_object_unref()</code></a> or <a href="https://developer.gnome.org/glib/unstable/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a> if <em class="parameter"><code>object</code></em>
 does not implement the interface. </p>
 <p><span class="annotation">[<acronym title="Free data after the code is done."><span class="acronym">transfer full</span></acronym>]</span></p>
 </div>
@@ -853,11 +853,11 @@ udisks_object_get_mdraid (<em class="parameter"><code><a class="link" href="UDis
 </div>
 <div class="refsect3">
 <a name="id-1.4.5.2.13.13.6"></a><h4>Returns</h4>
-<p> A <a class="link" href="UDisksMDRaid.html" title="UDisksMDRaid"><span class="type">UDisksMDRaid</span></a> that must be freed with <code class="function">g_object_unref()</code> or <code class="literal">NULL</code> if <em class="parameter"><code>object</code></em>
+<p> A <a class="link" href="UDisksMDRaid.html" title="UDisksMDRaid"><span class="type">UDisksMDRaid</span></a> that must be freed with <a href="https://developer.gnome.org/gobject/unstable/gobject-The-Base-Object-Type.html#g-object-unref"><code class="function">g_object_unref()</code></a> or <a href="https://developer.gnome.org/glib/unstable/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a> if <em class="parameter"><code>object</code></em>
 does not implement the interface. </p>
 <p><span class="annotation">[<acronym title="Free data after the code is done."><span class="acronym">transfer full</span></acronym>]</span></p>
 </div>
-<p class="since">Since 2.1</p>
+<p class="since">Since: <a class="link" href="api-index-2.1.html" title="Index of new symbols in 2.1">2.1</a></p>
 </div>
 <hr>
 <div class="refsect2">
@@ -865,9 +865,10 @@ does not implement the interface. </p>
 <pre class="programlisting"><a class="link" href="UDisksBlock.html" title="UDisksBlock"><span class="returnvalue">UDisksBlock</span></a> *
 udisks_object_peek_block (<em class="parameter"><code><a class="link" href="UDisksObject.html" title="UDisksObject"><span class="type">UDisksObject</span></a> *object</code></em>);</pre>
 <p>Like <a class="link" href="UDisksObject.html#udisks-object-get-block" title="udisks_object_get_block ()"><code class="function">udisks_object_get_block()</code></a> but doesn't increase the reference count on the returned object.</p>
-<div class="warning">It is not safe to use the returned object if you are on another thread than the one where the <span class="type">GDBusObjectManagerClient</span> or <span class="type">GDBusObjectManagerServer</span> for <em class="parameter"><code>object</code></em> is running.</div>
+<div class="warning">It is not safe to use the returned object if you are on another thread than the one where the <a href="https://developer.gnome.org/gio/unstable/GDBusObjectManagerClient.html"><span class="type">GDBusObjectManagerClient</span></a> or <a href="https://developer.gnome.org/gio/unstable/GDBusObjectManagerServer.html"><span class="type">GDBusObjectManagerServer</span></a> for <em class="parameter"><code>object</code></em> is running.</div>
+<p><span class="annotation">[<acronym title="Exposed in C code, not necessarily available in other languages."><span class="acronym">skip</span></acronym>]</span></p>
 <div class="refsect3">
-<a name="id-1.4.5.2.13.14.6"></a><h4>Parameters</h4>
+<a name="id-1.4.5.2.13.14.7"></a><h4>Parameters</h4>
 <div class="informaltable"><table width="100%" border="0">
 <colgroup>
 <col width="150px" class="parameters_name">
@@ -882,8 +883,8 @@ udisks_object_peek_block (<em class="parameter"><code><a class="link" href="UDis
 </table></div>
 </div>
 <div class="refsect3">
-<a name="id-1.4.5.2.13.14.7"></a><h4>Returns</h4>
-<p> A <a class="link" href="UDisksBlock.html" title="UDisksBlock"><span class="type">UDisksBlock</span></a> or <code class="literal">NULL</code> if <em class="parameter"><code>object</code></em>
+<a name="id-1.4.5.2.13.14.8"></a><h4>Returns</h4>
+<p> A <a class="link" href="UDisksBlock.html" title="UDisksBlock"><span class="type">UDisksBlock</span></a> or <a href="https://developer.gnome.org/glib/unstable/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a> if <em class="parameter"><code>object</code></em>
 does not implement the interface. Do not free the returned object, it is owned by <em class="parameter"><code>object</code></em>
 . </p>
 <p><span class="annotation">[<acronym title="Don't free data after the code is done."><span class="acronym">transfer none</span></acronym>]</span></p>
@@ -895,9 +896,10 @@ does not implement the interface. Do not free the returned object, it is owned b
 <pre class="programlisting"><a class="link" href="UDisksDrive.html" title="UDisksDrive"><span class="returnvalue">UDisksDrive</span></a> *
 udisks_object_peek_drive (<em class="parameter"><code><a class="link" href="UDisksObject.html" title="UDisksObject"><span class="type">UDisksObject</span></a> *object</code></em>);</pre>
 <p>Like <a class="link" href="UDisksObject.html#udisks-object-get-drive" title="udisks_object_get_drive ()"><code class="function">udisks_object_get_drive()</code></a> but doesn't increase the reference count on the returned object.</p>
-<div class="warning">It is not safe to use the returned object if you are on another thread than the one where the <span class="type">GDBusObjectManagerClient</span> or <span class="type">GDBusObjectManagerServer</span> for <em class="parameter"><code>object</code></em> is running.</div>
+<div class="warning">It is not safe to use the returned object if you are on another thread than the one where the <a href="https://developer.gnome.org/gio/unstable/GDBusObjectManagerClient.html"><span class="type">GDBusObjectManagerClient</span></a> or <a href="https://developer.gnome.org/gio/unstable/GDBusObjectManagerServer.html"><span class="type">GDBusObjectManagerServer</span></a> for <em class="parameter"><code>object</code></em> is running.</div>
+<p><span class="annotation">[<acronym title="Exposed in C code, not necessarily available in other languages."><span class="acronym">skip</span></acronym>]</span></p>
 <div class="refsect3">
-<a name="id-1.4.5.2.13.15.6"></a><h4>Parameters</h4>
+<a name="id-1.4.5.2.13.15.7"></a><h4>Parameters</h4>
 <div class="informaltable"><table width="100%" border="0">
 <colgroup>
 <col width="150px" class="parameters_name">
@@ -912,8 +914,8 @@ udisks_object_peek_drive (<em class="parameter"><code><a class="link" href="UDis
 </table></div>
 </div>
 <div class="refsect3">
-<a name="id-1.4.5.2.13.15.7"></a><h4>Returns</h4>
-<p> A <a class="link" href="UDisksDrive.html" title="UDisksDrive"><span class="type">UDisksDrive</span></a> or <code class="literal">NULL</code> if <em class="parameter"><code>object</code></em>
+<a name="id-1.4.5.2.13.15.8"></a><h4>Returns</h4>
+<p> A <a class="link" href="UDisksDrive.html" title="UDisksDrive"><span class="type">UDisksDrive</span></a> or <a href="https://developer.gnome.org/glib/unstable/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a> if <em class="parameter"><code>object</code></em>
 does not implement the interface. Do not free the returned object, it is owned by <em class="parameter"><code>object</code></em>
 . </p>
 <p><span class="annotation">[<acronym title="Don't free data after the code is done."><span class="acronym">transfer none</span></acronym>]</span></p>
@@ -925,9 +927,10 @@ does not implement the interface. Do not free the returned object, it is owned b
 <pre class="programlisting"><a class="link" href="UDisksDriveAta.html" title="UDisksDriveAta"><span class="returnvalue">UDisksDriveAta</span></a> *
 udisks_object_peek_drive_ata (<em class="parameter"><code><a class="link" href="UDisksObject.html" title="UDisksObject"><span class="type">UDisksObject</span></a> *object</code></em>);</pre>
 <p>Like <a class="link" href="UDisksObject.html#udisks-object-get-drive-ata" title="udisks_object_get_drive_ata ()"><code class="function">udisks_object_get_drive_ata()</code></a> but doesn't increase the reference count on the returned object.</p>
-<div class="warning">It is not safe to use the returned object if you are on another thread than the one where the <span class="type">GDBusObjectManagerClient</span> or <span class="type">GDBusObjectManagerServer</span> for <em class="parameter"><code>object</code></em> is running.</div>
+<div class="warning">It is not safe to use the returned object if you are on another thread than the one where the <a href="https://developer.gnome.org/gio/unstable/GDBusObjectManagerClient.html"><span class="type">GDBusObjectManagerClient</span></a> or <a href="https://developer.gnome.org/gio/unstable/GDBusObjectManagerServer.html"><span class="type">GDBusObjectManagerServer</span></a> for <em class="parameter"><code>object</code></em> is running.</div>
+<p><span class="annotation">[<acronym title="Exposed in C code, not necessarily available in other languages."><span class="acronym">skip</span></acronym>]</span></p>
 <div class="refsect3">
-<a name="id-1.4.5.2.13.16.6"></a><h4>Parameters</h4>
+<a name="id-1.4.5.2.13.16.7"></a><h4>Parameters</h4>
 <div class="informaltable"><table width="100%" border="0">
 <colgroup>
 <col width="150px" class="parameters_name">
@@ -942,8 +945,8 @@ udisks_object_peek_drive_ata (<em class="parameter"><code><a class="link" href="
 </table></div>
 </div>
 <div class="refsect3">
-<a name="id-1.4.5.2.13.16.7"></a><h4>Returns</h4>
-<p> A <a class="link" href="UDisksDriveAta.html" title="UDisksDriveAta"><span class="type">UDisksDriveAta</span></a> or <code class="literal">NULL</code> if <em class="parameter"><code>object</code></em>
+<a name="id-1.4.5.2.13.16.8"></a><h4>Returns</h4>
+<p> A <a class="link" href="UDisksDriveAta.html" title="UDisksDriveAta"><span class="type">UDisksDriveAta</span></a> or <a href="https://developer.gnome.org/glib/unstable/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a> if <em class="parameter"><code>object</code></em>
 does not implement the interface. Do not free the returned object, it is owned by <em class="parameter"><code>object</code></em>
 . </p>
 <p><span class="annotation">[<acronym title="Don't free data after the code is done."><span class="acronym">transfer none</span></acronym>]</span></p>
@@ -955,9 +958,10 @@ does not implement the interface. Do not free the returned object, it is owned b
 <pre class="programlisting"><a class="link" href="UDisksFilesystem.html" title="UDisksFilesystem"><span class="returnvalue">UDisksFilesystem</span></a> *
 udisks_object_peek_filesystem (<em class="parameter"><code><a class="link" href="UDisksObject.html" title="UDisksObject"><span class="type">UDisksObject</span></a> *object</code></em>);</pre>
 <p>Like <a class="link" href="UDisksObject.html#udisks-object-get-filesystem" title="udisks_object_get_filesystem ()"><code class="function">udisks_object_get_filesystem()</code></a> but doesn't increase the reference count on the returned object.</p>
-<div class="warning">It is not safe to use the returned object if you are on another thread than the one where the <span class="type">GDBusObjectManagerClient</span> or <span class="type">GDBusObjectManagerServer</span> for <em class="parameter"><code>object</code></em> is running.</div>
+<div class="warning">It is not safe to use the returned object if you are on another thread than the one where the <a href="https://developer.gnome.org/gio/unstable/GDBusObjectManagerClient.html"><span class="type">GDBusObjectManagerClient</span></a> or <a href="https://developer.gnome.org/gio/unstable/GDBusObjectManagerServer.html"><span class="type">GDBusObjectManagerServer</span></a> for <em class="parameter"><code>object</code></em> is running.</div>
+<p><span class="annotation">[<acronym title="Exposed in C code, not necessarily available in other languages."><span class="acronym">skip</span></acronym>]</span></p>
 <div class="refsect3">
-<a name="id-1.4.5.2.13.17.6"></a><h4>Parameters</h4>
+<a name="id-1.4.5.2.13.17.7"></a><h4>Parameters</h4>
 <div class="informaltable"><table width="100%" border="0">
 <colgroup>
 <col width="150px" class="parameters_name">
@@ -972,8 +976,8 @@ udisks_object_peek_filesystem (<em class="parameter"><code><a class="link" href=
 </table></div>
 </div>
 <div class="refsect3">
-<a name="id-1.4.5.2.13.17.7"></a><h4>Returns</h4>
-<p> A <a class="link" href="UDisksFilesystem.html" title="UDisksFilesystem"><span class="type">UDisksFilesystem</span></a> or <code class="literal">NULL</code> if <em class="parameter"><code>object</code></em>
+<a name="id-1.4.5.2.13.17.8"></a><h4>Returns</h4>
+<p> A <a class="link" href="UDisksFilesystem.html" title="UDisksFilesystem"><span class="type">UDisksFilesystem</span></a> or <a href="https://developer.gnome.org/glib/unstable/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a> if <em class="parameter"><code>object</code></em>
 does not implement the interface. Do not free the returned object, it is owned by <em class="parameter"><code>object</code></em>
 . </p>
 <p><span class="annotation">[<acronym title="Don't free data after the code is done."><span class="acronym">transfer none</span></acronym>]</span></p>
@@ -985,9 +989,10 @@ does not implement the interface. Do not free the returned object, it is owned b
 <pre class="programlisting"><a class="link" href="UDisksJob.html" title="UDisksJob"><span class="returnvalue">UDisksJob</span></a> *
 udisks_object_peek_job (<em class="parameter"><code><a class="link" href="UDisksObject.html" title="UDisksObject"><span class="type">UDisksObject</span></a> *object</code></em>);</pre>
 <p>Like <a class="link" href="UDisksObject.html#udisks-object-get-job" title="udisks_object_get_job ()"><code class="function">udisks_object_get_job()</code></a> but doesn't increase the reference count on the returned object.</p>
-<div class="warning">It is not safe to use the returned object if you are on another thread than the one where the <span class="type">GDBusObjectManagerClient</span> or <span class="type">GDBusObjectManagerServer</span> for <em class="parameter"><code>object</code></em> is running.</div>
+<div class="warning">It is not safe to use the returned object if you are on another thread than the one where the <a href="https://developer.gnome.org/gio/unstable/GDBusObjectManagerClient.html"><span class="type">GDBusObjectManagerClient</span></a> or <a href="https://developer.gnome.org/gio/unstable/GDBusObjectManagerServer.html"><span class="type">GDBusObjectManagerServer</span></a> for <em class="parameter"><code>object</code></em> is running.</div>
+<p><span class="annotation">[<acronym title="Exposed in C code, not necessarily available in other languages."><span class="acronym">skip</span></acronym>]</span></p>
 <div class="refsect3">
-<a name="id-1.4.5.2.13.18.6"></a><h4>Parameters</h4>
+<a name="id-1.4.5.2.13.18.7"></a><h4>Parameters</h4>
 <div class="informaltable"><table width="100%" border="0">
 <colgroup>
 <col width="150px" class="parameters_name">
@@ -1002,8 +1007,8 @@ udisks_object_peek_job (<em class="parameter"><code><a class="link" href="UDisks
 </table></div>
 </div>
 <div class="refsect3">
-<a name="id-1.4.5.2.13.18.7"></a><h4>Returns</h4>
-<p> A <a class="link" href="UDisksJob.html" title="UDisksJob"><span class="type">UDisksJob</span></a> or <code class="literal">NULL</code> if <em class="parameter"><code>object</code></em>
+<a name="id-1.4.5.2.13.18.8"></a><h4>Returns</h4>
+<p> A <a class="link" href="UDisksJob.html" title="UDisksJob"><span class="type">UDisksJob</span></a> or <a href="https://developer.gnome.org/glib/unstable/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a> if <em class="parameter"><code>object</code></em>
 does not implement the interface. Do not free the returned object, it is owned by <em class="parameter"><code>object</code></em>
 . </p>
 <p><span class="annotation">[<acronym title="Don't free data after the code is done."><span class="acronym">transfer none</span></acronym>]</span></p>
@@ -1015,9 +1020,10 @@ does not implement the interface. Do not free the returned object, it is owned b
 <pre class="programlisting"><a class="link" href="UDisksSwapspace.html" title="UDisksSwapspace"><span class="returnvalue">UDisksSwapspace</span></a> *
 udisks_object_peek_swapspace (<em class="parameter"><code><a class="link" href="UDisksObject.html" title="UDisksObject"><span class="type">UDisksObject</span></a> *object</code></em>);</pre>
 <p>Like <a class="link" href="UDisksObject.html#udisks-object-get-swapspace" title="udisks_object_get_swapspace ()"><code class="function">udisks_object_get_swapspace()</code></a> but doesn't increase the reference count on the returned object.</p>
-<div class="warning">It is not safe to use the returned object if you are on another thread than the one where the <span class="type">GDBusObjectManagerClient</span> or <span class="type">GDBusObjectManagerServer</span> for <em class="parameter"><code>object</code></em> is running.</div>
+<div class="warning">It is not safe to use the returned object if you are on another thread than the one where the <a href="https://developer.gnome.org/gio/unstable/GDBusObjectManagerClient.html"><span class="type">GDBusObjectManagerClient</span></a> or <a href="https://developer.gnome.org/gio/unstable/GDBusObjectManagerServer.html"><span class="type">GDBusObjectManagerServer</span></a> for <em class="parameter"><code>object</code></em> is running.</div>
+<p><span class="annotation">[<acronym title="Exposed in C code, not necessarily available in other languages."><span class="acronym">skip</span></acronym>]</span></p>
 <div class="refsect3">
-<a name="id-1.4.5.2.13.19.6"></a><h4>Parameters</h4>
+<a name="id-1.4.5.2.13.19.7"></a><h4>Parameters</h4>
 <div class="informaltable"><table width="100%" border="0">
 <colgroup>
 <col width="150px" class="parameters_name">
@@ -1032,8 +1038,8 @@ udisks_object_peek_swapspace (<em class="parameter"><code><a class="link" href="
 </table></div>
 </div>
 <div class="refsect3">
-<a name="id-1.4.5.2.13.19.7"></a><h4>Returns</h4>
-<p> A <a class="link" href="UDisksSwapspace.html" title="UDisksSwapspace"><span class="type">UDisksSwapspace</span></a> or <code class="literal">NULL</code> if <em class="parameter"><code>object</code></em>
+<a name="id-1.4.5.2.13.19.8"></a><h4>Returns</h4>
+<p> A <a class="link" href="UDisksSwapspace.html" title="UDisksSwapspace"><span class="type">UDisksSwapspace</span></a> or <a href="https://developer.gnome.org/glib/unstable/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a> if <em class="parameter"><code>object</code></em>
 does not implement the interface. Do not free the returned object, it is owned by <em class="parameter"><code>object</code></em>
 . </p>
 <p><span class="annotation">[<acronym title="Don't free data after the code is done."><span class="acronym">transfer none</span></acronym>]</span></p>
@@ -1045,9 +1051,10 @@ does not implement the interface. Do not free the returned object, it is owned b
 <pre class="programlisting"><a class="link" href="UDisksEncrypted.html" title="UDisksEncrypted"><span class="returnvalue">UDisksEncrypted</span></a> *
 udisks_object_peek_encrypted (<em class="parameter"><code><a class="link" href="UDisksObject.html" title="UDisksObject"><span class="type">UDisksObject</span></a> *object</code></em>);</pre>
 <p>Like <a class="link" href="UDisksObject.html#udisks-object-get-encrypted" title="udisks_object_get_encrypted ()"><code class="function">udisks_object_get_encrypted()</code></a> but doesn't increase the reference count on the returned object.</p>
-<div class="warning">It is not safe to use the returned object if you are on another thread than the one where the <span class="type">GDBusObjectManagerClient</span> or <span class="type">GDBusObjectManagerServer</span> for <em class="parameter"><code>object</code></em> is running.</div>
+<div class="warning">It is not safe to use the returned object if you are on another thread than the one where the <a href="https://developer.gnome.org/gio/unstable/GDBusObjectManagerClient.html"><span class="type">GDBusObjectManagerClient</span></a> or <a href="https://developer.gnome.org/gio/unstable/GDBusObjectManagerServer.html"><span class="type">GDBusObjectManagerServer</span></a> for <em class="parameter"><code>object</code></em> is running.</div>
+<p><span class="annotation">[<acronym title="Exposed in C code, not necessarily available in other languages."><span class="acronym">skip</span></acronym>]</span></p>
 <div class="refsect3">
-<a name="id-1.4.5.2.13.20.6"></a><h4>Parameters</h4>
+<a name="id-1.4.5.2.13.20.7"></a><h4>Parameters</h4>
 <div class="informaltable"><table width="100%" border="0">
 <colgroup>
 <col width="150px" class="parameters_name">
@@ -1062,8 +1069,8 @@ udisks_object_peek_encrypted (<em class="parameter"><code><a class="link" href="
 </table></div>
 </div>
 <div class="refsect3">
-<a name="id-1.4.5.2.13.20.7"></a><h4>Returns</h4>
-<p> A <a class="link" href="UDisksEncrypted.html" title="UDisksEncrypted"><span class="type">UDisksEncrypted</span></a> or <code class="literal">NULL</code> if <em class="parameter"><code>object</code></em>
+<a name="id-1.4.5.2.13.20.8"></a><h4>Returns</h4>
+<p> A <a class="link" href="UDisksEncrypted.html" title="UDisksEncrypted"><span class="type">UDisksEncrypted</span></a> or <a href="https://developer.gnome.org/glib/unstable/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a> if <em class="parameter"><code>object</code></em>
 does not implement the interface. Do not free the returned object, it is owned by <em class="parameter"><code>object</code></em>
 . </p>
 <p><span class="annotation">[<acronym title="Don't free data after the code is done."><span class="acronym">transfer none</span></acronym>]</span></p>
@@ -1075,9 +1082,10 @@ does not implement the interface. Do not free the returned object, it is owned b
 <pre class="programlisting"><a class="link" href="UDisksLoop.html" title="UDisksLoop"><span class="returnvalue">UDisksLoop</span></a> *
 udisks_object_peek_loop (<em class="parameter"><code><a class="link" href="UDisksObject.html" title="UDisksObject"><span class="type">UDisksObject</span></a> *object</code></em>);</pre>
 <p>Like <a class="link" href="UDisksObject.html#udisks-object-get-loop" title="udisks_object_get_loop ()"><code class="function">udisks_object_get_loop()</code></a> but doesn't increase the reference count on the returned object.</p>
-<div class="warning">It is not safe to use the returned object if you are on another thread than the one where the <span class="type">GDBusObjectManagerClient</span> or <span class="type">GDBusObjectManagerServer</span> for <em class="parameter"><code>object</code></em> is running.</div>
+<div class="warning">It is not safe to use the returned object if you are on another thread than the one where the <a href="https://developer.gnome.org/gio/unstable/GDBusObjectManagerClient.html"><span class="type">GDBusObjectManagerClient</span></a> or <a href="https://developer.gnome.org/gio/unstable/GDBusObjectManagerServer.html"><span class="type">GDBusObjectManagerServer</span></a> for <em class="parameter"><code>object</code></em> is running.</div>
+<p><span class="annotation">[<acronym title="Exposed in C code, not necessarily available in other languages."><span class="acronym">skip</span></acronym>]</span></p>
 <div class="refsect3">
-<a name="id-1.4.5.2.13.21.6"></a><h4>Parameters</h4>
+<a name="id-1.4.5.2.13.21.7"></a><h4>Parameters</h4>
 <div class="informaltable"><table width="100%" border="0">
 <colgroup>
 <col width="150px" class="parameters_name">
@@ -1092,8 +1100,8 @@ udisks_object_peek_loop (<em class="parameter"><code><a class="link" href="UDisk
 </table></div>
 </div>
 <div class="refsect3">
-<a name="id-1.4.5.2.13.21.7"></a><h4>Returns</h4>
-<p> A <a class="link" href="UDisksLoop.html" title="UDisksLoop"><span class="type">UDisksLoop</span></a> or <code class="literal">NULL</code> if <em class="parameter"><code>object</code></em>
+<a name="id-1.4.5.2.13.21.8"></a><h4>Returns</h4>
+<p> A <a class="link" href="UDisksLoop.html" title="UDisksLoop"><span class="type">UDisksLoop</span></a> or <a href="https://developer.gnome.org/glib/unstable/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a> if <em class="parameter"><code>object</code></em>
 does not implement the interface. Do not free the returned object, it is owned by <em class="parameter"><code>object</code></em>
 . </p>
 <p><span class="annotation">[<acronym title="Don't free data after the code is done."><span class="acronym">transfer none</span></acronym>]</span></p>
@@ -1105,9 +1113,10 @@ does not implement the interface. Do not free the returned object, it is owned b
 <pre class="programlisting"><a class="link" href="UDisksManager.html" title="UDisksManager"><span class="returnvalue">UDisksManager</span></a> *
 udisks_object_peek_manager (<em class="parameter"><code><a class="link" href="UDisksObject.html" title="UDisksObject"><span class="type">UDisksObject</span></a> *object</code></em>);</pre>
 <p>Like <a class="link" href="UDisksObject.html#udisks-object-get-manager" title="udisks_object_get_manager ()"><code class="function">udisks_object_get_manager()</code></a> but doesn't increase the reference count on the returned object.</p>
-<div class="warning">It is not safe to use the returned object if you are on another thread than the one where the <span class="type">GDBusObjectManagerClient</span> or <span class="type">GDBusObjectManagerServer</span> for <em class="parameter"><code>object</code></em> is running.</div>
+<div class="warning">It is not safe to use the returned object if you are on another thread than the one where the <a href="https://developer.gnome.org/gio/unstable/GDBusObjectManagerClient.html"><span class="type">GDBusObjectManagerClient</span></a> or <a href="https://developer.gnome.org/gio/unstable/GDBusObjectManagerServer.html"><span class="type">GDBusObjectManagerServer</span></a> for <em class="parameter"><code>object</code></em> is running.</div>
+<p><span class="annotation">[<acronym title="Exposed in C code, not necessarily available in other languages."><span class="acronym">skip</span></acronym>]</span></p>
 <div class="refsect3">
-<a name="id-1.4.5.2.13.22.6"></a><h4>Parameters</h4>
+<a name="id-1.4.5.2.13.22.7"></a><h4>Parameters</h4>
 <div class="informaltable"><table width="100%" border="0">
 <colgroup>
 <col width="150px" class="parameters_name">
@@ -1122,8 +1131,8 @@ udisks_object_peek_manager (<em class="parameter"><code><a class="link" href="UD
 </table></div>
 </div>
 <div class="refsect3">
-<a name="id-1.4.5.2.13.22.7"></a><h4>Returns</h4>
-<p> A <a class="link" href="UDisksManager.html" title="UDisksManager"><span class="type">UDisksManager</span></a> or <code class="literal">NULL</code> if <em class="parameter"><code>object</code></em>
+<a name="id-1.4.5.2.13.22.8"></a><h4>Returns</h4>
+<p> A <a class="link" href="UDisksManager.html" title="UDisksManager"><span class="type">UDisksManager</span></a> or <a href="https://developer.gnome.org/glib/unstable/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a> if <em class="parameter"><code>object</code></em>
 does not implement the interface. Do not free the returned object, it is owned by <em class="parameter"><code>object</code></em>
 . </p>
 <p><span class="annotation">[<acronym title="Don't free data after the code is done."><span class="acronym">transfer none</span></acronym>]</span></p>
@@ -1135,9 +1144,10 @@ does not implement the interface. Do not free the returned object, it is owned b
 <pre class="programlisting"><a class="link" href="UDisksPartition.html" title="UDisksPartition"><span class="returnvalue">UDisksPartition</span></a> *
 udisks_object_peek_partition (<em class="parameter"><code><a class="link" href="UDisksObject.html" title="UDisksObject"><span class="type">UDisksObject</span></a> *object</code></em>);</pre>
 <p>Like <a class="link" href="UDisksObject.html#udisks-object-get-partition" title="udisks_object_get_partition ()"><code class="function">udisks_object_get_partition()</code></a> but doesn't increase the reference count on the returned object.</p>
-<div class="warning">It is not safe to use the returned object if you are on another thread than the one where the <span class="type">GDBusObjectManagerClient</span> or <span class="type">GDBusObjectManagerServer</span> for <em class="parameter"><code>object</code></em> is running.</div>
+<div class="warning">It is not safe to use the returned object if you are on another thread than the one where the <a href="https://developer.gnome.org/gio/unstable/GDBusObjectManagerClient.html"><span class="type">GDBusObjectManagerClient</span></a> or <a href="https://developer.gnome.org/gio/unstable/GDBusObjectManagerServer.html"><span class="type">GDBusObjectManagerServer</span></a> for <em class="parameter"><code>object</code></em> is running.</div>
+<p><span class="annotation">[<acronym title="Exposed in C code, not necessarily available in other languages."><span class="acronym">skip</span></acronym>]</span></p>
 <div class="refsect3">
-<a name="id-1.4.5.2.13.23.6"></a><h4>Parameters</h4>
+<a name="id-1.4.5.2.13.23.7"></a><h4>Parameters</h4>
 <div class="informaltable"><table width="100%" border="0">
 <colgroup>
 <col width="150px" class="parameters_name">
@@ -1152,8 +1162,8 @@ udisks_object_peek_partition (<em class="parameter"><code><a class="link" href="
 </table></div>
 </div>
 <div class="refsect3">
-<a name="id-1.4.5.2.13.23.7"></a><h4>Returns</h4>
-<p> A <a class="link" href="UDisksPartition.html" title="UDisksPartition"><span class="type">UDisksPartition</span></a> or <code class="literal">NULL</code> if <em class="parameter"><code>object</code></em>
+<a name="id-1.4.5.2.13.23.8"></a><h4>Returns</h4>
+<p> A <a class="link" href="UDisksPartition.html" title="UDisksPartition"><span class="type">UDisksPartition</span></a> or <a href="https://developer.gnome.org/glib/unstable/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a> if <em class="parameter"><code>object</code></em>
 does not implement the interface. Do not free the returned object, it is owned by <em class="parameter"><code>object</code></em>
 . </p>
 <p><span class="annotation">[<acronym title="Don't free data after the code is done."><span class="acronym">transfer none</span></acronym>]</span></p>
@@ -1165,9 +1175,10 @@ does not implement the interface. Do not free the returned object, it is owned b
 <pre class="programlisting"><a class="link" href="UDisksPartitionTable.html" title="UDisksPartitionTable"><span class="returnvalue">UDisksPartitionTable</span></a> *
 udisks_object_peek_partition_table (<em class="parameter"><code><a class="link" href="UDisksObject.html" title="UDisksObject"><span class="type">UDisksObject</span></a> *object</code></em>);</pre>
 <p>Like <a class="link" href="UDisksObject.html#udisks-object-get-partition-table" title="udisks_object_get_partition_table ()"><code class="function">udisks_object_get_partition_table()</code></a> but doesn't increase the reference count on the returned object.</p>
-<div class="warning">It is not safe to use the returned object if you are on another thread than the one where the <span class="type">GDBusObjectManagerClient</span> or <span class="type">GDBusObjectManagerServer</span> for <em class="parameter"><code>object</code></em> is running.</div>
+<div class="warning">It is not safe to use the returned object if you are on another thread than the one where the <a href="https://developer.gnome.org/gio/unstable/GDBusObjectManagerClient.html"><span class="type">GDBusObjectManagerClient</span></a> or <a href="https://developer.gnome.org/gio/unstable/GDBusObjectManagerServer.html"><span class="type">GDBusObjectManagerServer</span></a> for <em class="parameter"><code>object</code></em> is running.</div>
+<p><span class="annotation">[<acronym title="Exposed in C code, not necessarily available in other languages."><span class="acronym">skip</span></acronym>]</span></p>
 <div class="refsect3">
-<a name="id-1.4.5.2.13.24.6"></a><h4>Parameters</h4>
+<a name="id-1.4.5.2.13.24.7"></a><h4>Parameters</h4>
 <div class="informaltable"><table width="100%" border="0">
 <colgroup>
 <col width="150px" class="parameters_name">
@@ -1182,8 +1193,8 @@ udisks_object_peek_partition_table (<em class="parameter"><code><a class="link" 
 </table></div>
 </div>
 <div class="refsect3">
-<a name="id-1.4.5.2.13.24.7"></a><h4>Returns</h4>
-<p> A <a class="link" href="UDisksPartitionTable.html" title="UDisksPartitionTable"><span class="type">UDisksPartitionTable</span></a> or <code class="literal">NULL</code> if <em class="parameter"><code>object</code></em>
+<a name="id-1.4.5.2.13.24.8"></a><h4>Returns</h4>
+<p> A <a class="link" href="UDisksPartitionTable.html" title="UDisksPartitionTable"><span class="type">UDisksPartitionTable</span></a> or <a href="https://developer.gnome.org/glib/unstable/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a> if <em class="parameter"><code>object</code></em>
 does not implement the interface. Do not free the returned object, it is owned by <em class="parameter"><code>object</code></em>
 . </p>
 <p><span class="annotation">[<acronym title="Don't free data after the code is done."><span class="acronym">transfer none</span></acronym>]</span></p>
@@ -1195,9 +1206,10 @@ does not implement the interface. Do not free the returned object, it is owned b
 <pre class="programlisting"><a class="link" href="UDisksMDRaid.html" title="UDisksMDRaid"><span class="returnvalue">UDisksMDRaid</span></a> *
 udisks_object_peek_mdraid (<em class="parameter"><code><a class="link" href="UDisksObject.html" title="UDisksObject"><span class="type">UDisksObject</span></a> *object</code></em>);</pre>
 <p>Like <a class="link" href="UDisksObject.html#udisks-object-get-mdraid" title="udisks_object_get_mdraid ()"><code class="function">udisks_object_get_mdraid()</code></a> but doesn't increase the reference count on the returned object.</p>
-<div class="warning">It is not safe to use the returned object if you are on another thread than the one where the <span class="type">GDBusObjectManagerClient</span> or <span class="type">GDBusObjectManagerServer</span> for <em class="parameter"><code>object</code></em> is running.</div>
+<div class="warning">It is not safe to use the returned object if you are on another thread than the one where the <a href="https://developer.gnome.org/gio/unstable/GDBusObjectManagerClient.html"><span class="type">GDBusObjectManagerClient</span></a> or <a href="https://developer.gnome.org/gio/unstable/GDBusObjectManagerServer.html"><span class="type">GDBusObjectManagerServer</span></a> for <em class="parameter"><code>object</code></em> is running.</div>
+<p><span class="annotation">[<acronym title="Exposed in C code, not necessarily available in other languages."><span class="acronym">skip</span></acronym>]</span></p>
 <div class="refsect3">
-<a name="id-1.4.5.2.13.25.6"></a><h4>Parameters</h4>
+<a name="id-1.4.5.2.13.25.7"></a><h4>Parameters</h4>
 <div class="informaltable"><table width="100%" border="0">
 <colgroup>
 <col width="150px" class="parameters_name">
@@ -1212,20 +1224,20 @@ udisks_object_peek_mdraid (<em class="parameter"><code><a class="link" href="UDi
 </table></div>
 </div>
 <div class="refsect3">
-<a name="id-1.4.5.2.13.25.7"></a><h4>Returns</h4>
-<p> A <a class="link" href="UDisksMDRaid.html" title="UDisksMDRaid"><span class="type">UDisksMDRaid</span></a> or <code class="literal">NULL</code> if <em class="parameter"><code>object</code></em>
+<a name="id-1.4.5.2.13.25.8"></a><h4>Returns</h4>
+<p> A <a class="link" href="UDisksMDRaid.html" title="UDisksMDRaid"><span class="type">UDisksMDRaid</span></a> or <a href="https://developer.gnome.org/glib/unstable/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a> if <em class="parameter"><code>object</code></em>
 does not implement the interface. Do not free the returned object, it is owned by <em class="parameter"><code>object</code></em>
 . </p>
 <p><span class="annotation">[<acronym title="Don't free data after the code is done."><span class="acronym">transfer none</span></acronym>]</span></p>
 </div>
-<p class="since">Since 2.1</p>
+<p class="since">Since: <a class="link" href="api-index-2.1.html" title="Index of new symbols in 2.1">2.1</a></p>
 </div>
 <hr>
 <div class="refsect2">
 <a name="udisks-object-proxy-new"></a><h3>udisks_object_proxy_new ()</h3>
 <pre class="programlisting"><a class="link" href="UDisksObject.html#UDisksObjectProxy"><span class="returnvalue">UDisksObjectProxy</span></a> *
-udisks_object_proxy_new (<em class="parameter"><code><span class="type">GDBusConnection</span> *connection</code></em>,
-                         <em class="parameter"><code>const <span class="type">gchar</span> *object_path</code></em>);</pre>
+udisks_object_proxy_new (<em class="parameter"><code><a href="https://developer.gnome.org/gio/unstable/GDBusConnection.html"><span class="type">GDBusConnection</span></a> *connection</code></em>,
+                         <em class="parameter"><code>const <a href="https://developer.gnome.org/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *object_path</code></em>);</pre>
 <p>Creates a new proxy object.</p>
 <div class="refsect3">
 <a name="id-1.4.5.2.13.26.5"></a><h4>Parameters</h4>
@@ -1238,7 +1250,7 @@ udisks_object_proxy_new (<em class="parameter"><code><span class="type">GDBusCon
 <tbody>
 <tr>
 <td class="parameter_name"><p>connection</p></td>
-<td class="parameter_description"><p>A <span class="type">GDBusConnection</span>.</p></td>
+<td class="parameter_description"><p>A <a href="https://developer.gnome.org/gio/unstable/GDBusConnection.html"><span class="type">GDBusConnection</span></a>.</p></td>
 <td class="parameter_annotations"> </td>
 </tr>
 <tr>
@@ -1259,7 +1271,7 @@ udisks_object_proxy_new (<em class="parameter"><code><span class="type">GDBusCon
 <div class="refsect2">
 <a name="udisks-object-skeleton-new"></a><h3>udisks_object_skeleton_new ()</h3>
 <pre class="programlisting"><a class="link" href="UDisksObject.html#UDisksObjectSkeleton"><span class="returnvalue">UDisksObjectSkeleton</span></a> *
-udisks_object_skeleton_new (<em class="parameter"><code>const <span class="type">gchar</span> *object_path</code></em>);</pre>
+udisks_object_skeleton_new (<em class="parameter"><code>const <a href="https://developer.gnome.org/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *object_path</code></em>);</pre>
 <p>Creates a new skeleton object.</p>
 <div class="refsect3">
 <a name="id-1.4.5.2.13.27.5"></a><h4>Parameters</h4>
@@ -1306,7 +1318,7 @@ udisks_object_skeleton_set_block (<em class="parameter"><code><a class="link" hr
 </tr>
 <tr>
 <td class="parameter_name"><p>interface_</p></td>
-<td class="parameter_description"><p> A <a class="link" href="UDisksBlock.html" title="UDisksBlock"><span class="type">UDisksBlock</span></a> or <code class="literal">NULL</code> to clear the interface. </p></td>
+<td class="parameter_description"><p> A <a class="link" href="UDisksBlock.html" title="UDisksBlock"><span class="type">UDisksBlock</span></a> or <a href="https://developer.gnome.org/glib/unstable/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a> to clear the interface. </p></td>
 <td class="parameter_annotations"><span class="annotation">[<acronym title="NULL is OK, both for passing and for returning."><span class="acronym">allow-none</span></acronym>]</span></td>
 </tr>
 </tbody>
@@ -1337,7 +1349,7 @@ udisks_object_skeleton_set_drive (<em class="parameter"><code><a class="link" hr
 </tr>
 <tr>
 <td class="parameter_name"><p>interface_</p></td>
-<td class="parameter_description"><p> A <a class="link" href="UDisksDrive.html" title="UDisksDrive"><span class="type">UDisksDrive</span></a> or <code class="literal">NULL</code> to clear the interface. </p></td>
+<td class="parameter_description"><p> A <a class="link" href="UDisksDrive.html" title="UDisksDrive"><span class="type">UDisksDrive</span></a> or <a href="https://developer.gnome.org/glib/unstable/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a> to clear the interface. </p></td>
 <td class="parameter_annotations"><span class="annotation">[<acronym title="NULL is OK, both for passing and for returning."><span class="acronym">allow-none</span></acronym>]</span></td>
 </tr>
 </tbody>
@@ -1368,7 +1380,7 @@ udisks_object_skeleton_set_drive_ata (<em class="parameter"><code><a class="link
 </tr>
 <tr>
 <td class="parameter_name"><p>interface_</p></td>
-<td class="parameter_description"><p> A <a class="link" href="UDisksDriveAta.html" title="UDisksDriveAta"><span class="type">UDisksDriveAta</span></a> or <code class="literal">NULL</code> to clear the interface. </p></td>
+<td class="parameter_description"><p> A <a class="link" href="UDisksDriveAta.html" title="UDisksDriveAta"><span class="type">UDisksDriveAta</span></a> or <a href="https://developer.gnome.org/glib/unstable/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a> to clear the interface. </p></td>
 <td class="parameter_annotations"><span class="annotation">[<acronym title="NULL is OK, both for passing and for returning."><span class="acronym">allow-none</span></acronym>]</span></td>
 </tr>
 </tbody>
@@ -1399,7 +1411,7 @@ udisks_object_skeleton_set_filesystem (<em class="parameter"><code><a class="lin
 </tr>
 <tr>
 <td class="parameter_name"><p>interface_</p></td>
-<td class="parameter_description"><p> A <a class="link" href="UDisksFilesystem.html" title="UDisksFilesystem"><span class="type">UDisksFilesystem</span></a> or <code class="literal">NULL</code> to clear the interface. </p></td>
+<td class="parameter_description"><p> A <a class="link" href="UDisksFilesystem.html" title="UDisksFilesystem"><span class="type">UDisksFilesystem</span></a> or <a href="https://developer.gnome.org/glib/unstable/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a> to clear the interface. </p></td>
 <td class="parameter_annotations"><span class="annotation">[<acronym title="NULL is OK, both for passing and for returning."><span class="acronym">allow-none</span></acronym>]</span></td>
 </tr>
 </tbody>
@@ -1430,7 +1442,7 @@ udisks_object_skeleton_set_job (<em class="parameter"><code><a class="link" href
 </tr>
 <tr>
 <td class="parameter_name"><p>interface_</p></td>
-<td class="parameter_description"><p> A <a class="link" href="UDisksJob.html" title="UDisksJob"><span class="type">UDisksJob</span></a> or <code class="literal">NULL</code> to clear the interface. </p></td>
+<td class="parameter_description"><p> A <a class="link" href="UDisksJob.html" title="UDisksJob"><span class="type">UDisksJob</span></a> or <a href="https://developer.gnome.org/glib/unstable/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a> to clear the interface. </p></td>
 <td class="parameter_annotations"><span class="annotation">[<acronym title="NULL is OK, both for passing and for returning."><span class="acronym">allow-none</span></acronym>]</span></td>
 </tr>
 </tbody>
@@ -1461,7 +1473,7 @@ udisks_object_skeleton_set_swapspace (<em class="parameter"><code><a class="link
 </tr>
 <tr>
 <td class="parameter_name"><p>interface_</p></td>
-<td class="parameter_description"><p> A <a class="link" href="UDisksSwapspace.html" title="UDisksSwapspace"><span class="type">UDisksSwapspace</span></a> or <code class="literal">NULL</code> to clear the interface. </p></td>
+<td class="parameter_description"><p> A <a class="link" href="UDisksSwapspace.html" title="UDisksSwapspace"><span class="type">UDisksSwapspace</span></a> or <a href="https://developer.gnome.org/glib/unstable/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a> to clear the interface. </p></td>
 <td class="parameter_annotations"><span class="annotation">[<acronym title="NULL is OK, both for passing and for returning."><span class="acronym">allow-none</span></acronym>]</span></td>
 </tr>
 </tbody>
@@ -1492,7 +1504,7 @@ udisks_object_skeleton_set_encrypted (<em class="parameter"><code><a class="link
 </tr>
 <tr>
 <td class="parameter_name"><p>interface_</p></td>
-<td class="parameter_description"><p> A <a class="link" href="UDisksEncrypted.html" title="UDisksEncrypted"><span class="type">UDisksEncrypted</span></a> or <code class="literal">NULL</code> to clear the interface. </p></td>
+<td class="parameter_description"><p> A <a class="link" href="UDisksEncrypted.html" title="UDisksEncrypted"><span class="type">UDisksEncrypted</span></a> or <a href="https://developer.gnome.org/glib/unstable/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a> to clear the interface. </p></td>
 <td class="parameter_annotations"><span class="annotation">[<acronym title="NULL is OK, both for passing and for returning."><span class="acronym">allow-none</span></acronym>]</span></td>
 </tr>
 </tbody>
@@ -1523,7 +1535,7 @@ udisks_object_skeleton_set_loop (<em class="parameter"><code><a class="link" hre
 </tr>
 <tr>
 <td class="parameter_name"><p>interface_</p></td>
-<td class="parameter_description"><p> A <a class="link" href="UDisksLoop.html" title="UDisksLoop"><span class="type">UDisksLoop</span></a> or <code class="literal">NULL</code> to clear the interface. </p></td>
+<td class="parameter_description"><p> A <a class="link" href="UDisksLoop.html" title="UDisksLoop"><span class="type">UDisksLoop</span></a> or <a href="https://developer.gnome.org/glib/unstable/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a> to clear the interface. </p></td>
 <td class="parameter_annotations"><span class="annotation">[<acronym title="NULL is OK, both for passing and for returning."><span class="acronym">allow-none</span></acronym>]</span></td>
 </tr>
 </tbody>
@@ -1554,7 +1566,7 @@ udisks_object_skeleton_set_manager (<em class="parameter"><code><a class="link" 
 </tr>
 <tr>
 <td class="parameter_name"><p>interface_</p></td>
-<td class="parameter_description"><p> A <a class="link" href="UDisksManager.html" title="UDisksManager"><span class="type">UDisksManager</span></a> or <code class="literal">NULL</code> to clear the interface. </p></td>
+<td class="parameter_description"><p> A <a class="link" href="UDisksManager.html" title="UDisksManager"><span class="type">UDisksManager</span></a> or <a href="https://developer.gnome.org/glib/unstable/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a> to clear the interface. </p></td>
 <td class="parameter_annotations"><span class="annotation">[<acronym title="NULL is OK, both for passing and for returning."><span class="acronym">allow-none</span></acronym>]</span></td>
 </tr>
 </tbody>
@@ -1585,7 +1597,7 @@ udisks_object_skeleton_set_partition (<em class="parameter"><code><a class="link
 </tr>
 <tr>
 <td class="parameter_name"><p>interface_</p></td>
-<td class="parameter_description"><p> A <a class="link" href="UDisksPartition.html" title="UDisksPartition"><span class="type">UDisksPartition</span></a> or <code class="literal">NULL</code> to clear the interface. </p></td>
+<td class="parameter_description"><p> A <a class="link" href="UDisksPartition.html" title="UDisksPartition"><span class="type">UDisksPartition</span></a> or <a href="https://developer.gnome.org/glib/unstable/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a> to clear the interface. </p></td>
 <td class="parameter_annotations"><span class="annotation">[<acronym title="NULL is OK, both for passing and for returning."><span class="acronym">allow-none</span></acronym>]</span></td>
 </tr>
 </tbody>
@@ -1617,7 +1629,7 @@ udisks_object_skeleton_set_partition_table
 </tr>
 <tr>
 <td class="parameter_name"><p>interface_</p></td>
-<td class="parameter_description"><p> A <a class="link" href="UDisksPartitionTable.html" title="UDisksPartitionTable"><span class="type">UDisksPartitionTable</span></a> or <code class="literal">NULL</code> to clear the interface. </p></td>
+<td class="parameter_description"><p> A <a class="link" href="UDisksPartitionTable.html" title="UDisksPartitionTable"><span class="type">UDisksPartitionTable</span></a> or <a href="https://developer.gnome.org/glib/unstable/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a> to clear the interface. </p></td>
 <td class="parameter_annotations"><span class="annotation">[<acronym title="NULL is OK, both for passing and for returning."><span class="acronym">allow-none</span></acronym>]</span></td>
 </tr>
 </tbody>
@@ -1648,13 +1660,13 @@ udisks_object_skeleton_set_mdraid (<em class="parameter"><code><a class="link" h
 </tr>
 <tr>
 <td class="parameter_name"><p>interface_</p></td>
-<td class="parameter_description"><p> A <a class="link" href="UDisksMDRaid.html" title="UDisksMDRaid"><span class="type">UDisksMDRaid</span></a> or <code class="literal">NULL</code> to clear the interface. </p></td>
+<td class="parameter_description"><p> A <a class="link" href="UDisksMDRaid.html" title="UDisksMDRaid"><span class="type">UDisksMDRaid</span></a> or <a href="https://developer.gnome.org/glib/unstable/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a> to clear the interface. </p></td>
 <td class="parameter_annotations"><span class="annotation">[<acronym title="NULL is OK, both for passing and for returning."><span class="acronym">allow-none</span></acronym>]</span></td>
 </tr>
 </tbody>
 </table></div>
 </div>
-<p class="since">Since 2.1</p>
+<p class="since">Since: <a class="link" href="api-index-2.1.html" title="Index of new symbols in 2.1">2.1</a></p>
 </div>
 </div>
 <div class="refsect1">
@@ -1681,7 +1693,7 @@ udisks_object_skeleton_set_mdraid (<em class="parameter"><code><a class="link" h
 <col width="200px" class="struct_members_annotations">
 </colgroup>
 <tbody><tr>
-<td class="struct_member_name"><p><span class="type">GTypeInterface</span> <em class="structfield"><code><a name="UDisksObjectIface.parent-iface"></a>parent_iface</code></em>;</p></td>
+<td class="struct_member_name"><p><a href="https://developer.gnome.org/gobject/unstable/gobject-Type-Information.html#GTypeInterface"><span class="type">GTypeInterface</span></a> <em class="structfield"><code><a name="UDisksObjectIface.parent-iface"></a>parent_iface</code></em>;</p></td>
 <td class="struct_member_description"><p>The parent interface.</p></td>
 <td class="struct_member_annotations"> </td>
 </tr></tbody>
@@ -1711,7 +1723,7 @@ udisks_object_skeleton_set_mdraid (<em class="parameter"><code><a class="link" h
 <col width="200px" class="struct_members_annotations">
 </colgroup>
 <tbody><tr>
-<td class="struct_member_name"><p><span class="type">GDBusObjectProxyClass</span> <em class="structfield"><code><a name="UDisksObjectProxyClass.parent-class"></a>parent_class</code></em>;</p></td>
+<td class="struct_member_name"><p><a href="https://developer.gnome.org/gio/unstable/GDBusObjectProxy.html#GDBusObjectProxyClass"><span class="type">GDBusObjectProxyClass</span></a> <em class="structfield"><code><a name="UDisksObjectProxyClass.parent-class"></a>parent_class</code></em>;</p></td>
 <td class="struct_member_description"><p>The parent class.</p></td>
 <td class="struct_member_annotations"> </td>
 </tr></tbody>
@@ -1741,7 +1753,7 @@ udisks_object_skeleton_set_mdraid (<em class="parameter"><code><a class="link" h
 <col width="200px" class="struct_members_annotations">
 </colgroup>
 <tbody><tr>
-<td class="struct_member_name"><p><span class="type">GDBusObjectSkeletonClass</span> <em class="structfield"><code><a name="UDisksObjectSkeletonClass.parent-class"></a>parent_class</code></em>;</p></td>
+<td class="struct_member_name"><p><a href="https://developer.gnome.org/gio/unstable/GDBusObjectSkeleton.html#GDBusObjectSkeletonClass"><span class="type">GDBusObjectSkeletonClass</span></a> <em class="structfield"><code><a name="UDisksObjectSkeletonClass.parent-class"></a>parent_class</code></em>;</p></td>
 <td class="struct_member_description"><p>The parent class.</p></td>
 <td class="struct_member_annotations"> </td>
 </tr></tbody>
@@ -1755,7 +1767,7 @@ udisks_object_skeleton_set_mdraid (<em class="parameter"><code><a class="link" h
 <a name="UDisksObject--block"></a><h3>The <code class="literal">“block”</code> property</h3>
 <pre class="programlisting">  “block”                    <a class="link" href="UDisksBlock.html" title="UDisksBlock"><span class="type">UDisksBlock</span></a> *</pre>
 <p>The <a class="link" href="UDisksBlock.html" title="UDisksBlock"><span class="type">UDisksBlock</span></a> instance corresponding to the D-Bus interface <a class="link" href="gdbus-org.freedesktop.UDisks2.Block.html#gdbus-interface-org-freedesktop-UDisks2-Block.top_of_page">org.freedesktop.UDisks2.Block</a>, if any.</p>
-<p>Connect to the <span class="type">“notify”</span> signal to get informed of property changes.</p>
+<p>Connect to the <a href="https://developer.gnome.org/gobject/unstable/gobject-The-Base-Object-Type.html#GObject-notify"><span class="type">“notify”</span></a> signal to get informed of property changes.</p>
 <p>Flags: Read / Write</p>
 </div>
 <hr>
@@ -1763,7 +1775,7 @@ udisks_object_skeleton_set_mdraid (<em class="parameter"><code><a class="link" h
 <a name="UDisksObject--drive"></a><h3>The <code class="literal">“drive”</code> property</h3>
 <pre class="programlisting">  “drive”                    <a class="link" href="UDisksDrive.html" title="UDisksDrive"><span class="type">UDisksDrive</span></a> *</pre>
 <p>The <a class="link" href="UDisksDrive.html" title="UDisksDrive"><span class="type">UDisksDrive</span></a> instance corresponding to the D-Bus interface <a class="link" href="gdbus-org.freedesktop.UDisks2.Drive.html#gdbus-interface-org-freedesktop-UDisks2-Drive.top_of_page">org.freedesktop.UDisks2.Drive</a>, if any.</p>
-<p>Connect to the <span class="type">“notify”</span> signal to get informed of property changes.</p>
+<p>Connect to the <a href="https://developer.gnome.org/gobject/unstable/gobject-The-Base-Object-Type.html#GObject-notify"><span class="type">“notify”</span></a> signal to get informed of property changes.</p>
 <p>Flags: Read / Write</p>
 </div>
 <hr>
@@ -1771,7 +1783,7 @@ udisks_object_skeleton_set_mdraid (<em class="parameter"><code><a class="link" h
 <a name="UDisksObject--drive-ata"></a><h3>The <code class="literal">“drive-ata”</code> property</h3>
 <pre class="programlisting">  “drive-ata”                <a class="link" href="UDisksDriveAta.html" title="UDisksDriveAta"><span class="type">UDisksDriveAta</span></a> *</pre>
 <p>The <a class="link" href="UDisksDriveAta.html" title="UDisksDriveAta"><span class="type">UDisksDriveAta</span></a> instance corresponding to the D-Bus interface <a class="link" href="gdbus-org.freedesktop.UDisks2.Drive.Ata.html#gdbus-interface-org-freedesktop-UDisks2-Drive-Ata.top_of_page">org.freedesktop.UDisks2.Drive.Ata</a>, if any.</p>
-<p>Connect to the <span class="type">“notify”</span> signal to get informed of property changes.</p>
+<p>Connect to the <a href="https://developer.gnome.org/gobject/unstable/gobject-The-Base-Object-Type.html#GObject-notify"><span class="type">“notify”</span></a> signal to get informed of property changes.</p>
 <p>Flags: Read / Write</p>
 </div>
 <hr>
@@ -1779,7 +1791,7 @@ udisks_object_skeleton_set_mdraid (<em class="parameter"><code><a class="link" h
 <a name="UDisksObject--encrypted"></a><h3>The <code class="literal">“encrypted”</code> property</h3>
 <pre class="programlisting">  “encrypted”                <a class="link" href="UDisksEncrypted.html" title="UDisksEncrypted"><span class="type">UDisksEncrypted</span></a> *</pre>
 <p>The <a class="link" href="UDisksEncrypted.html" title="UDisksEncrypted"><span class="type">UDisksEncrypted</span></a> instance corresponding to the D-Bus interface <a class="link" href="gdbus-org.freedesktop.UDisks2.Encrypted.html#gdbus-interface-org-freedesktop-UDisks2-Encrypted.top_of_page">org.freedesktop.UDisks2.Encrypted</a>, if any.</p>
-<p>Connect to the <span class="type">“notify”</span> signal to get informed of property changes.</p>
+<p>Connect to the <a href="https://developer.gnome.org/gobject/unstable/gobject-The-Base-Object-Type.html#GObject-notify"><span class="type">“notify”</span></a> signal to get informed of property changes.</p>
 <p>Flags: Read / Write</p>
 </div>
 <hr>
@@ -1787,7 +1799,7 @@ udisks_object_skeleton_set_mdraid (<em class="parameter"><code><a class="link" h
 <a name="UDisksObject--filesystem"></a><h3>The <code class="literal">“filesystem”</code> property</h3>
 <pre class="programlisting">  “filesystem”               <a class="link" href="UDisksFilesystem.html" title="UDisksFilesystem"><span class="type">UDisksFilesystem</span></a> *</pre>
 <p>The <a class="link" href="UDisksFilesystem.html" title="UDisksFilesystem"><span class="type">UDisksFilesystem</span></a> instance corresponding to the D-Bus interface <a class="link" href="gdbus-org.freedesktop.UDisks2.Filesystem.html#gdbus-interface-org-freedesktop-UDisks2-Filesystem.top_of_page">org.freedesktop.UDisks2.Filesystem</a>, if any.</p>
-<p>Connect to the <span class="type">“notify”</span> signal to get informed of property changes.</p>
+<p>Connect to the <a href="https://developer.gnome.org/gobject/unstable/gobject-The-Base-Object-Type.html#GObject-notify"><span class="type">“notify”</span></a> signal to get informed of property changes.</p>
 <p>Flags: Read / Write</p>
 </div>
 <hr>
@@ -1795,7 +1807,7 @@ udisks_object_skeleton_set_mdraid (<em class="parameter"><code><a class="link" h
 <a name="UDisksObject--job"></a><h3>The <code class="literal">“job”</code> property</h3>
 <pre class="programlisting">  “job”                      <a class="link" href="UDisksJob.html" title="UDisksJob"><span class="type">UDisksJob</span></a> *</pre>
 <p>The <a class="link" href="UDisksJob.html" title="UDisksJob"><span class="type">UDisksJob</span></a> instance corresponding to the D-Bus interface <a class="link" href="gdbus-org.freedesktop.UDisks2.Job.html#gdbus-interface-org-freedesktop-UDisks2-Job.top_of_page">org.freedesktop.UDisks2.Job</a>, if any.</p>
-<p>Connect to the <span class="type">“notify”</span> signal to get informed of property changes.</p>
+<p>Connect to the <a href="https://developer.gnome.org/gobject/unstable/gobject-The-Base-Object-Type.html#GObject-notify"><span class="type">“notify”</span></a> signal to get informed of property changes.</p>
 <p>Flags: Read / Write</p>
 </div>
 <hr>
@@ -1803,7 +1815,7 @@ udisks_object_skeleton_set_mdraid (<em class="parameter"><code><a class="link" h
 <a name="UDisksObject--loop"></a><h3>The <code class="literal">“loop”</code> property</h3>
 <pre class="programlisting">  “loop”                     <a class="link" href="UDisksLoop.html" title="UDisksLoop"><span class="type">UDisksLoop</span></a> *</pre>
 <p>The <a class="link" href="UDisksLoop.html" title="UDisksLoop"><span class="type">UDisksLoop</span></a> instance corresponding to the D-Bus interface <a class="link" href="gdbus-org.freedesktop.UDisks2.Loop.html#gdbus-interface-org-freedesktop-UDisks2-Loop.top_of_page">org.freedesktop.UDisks2.Loop</a>, if any.</p>
-<p>Connect to the <span class="type">“notify”</span> signal to get informed of property changes.</p>
+<p>Connect to the <a href="https://developer.gnome.org/gobject/unstable/gobject-The-Base-Object-Type.html#GObject-notify"><span class="type">“notify”</span></a> signal to get informed of property changes.</p>
 <p>Flags: Read / Write</p>
 </div>
 <hr>
@@ -1811,7 +1823,7 @@ udisks_object_skeleton_set_mdraid (<em class="parameter"><code><a class="link" h
 <a name="UDisksObject--manager"></a><h3>The <code class="literal">“manager”</code> property</h3>
 <pre class="programlisting">  “manager”                  <a class="link" href="UDisksManager.html" title="UDisksManager"><span class="type">UDisksManager</span></a> *</pre>
 <p>The <a class="link" href="UDisksManager.html" title="UDisksManager"><span class="type">UDisksManager</span></a> instance corresponding to the D-Bus interface <a class="link" href="gdbus-org.freedesktop.UDisks2.Manager.html#gdbus-interface-org-freedesktop-UDisks2-Manager.top_of_page">org.freedesktop.UDisks2.Manager</a>, if any.</p>
-<p>Connect to the <span class="type">“notify”</span> signal to get informed of property changes.</p>
+<p>Connect to the <a href="https://developer.gnome.org/gobject/unstable/gobject-The-Base-Object-Type.html#GObject-notify"><span class="type">“notify”</span></a> signal to get informed of property changes.</p>
 <p>Flags: Read / Write</p>
 </div>
 <hr>
@@ -1819,16 +1831,16 @@ udisks_object_skeleton_set_mdraid (<em class="parameter"><code><a class="link" h
 <a name="UDisksObject--mdraid"></a><h3>The <code class="literal">“mdraid”</code> property</h3>
 <pre class="programlisting">  “mdraid”                   <a class="link" href="UDisksMDRaid.html" title="UDisksMDRaid"><span class="type">UDisksMDRaid</span></a> *</pre>
 <p>The <a class="link" href="UDisksMDRaid.html" title="UDisksMDRaid"><span class="type">UDisksMDRaid</span></a> instance corresponding to the D-Bus interface <a class="link" href="gdbus-org.freedesktop.UDisks2.MDRaid.html#gdbus-interface-org-freedesktop-UDisks2-MDRaid.top_of_page">org.freedesktop.UDisks2.MDRaid</a>, if any.</p>
-<p>Connect to the <span class="type">“notify”</span> signal to get informed of property changes.</p>
+<p>Connect to the <a href="https://developer.gnome.org/gobject/unstable/gobject-The-Base-Object-Type.html#GObject-notify"><span class="type">“notify”</span></a> signal to get informed of property changes.</p>
 <p>Flags: Read / Write</p>
-<p class="since">Since 2.1</p>
+<p class="since">Since: <a class="link" href="api-index-2.1.html" title="Index of new symbols in 2.1">2.1</a></p>
 </div>
 <hr>
 <div class="refsect2">
 <a name="UDisksObject--partition"></a><h3>The <code class="literal">“partition”</code> property</h3>
 <pre class="programlisting">  “partition”                <a class="link" href="UDisksPartition.html" title="UDisksPartition"><span class="type">UDisksPartition</span></a> *</pre>
 <p>The <a class="link" href="UDisksPartition.html" title="UDisksPartition"><span class="type">UDisksPartition</span></a> instance corresponding to the D-Bus interface <a class="link" href="gdbus-org.freedesktop.UDisks2.Partition.html#gdbus-interface-org-freedesktop-UDisks2-Partition.top_of_page">org.freedesktop.UDisks2.Partition</a>, if any.</p>
-<p>Connect to the <span class="type">“notify”</span> signal to get informed of property changes.</p>
+<p>Connect to the <a href="https://developer.gnome.org/gobject/unstable/gobject-The-Base-Object-Type.html#GObject-notify"><span class="type">“notify”</span></a> signal to get informed of property changes.</p>
 <p>Flags: Read / Write</p>
 </div>
 <hr>
@@ -1836,7 +1848,7 @@ udisks_object_skeleton_set_mdraid (<em class="parameter"><code><a class="link" h
 <a name="UDisksObject--partition-table"></a><h3>The <code class="literal">“partition-table”</code> property</h3>
 <pre class="programlisting">  “partition-table”          <a class="link" href="UDisksPartitionTable.html" title="UDisksPartitionTable"><span class="type">UDisksPartitionTable</span></a> *</pre>
 <p>The <a class="link" href="UDisksPartitionTable.html" title="UDisksPartitionTable"><span class="type">UDisksPartitionTable</span></a> instance corresponding to the D-Bus interface <a class="link" href="gdbus-org.freedesktop.UDisks2.PartitionTable.html#gdbus-interface-org-freedesktop-UDisks2-PartitionTable.top_of_page">org.freedesktop.UDisks2.PartitionTable</a>, if any.</p>
-<p>Connect to the <span class="type">“notify”</span> signal to get informed of property changes.</p>
+<p>Connect to the <a href="https://developer.gnome.org/gobject/unstable/gobject-The-Base-Object-Type.html#GObject-notify"><span class="type">“notify”</span></a> signal to get informed of property changes.</p>
 <p>Flags: Read / Write</p>
 </div>
 <hr>
@@ -1844,13 +1856,12 @@ udisks_object_skeleton_set_mdraid (<em class="parameter"><code><a class="link" h
 <a name="UDisksObject--swapspace"></a><h3>The <code class="literal">“swapspace”</code> property</h3>
 <pre class="programlisting">  “swapspace”                <a class="link" href="UDisksSwapspace.html" title="UDisksSwapspace"><span class="type">UDisksSwapspace</span></a> *</pre>
 <p>The <a class="link" href="UDisksSwapspace.html" title="UDisksSwapspace"><span class="type">UDisksSwapspace</span></a> instance corresponding to the D-Bus interface <a class="link" href="gdbus-org.freedesktop.UDisks2.Swapspace.html#gdbus-interface-org-freedesktop-UDisks2-Swapspace.top_of_page">org.freedesktop.UDisks2.Swapspace</a>, if any.</p>
-<p>Connect to the <span class="type">“notify”</span> signal to get informed of property changes.</p>
+<p>Connect to the <a href="https://developer.gnome.org/gobject/unstable/gobject-The-Base-Object-Type.html#GObject-notify"><span class="type">“notify”</span></a> signal to get informed of property changes.</p>
 <p>Flags: Read / Write</p>
 </div>
 </div>
 </div>
 <div class="footer">
-<hr>
-          Generated by GTK-Doc V1.21</div>
+<hr>Generated by GTK-Doc V1.24</div>
 </body>
 </html>

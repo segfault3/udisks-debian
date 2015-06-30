@@ -2,13 +2,13 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>UDisks Reference Manual: UDisksLinuxProvider</title>
+<title>UDisksLinuxProvider: UDisks Reference Manual</title>
 <meta name="generator" content="DocBook XSL Stylesheets V1.78.1">
 <link rel="home" href="index.html" title="UDisks Reference Manual">
 <link rel="up" href="ref-daemon-linux-types.html" title="Linux-specific types">
 <link rel="prev" href="UDisksLinuxManager.html" title="UDisksLinuxManager">
 <link rel="next" href="UDisksLinuxDevice.html" title="UDisksLinuxDevice">
-<meta name="generator" content="GTK-Doc V1.21 (XML mode)">
+<meta name="generator" content="GTK-Doc V1.24 (XML mode)">
 <link rel="stylesheet" href="style.css" type="text/css">
 </head>
 <body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
@@ -50,7 +50,7 @@
 </tr>
 <tr>
 <td class="function_type">
-<a href="http://www.freedesktop.org/software/systemd/gudev/GUdevClient.html"><span class="returnvalue">GUdevClient</span></a> *
+<a href="https://developer.gnome.org/GUdevClient.html"><span class="returnvalue">GUdevClient</span></a> *
 </td>
 <td class="function_name">
 <a class="link" href="UDisksLinuxProvider.html#udisks-linux-provider-get-udev-client" title="udisks_linux_provider_get_udev_client ()">udisks_linux_provider_get_udev_client</a> <span class="c_punctuation">()</span>
@@ -58,7 +58,7 @@
 </tr>
 <tr>
 <td class="function_type">
-<span class="returnvalue">gboolean</span>
+<a href="https://developer.gnome.org/glib/unstable/glib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>
 </td>
 <td class="function_name">
 <a class="link" href="UDisksLinuxProvider.html#udisks-linux-provider-get-coldplug" title="udisks_linux_provider_get_coldplug ()">udisks_linux_provider_get_coldplug</a> <span class="c_punctuation">()</span>
@@ -82,7 +82,7 @@
 </div>
 <div class="refsect1">
 <a name="UDisksLinuxProvider.object-hierarchy"></a><h2>Object Hierarchy</h2>
-<pre class="screen">    GObject
+<pre class="screen">    <a href="https://developer.gnome.org/gobject/unstable/gobject-The-Base-Object-Type.html#GObject">GObject</a>
     <span class="lineart">╰──</span> <a class="link" href="UDisksProvider.html" title="UDisksProvider">UDisksProvider</a>
         <span class="lineart">╰──</span> UDisksLinuxProvider
 </pre>
@@ -116,16 +116,15 @@ udisks_linux_provider_new (<em class="parameter"><code><a class="link" href="UDi
 </div>
 <div class="refsect3">
 <a name="id-1.5.5.3.7.2.6"></a><h4>Returns</h4>
-<p> A <a class="link" href="UDisksLinuxProvider.html" title="UDisksLinuxProvider"><span class="type">UDisksLinuxProvider</span></a> object. Free with <code class="function">g_object_unref()</code>.</p>
-<p></p>
+<p> A <a class="link" href="UDisksLinuxProvider.html" title="UDisksLinuxProvider"><span class="type">UDisksLinuxProvider</span></a> object. Free with <a href="https://developer.gnome.org/gobject/unstable/gobject-The-Base-Object-Type.html#g-object-unref"><code class="function">g_object_unref()</code></a>.</p>
 </div>
 </div>
 <hr>
 <div class="refsect2">
 <a name="udisks-linux-provider-get-udev-client"></a><h3>udisks_linux_provider_get_udev_client ()</h3>
-<pre class="programlisting"><a href="http://www.freedesktop.org/software/systemd/gudev/GUdevClient.html"><span class="returnvalue">GUdevClient</span></a> *
+<pre class="programlisting"><a href="https://developer.gnome.org/GUdevClient.html"><span class="returnvalue">GUdevClient</span></a> *
 udisks_linux_provider_get_udev_client (<em class="parameter"><code><a class="link" href="UDisksLinuxProvider.html" title="UDisksLinuxProvider"><span class="type">UDisksLinuxProvider</span></a> *provider</code></em>);</pre>
-<p>Gets the <a href="http://www.freedesktop.org/software/systemd/gudev/GUdevClient.html"><span class="type">GUdevClient</span></a> used by <em class="parameter"><code>provider</code></em>
+<p>Gets the <a href="https://developer.gnome.org/GUdevClient.html"><span class="type">GUdevClient</span></a> used by <em class="parameter"><code>provider</code></em>
 .</p>
 <div class="refsect3">
 <a name="id-1.5.5.3.7.3.5"></a><h4>Parameters</h4>
@@ -144,15 +143,14 @@ udisks_linux_provider_get_udev_client (<em class="parameter"><code><a class="lin
 </div>
 <div class="refsect3">
 <a name="id-1.5.5.3.7.3.6"></a><h4>Returns</h4>
-<p> A <a href="http://www.freedesktop.org/software/systemd/gudev/GUdevClient.html"><span class="type">GUdevClient</span></a> owned by <em class="parameter"><code>provider</code></em>
+<p> A <a href="https://developer.gnome.org/GUdevClient.html"><span class="type">GUdevClient</span></a> owned by <em class="parameter"><code>provider</code></em>
 . Do not free.</p>
-<p></p>
 </div>
 </div>
 <hr>
 <div class="refsect2">
 <a name="udisks-linux-provider-get-coldplug"></a><h3>udisks_linux_provider_get_coldplug ()</h3>
-<pre class="programlisting"><span class="returnvalue">gboolean</span>
+<pre class="programlisting"><a href="https://developer.gnome.org/glib/unstable/glib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>
 udisks_linux_provider_get_coldplug (<em class="parameter"><code><a class="link" href="UDisksLinuxProvider.html" title="UDisksLinuxProvider"><span class="type">UDisksLinuxProvider</span></a> *provider</code></em>);</pre>
 <p>Gets whether <em class="parameter"><code>provider</code></em>
  is in the coldplug phase.</p>
@@ -173,8 +171,7 @@ udisks_linux_provider_get_coldplug (<em class="parameter"><code><a class="link" 
 </div>
 <div class="refsect3">
 <a name="id-1.5.5.3.7.4.6"></a><h4>Returns</h4>
-<p> <code class="literal">TRUE</code> if in the coldplug phase, <code class="literal">FALSE</code> otherwise.</p>
-<p></p>
+<p> <a href="https://developer.gnome.org/glib/unstable/glib-Standard-Macros.html#TRUE:CAPS"><code class="literal">TRUE</code></a> if in the coldplug phase, <a href="https://developer.gnome.org/glib/unstable/glib-Standard-Macros.html#FALSE:CAPS"><code class="literal">FALSE</code></a> otherwise.</p>
 </div>
 </div>
 </div>
@@ -189,7 +186,6 @@ should only be accessed using the provided API.</p>
 </div>
 </div>
 <div class="footer">
-<hr>
-          Generated by GTK-Doc V1.21</div>
+<hr>Generated by GTK-Doc V1.24</div>
 </body>
 </html>

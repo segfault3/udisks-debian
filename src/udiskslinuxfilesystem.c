@@ -304,7 +304,7 @@ static const gchar *iso9660_allow_gid_self[] = { "gid=", NULL };
 
 /* ---------------------- udf -------------------- */
 
-static const gchar *udf_defaults[] = { "uid=", "gid=", "iocharset=utf8", "umask=0077", NULL };
+static const gchar *udf_defaults[] = { "uid=", "gid=", "iocharset=utf8", NULL };
 static const gchar *udf_allow[] = { "iocharset=", "umask=", NULL };
 static const gchar *udf_allow_uid_self[] = { "uid=", NULL };
 static const gchar *udf_allow_gid_self[] = { "gid=", NULL };
@@ -1147,7 +1147,6 @@ handle_mount (UDisksFilesystem       *filesystem,
   UDisksState *state;
   uid_t caller_uid;
   gid_t caller_gid;
-  pid_t caller_pid;
   const gchar * const *existing_mount_points;
   const gchar *probed_fs_usage;
   gchar *fs_type_to_use;
@@ -1235,18 +1234,6 @@ handle_mount (UDisksFilesystem       *filesystem,
       goto out;
     }
 
-  error = NULL;
-  if (!udisks_daemon_util_get_caller_pid_sync (daemon,
-                                               invocation,
-                                               NULL /* GCancellable */,
-                                               &caller_pid,
-                                               &error))
-    {
-      g_dbus_method_invocation_return_gerror (invocation, error);
-      g_error_free (error);
-      goto out;
-    }
-
   if (system_managed)
     {
       gint status;
@@ -1268,7 +1255,7 @@ handle_mount (UDisksFilesystem       *filesystem,
                 {
                   action_id = "org.freedesktop.udisks2.filesystem-mount-system";
                 }
-              else if (!udisks_daemon_util_on_same_seat (daemon, object, caller_pid))
+              else if (!udisks_daemon_util_on_user_seat (daemon, object, caller_uid))
                 {
                   action_id = "org.freedesktop.udisks2.filesystem-mount-other-seat";
                 }
@@ -1430,7 +1417,7 @@ handle_mount (UDisksFilesystem       *filesystem,
         {
           action_id = "org.freedesktop.udisks2.filesystem-mount-system";
         }
-      else if (!udisks_daemon_util_on_same_seat (daemon, object, caller_pid))
+      else if (!udisks_daemon_util_on_user_seat (daemon, object, caller_uid))
         {
           action_id = "org.freedesktop.udisks2.filesystem-mount-other-seat";
         }
@@ -1845,7 +1832,6 @@ handle_set_label (UDisksFilesystem       *filesystem,
   gchar *real_label = NULL;
   uid_t caller_uid;
   gid_t caller_gid;
-  pid_t caller_pid;
   gchar *command;
   gchar *tmp;
   GError *error;
@@ -1864,18 +1850,6 @@ handle_set_label (UDisksFilesystem       *filesystem,
 
   daemon = udisks_linux_block_object_get_daemon (UDISKS_LINUX_BLOCK_OBJECT (object));
   block = udisks_object_peek_block (object);
-
-  error = NULL;
-  if (!udisks_daemon_util_get_caller_pid_sync (daemon,
-                                               invocation,
-                                               NULL /* GCancellable */,
-                                               &caller_pid,
-                                               &error))
-    {
-      g_dbus_method_invocation_return_gerror (invocation, error);
-      g_error_free (error);
-      goto out;
-    }
 
   error = NULL;
   if (!udisks_daemon_util_get_caller_uid_sync (daemon,
@@ -1976,7 +1950,7 @@ handle_set_label (UDisksFilesystem       *filesystem,
         {
           action_id = "org.freedesktop.udisks2.modify-device-system";
         }
-      else if (!udisks_daemon_util_on_same_seat (daemon, UDISKS_OBJECT (object), caller_pid))
+      else if (!udisks_daemon_util_on_user_seat (daemon, UDISKS_OBJECT (object), caller_uid))
         {
           action_id = "org.freedesktop.udisks2.modify-device-other-seat";
         }

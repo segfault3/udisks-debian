@@ -227,7 +227,6 @@ handle_set_flags (UDisksPartition        *partition,
   gint fd = -1;
   uid_t caller_uid;
   gid_t caller_gid;
-  pid_t caller_pid;
   GError *error;
 
   error = NULL;
@@ -240,18 +239,6 @@ handle_set_flags (UDisksPartition        *partition,
 
   daemon = udisks_linux_block_object_get_daemon (UDISKS_LINUX_BLOCK_OBJECT (object));
   block = udisks_object_get_block (object);
-
-  error = NULL;
-  if (!udisks_daemon_util_get_caller_pid_sync (daemon,
-                                               invocation,
-                                               NULL /* GCancellable */,
-                                               &caller_pid,
-                                               &error))
-    {
-      g_dbus_method_invocation_return_gerror (invocation, error);
-      g_error_free (error);
-      goto out;
-    }
 
   error = NULL;
   if (!udisks_daemon_util_get_caller_uid_sync (daemon,
@@ -285,7 +272,7 @@ handle_set_flags (UDisksPartition        *partition,
         {
           action_id = "org.freedesktop.udisks2.modify-device-system";
         }
-      else if (!udisks_daemon_util_on_same_seat (daemon, object, caller_pid))
+      else if (!udisks_daemon_util_on_user_seat (daemon, object, caller_uid))
         {
           action_id = "org.freedesktop.udisks2.modify-device-other-seat";
         }
@@ -392,7 +379,6 @@ handle_set_name (UDisksPartition        *partition,
   gint fd = -1;
   uid_t caller_uid;
   gid_t caller_gid;
-  pid_t caller_pid;
   GError *error;
 
   error = NULL;
@@ -405,18 +391,6 @@ handle_set_name (UDisksPartition        *partition,
 
   daemon = udisks_linux_block_object_get_daemon (UDISKS_LINUX_BLOCK_OBJECT (object));
   block = udisks_object_get_block (object);
-
-  error = NULL;
-  if (!udisks_daemon_util_get_caller_pid_sync (daemon,
-                                               invocation,
-                                               NULL /* GCancellable */,
-                                               &caller_pid,
-                                               &error))
-    {
-      g_dbus_method_invocation_return_gerror (invocation, error);
-      g_error_free (error);
-      goto out;
-    }
 
   error = NULL;
   if (!udisks_daemon_util_get_caller_uid_sync (daemon,
@@ -450,7 +424,7 @@ handle_set_name (UDisksPartition        *partition,
         {
           action_id = "org.freedesktop.udisks2.modify-device-system";
         }
-      else if (!udisks_daemon_util_on_same_seat (daemon, object, caller_pid))
+      else if (!udisks_daemon_util_on_user_seat (daemon, object, caller_uid))
         {
           action_id = "org.freedesktop.udisks2.modify-device-other-seat";
         }
@@ -734,7 +708,6 @@ handle_set_type (UDisksPartition        *partition,
   UDisksBlock *partition_table_block = NULL;
   uid_t caller_uid;
   gid_t caller_gid;
-  pid_t caller_pid;
   GError *error;
 
   error = NULL;
@@ -747,18 +720,6 @@ handle_set_type (UDisksPartition        *partition,
 
   daemon = udisks_linux_block_object_get_daemon (UDISKS_LINUX_BLOCK_OBJECT (object));
   block = udisks_object_get_block (object);
-
-  error = NULL;
-  if (!udisks_daemon_util_get_caller_pid_sync (daemon,
-                                               invocation,
-                                               NULL /* GCancellable */,
-                                               &caller_pid,
-                                               &error))
-    {
-      g_dbus_method_invocation_return_gerror (invocation, error);
-      g_error_free (error);
-      goto out;
-    }
 
   error = NULL;
   if (!udisks_daemon_util_get_caller_uid_sync (daemon,
@@ -792,7 +753,7 @@ handle_set_type (UDisksPartition        *partition,
         {
           action_id = "org.freedesktop.udisks2.modify-device-system";
         }
-      else if (!udisks_daemon_util_on_same_seat (daemon, object, caller_pid))
+      else if (!udisks_daemon_util_on_user_seat (daemon, object, caller_uid))
         {
           action_id = "org.freedesktop.udisks2.modify-device-other-seat";
         }
@@ -845,7 +806,6 @@ handle_delete (UDisksPartition        *partition,
   gchar *command_line = NULL;
   uid_t caller_uid;
   gid_t caller_gid;
-  pid_t caller_pid;
   GError *error;
 
   error = NULL;
@@ -858,18 +818,6 @@ handle_delete (UDisksPartition        *partition,
 
   daemon = udisks_linux_block_object_get_daemon (UDISKS_LINUX_BLOCK_OBJECT (object));
   block = udisks_object_get_block (object);
-
-  error = NULL;
-  if (!udisks_daemon_util_get_caller_pid_sync (daemon,
-                                               invocation,
-                                               NULL /* GCancellable */,
-                                               &caller_pid,
-                                               &error))
-    {
-      g_dbus_method_invocation_return_gerror (invocation, error);
-      g_error_free (error);
-      goto out;
-    }
 
   error = NULL;
   if (!udisks_daemon_util_get_caller_uid_sync (daemon,
@@ -903,7 +851,7 @@ handle_delete (UDisksPartition        *partition,
         {
           action_id = "org.freedesktop.udisks2.modify-device-system";
         }
-      else if (!udisks_daemon_util_on_same_seat (daemon, object, caller_pid))
+      else if (!udisks_daemon_util_on_user_seat (daemon, object, caller_uid))
         {
           action_id = "org.freedesktop.udisks2.modify-device-other-seat";
         }

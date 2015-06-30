@@ -44,9 +44,9 @@ gboolean udisks_daemon_util_setup_by_user (UDisksDaemon *daemon,
                                            UDisksObject *object,
                                            uid_t         user);
 
-gboolean udisks_daemon_util_on_same_seat (UDisksDaemon          *daemon,
+gboolean udisks_daemon_util_on_user_seat (UDisksDaemon          *daemon,
                                           UDisksObject          *object,
-                                          pid_t                  process);
+                                          uid_t                  user);
 
 gboolean udisks_daemon_util_check_authorization_sync (UDisksDaemon          *daemon,
                                                       UDisksObject          *object,
@@ -86,10 +86,6 @@ gboolean udisks_daemon_util_file_set_contents (const gchar  *filename,
 
 UDisksInhibitCookie *udisks_daemon_util_inhibit_system_sync   (const gchar          *reason);
 void                 udisks_daemon_util_uninhibit_system_sync (UDisksInhibitCookie  *cookie);
-
-gboolean udisks_daemon_util_on_same_seat (UDisksDaemon          *daemon,
-                                          UDisksObject          *object,
-                                          pid_t                  process);
 
 gchar *udisks_daemon_util_get_free_mdraid_device (void);
 

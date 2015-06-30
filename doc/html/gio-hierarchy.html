@@ -2,12 +2,12 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>UDisks Reference Manual: Object Hierarchy</title>
+<title>Object Hierarchy: UDisks Reference Manual</title>
 <meta name="generator" content="DocBook XSL Stylesheets V1.78.1">
 <link rel="home" href="index.html" title="UDisks Reference Manual">
 <link rel="up" href="index.html" title="UDisks Reference Manual">
 <link rel="prev" href="annotation-glossary.html" title="Annotation Glossary">
-<meta name="generator" content="GTK-Doc V1.21 (XML mode)">
+<meta name="generator" content="GTK-Doc V1.24 (XML mode)">
 <link rel="stylesheet" href="style.css" type="text/css">
 </head>
 <body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
@@ -22,17 +22,17 @@
 <div class="titlepage"><div><div><h1 class="title">
 <a name="gio-hierarchy"></a>Object Hierarchy</h1></div></div></div>
 <pre class="screen">
-    GObject
+    <a href="https://developer.gnome.org/gobject/unstable/gobject-The-Base-Object-Type.html#GObject">GObject</a>
     <span class="lineart">├──</span> <a class="link" href="UDisksClient.html" title="UDisksClient">UDisksClient</a>
     <span class="lineart">├──</span> <a class="link" href="UDisksObjectInfo.html" title="UDisksObjectInfo">UDisksObjectInfo</a>
     <span class="lineart">├──</span> <a class="link" href="UDisksDaemon.html" title="UDisksDaemon">UDisksDaemon</a>
     <span class="lineart">├──</span> <a class="link" href="UDisksLinuxDevice.html" title="UDisksLinuxDevice">UDisksLinuxDevice</a>
-    <span class="lineart">├──</span> GDBusObjectSkeleton
+    <span class="lineart">├──</span> <a href="https://developer.gnome.org/gio/unstable/GDBusObjectSkeleton.html">GDBusObjectSkeleton</a>
     <span class="lineart">│</span>   <span class="lineart">╰──</span> <a class="link" href="UDisksObject.html#UDisksObjectSkeleton">UDisksObjectSkeleton</a>
     <span class="lineart">│</span>       <span class="lineart">├──</span> <a class="link" href="UDisksLinuxBlockObject.html" title="UDisksLinuxBlockObject">UDisksLinuxBlockObject</a>
     <span class="lineart">│</span>       <span class="lineart">├──</span> <a class="link" href="UDisksLinuxDriveObject.html" title="UDisksLinuxDriveObject">UDisksLinuxDriveObject</a>
     <span class="lineart">│</span>       <span class="lineart">╰──</span> <a class="link" href="UDisksLinuxMDRaidObject.html" title="UDisksLinuxMDRaidObject">UDisksLinuxMDRaidObject</a>
-    <span class="lineart">├──</span> GDBusInterfaceSkeleton
+    <span class="lineart">├──</span> <a href="https://developer.gnome.org/gio/unstable/GDBusInterfaceSkeleton.html">GDBusInterfaceSkeleton</a>
     <span class="lineart">│</span>   <span class="lineart">├──</span> <a class="link" href="UDisksBlock.html#UDisksBlockSkeleton">UDisksBlockSkeleton</a>
     <span class="lineart">│</span>   <span class="lineart">│</span>   <span class="lineart">╰──</span> <a class="link" href="UDisksLinuxBlock.html" title="UDisksLinuxBlock">UDisksLinuxBlock</a>
     <span class="lineart">│</span>   <span class="lineart">├──</span> <a class="link" href="UDisksDrive.html#UDisksDriveSkeleton">UDisksDriveSkeleton</a>
@@ -69,7 +69,7 @@
     <span class="lineart">├──</span> <a class="link" href="UDisksFstabMonitor.html" title="UDisksFstabMonitor">UDisksFstabMonitor</a>
     <span class="lineart">├──</span> <a class="link" href="UDisksCrypttabMonitor.html#UDisksCrypttabEntry">UDisksCrypttabEntry</a>
     <span class="lineart">├──</span> <a class="link" href="UDisksCrypttabMonitor.html" title="UDisksCrypttabMonitor">UDisksCrypttabMonitor</a>
-    <span class="lineart">├──</span> GDBusProxy
+    <span class="lineart">├──</span> <a href="https://developer.gnome.org/gio/unstable/GDBusProxy.html">GDBusProxy</a>
     <span class="lineart">│</span>   <span class="lineart">├──</span> <a class="link" href="UDisksDrive.html#UDisksDriveProxy">UDisksDriveProxy</a>
     <span class="lineart">│</span>   <span class="lineart">├──</span> <a class="link" href="UDisksDriveAta.html#UDisksDriveAtaProxy">UDisksDriveAtaProxy</a>
     <span class="lineart">│</span>   <span class="lineart">├──</span> <a class="link" href="UDisksBlock.html#UDisksBlockProxy">UDisksBlockProxy</a>
@@ -80,11 +80,11 @@
     <span class="lineart">│</span>   <span class="lineart">├──</span> <a class="link" href="UDisksManager.html#UDisksManagerProxy">UDisksManagerProxy</a>
     <span class="lineart">│</span>   <span class="lineart">├──</span> <a class="link" href="UDisksJob.html#UDisksJobProxy">UDisksJobProxy</a>
     <span class="lineart">│</span>   <span class="lineart">╰──</span> <a class="link" href="UDisksMDRaid.html#UDisksMDRaidProxy">UDisksMDRaidProxy</a>
-    <span class="lineart">├──</span> GDBusObjectProxy
+    <span class="lineart">├──</span> <a href="https://developer.gnome.org/gio/unstable/GDBusObjectProxy.html">GDBusObjectProxy</a>
     <span class="lineart">│</span>   <span class="lineart">╰──</span> <a class="link" href="UDisksObject.html#UDisksObjectProxy">UDisksObjectProxy</a>
-    <span class="lineart">╰──</span> GDBusObjectManagerClient
+    <span class="lineart">╰──</span> <a href="https://developer.gnome.org/gio/unstable/GDBusObjectManagerClient.html">GDBusObjectManagerClient</a>
         <span class="lineart">╰──</span> <a class="link" href="UDisksObjectManagerClient.html" title="UDisksObjectManagerClient">UDisksObjectManagerClient</a>
-    GInterface
+    <a href="https://developer.gnome.org/gobject/unstable/GTypeModule.html">GInterface</a>
     <span class="lineart">├──</span> <a class="link" href="UDisksObject.html" title="UDisksObject">UDisksObject</a>
     <span class="lineart">├──</span> <a class="link" href="UDisksBlock.html" title="UDisksBlock">UDisksBlock</a>
     <span class="lineart">├──</span> <a class="link" href="UDisksDrive.html" title="UDisksDrive">UDisksDrive</a>
@@ -98,14 +98,13 @@
     <span class="lineart">├──</span> <a class="link" href="UDisksLoop.html" title="UDisksLoop">UDisksLoop</a>
     <span class="lineart">├──</span> <a class="link" href="UDisksManager.html" title="UDisksManager">UDisksManager</a>
     <span class="lineart">╰──</span> <a class="link" href="UDisksMDRaid.html" title="UDisksMDRaid">UDisksMDRaid</a>
-    GBoxed
+    <a href="https://developer.gnome.org/gobject/unstable/gobject-Boxed-Types.html">GBoxed</a>
     <span class="lineart">╰──</span> <a class="link" href="UDisksClient.html#UDisksPartitionTypeInfo">UDisksPartitionTypeInfo</a>
-    GFlags
+    <a href="https://developer.gnome.org/gobject/unstable/gobject-Enumeration-and-Flag-Types.html">GFlags</a>
     <span class="lineart">╰──</span> <a class="link" href="UDisksClient.html#UDisksPartitionTypeInfoFlags" title="enum UDisksPartitionTypeInfoFlags">UDisksPartitionTypeInfoFlags</a>
 </pre>
 </div>
 <div class="footer">
-<hr>
-          Generated by GTK-Doc V1.21</div>
+<hr>Generated by GTK-Doc V1.24</div>
 </body>
 </html>

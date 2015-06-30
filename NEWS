@@ -1,3 +1,47 @@
+------------
+udisks 2.1.6
+------------
+
+The udisks project provides a daemon, tools and libraries to access
+and manipulate disks and storage devices.
+
+Changes since udisks 2.1.5:
+
+Martin Pitt (4):
+      udev rules: Stop hardcoding sed path
+      Fix crash on inaccessible RAID member "state" attribute
+      UDF: Drop umask=0077 default
+      Update translations from transifex
+
+Michael Catanzaro (1):
+      Install udisksd into a libexecdir
+
+Ondrej Holy (1):
+      Fail before formatting if partition contains a partition table
+
+Peter Hatina (2):
+      Fix udisks_daemon_util_file_set_contents() return value handling
+      Remove deprecated g_io_scheduler_* calls
+
+Ross Lagerwall (5):
+      integration-tests: Settle while waiting for property change
+      integration-tests: Don't fail if a SMART test was aborted
+      integration-tests: Add a wrapper to write and flush stderr
+      Don't ignore isohybrid udf filesystems
+      Add support for creating f2fs filesystems
+
+Simon McVittie (1):
+      Decide whether devices are on the same seat by uid, not pid
+
+Tomas Bzatek (1):
+      UDisksSpawnedJob: Retrieve uid/gid info before forking
+
+Thanks to all our contributors.
+
+Martin Pitt,
+2015-06-30
+
+------------
 udisks 2.1.5
 ------------
 
