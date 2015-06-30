@@ -1278,7 +1278,7 @@ add_remove_fstab_entry (GVariant  *remove,
                                              str->str,
                                              -1,
                                              0644, /* mode to use if non-existant */
-                                             error) != 0)
+                                             error))
     goto out;
 
   ret = TRUE;
@@ -1522,7 +1522,7 @@ add_remove_crypttab_entry (GVariant  *remove,
                                              str->str,
                                              -1,
                                              0600, /* mode to use if non-existant */
-                                             error) != 0)
+                                             error))
     goto out;
 
   ret = TRUE;
@@ -2176,7 +2176,6 @@ handle_format (UDisksBlock           *block,
   int status;
   uid_t caller_uid;
   gid_t caller_gid;
-  pid_t caller_pid;
   gboolean take_ownership = FALSE;
   gchar *encrypt_passphrase = NULL;
   gchar *erase_type = NULL;
@@ -2212,6 +2211,19 @@ handle_format (UDisksBlock           *block,
   if (partition != NULL)
     {
       UDisksObject *partition_table_object;
+
+      /* Fail if partition contains a partition table (e.g. Fedora Hybrid ISO).
+       * See: https://bugs.freedesktop.org/show_bug.cgi?id=76178
+       */
+      if (udisks_partition_get_offset (partition) == 0)
+        {
+          g_dbus_method_invocation_return_error (invocation,
+                                                 UDISKS_ERROR,
+                                                 UDISKS_ERROR_NOT_SUPPORTED,
+                                                 "This partition cannot be modified because it contains a partition table; please reinitialize layout of the whole device.");
+          goto out;
+        }
+
       partition_table_object = udisks_daemon_find_object (daemon, udisks_partition_get_table (partition));
       if (partition_table_object == NULL)
         {
@@ -2228,18 +2240,6 @@ handle_format (UDisksBlock           *block,
     {
       partition_type = determine_partition_type_for_id (udisks_partition_table_get_type_ (partition_table),
                                                         encrypt_passphrase != NULL ? "crypto_LUKS" : type);
-    }
-
-  error = NULL;
-  if (!udisks_daemon_util_get_caller_pid_sync (daemon,
-                                               invocation,
-                                               NULL /* GCancellable */,
-                                               &caller_pid,
-                                               &error))
-    {
-      g_dbus_method_invocation_return_gerror (invocation, error);
-      g_error_free (error);
-      goto out;
     }
 
   error = NULL;
@@ -2280,7 +2280,7 @@ handle_format (UDisksBlock           *block,
             {
               action_id = "org.freedesktop.udisks2.modify-device-system";
             }
-          else if (!udisks_daemon_util_on_same_seat (daemon, object, caller_pid))
+          else if (!udisks_daemon_util_on_user_seat (daemon, object, caller_uid))
             {
               action_id = "org.freedesktop.udisks2.modify-device-other-seat";
             }

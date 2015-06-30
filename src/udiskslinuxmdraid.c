@@ -476,6 +476,12 @@ udisks_linux_mdraid_update (UDisksLinuxMDRaid       *mdraid,
                   g_strstrip (member_state);
                   member_state_elements = g_strsplit (member_state, ",", 0);
                 }
+              else
+                {
+                  // g_variant_new() doesn't like NULL pointers for empty
+                  // arrays
+                  member_state_elements = g_new0 (gchar*, 1);
+                }
 
               snprintf (buf, sizeof (buf), "md/%s/slot", file_name);
               member_slot = read_sysfs_attr (raid_device->udev_device, buf);

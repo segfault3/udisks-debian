@@ -2,13 +2,13 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>UDisks Reference Manual: UDisksSpawnedJob</title>
+<title>UDisksSpawnedJob: UDisks Reference Manual</title>
 <meta name="generator" content="DocBook XSL Stylesheets V1.78.1">
 <link rel="home" href="index.html" title="UDisks Reference Manual">
 <link rel="up" href="ref-daemon-jobs.html" title="Jobs">
 <link rel="prev" href="UDisksThreadedJob.html" title="UDisksThreadedJob">
 <link rel="next" href="ref-daemon-linux-types.html" title="Linux-specific types">
-<meta name="generator" content="GTK-Doc V1.21 (XML mode)">
+<meta name="generator" content="GTK-Doc V1.24 (XML mode)">
 <link rel="stylesheet" href="style.css" type="text/css">
 </head>
 <body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
@@ -52,7 +52,7 @@
 </td>
 </tr>
 <tr>
-<td class="function_type">const <span class="returnvalue">gchar</span> *
+<td class="function_type">const <a href="https://developer.gnome.org/glib/unstable/glib-Basic-Types.html#gchar"><span class="returnvalue">gchar</span></a> *
 </td>
 <td class="function_name">
 <a class="link" href="UDisksSpawnedJob.html#udisks-spawned-job-get-command-line" title="udisks_spawned_job_get_command_line ()">udisks_spawned_job_get_command_line</a> <span class="c_punctuation">()</span>
@@ -72,23 +72,23 @@
 <tbody>
 <tr>
 <td class="property_type">
-<span class="type">gchar</span> *</td>
+<a href="https://developer.gnome.org/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *</td>
 <td class="property_name"><a class="link" href="UDisksSpawnedJob.html#UDisksSpawnedJob--command-line" title="The “command-line” property">command-line</a></td>
 <td class="property_flags">Read / Write / Construct Only</td>
 </tr>
 <tr>
 <td class="property_type">
-<span class="type">gchar</span> *</td>
+<a href="https://developer.gnome.org/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *</td>
 <td class="property_name"><a class="link" href="UDisksSpawnedJob.html#UDisksSpawnedJob--input-string" title="The “input-string” property">input-string</a></td>
 <td class="property_flags">Write / Construct Only</td>
 </tr>
 <tr>
-<td class="property_type"><span class="type">guint</span></td>
+<td class="property_type"><a href="https://developer.gnome.org/glib/unstable/glib-Basic-Types.html#guint"><span class="type">guint</span></a></td>
 <td class="property_name"><a class="link" href="UDisksSpawnedJob.html#UDisksSpawnedJob--run-as-euid" title="The “run-as-euid” property">run-as-euid</a></td>
 <td class="property_flags">Write / Construct Only</td>
 </tr>
 <tr>
-<td class="property_type"><span class="type">guint</span></td>
+<td class="property_type"><a href="https://developer.gnome.org/glib/unstable/glib-Basic-Types.html#guint"><span class="type">guint</span></a></td>
 <td class="property_name"><a class="link" href="UDisksSpawnedJob.html#UDisksSpawnedJob--run-as-uid" title="The “run-as-uid” property">run-as-uid</a></td>
 <td class="property_flags">Write / Construct Only</td>
 </tr>
@@ -104,9 +104,9 @@
 <col width="200px" class="signals_flags">
 </colgroup>
 <tbody><tr>
-<td class="signal_type"><span class="returnvalue">gboolean</span></td>
+<td class="signal_type"><a href="https://developer.gnome.org/glib/unstable/glib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a></td>
 <td class="signal_name"><a class="link" href="UDisksSpawnedJob.html#UDisksSpawnedJob-spawned-job-completed" title="The “spawned-job-completed” signal">spawned-job-completed</a></td>
-<td class="signal_flags">Run Last</td>
+<td class="signal_flags"><a href="https://developer.gnome.org/gobject/unstable/gobject-Signals.html#G-SIGNAL-RUN-LAST:CAPS">Run Last</a></td>
 </tr></tbody>
 </table></div>
 </div>
@@ -125,8 +125,8 @@
 </div>
 <div class="refsect1">
 <a name="UDisksSpawnedJob.object-hierarchy"></a><h2>Object Hierarchy</h2>
-<pre class="screen">    GObject
-    <span class="lineart">╰──</span> GDBusInterfaceSkeleton
+<pre class="screen">    <a href="https://developer.gnome.org/gobject/unstable/gobject-The-Base-Object-Type.html#GObject">GObject</a>
+    <span class="lineart">╰──</span> <a href="https://developer.gnome.org/gio/unstable/GDBusInterfaceSkeleton.html">GDBusInterfaceSkeleton</a>
         <span class="lineart">╰──</span> <a class="link" href="UDisksJob.html#UDisksJobSkeleton">UDisksJobSkeleton</a>
             <span class="lineart">╰──</span> <a class="link" href="UDisksBaseJob.html" title="UDisksBaseJob">UDisksBaseJob</a>
                 <span class="lineart">╰──</span> UDisksSpawnedJob
@@ -136,7 +136,7 @@
 <a name="UDisksSpawnedJob.implemented-interfaces"></a><h2>Implemented Interfaces</h2>
 <p>
 UDisksSpawnedJob implements
- GDBusInterface and  <a class="link" href="UDisksJob.html" title="UDisksJob">UDisksJob</a>.</p>
+ <a href="https://developer.gnome.org/gio/unstable/GDBusInterface.html">GDBusInterface</a> and  <a class="link" href="UDisksJob.html" title="UDisksJob">UDisksJob</a>.</p>
 </div>
 <div class="refsect1">
 <a name="UDisksSpawnedJob.description"></a><h2>Description</h2>
@@ -148,12 +148,12 @@ for jobs that are implemented by spawning a command line.</p>
 <div class="refsect2">
 <a name="udisks-spawned-job-new"></a><h3>udisks_spawned_job_new ()</h3>
 <pre class="programlisting"><a class="link" href="UDisksSpawnedJob.html" title="UDisksSpawnedJob"><span class="returnvalue">UDisksSpawnedJob</span></a> *
-udisks_spawned_job_new (<em class="parameter"><code>const <span class="type">gchar</span> *command_line</code></em>,
-                        <em class="parameter"><code>const <span class="type">gchar</span> *input_string</code></em>,
+udisks_spawned_job_new (<em class="parameter"><code>const <a href="https://developer.gnome.org/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *command_line</code></em>,
+                        <em class="parameter"><code>const <a href="https://developer.gnome.org/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *input_string</code></em>,
                         <em class="parameter"><code><span class="type">uid_t</span> run_as_uid</code></em>,
                         <em class="parameter"><code><span class="type">uid_t</span> run_as_euid</code></em>,
                         <em class="parameter"><code><a class="link" href="UDisksDaemon.html" title="UDisksDaemon"><span class="type">UDisksDaemon</span></a> *daemon</code></em>,
-                        <em class="parameter"><code><span class="type">GCancellable</span> *cancellable</code></em>);</pre>
+                        <em class="parameter"><code><a href="https://developer.gnome.org/gio/unstable/GCancellable.html"><span class="type">GCancellable</span></a> *cancellable</code></em>);</pre>
 <p>Creates a new <a class="link" href="UDisksSpawnedJob.html" title="UDisksSpawnedJob"><span class="type">UDisksSpawnedJob</span></a> instance.</p>
 <p>The job is started immediately - connect to the
 <a class="link" href="UDisksSpawnedJob.html#UDisksSpawnedJob-spawned-job-completed" title="The “spawned-job-completed” signal"><span class="type">“spawned-job-completed”</span></a> or <a class="link" href="UDisksJob.html#UDisksJob-completed" title="The “completed” signal"><span class="type">“completed”</span></a>
@@ -174,7 +174,7 @@ signals to get notified when the job is done.</p>
 </tr>
 <tr>
 <td class="parameter_name"><p>input_string</p></td>
-<td class="parameter_description"><p>A string to write to stdin of the spawned program or <code class="literal">NULL</code>.</p></td>
+<td class="parameter_description"><p>A string to write to stdin of the spawned program or <a href="https://developer.gnome.org/glib/unstable/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a>.</p></td>
 <td class="parameter_annotations"> </td>
 </tr>
 <tr>
@@ -194,7 +194,7 @@ signals to get notified when the job is done.</p>
 </tr>
 <tr>
 <td class="parameter_name"><p>cancellable</p></td>
-<td class="parameter_description"><p>A <span class="type">GCancellable</span> or <code class="literal">NULL</code>.</p></td>
+<td class="parameter_description"><p>A <a href="https://developer.gnome.org/gio/unstable/GCancellable.html"><span class="type">GCancellable</span></a> or <a href="https://developer.gnome.org/glib/unstable/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a>.</p></td>
 <td class="parameter_annotations"> </td>
 </tr>
 </tbody>
@@ -202,14 +202,13 @@ signals to get notified when the job is done.</p>
 </div>
 <div class="refsect3">
 <a name="id-1.5.4.5.10.2.7"></a><h4>Returns</h4>
-<p> A new <a class="link" href="UDisksSpawnedJob.html" title="UDisksSpawnedJob"><span class="type">UDisksSpawnedJob</span></a>. Free with <code class="function">g_object_unref()</code>.</p>
-<p></p>
+<p> A new <a class="link" href="UDisksSpawnedJob.html" title="UDisksSpawnedJob"><span class="type">UDisksSpawnedJob</span></a>. Free with <a href="https://developer.gnome.org/gobject/unstable/gobject-The-Base-Object-Type.html#g-object-unref"><code class="function">g_object_unref()</code></a>.</p>
 </div>
 </div>
 <hr>
 <div class="refsect2">
 <a name="udisks-spawned-job-get-command-line"></a><h3>udisks_spawned_job_get_command_line ()</h3>
-<pre class="programlisting">const <span class="returnvalue">gchar</span> *
+<pre class="programlisting">const <a href="https://developer.gnome.org/glib/unstable/glib-Basic-Types.html#gchar"><span class="returnvalue">gchar</span></a> *
 udisks_spawned_job_get_command_line (<em class="parameter"><code><a class="link" href="UDisksSpawnedJob.html" title="UDisksSpawnedJob"><span class="type">UDisksSpawnedJob</span></a> *job</code></em>);</pre>
 <p>Gets the command line that <em class="parameter"><code>job</code></em>
  was constructed with.</p>
@@ -232,7 +231,6 @@ udisks_spawned_job_get_command_line (<em class="parameter"><code><a class="link"
 <a name="id-1.5.4.5.10.3.6"></a><h4>Returns</h4>
 <p> A string owned by <em class="parameter"><code>job</code></em>
 . Do not free.</p>
-<p></p>
 </div>
 </div>
 </div>
@@ -249,7 +247,7 @@ only be accessed using the provided API.</p>
 <a name="UDisksSpawnedJob.property-details"></a><h2>Property Details</h2>
 <div class="refsect2">
 <a name="UDisksSpawnedJob--command-line"></a><h3>The <code class="literal">“command-line”</code> property</h3>
-<pre class="programlisting">  “command-line”             <span class="type">gchar</span> *</pre>
+<pre class="programlisting">  “command-line”             <a href="https://developer.gnome.org/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *</pre>
 <p>The command-line to run.</p>
 <p>Flags: Read / Write / Construct Only</p>
 <p>Default value: NULL</p>
@@ -257,16 +255,16 @@ only be accessed using the provided API.</p>
 <hr>
 <div class="refsect2">
 <a name="UDisksSpawnedJob--input-string"></a><h3>The <code class="literal">“input-string”</code> property</h3>
-<pre class="programlisting">  “input-string”             <span class="type">gchar</span> *</pre>
+<pre class="programlisting">  “input-string”             <a href="https://developer.gnome.org/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *</pre>
 <p>String that will be written to stdin of the spawned program or
-<code class="literal">NULL</code> to not write anything.</p>
+<a href="https://developer.gnome.org/glib/unstable/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a> to not write anything.</p>
 <p>Flags: Write / Construct Only</p>
 <p>Default value: NULL</p>
 </div>
 <hr>
 <div class="refsect2">
 <a name="UDisksSpawnedJob--run-as-euid"></a><h3>The <code class="literal">“run-as-euid”</code> property</h3>
-<pre class="programlisting">  “run-as-euid”              <span class="type">guint</span></pre>
+<pre class="programlisting">  “run-as-euid”              <a href="https://developer.gnome.org/glib/unstable/glib-Basic-Types.html#guint"><span class="type">guint</span></a></pre>
 <p>The effective <span class="type">uid_t</span> to run the program as.</p>
 <p>Flags: Write / Construct Only</p>
 <p>Default value: 0</p>
@@ -274,7 +272,7 @@ only be accessed using the provided API.</p>
 <hr>
 <div class="refsect2">
 <a name="UDisksSpawnedJob--run-as-uid"></a><h3>The <code class="literal">“run-as-uid”</code> property</h3>
-<pre class="programlisting">  “run-as-uid”               <span class="type">guint</span></pre>
+<pre class="programlisting">  “run-as-uid”               <a href="https://developer.gnome.org/glib/unstable/glib-Basic-Types.html#guint"><span class="type">guint</span></a></pre>
 <p>The <span class="type">uid_t</span> to run the program as.</p>
 <p>Flags: Write / Construct Only</p>
 <p>Default value: 0</p>
@@ -284,33 +282,33 @@ only be accessed using the provided API.</p>
 <a name="UDisksSpawnedJob.signal-details"></a><h2>Signal Details</h2>
 <div class="refsect2">
 <a name="UDisksSpawnedJob-spawned-job-completed"></a><h3>The <code class="literal">“spawned-job-completed”</code> signal</h3>
-<pre class="programlisting"><span class="returnvalue">gboolean</span>
+<pre class="programlisting"><a href="https://developer.gnome.org/glib/unstable/glib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>
 user_function (<a class="link" href="UDisksSpawnedJob.html" title="UDisksSpawnedJob"><span class="type">UDisksSpawnedJob</span></a> *job,
-               <span class="type">GError</span>           *error,
-               <span class="type">gint</span>              status,
-               <span class="type">GString</span>          *standard_output,
-               <span class="type">GString</span>          *standard_error,
-               <span class="type">gpointer</span>          user_data)</pre>
+               <a href="https://developer.gnome.org/glib/unstable/glib-Error-Reporting.html#GError"><span class="type">GError</span></a>           *error,
+               <a href="https://developer.gnome.org/glib/unstable/glib-Basic-Types.html#gint"><span class="type">gint</span></a>              status,
+               <a href="https://developer.gnome.org/glib/unstable/glib-Strings.html#GString"><span class="type">GString</span></a>          *standard_output,
+               <a href="https://developer.gnome.org/glib/unstable/glib-Strings.html#GString"><span class="type">GString</span></a>          *standard_error,
+               <a href="https://developer.gnome.org/glib/unstable/glib-Basic-Types.html#gpointer"><span class="type">gpointer</span></a>          user_data)</pre>
 <p>Emitted when the spawned job is complete. If spawning the command
 failed or if the job was cancelled, <em class="parameter"><code>error</code></em>
  will
-non-<code class="literal">NULL</code>. Otherwise you can use macros such as <code class="function">WIFEXITED()</code> and
+non-<a href="https://developer.gnome.org/glib/unstable/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a>. Otherwise you can use macros such as <code class="function">WIFEXITED()</code> and
 <code class="function">WEXITSTATUS()</code> on the <em class="parameter"><code>status</code></em>
  integer to obtain more information.</p>
 <p>The default implementation simply emits the <a class="link" href="UDisksJob.html#UDisksJob-completed" title="The “completed” signal"><span class="type">“completed”</span></a>
 signal with <em class="parameter"><code>success</code></em>
- set to <code class="literal">TRUE</code> if, and only if, <em class="parameter"><code>error</code></em>
+ set to <a href="https://developer.gnome.org/glib/unstable/glib-Standard-Macros.html#TRUE:CAPS"><code class="literal">TRUE</code></a> if, and only if, <em class="parameter"><code>error</code></em>
  is
-<code class="literal">NULL</code>, <code class="function">WIFEXITED()</code> evaluates to <code class="literal">TRUE</code> and <code class="function">WEXITSTATUS()</code> is
+<a href="https://developer.gnome.org/glib/unstable/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a>, <code class="function">WIFEXITED()</code> evaluates to <a href="https://developer.gnome.org/glib/unstable/glib-Standard-Macros.html#TRUE:CAPS"><code class="literal">TRUE</code></a> and <code class="function">WEXITSTATUS()</code> is
 zero. Additionally, <em class="parameter"><code>message</code></em>
  on that signal is set to
 <em class="parameter"><code>standard_error</code></em>
  regards of whether <em class="parameter"><code>success</code></em>
- is <code class="literal">TRUE</code> or <code class="literal">FALSE</code>.</p>
-<p>You can avoid the default implementation by returning <code class="literal">TRUE</code> from
+ is <a href="https://developer.gnome.org/glib/unstable/glib-Standard-Macros.html#TRUE:CAPS"><code class="literal">TRUE</code></a> or <a href="https://developer.gnome.org/glib/unstable/glib-Standard-Macros.html#FALSE:CAPS"><code class="literal">FALSE</code></a>.</p>
+<p>You can avoid the default implementation by returning <a href="https://developer.gnome.org/glib/unstable/glib-Standard-Macros.html#TRUE:CAPS"><code class="literal">TRUE</code></a> from
 your signal handler.</p>
 <p>This signal is emitted in the</p>
-thread-default main loop<p>of the thread that <em class="parameter"><code>job</code></em>
+<a href="https://developer.gnome.org/glib/unstable/glib-The-Main-Event-Loop.html#g-main-context-push-thread-default">thread-default main loop</a><p>of the thread that <em class="parameter"><code>job</code></em>
  was created in.</p>
 <div class="refsect3">
 <a name="id-1.5.4.5.13.2.10"></a><h4>Parameters</h4>
@@ -328,7 +326,7 @@ thread-default main loop<p>of the thread that <em class="parameter"><code>job</c
 </tr>
 <tr>
 <td class="parameter_name"><p>error</p></td>
-<td class="parameter_description"><p><code class="literal">NULL</code> if running the whole command line succeeded, otherwise a <span class="type">GError</span> that is set.</p></td>
+<td class="parameter_description"><p><a href="https://developer.gnome.org/glib/unstable/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a> if running the whole command line succeeded, otherwise a <a href="https://developer.gnome.org/glib/unstable/glib-Error-Reporting.html#GError"><span class="type">GError</span></a> that is set.</p></td>
 <td class="parameter_annotations"> </td>
 </tr>
 <tr>
@@ -356,16 +354,14 @@ thread-default main loop<p>of the thread that <em class="parameter"><code>job</c
 </div>
 <div class="refsect3">
 <a name="id-1.5.4.5.13.2.11"></a><h4>Returns</h4>
-<p> <code class="literal">TRUE</code> if the signal was handled, <code class="literal">FALSE</code> to let other
+<p> <a href="https://developer.gnome.org/glib/unstable/glib-Standard-Macros.html#TRUE:CAPS"><code class="literal">TRUE</code></a> if the signal was handled, <a href="https://developer.gnome.org/glib/unstable/glib-Standard-Macros.html#FALSE:CAPS"><code class="literal">FALSE</code></a> to let other
 handlers run.</p>
-<p></p>
 </div>
-<p>Flags: Run Last</p>
+<p>Flags: <a href="https://developer.gnome.org/gobject/unstable/gobject-Signals.html#G-SIGNAL-RUN-LAST:CAPS">Run Last</a></p>
 </div>
 </div>
 </div>
 <div class="footer">
-<hr>
-          Generated by GTK-Doc V1.21</div>
+<hr>Generated by GTK-Doc V1.24</div>
 </body>
 </html>

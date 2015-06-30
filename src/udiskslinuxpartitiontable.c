@@ -340,7 +340,6 @@ handle_create_partition (UDisksPartitionTable   *table,
   UDisksBlock *partition_block = NULL;
   gchar *escaped_partition_device = NULL;
   const gchar *table_type;
-  pid_t caller_pid;
   uid_t caller_uid;
   gid_t caller_gid;
   gboolean do_wipe = TRUE;
@@ -360,18 +359,6 @@ handle_create_partition (UDisksPartitionTable   *table,
     {
       g_dbus_method_invocation_return_error (invocation, UDISKS_ERROR, UDISKS_ERROR_FAILED,
                                              "Partition table object is not a block device");
-      goto out;
-    }
-
-  error = NULL;
-  if (!udisks_daemon_util_get_caller_pid_sync (daemon,
-                                               invocation,
-                                               NULL /* GCancellable */,
-                                               &caller_pid,
-                                               &error))
-    {
-      g_dbus_method_invocation_return_gerror (invocation, error);
-      g_error_free (error);
       goto out;
     }
 
@@ -403,7 +390,7 @@ handle_create_partition (UDisksPartitionTable   *table,
         {
           action_id = "org.freedesktop.udisks2.modify-device-system";
         }
-      else if (!udisks_daemon_util_on_same_seat (daemon, object, caller_pid))
+      else if (!udisks_daemon_util_on_user_seat (daemon, object, caller_uid))
         {
           action_id = "org.freedesktop.udisks2.modify-device-other-seat";
         }

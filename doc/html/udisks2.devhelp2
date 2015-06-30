@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="utf-8" standalone="no"?>
-<!DOCTYPE book PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "">
 <book xmlns="http://www.devhelp.net/book" title="UDisks Reference Manual" link="index.html" author="" name="udisks2" version="2" language="c">
   <chapters>
     <sub name="Manual pages and Overview" link="overview.html">
@@ -107,7 +106,6 @@
     <sub name="Object Hierarchy" link="gio-hierarchy.html"/>
   </chapters>
   <functions>
-    <keyword type="" name="ATA group" link="udisks.8.html#id-1.2.2.6.3"/>
     <keyword type="method" name="The LoopSetup() method" link="gdbus-org.freedesktop.UDisks2.Manager.html#gdbus-method-org-freedesktop-UDisks2-Manager.LoopSetup"/>
     <keyword type="method" name="The MDRaidCreate() method" link="gdbus-org.freedesktop.UDisks2.Manager.html#gdbus-method-org-freedesktop-UDisks2-Manager.MDRaidCreate"/>
     <keyword type="property" name="The &quot;Version&quot; property" link="gdbus-org.freedesktop.UDisks2.Manager.html#gdbus-property-org-freedesktop-UDisks2-Manager.Version"/>
@@ -299,7 +297,6 @@
     <keyword type="function" name="udisks_client_get_object_info ()" link="UDisksClient.html#udisks-client-get-object-info" since="2.1"/>
     <keyword type="function" name="udisks_client_get_drive_info ()" link="UDisksClient.html#udisks-client-get-drive-info" deprecated="2.1: Use udisks_client_get_object_info() instead."/>
     <keyword type="function" name="udisks_client_get_partition_info ()" link="UDisksClient.html#udisks-client-get-partition-info"/>
-    <keyword type="" name="UDisksPartition." link="UDisksClient.html#id-1.4.2.11.30.6.2.1.4.2.2.1"/>
     <keyword type="function" name="udisks_client_get_size_for_display ()" link="UDisksClient.html#udisks-client-get-size-for-display"/>
     <keyword type="function" name="udisks_client_get_id_for_display ()" link="UDisksClient.html#udisks-client-get-id-for-display"/>
     <keyword type="function" name="udisks_client_get_media_compat_for_display ()" link="UDisksClient.html#udisks-client-get-media-compat-for-display"/>
@@ -1200,7 +1197,7 @@
     <keyword type="function" name="udisks_daemon_util_hexdump ()" link="udisks2-Utilities.html#udisks-daemon-util-hexdump"/>
     <keyword type="function" name="udisks_daemon_util_hexdump_debug ()" link="udisks2-Utilities.html#udisks-daemon-util-hexdump-debug"/>
     <keyword type="function" name="udisks_daemon_util_file_set_contents ()" link="udisks2-Utilities.html#udisks-daemon-util-file-set-contents"/>
-    <keyword type="function" name="udisks_daemon_util_on_same_seat ()" link="udisks2-Utilities.html#udisks-daemon-util-on-same-seat"/>
+    <keyword type="function" name="udisks_daemon_util_on_user_seat ()" link="udisks2-Utilities.html#udisks-daemon-util-on-user-seat"/>
     <keyword type="function" name="udisks_daemon_util_get_free_mdraid_device ()" link="udisks2-Utilities.html#udisks-daemon-util-get-free-mdraid-device"/>
     <keyword type="function" name="udisks_ata_identify_get_word ()" link="udisks2-Utilities.html#udisks-ata-identify-get-word"/>
     <keyword type="typedef" name="UDisksInhibitCookie" link="udisks2-Utilities.html#UDisksInhibitCookie"/>
@@ -1402,5 +1399,36 @@
     <keyword type="struct" name="UDisksLinuxBlockObject" link="UDisksLinuxBlockObject.html#UDisksLinuxBlockObject-struct"/>
     <keyword type="property" name="The “daemon” property" link="UDisksLinuxBlockObject.html#UDisksLinuxBlockObject--daemon"/>
     <keyword type="property" name="The “device” property" link="UDisksLinuxBlockObject.html#UDisksLinuxBlockObject--device"/>
+    <keyword type="constant" name="UDISKS_PARTITION_TYPE_INFO_FLAGS_NONE" link="UDisksClient.html#UDISKS-PARTITION-TYPE-INFO-FLAGS-NONE:CAPS"/>
+    <keyword type="constant" name="UDISKS_PARTITION_TYPE_INFO_FLAGS_SWAP" link="UDisksClient.html#UDISKS-PARTITION-TYPE-INFO-FLAGS-SWAP:CAPS"/>
+    <keyword type="constant" name="UDISKS_PARTITION_TYPE_INFO_FLAGS_RAID" link="UDisksClient.html#UDISKS-PARTITION-TYPE-INFO-FLAGS-RAID:CAPS"/>
+    <keyword type="constant" name="UDISKS_PARTITION_TYPE_INFO_FLAGS_HIDDEN" link="UDisksClient.html#UDISKS-PARTITION-TYPE-INFO-FLAGS-HIDDEN:CAPS"/>
+    <keyword type="constant" name="UDISKS_PARTITION_TYPE_INFO_FLAGS_CREATE_ONLY" link="UDisksClient.html#UDISKS-PARTITION-TYPE-INFO-FLAGS-CREATE-ONLY:CAPS"/>
+    <keyword type="constant" name="UDISKS_PARTITION_TYPE_INFO_FLAGS_SYSTEM" link="UDisksClient.html#UDISKS-PARTITION-TYPE-INFO-FLAGS-SYSTEM:CAPS"/>
+    <keyword type="constant" name="UDISKS_ERROR_FAILED" link="udisks2-UDisksError.html#UDISKS-ERROR-FAILED:CAPS"/>
+    <keyword type="constant" name="UDISKS_ERROR_CANCELLED" link="udisks2-UDisksError.html#UDISKS-ERROR-CANCELLED:CAPS"/>
+    <keyword type="constant" name="UDISKS_ERROR_ALREADY_CANCELLED" link="udisks2-UDisksError.html#UDISKS-ERROR-ALREADY-CANCELLED:CAPS"/>
+    <keyword type="constant" name="UDISKS_ERROR_NOT_AUTHORIZED" link="udisks2-UDisksError.html#UDISKS-ERROR-NOT-AUTHORIZED:CAPS"/>
+    <keyword type="constant" name="UDISKS_ERROR_NOT_AUTHORIZED_CAN_OBTAIN" link="udisks2-UDisksError.html#UDISKS-ERROR-NOT-AUTHORIZED-CAN-OBTAIN:CAPS"/>
+    <keyword type="constant" name="UDISKS_ERROR_NOT_AUTHORIZED_DISMISSED" link="udisks2-UDisksError.html#UDISKS-ERROR-NOT-AUTHORIZED-DISMISSED:CAPS"/>
+    <keyword type="constant" name="UDISKS_ERROR_ALREADY_MOUNTED" link="udisks2-UDisksError.html#UDISKS-ERROR-ALREADY-MOUNTED:CAPS"/>
+    <keyword type="constant" name="UDISKS_ERROR_NOT_MOUNTED" link="udisks2-UDisksError.html#UDISKS-ERROR-NOT-MOUNTED:CAPS"/>
+    <keyword type="constant" name="UDISKS_ERROR_OPTION_NOT_PERMITTED" link="udisks2-UDisksError.html#UDISKS-ERROR-OPTION-NOT-PERMITTED:CAPS"/>
+    <keyword type="constant" name="UDISKS_ERROR_MOUNTED_BY_OTHER_USER" link="udisks2-UDisksError.html#UDISKS-ERROR-MOUNTED-BY-OTHER-USER:CAPS"/>
+    <keyword type="constant" name="UDISKS_ERROR_ALREADY_UNMOUNTING" link="udisks2-UDisksError.html#UDISKS-ERROR-ALREADY-UNMOUNTING:CAPS"/>
+    <keyword type="constant" name="UDISKS_ERROR_NOT_SUPPORTED" link="udisks2-UDisksError.html#UDISKS-ERROR-NOT-SUPPORTED:CAPS"/>
+    <keyword type="constant" name="UDISKS_ERROR_TIMED_OUT" link="udisks2-UDisksError.html#UDISKS-ERROR-TIMED-OUT:CAPS"/>
+    <keyword type="constant" name="UDISKS_ERROR_WOULD_WAKEUP" link="udisks2-UDisksError.html#UDISKS-ERROR-WOULD-WAKEUP:CAPS"/>
+    <keyword type="constant" name="UDISKS_ERROR_DEVICE_BUSY" link="udisks2-UDisksError.html#UDISKS-ERROR-DEVICE-BUSY:CAPS"/>
+    <keyword type="constant" name="UDISKS_LOG_LEVEL_DEBUG" link="udisks2-Logging.html#UDISKS-LOG-LEVEL-DEBUG:CAPS"/>
+    <keyword type="constant" name="UDISKS_LOG_LEVEL_INFO" link="udisks2-Logging.html#UDISKS-LOG-LEVEL-INFO:CAPS"/>
+    <keyword type="constant" name="UDISKS_LOG_LEVEL_NOTICE" link="udisks2-Logging.html#UDISKS-LOG-LEVEL-NOTICE:CAPS"/>
+    <keyword type="constant" name="UDISKS_LOG_LEVEL_WARNING" link="udisks2-Logging.html#UDISKS-LOG-LEVEL-WARNING:CAPS"/>
+    <keyword type="constant" name="UDISKS_LOG_LEVEL_ERROR" link="udisks2-Logging.html#UDISKS-LOG-LEVEL-ERROR:CAPS"/>
+    <keyword type="constant" name="UDISKS_ATA_COMMAND_PROTOCOL_NONE" link="udisks2-ATA-commands.html#UDISKS-ATA-COMMAND-PROTOCOL-NONE:CAPS"/>
+    <keyword type="constant" name="UDISKS_ATA_COMMAND_PROTOCOL_DRIVE_TO_HOST" link="udisks2-ATA-commands.html#UDISKS-ATA-COMMAND-PROTOCOL-DRIVE-TO-HOST:CAPS"/>
+    <keyword type="constant" name="UDISKS_ATA_COMMAND_PROTOCOL_HOST_TO_DRIVE" link="udisks2-ATA-commands.html#UDISKS-ATA-COMMAND-PROTOCOL-HOST-TO-DRIVE:CAPS"/>
+    <keyword type="constant" name="UDISKS_MOUNT_TYPE_FILESYSTEM" link="UDisksMountMonitor.html#UDISKS-MOUNT-TYPE-FILESYSTEM:CAPS"/>
+    <keyword type="constant" name="UDISKS_MOUNT_TYPE_SWAP" link="UDisksMountMonitor.html#UDISKS-MOUNT-TYPE-SWAP:CAPS"/>
   </functions>
 </book>

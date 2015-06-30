@@ -2,13 +2,13 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>UDisks Reference Manual: UDisksSimpleJob</title>
+<title>UDisksSimpleJob: UDisks Reference Manual</title>
 <meta name="generator" content="DocBook XSL Stylesheets V1.78.1">
 <link rel="home" href="index.html" title="UDisks Reference Manual">
 <link rel="up" href="ref-daemon-jobs.html" title="Jobs">
 <link rel="prev" href="UDisksBaseJob.html" title="UDisksBaseJob">
 <link rel="next" href="UDisksThreadedJob.html" title="UDisksThreadedJob">
-<meta name="generator" content="GTK-Doc V1.21 (XML mode)">
+<meta name="generator" content="GTK-Doc V1.24 (XML mode)">
 <link rel="stylesheet" href="style.css" type="text/css">
 </head>
 <body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
@@ -75,8 +75,8 @@
 </div>
 <div class="refsect1">
 <a name="UDisksSimpleJob.object-hierarchy"></a><h2>Object Hierarchy</h2>
-<pre class="screen">    GObject
-    <span class="lineart">╰──</span> GDBusInterfaceSkeleton
+<pre class="screen">    <a href="https://developer.gnome.org/gobject/unstable/gobject-The-Base-Object-Type.html#GObject">GObject</a>
+    <span class="lineart">╰──</span> <a href="https://developer.gnome.org/gio/unstable/GDBusInterfaceSkeleton.html">GDBusInterfaceSkeleton</a>
         <span class="lineart">╰──</span> <a class="link" href="UDisksJob.html#UDisksJobSkeleton">UDisksJobSkeleton</a>
             <span class="lineart">╰──</span> <a class="link" href="UDisksBaseJob.html" title="UDisksBaseJob">UDisksBaseJob</a>
                 <span class="lineart">╰──</span> UDisksSimpleJob
@@ -86,7 +86,7 @@
 <a name="UDisksSimpleJob.implemented-interfaces"></a><h2>Implemented Interfaces</h2>
 <p>
 UDisksSimpleJob implements
- GDBusInterface and  <a class="link" href="UDisksJob.html" title="UDisksJob">UDisksJob</a>.</p>
+ <a href="https://developer.gnome.org/gio/unstable/GDBusInterface.html">GDBusInterface</a> and  <a class="link" href="UDisksJob.html" title="UDisksJob">UDisksJob</a>.</p>
 </div>
 <div class="refsect1">
 <a name="UDisksSimpleJob.description"></a><h2>Description</h2>
@@ -99,7 +99,7 @@ for simple jobs.</p>
 <a name="udisks-simple-job-new"></a><h3>udisks_simple_job_new ()</h3>
 <pre class="programlisting"><a class="link" href="UDisksSimpleJob.html" title="UDisksSimpleJob"><span class="returnvalue">UDisksSimpleJob</span></a> *
 udisks_simple_job_new (<em class="parameter"><code><a class="link" href="UDisksDaemon.html" title="UDisksDaemon"><span class="type">UDisksDaemon</span></a> *daemon</code></em>,
-                       <em class="parameter"><code><span class="type">GCancellable</span> *cancellable</code></em>);</pre>
+                       <em class="parameter"><code><a href="https://developer.gnome.org/gio/unstable/GCancellable.html"><span class="type">GCancellable</span></a> *cancellable</code></em>);</pre>
 <p>Creates a new <a class="link" href="UDisksSimpleJob.html" title="UDisksSimpleJob"><span class="type">UDisksSimpleJob</span></a> instance.</p>
 <p>Call <a class="link" href="UDisksSimpleJob.html#udisks-simple-job-complete" title="udisks_simple_job_complete ()"><code class="function">udisks_simple_job_complete()</code></a> to compelte the returned job.</p>
 <div class="refsect3">
@@ -118,7 +118,7 @@ udisks_simple_job_new (<em class="parameter"><code><a class="link" href="UDisksD
 </tr>
 <tr>
 <td class="parameter_name"><p>cancellable</p></td>
-<td class="parameter_description"><p>A <span class="type">GCancellable</span> or <code class="literal">NULL</code>.</p></td>
+<td class="parameter_description"><p>A <a href="https://developer.gnome.org/gio/unstable/GCancellable.html"><span class="type">GCancellable</span></a> or <a href="https://developer.gnome.org/glib/unstable/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a>.</p></td>
 <td class="parameter_annotations"> </td>
 </tr>
 </tbody>
@@ -126,8 +126,7 @@ udisks_simple_job_new (<em class="parameter"><code><a class="link" href="UDisksD
 </div>
 <div class="refsect3">
 <a name="id-1.5.4.3.8.2.7"></a><h4>Returns</h4>
-<p> A new <a class="link" href="UDisksSimpleJob.html" title="UDisksSimpleJob"><span class="type">UDisksSimpleJob</span></a>. Free with <code class="function">g_object_unref()</code>.</p>
-<p></p>
+<p> A new <a class="link" href="UDisksSimpleJob.html" title="UDisksSimpleJob"><span class="type">UDisksSimpleJob</span></a>. Free with <a href="https://developer.gnome.org/gobject/unstable/gobject-The-Base-Object-Type.html#g-object-unref"><code class="function">g_object_unref()</code></a>.</p>
 </div>
 </div>
 <hr>
@@ -135,8 +134,8 @@ udisks_simple_job_new (<em class="parameter"><code><a class="link" href="UDisksD
 <a name="udisks-simple-job-complete"></a><h3>udisks_simple_job_complete ()</h3>
 <pre class="programlisting"><span class="returnvalue">void</span>
 udisks_simple_job_complete (<em class="parameter"><code><a class="link" href="UDisksSimpleJob.html" title="UDisksSimpleJob"><span class="type">UDisksSimpleJob</span></a> *job</code></em>,
-                            <em class="parameter"><code><span class="type">gboolean</span> succeess</code></em>,
-                            <em class="parameter"><code>const <span class="type">gchar</span> *message</code></em>);</pre>
+                            <em class="parameter"><code><a href="https://developer.gnome.org/glib/unstable/glib-Basic-Types.html#gboolean"><span class="type">gboolean</span></a> succeess</code></em>,
+                            <em class="parameter"><code>const <a href="https://developer.gnome.org/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *message</code></em>);</pre>
 <p>Completes <em class="parameter"><code>job</code></em>
 .</p>
 <div class="refsect3">
@@ -160,7 +159,7 @@ udisks_simple_job_complete (<em class="parameter"><code><a class="link" href="UD
 </tr>
 <tr>
 <td class="parameter_name"><p>message</p></td>
-<td class="parameter_description"><p>An error message or <code class="literal">NULL</code>.</p></td>
+<td class="parameter_description"><p>An error message or <a href="https://developer.gnome.org/glib/unstable/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a>.</p></td>
 <td class="parameter_annotations"> </td>
 </tr>
 </tbody>
@@ -179,7 +178,6 @@ only be accessed using the provided API.</p>
 </div>
 </div>
 <div class="footer">
-<hr>
-          Generated by GTK-Doc V1.21</div>
+<hr>Generated by GTK-Doc V1.24</div>
 </body>
 </html>

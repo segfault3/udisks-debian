@@ -2,13 +2,13 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>UDisks Reference Manual: Part IV. Daemon Implementation Details</title>
+<title>Part IV. Daemon Implementation Details: UDisks Reference Manual</title>
 <meta name="generator" content="DocBook XSL Stylesheets V1.78.1">
 <link rel="home" href="index.html" title="UDisks Reference Manual">
 <link rel="up" href="index.html" title="UDisks Reference Manual">
 <link rel="prev" href="UDisksLoop.html" title="UDisksLoop">
 <link rel="next" href="ref-daemon-core.html" title="Core">
-<meta name="generator" content="GTK-Doc V1.21 (XML mode)">
+<meta name="generator" content="GTK-Doc V1.24 (XML mode)">
 <link rel="stylesheet" href="style.css" type="text/css">
 </head>
 <body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
@@ -76,7 +76,7 @@
 <dt><span class="chapter"><a href="ref-daemon-linux-types.html">Linux-specific types</a></span></dt>
 <dd><dl>
 <dt>
-<span class="refentrytitle"><a href="UDisksLinuxManager.html">UDisksLinuxManager</a></span><span class="refpurpose">Linux implementation of <span class="type">UDisksManager</span></span>
+<span class="refentrytitle"><a href="UDisksLinuxManager.html">UDisksLinuxManager</a></span><span class="refpurpose"> — Linux implementation of <span class="type">UDisksManager</span></span>
 </dt>
 <dt>
 <span class="refentrytitle"><a href="UDisksLinuxProvider.html">UDisksLinuxProvider</a></span><span class="refpurpose"> — Provides Linux-specific objects</span>
@@ -88,10 +88,10 @@
 <dt><span class="chapter"><a href="ref-daemon-drives.html">Drives on Linux</a></span></dt>
 <dd><dl>
 <dt>
-<span class="refentrytitle"><a href="UDisksLinuxDrive.html">UDisksLinuxDrive</a></span><span class="refpurpose">Linux implementation of <span class="type">UDisksDrive</span></span>
+<span class="refentrytitle"><a href="UDisksLinuxDrive.html">UDisksLinuxDrive</a></span><span class="refpurpose"> — Linux implementation of <span class="type">UDisksDrive</span></span>
 </dt>
 <dt>
-<span class="refentrytitle"><a href="UDisksLinuxDriveAta.html">UDisksLinuxDriveAta</a></span><span class="refpurpose">Linux implementation of <span class="type">UDisksDriveAta</span></span>
+<span class="refentrytitle"><a href="UDisksLinuxDriveAta.html">UDisksLinuxDriveAta</a></span><span class="refpurpose"> — Linux implementation of <span class="type">UDisksDriveAta</span></span>
 </dt>
 <dt>
 <span class="refentrytitle"><a href="UDisksLinuxDriveObject.html">UDisksLinuxDriveObject</a></span><span class="refpurpose"> — Object representing a drive on Linux</span>
@@ -100,7 +100,7 @@
 <dt><span class="chapter"><a href="ref-daemon-mdraid.html">Linux RAID</a></span></dt>
 <dd><dl>
 <dt>
-<span class="refentrytitle"><a href="UDisksLinuxMDRaid.html">UDisksLinuxMDRaid</a></span><span class="refpurpose">Linux implementation of <span class="type">UDisksMDRaid</span></span>
+<span class="refentrytitle"><a href="UDisksLinuxMDRaid.html">UDisksLinuxMDRaid</a></span><span class="refpurpose"> — Linux implementation of <span class="type">UDisksMDRaid</span></span>
 </dt>
 <dt>
 <span class="refentrytitle"><a href="UDisksLinuxMDRaidObject.html">UDisksLinuxMDRaidObject</a></span><span class="refpurpose"> — Object representing a Linux Software RAID array</span>
@@ -109,25 +109,25 @@
 <dt><span class="chapter"><a href="ref-daemon-block-devices.html">Block devices on Linux</a></span></dt>
 <dd><dl>
 <dt>
-<span class="refentrytitle"><a href="UDisksLinuxBlock.html">UDisksLinuxBlock</a></span><span class="refpurpose">Linux implementation of <span class="type">UDisksBlock</span></span>
+<span class="refentrytitle"><a href="UDisksLinuxBlock.html">UDisksLinuxBlock</a></span><span class="refpurpose"> — Linux implementation of <span class="type">UDisksBlock</span></span>
 </dt>
 <dt>
-<span class="refentrytitle"><a href="UDisksLinuxPartition.html">UDisksLinuxPartition</a></span><span class="refpurpose">Linux implementation of <span class="type">UDisksPartition</span></span>
+<span class="refentrytitle"><a href="UDisksLinuxPartition.html">UDisksLinuxPartition</a></span><span class="refpurpose"> — Linux implementation of <span class="type">UDisksPartition</span></span>
 </dt>
 <dt>
-<span class="refentrytitle"><a href="UDisksLinuxPartitionTable.html">UDisksLinuxPartitionTable</a></span><span class="refpurpose">Linux implementation of <span class="type">UDisksPartitionTable</span></span>
+<span class="refentrytitle"><a href="UDisksLinuxPartitionTable.html">UDisksLinuxPartitionTable</a></span><span class="refpurpose"> — Linux implementation of <span class="type">UDisksPartitionTable</span></span>
 </dt>
 <dt>
-<span class="refentrytitle"><a href="UDisksLinuxFilesystem.html">UDisksLinuxFilesystem</a></span><span class="refpurpose">Linux implementation of <span class="type">UDisksFilesystem</span></span>
+<span class="refentrytitle"><a href="UDisksLinuxFilesystem.html">UDisksLinuxFilesystem</a></span><span class="refpurpose"> — Linux implementation of <span class="type">UDisksFilesystem</span></span>
 </dt>
 <dt>
-<span class="refentrytitle"><a href="UDisksLinuxEncrypted.html">UDisksLinuxEncrypted</a></span><span class="refpurpose">Linux implementation of <span class="type">UDisksEncrypted</span></span>
+<span class="refentrytitle"><a href="UDisksLinuxEncrypted.html">UDisksLinuxEncrypted</a></span><span class="refpurpose"> — Linux implementation of <span class="type">UDisksEncrypted</span></span>
 </dt>
 <dt>
-<span class="refentrytitle"><a href="UDisksLinuxSwapspace.html">UDisksLinuxSwapspace</a></span><span class="refpurpose">Linux implementation of <span class="type">UDisksSwapspace</span></span>
+<span class="refentrytitle"><a href="UDisksLinuxSwapspace.html">UDisksLinuxSwapspace</a></span><span class="refpurpose"> — Linux implementation of <span class="type">UDisksSwapspace</span></span>
 </dt>
 <dt>
-<span class="refentrytitle"><a href="UDisksLinuxLoop.html">UDisksLinuxLoop</a></span><span class="refpurpose">Linux implementation of <span class="type">UDisksLoop</span></span>
+<span class="refentrytitle"><a href="UDisksLinuxLoop.html">UDisksLinuxLoop</a></span><span class="refpurpose"> — Linux implementation of <span class="type">UDisksLoop</span></span>
 </dt>
 <dt>
 <span class="refentrytitle"><a href="UDisksLinuxBlockObject.html">UDisksLinuxBlockObject</a></span><span class="refpurpose"> — Object representing a block device on Linux.</span>
@@ -137,7 +137,6 @@
 </div>
 </div>
 <div class="footer">
-<hr>
-          Generated by GTK-Doc V1.21</div>
+<hr>Generated by GTK-Doc V1.24</div>
 </body>
 </html>

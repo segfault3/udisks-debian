@@ -106,7 +106,7 @@ libudisks_daemon_la_LIBADD =				\
 
 # ----------------------------------------------------------------------------------------------------
 
-udisksdprivdir = $(prefix)/lib/udisks2
+udisksdprivdir = $(libexecdir)/udisks2
 udisksdpriv_PROGRAMS = udisksd
 
 udisksd_SOURCES = 					\
