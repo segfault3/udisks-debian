@@ -27,7 +27,7 @@ Homepage: http://www.freedesktop.org/wiki/Software/udisks
 Package: udisks2
 Architecture: linux-any
 Multi-Arch: foreign
-Depends: ${shlibs:Depends}, ${misc:Depends}, udev, dbus, parted, libpam-systemd
+Depends: ${shlibs:Depends}, ${misc:Depends}, udev, dbus (>= 1.9.18), parted, libpam-systemd
 Pre-Depends: ${misc:Pre-Depends}
 Recommends: policykit-1, dosfstools, ntfs-3g, eject, gdisk
 Suggests: xfsprogs, reiserfsprogs, exfat-utils, btrfs-tools, mdadm, cryptsetup-bin
