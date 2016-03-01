@@ -78,6 +78,8 @@
 <ANCHOR id="gdbus-property-org-freedesktop-UDisks2-Drive-Ata.AamVendorRecommendedValue" href="udisks2/gdbus-org.freedesktop.UDisks2.Drive.Ata.html#gdbus-property-org-freedesktop-UDisks2-Drive-Ata.AamVendorRecommendedValue">
 <ANCHOR id="gdbus-property-org-freedesktop-UDisks2-Drive-Ata.WriteCacheSupported" href="udisks2/gdbus-org.freedesktop.UDisks2.Drive.Ata.html#gdbus-property-org-freedesktop-UDisks2-Drive-Ata.WriteCacheSupported">
 <ANCHOR id="gdbus-property-org-freedesktop-UDisks2-Drive-Ata.WriteCacheEnabled" href="udisks2/gdbus-org.freedesktop.UDisks2.Drive.Ata.html#gdbus-property-org-freedesktop-UDisks2-Drive-Ata.WriteCacheEnabled">
+<ANCHOR id="gdbus-property-org-freedesktop-UDisks2-Drive-Ata.ReadLookaheadSupported" href="udisks2/gdbus-org.freedesktop.UDisks2.Drive.Ata.html#gdbus-property-org-freedesktop-UDisks2-Drive-Ata.ReadLookaheadSupported">
+<ANCHOR id="gdbus-property-org-freedesktop-UDisks2-Drive-Ata.ReadLookaheadEnabled" href="udisks2/gdbus-org.freedesktop.UDisks2.Drive.Ata.html#gdbus-property-org-freedesktop-UDisks2-Drive-Ata.ReadLookaheadEnabled">
 <ANCHOR id="gdbus-property-org-freedesktop-UDisks2-Drive-Ata.SecurityEraseUnitMinutes" href="udisks2/gdbus-org.freedesktop.UDisks2.Drive.Ata.html#gdbus-property-org-freedesktop-UDisks2-Drive-Ata.SecurityEraseUnitMinutes">
 <ANCHOR id="gdbus-property-org-freedesktop-UDisks2-Drive-Ata.SecurityEnhancedEraseUnitMinutes" href="udisks2/gdbus-org.freedesktop.UDisks2.Drive.Ata.html#gdbus-property-org-freedesktop-UDisks2-Drive-Ata.SecurityEnhancedEraseUnitMinutes">
 <ANCHOR id="gdbus-property-org-freedesktop-UDisks2-Drive-Ata.SecurityFrozen" href="udisks2/gdbus-org.freedesktop.UDisks2.Drive.Ata.html#gdbus-property-org-freedesktop-UDisks2-Drive-Ata.SecurityFrozen">
@@ -670,6 +672,8 @@
 <ANCHOR id="udisks-drive-ata-get-pm-supported" href="udisks2/UDisksDriveAta.html#udisks-drive-ata-get-pm-supported">
 <ANCHOR id="udisks-drive-ata-get-write-cache-enabled" href="udisks2/UDisksDriveAta.html#udisks-drive-ata-get-write-cache-enabled">
 <ANCHOR id="udisks-drive-ata-get-write-cache-supported" href="udisks2/UDisksDriveAta.html#udisks-drive-ata-get-write-cache-supported">
+<ANCHOR id="udisks-drive-ata-get-read-lookahead-enabled" href="udisks2/UDisksDriveAta.html#udisks-drive-ata-get-read-lookahead-enabled">
+<ANCHOR id="udisks-drive-ata-get-read-lookahead-supported" href="udisks2/UDisksDriveAta.html#udisks-drive-ata-get-read-lookahead-supported">
 <ANCHOR id="udisks-drive-ata-get-security-enhanced-erase-unit-minutes" href="udisks2/UDisksDriveAta.html#udisks-drive-ata-get-security-enhanced-erase-unit-minutes">
 <ANCHOR id="udisks-drive-ata-get-security-erase-unit-minutes" href="udisks2/UDisksDriveAta.html#udisks-drive-ata-get-security-erase-unit-minutes">
 <ANCHOR id="udisks-drive-ata-get-security-frozen" href="udisks2/UDisksDriveAta.html#udisks-drive-ata-get-security-frozen">
@@ -693,6 +697,8 @@
 <ANCHOR id="udisks-drive-ata-set-pm-supported" href="udisks2/UDisksDriveAta.html#udisks-drive-ata-set-pm-supported">
 <ANCHOR id="udisks-drive-ata-set-write-cache-enabled" href="udisks2/UDisksDriveAta.html#udisks-drive-ata-set-write-cache-enabled">
 <ANCHOR id="udisks-drive-ata-set-write-cache-supported" href="udisks2/UDisksDriveAta.html#udisks-drive-ata-set-write-cache-supported">
+<ANCHOR id="udisks-drive-ata-set-read-lookahead-enabled" href="udisks2/UDisksDriveAta.html#udisks-drive-ata-set-read-lookahead-enabled">
+<ANCHOR id="udisks-drive-ata-set-read-lookahead-supported" href="udisks2/UDisksDriveAta.html#udisks-drive-ata-set-read-lookahead-supported">
 <ANCHOR id="udisks-drive-ata-set-security-enhanced-erase-unit-minutes" href="udisks2/UDisksDriveAta.html#udisks-drive-ata-set-security-enhanced-erase-unit-minutes">
 <ANCHOR id="udisks-drive-ata-set-security-erase-unit-minutes" href="udisks2/UDisksDriveAta.html#udisks-drive-ata-set-security-erase-unit-minutes">
 <ANCHOR id="udisks-drive-ata-set-security-frozen" href="udisks2/UDisksDriveAta.html#udisks-drive-ata-set-security-frozen">
@@ -718,6 +724,8 @@
 <ANCHOR id="UDisksDriveAta--apm-supported" href="udisks2/UDisksDriveAta.html#UDisksDriveAta--apm-supported">
 <ANCHOR id="UDisksDriveAta--pm-enabled" href="udisks2/UDisksDriveAta.html#UDisksDriveAta--pm-enabled">
 <ANCHOR id="UDisksDriveAta--pm-supported" href="udisks2/UDisksDriveAta.html#UDisksDriveAta--pm-supported">
+<ANCHOR id="UDisksDriveAta--read-lookahead-enabled" href="udisks2/UDisksDriveAta.html#UDisksDriveAta--read-lookahead-enabled">
+<ANCHOR id="UDisksDriveAta--read-lookahead-supported" href="udisks2/UDisksDriveAta.html#UDisksDriveAta--read-lookahead-supported">
 <ANCHOR id="UDisksDriveAta--security-enhanced-erase-unit-minutes" href="udisks2/UDisksDriveAta.html#UDisksDriveAta--security-enhanced-erase-unit-minutes">
 <ANCHOR id="UDisksDriveAta--security-erase-unit-minutes" href="udisks2/UDisksDriveAta.html#UDisksDriveAta--security-erase-unit-minutes">
 <ANCHOR id="UDisksDriveAta--security-frozen" href="udisks2/UDisksDriveAta.html#UDisksDriveAta--security-frozen">

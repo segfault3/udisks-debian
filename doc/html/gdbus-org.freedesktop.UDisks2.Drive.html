@@ -3,7 +3,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>org.freedesktop.UDisks2.Drive: UDisks Reference Manual</title>
-<meta name="generator" content="DocBook XSL Stylesheets V1.78.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.79.1">
 <link rel="home" href="index.html" title="UDisks Reference Manual">
 <link rel="up" href="ch02.html" title="D-Bus Interfaces">
 <link rel="prev" href="gdbus-org.freedesktop.UDisks2.Manager.html" title="org.freedesktop.UDisks2.Manager">
@@ -296,6 +296,12 @@ Configuration  readable   a{sv}
 <td><p><span class="term">ata-write-cache-enabled (type <code class="literal">'b'</code>)</span></p></td>
 <td><p>
                Whether the write-cache is enabled (See ATA command <span class="quote">“<span class="quote">SET FEATURES</span>”</span>, sub-commands 0x82 and 0x02). Since 2.1.
+             </p></td>
+</tr>
+<tr>
+<td><p><span class="term">ata-read-lookahead-enabled (type <code class="literal">'b'</code>)</span></p></td>
+<td><p>
+               Whether the read look-ahead is enabled (See ATA command <span class="quote">“<span class="quote">SET FEATURES</span>”</span>, sub-commands 0x55 and 0xaa). Since 2.1.7.
              </p></td>
 </tr>
 </tbody>

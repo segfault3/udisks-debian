@@ -3,7 +3,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>UDisksLinuxBlockObject: UDisks Reference Manual</title>
-<meta name="generator" content="DocBook XSL Stylesheets V1.78.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.79.1">
 <link rel="home" href="index.html" title="UDisks Reference Manual">
 <link rel="up" href="ref-daemon-block-devices.html" title="Block devices on Linux">
 <link rel="prev" href="UDisksLinuxLoop.html" title="UDisksLinuxLoop">
@@ -36,7 +36,7 @@
 </tr></table></div>
 <div class="refsect1">
 <a name="UDisksLinuxBlockObject.functions"></a><h2>Functions</h2>
-<div class="informaltable"><table width="100%" border="0">
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
 <colgroup>
 <col width="150px" class="functions_return">
 <col class="functions_name">
@@ -95,7 +95,7 @@
 </div>
 <div class="refsect1">
 <a name="UDisksLinuxBlockObject.properties"></a><h2>Properties</h2>
-<div class="informaltable"><table border="0">
+<div class="informaltable"><table class="informaltable" border="0">
 <colgroup>
 <col width="150px" class="properties_type">
 <col width="300px" class="properties_name">
@@ -119,7 +119,7 @@
 </div>
 <div class="refsect1">
 <a name="UDisksLinuxBlockObject.other"></a><h2>Types and Values</h2>
-<div class="informaltable"><table width="100%" border="0">
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
 <colgroup>
 <col width="150px" class="name">
 <col class="description">
@@ -132,8 +132,8 @@
 </div>
 <div class="refsect1">
 <a name="UDisksLinuxBlockObject.object-hierarchy"></a><h2>Object Hierarchy</h2>
-<pre class="screen">    <a href="https://developer.gnome.org/gobject/unstable/gobject-The-Base-Object-Type.html#GObject">GObject</a>
-    <span class="lineart">╰──</span> <a href="https://developer.gnome.org/gio/unstable/GDBusObjectSkeleton.html">GDBusObjectSkeleton</a>
+<pre class="screen">    GObject
+    <span class="lineart">╰──</span> GDBusObjectSkeleton
         <span class="lineart">╰──</span> <a class="link" href="UDisksObject.html#UDisksObjectSkeleton">UDisksObjectSkeleton</a>
             <span class="lineart">╰──</span> UDisksLinuxBlockObject
 </pre>
@@ -142,7 +142,7 @@
 <a name="UDisksLinuxBlockObject.implemented-interfaces"></a><h2>Implemented Interfaces</h2>
 <p>
 UDisksLinuxBlockObject implements
- <a href="https://developer.gnome.org/gio/unstable/GDBusObject.html">GDBusObject</a> and  <a class="link" href="UDisksObject.html" title="UDisksObject">UDisksObject</a>.</p>
+ GDBusObject and  <a class="link" href="UDisksObject.html" title="UDisksObject">UDisksObject</a>.</p>
 </div>
 <div class="refsect1">
 <a name="UDisksLinuxBlockObject.description"></a><h2>Description</h2>
@@ -158,7 +158,7 @@ udisks_linux_block_object_new (<em class="parameter"><code><a class="link" href=
 <p>Create a new block object.</p>
 <div class="refsect3">
 <a name="id-1.5.8.9.9.2.5"></a><h4>Parameters</h4>
-<div class="informaltable"><table width="100%" border="0">
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
 <colgroup>
 <col width="150px" class="parameters_name">
 <col class="parameters_description">
@@ -180,7 +180,7 @@ udisks_linux_block_object_new (<em class="parameter"><code><a class="link" href=
 </div>
 <div class="refsect3">
 <a name="id-1.5.8.9.9.2.6"></a><h4>Returns</h4>
-<p> A <a class="link" href="UDisksLinuxBlockObject.html" title="UDisksLinuxBlockObject"><span class="type">UDisksLinuxBlockObject</span></a> object. Free with <a href="https://developer.gnome.org/gobject/unstable/gobject-The-Base-Object-Type.html#g-object-unref"><code class="function">g_object_unref()</code></a>.</p>
+<p> A <a class="link" href="UDisksLinuxBlockObject.html" title="UDisksLinuxBlockObject"><span class="type">UDisksLinuxBlockObject</span></a> object. Free with <code class="function">g_object_unref()</code>.</p>
 </div>
 </div>
 <hr>
@@ -188,13 +188,13 @@ udisks_linux_block_object_new (<em class="parameter"><code><a class="link" href=
 <a name="udisks-linux-block-object-uevent"></a><h3>udisks_linux_block_object_uevent ()</h3>
 <pre class="programlisting"><span class="returnvalue">void</span>
 udisks_linux_block_object_uevent (<em class="parameter"><code><a class="link" href="UDisksLinuxBlockObject.html" title="UDisksLinuxBlockObject"><span class="type">UDisksLinuxBlockObject</span></a> *object</code></em>,
-                                  <em class="parameter"><code>const <a href="https://developer.gnome.org/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *action</code></em>,
+                                  <em class="parameter"><code>const <span class="type">gchar</span> *action</code></em>,
                                   <em class="parameter"><code><a class="link" href="UDisksLinuxDevice.html" title="UDisksLinuxDevice"><span class="type">UDisksLinuxDevice</span></a> *device</code></em>);</pre>
 <p>Updates all information on interfaces on <em class="parameter"><code>object</code></em>
 .</p>
 <div class="refsect3">
 <a name="id-1.5.8.9.9.3.5"></a><h4>Parameters</h4>
-<div class="informaltable"><table width="100%" border="0">
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
 <colgroup>
 <col width="150px" class="parameters_name">
 <col class="parameters_description">
@@ -208,12 +208,12 @@ udisks_linux_block_object_uevent (<em class="parameter"><code><a class="link" hr
 </tr>
 <tr>
 <td class="parameter_name"><p>action</p></td>
-<td class="parameter_description"><p>Uevent action or <a href="https://developer.gnome.org/glib/unstable/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a></p></td>
+<td class="parameter_description"><p>Uevent action or <code class="literal">NULL</code></p></td>
 <td class="parameter_annotations"> </td>
 </tr>
 <tr>
 <td class="parameter_name"><p>device</p></td>
-<td class="parameter_description"><p>A new <a class="link" href="UDisksLinuxDevice.html" title="UDisksLinuxDevice"><span class="type">UDisksLinuxDevice</span></a> device object or <a href="https://developer.gnome.org/glib/unstable/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a> if the device hasn't changed.</p></td>
+<td class="parameter_description"><p>A new <a class="link" href="UDisksLinuxDevice.html" title="UDisksLinuxDevice"><span class="type">UDisksLinuxDevice</span></a> device object or <code class="literal">NULL</code> if the device hasn't changed.</p></td>
 <td class="parameter_annotations"> </td>
 </tr>
 </tbody>
@@ -229,7 +229,7 @@ udisks_linux_block_object_get_daemon (<em class="parameter"><code><a class="link
 .</p>
 <div class="refsect3">
 <a name="id-1.5.8.9.9.4.5"></a><h4>Parameters</h4>
-<div class="informaltable"><table width="100%" border="0">
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
 <colgroup>
 <col width="150px" class="parameters_name">
 <col class="parameters_description">
@@ -255,11 +255,11 @@ udisks_linux_block_object_get_daemon (<em class="parameter"><code><a class="link
 udisks_linux_block_object_get_device (<em class="parameter"><code><a class="link" href="UDisksLinuxBlockObject.html" title="UDisksLinuxBlockObject"><span class="type">UDisksLinuxBlockObject</span></a> *object</code></em>);</pre>
 <p>Gets the current <a class="link" href="UDisksLinuxDevice.html" title="UDisksLinuxDevice"><span class="type">UDisksLinuxDevice</span></a> for <em class="parameter"><code>object</code></em>
 . Connect to
-<a href="https://developer.gnome.org/gobject/unstable/gobject-The-Base-Object-Type.html#GObject-notify"><span class="type">“notify”</span></a> to track changes to the <a class="link" href="UDisksLinuxBlockObject.html#UDisksLinuxBlockObject--device" title="The “device” property"><span class="type">“device”</span></a>
+<span class="type">“notify”</span> to track changes to the <a class="link" href="UDisksLinuxBlockObject.html#UDisksLinuxBlockObject--device" title="The “device” property"><span class="type">“device”</span></a>
 property.</p>
 <div class="refsect3">
 <a name="id-1.5.8.9.9.5.5"></a><h4>Parameters</h4>
-<div class="informaltable"><table width="100%" border="0">
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
 <colgroup>
 <col width="150px" class="parameters_name">
 <col class="parameters_description">
@@ -274,7 +274,7 @@ property.</p>
 </div>
 <div class="refsect3">
 <a name="id-1.5.8.9.9.5.6"></a><h4>Returns</h4>
-<p> A <a class="link" href="UDisksLinuxDevice.html" title="UDisksLinuxDevice"><span class="type">UDisksLinuxDevice</span></a>. Free with <a href="https://developer.gnome.org/gobject/unstable/gobject-The-Base-Object-Type.html#g-object-unref"><code class="function">g_object_unref()</code></a>.</p>
+<p> A <a class="link" href="UDisksLinuxDevice.html" title="UDisksLinuxDevice"><span class="type">UDisksLinuxDevice</span></a>. Free with <code class="function">g_object_unref()</code>.</p>
 </div>
 </div>
 <hr>
@@ -289,7 +289,7 @@ stack and will eventually be received by the udisks daemon process
 itself. This method does not wait for the event to be received.</p>
 <div class="refsect3">
 <a name="id-1.5.8.9.9.6.6"></a><h4>Parameters</h4>
-<div class="informaltable"><table width="100%" border="0">
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
 <colgroup>
 <col width="150px" class="parameters_name">
 <col class="parameters_description">
@@ -317,7 +317,7 @@ the udisks daemon process itself. This method does not wait for the
 event to be received.</p>
 <div class="refsect3">
 <a name="id-1.5.8.9.9.7.6"></a><h4>Parameters</h4>
-<div class="informaltable"><table width="100%" border="0">
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
 <colgroup>
 <col width="150px" class="parameters_name">
 <col class="parameters_description">
@@ -353,7 +353,7 @@ should only be accessed using the provided API.</p>
 <div class="refsect2">
 <a name="UDisksLinuxBlockObject--device"></a><h3>The <code class="literal">“device”</code> property</h3>
 <pre class="programlisting">  “device”                   <a class="link" href="UDisksLinuxDevice.html" title="UDisksLinuxDevice"><span class="type">UDisksLinuxDevice</span></a> *</pre>
-<p>The <a class="link" href="UDisksLinuxDevice.html" title="UDisksLinuxDevice"><span class="type">UDisksLinuxDevice</span></a> for the object. Connect to the <a href="https://developer.gnome.org/gobject/unstable/gobject-The-Base-Object-Type.html#GObject-notify"><span class="type">“notify”</span></a>
+<p>The <a class="link" href="UDisksLinuxDevice.html" title="UDisksLinuxDevice"><span class="type">UDisksLinuxDevice</span></a> for the object. Connect to the <span class="type">“notify”</span>
 signal to get notified whenever this is updated.</p>
 <p>Flags: Read / Write / Construct Only</p>
 </div>

@@ -1,4 +1,42 @@
 ------------
+udisks 2.1.7
+------------
+
+The udisks project provides a daemon, tools and libraries to access
+and manipulate disks and storage devices.
+
+Changes since udisks 2.1.6:
+
+David Heidelberger (1):
+      allow disabling ACL
+
+Kylie McClain (1):
+      udisksctl: Properly redirect stdout
+
+Marius Vollmer (1):
+      Catch bogus UUID changes of MDRAIDs
+
+Martin Pitt (12):
+      Fix udiskctl help for glib 2.45
+      udisks2.service.in: Add [Install] section
+      Fix translator comments in udisksobjectinfo.c
+      integration-test: Explicitly require UDisks 2.0 gir
+      integration-test: Fix wait_timeout/busy error messages
+      integration-test: PEP-8 fixes
+      integration-test: Fix Polkit.test_removable_fs
+      test_polkitd.py: Fix race condition in waiting for test polkitd
+      integration-test: Fix race condition in fake CD drive creation
+      integration-test: Add timeout to readd_device()
+
+Tom Yan (1):
+      Bug 92488 - Add support for read look-ahead ATA settings
+
+Thanks to all our contributors.
+
+Martin Pitt,
+2016-03-01
+
+------------
 udisks 2.1.6
 ------------
 
