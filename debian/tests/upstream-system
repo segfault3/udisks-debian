@@ -1,6 +1,10 @@
 #!/bin/sh
 set -e
 
+# The NTFS test still hangs the kernel often (see 2.1.5-1 changelog and
+# https://launchpad.net/bugs/1398859)
+dpkg -P ntfs-3g 2>&1|| true
+
 # succeeding test must not write anything to stderr, as per DEP-8
 mkdir -p /var/run/udisks2
 src/tests/integration-test 2>&1

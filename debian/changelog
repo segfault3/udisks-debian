@@ -11,6 +11,8 @@ udisks2 (2.1.7-1) UNRELEASED; urgency=medium
     >= 106, and now also suppresses showing new block devices on the desktop.
     (LP: #1508075)
   * Bump Standards-Version to 3.9.7 (no changes necessary).
+  * debian/tests/upstream-system: Try to purge ntfs-3g, as the NTFS test still
+    hangs the kernel often (see 2.1.5-1).
 
  -- Martin Pitt <mpitt@debian.org>  Wed, 21 Oct 2015 15:12:17 +0200
 
