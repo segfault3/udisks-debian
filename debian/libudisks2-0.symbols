@@ -194,6 +194,8 @@ libudisks2.so.0 libudisks2-0 #MINVER#
  udisks_drive_ata_get_apm_supported@Base 2.0.0
  udisks_drive_ata_get_pm_enabled@Base 2.0.0
  udisks_drive_ata_get_pm_supported@Base 2.0.0
+ udisks_drive_ata_get_read_lookahead_enabled@Base 2.1.7
+ udisks_drive_ata_get_read_lookahead_supported@Base 2.1.7
  udisks_drive_ata_get_security_enhanced_erase_unit_minutes@Base 2.0.0
  udisks_drive_ata_get_security_erase_unit_minutes@Base 2.0.0
  udisks_drive_ata_get_security_frozen@Base 2.0.0
@@ -227,6 +229,8 @@ libudisks2.so.0 libudisks2-0 #MINVER#
  udisks_drive_ata_set_apm_supported@Base 2.0.0
  udisks_drive_ata_set_pm_enabled@Base 2.0.0
  udisks_drive_ata_set_pm_supported@Base 2.0.0
+ udisks_drive_ata_set_read_lookahead_enabled@Base 2.1.7
+ udisks_drive_ata_set_read_lookahead_supported@Base 2.1.7
  udisks_drive_ata_set_security_enhanced_erase_unit_minutes@Base 2.0.0
  udisks_drive_ata_set_security_erase_unit_minutes@Base 2.0.0
  udisks_drive_ata_set_security_frozen@Base 2.0.0

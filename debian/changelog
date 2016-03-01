@@ -2,6 +2,7 @@ udisks2 (2.1.7-1) UNRELEASED; urgency=medium
 
   * New upstream release.
     - Drop git_Fix-udiskctl-help-for-glib-2.45.patch, included upstream.
+  * debian/libudisks2-0.symbols: Add new symbols for this release.
   * udisks2-inhibit: Stop fiddling with polkit rules; restarting it can break
     existing clients/pending requests, and we can't use inotify as we don't
     want to write anything on the actual file system and bind mounts don't
