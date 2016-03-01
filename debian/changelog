@@ -10,6 +10,7 @@ udisks2 (2.1.7-1) UNRELEASED; urgency=medium
     the file system but does not need any daemon restarts, works with polkit
     >= 106, and now also suppresses showing new block devices on the desktop.
     (LP: #1508075)
+  * Bump Standards-Version to 3.9.7 (no changes necessary).
 
  -- Martin Pitt <mpitt@debian.org>  Wed, 21 Oct 2015 15:12:17 +0200
 
