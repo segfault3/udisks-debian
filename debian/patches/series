@@ -1,4 +1,3 @@
 # cherry-picked from upstream
-git_Fix-udiskctl-help-for-glib-2.45.patch
 
 # Debian patches for udisks
