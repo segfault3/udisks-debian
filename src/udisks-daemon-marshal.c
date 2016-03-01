@@ -65,9 +65,9 @@ udisks_daemon_marshal_BOOLEAN__BOXED_INT_BOXED_BOXED (GClosure     *closure,
                                                                    gpointer     arg_3,
                                                                    gpointer     arg_4,
                                                                    gpointer     data2);
-  register GMarshalFunc_BOOLEAN__BOXED_INT_BOXED_BOXED callback;
-  register GCClosure *cc = (GCClosure*) closure;
-  register gpointer data1, data2;
+  GMarshalFunc_BOOLEAN__BOXED_INT_BOXED_BOXED callback;
+  GCClosure *cc = (GCClosure*) closure;
+  gpointer data1, data2;
   gboolean v_return;
 
   g_return_if_fail (return_value != NULL);
@@ -108,9 +108,9 @@ udisks_daemon_marshal_BOOLEAN__BOOLEAN_BOXED (GClosure     *closure,
                                                            gboolean     arg_1,
                                                            gpointer     arg_2,
                                                            gpointer     data2);
-  register GMarshalFunc_BOOLEAN__BOOLEAN_BOXED callback;
-  register GCClosure *cc = (GCClosure*) closure;
-  register gpointer data1, data2;
+  GMarshalFunc_BOOLEAN__BOOLEAN_BOXED callback;
+  GCClosure *cc = (GCClosure*) closure;
+  gpointer data1, data2;
   gboolean v_return;
 
   g_return_if_fail (return_value != NULL);

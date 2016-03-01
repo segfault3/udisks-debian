@@ -170,6 +170,8 @@
     <keyword type="property" name="The &quot;AamVendorRecommendedValue&quot; property" link="gdbus-org.freedesktop.UDisks2.Drive.Ata.html#gdbus-property-org-freedesktop-UDisks2-Drive-Ata.AamVendorRecommendedValue"/>
     <keyword type="property" name="The &quot;WriteCacheSupported&quot; property" link="gdbus-org.freedesktop.UDisks2.Drive.Ata.html#gdbus-property-org-freedesktop-UDisks2-Drive-Ata.WriteCacheSupported"/>
     <keyword type="property" name="The &quot;WriteCacheEnabled&quot; property" link="gdbus-org.freedesktop.UDisks2.Drive.Ata.html#gdbus-property-org-freedesktop-UDisks2-Drive-Ata.WriteCacheEnabled"/>
+    <keyword type="property" name="The &quot;ReadLookaheadSupported&quot; property" link="gdbus-org.freedesktop.UDisks2.Drive.Ata.html#gdbus-property-org-freedesktop-UDisks2-Drive-Ata.ReadLookaheadSupported"/>
+    <keyword type="property" name="The &quot;ReadLookaheadEnabled&quot; property" link="gdbus-org.freedesktop.UDisks2.Drive.Ata.html#gdbus-property-org-freedesktop-UDisks2-Drive-Ata.ReadLookaheadEnabled"/>
     <keyword type="property" name="The &quot;SecurityEraseUnitMinutes&quot; property" link="gdbus-org.freedesktop.UDisks2.Drive.Ata.html#gdbus-property-org-freedesktop-UDisks2-Drive-Ata.SecurityEraseUnitMinutes"/>
     <keyword type="property" name="The &quot;SecurityEnhancedEraseUnitMinutes&quot; property" link="gdbus-org.freedesktop.UDisks2.Drive.Ata.html#gdbus-property-org-freedesktop-UDisks2-Drive-Ata.SecurityEnhancedEraseUnitMinutes"/>
     <keyword type="property" name="The &quot;SecurityFrozen&quot; property" link="gdbus-org.freedesktop.UDisks2.Drive.Ata.html#gdbus-property-org-freedesktop-UDisks2-Drive-Ata.SecurityFrozen"/>
@@ -612,6 +614,8 @@
     <keyword type="function" name="udisks_drive_ata_get_pm_supported ()" link="UDisksDriveAta.html#udisks-drive-ata-get-pm-supported"/>
     <keyword type="function" name="udisks_drive_ata_get_write_cache_enabled ()" link="UDisksDriveAta.html#udisks-drive-ata-get-write-cache-enabled" since="2.1"/>
     <keyword type="function" name="udisks_drive_ata_get_write_cache_supported ()" link="UDisksDriveAta.html#udisks-drive-ata-get-write-cache-supported" since="2.1"/>
+    <keyword type="function" name="udisks_drive_ata_get_read_lookahead_enabled ()" link="UDisksDriveAta.html#udisks-drive-ata-get-read-lookahead-enabled" since="2.1.7"/>
+    <keyword type="function" name="udisks_drive_ata_get_read_lookahead_supported ()" link="UDisksDriveAta.html#udisks-drive-ata-get-read-lookahead-supported" since="2.1.7"/>
     <keyword type="function" name="udisks_drive_ata_get_security_enhanced_erase_unit_minutes ()" link="UDisksDriveAta.html#udisks-drive-ata-get-security-enhanced-erase-unit-minutes"/>
     <keyword type="function" name="udisks_drive_ata_get_security_erase_unit_minutes ()" link="UDisksDriveAta.html#udisks-drive-ata-get-security-erase-unit-minutes"/>
     <keyword type="function" name="udisks_drive_ata_get_security_frozen ()" link="UDisksDriveAta.html#udisks-drive-ata-get-security-frozen"/>
@@ -635,6 +639,8 @@
     <keyword type="function" name="udisks_drive_ata_set_pm_supported ()" link="UDisksDriveAta.html#udisks-drive-ata-set-pm-supported"/>
     <keyword type="function" name="udisks_drive_ata_set_write_cache_enabled ()" link="UDisksDriveAta.html#udisks-drive-ata-set-write-cache-enabled" since="2.1"/>
     <keyword type="function" name="udisks_drive_ata_set_write_cache_supported ()" link="UDisksDriveAta.html#udisks-drive-ata-set-write-cache-supported" since="2.1"/>
+    <keyword type="function" name="udisks_drive_ata_set_read_lookahead_enabled ()" link="UDisksDriveAta.html#udisks-drive-ata-set-read-lookahead-enabled" since="2.1.7"/>
+    <keyword type="function" name="udisks_drive_ata_set_read_lookahead_supported ()" link="UDisksDriveAta.html#udisks-drive-ata-set-read-lookahead-supported" since="2.1.7"/>
     <keyword type="function" name="udisks_drive_ata_set_security_enhanced_erase_unit_minutes ()" link="UDisksDriveAta.html#udisks-drive-ata-set-security-enhanced-erase-unit-minutes"/>
     <keyword type="function" name="udisks_drive_ata_set_security_erase_unit_minutes ()" link="UDisksDriveAta.html#udisks-drive-ata-set-security-erase-unit-minutes"/>
     <keyword type="function" name="udisks_drive_ata_set_security_frozen ()" link="UDisksDriveAta.html#udisks-drive-ata-set-security-frozen"/>
@@ -658,6 +664,8 @@
     <keyword type="property" name="The “apm-supported” property" link="UDisksDriveAta.html#UDisksDriveAta--apm-supported"/>
     <keyword type="property" name="The “pm-enabled” property" link="UDisksDriveAta.html#UDisksDriveAta--pm-enabled"/>
     <keyword type="property" name="The “pm-supported” property" link="UDisksDriveAta.html#UDisksDriveAta--pm-supported"/>
+    <keyword type="property" name="The “read-lookahead-enabled” property" link="UDisksDriveAta.html#UDisksDriveAta--read-lookahead-enabled"/>
+    <keyword type="property" name="The “read-lookahead-supported” property" link="UDisksDriveAta.html#UDisksDriveAta--read-lookahead-supported"/>
     <keyword type="property" name="The “security-enhanced-erase-unit-minutes” property" link="UDisksDriveAta.html#UDisksDriveAta--security-enhanced-erase-unit-minutes"/>
     <keyword type="property" name="The “security-erase-unit-minutes” property" link="UDisksDriveAta.html#UDisksDriveAta--security-erase-unit-minutes"/>
     <keyword type="property" name="The “security-frozen” property" link="UDisksDriveAta.html#UDisksDriveAta--security-frozen"/>
