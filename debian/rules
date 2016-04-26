@@ -23,4 +23,5 @@ override_dh_auto_install:
 	fi
 
 override_dh_install:
-	dh_install -X.la --fail-missing
+	rm -f debian/tmp/usr/lib/*/*.la
+	dh_install --fail-missing

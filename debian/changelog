@@ -1,3 +1,13 @@
+udisks2 (2.1.7-2) UNRELEASED; urgency=medium
+
+  * Avoid using "dh_install -X.la". This would suppress installation of
+    anything containing the substring .la *anywhere*. -X.la is
+    less bad than -X.a (which stopped gnome-software from installing
+    its .appstream file as intended, for example), but still seems
+    somewhat risky.
+
+ -- Simon McVittie <smcv@debian.org>  Tue, 26 Apr 2016 15:46:07 +0100
+
 udisks2 (2.1.7-1) unstable; urgency=medium
 
   * New upstream release.
