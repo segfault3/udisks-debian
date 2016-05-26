@@ -2,23 +2,24 @@ Source: udisks2
 Section: admin
 Priority: optional
 Maintainer: Utopia Maintenance Team <pkg-utopia-maintainers@lists.alioth.debian.org>
-Uploaders: Michael Biebl <biebl@debian.org>, Martin Pitt <mpitt@debian.org>
+Uploaders: Michael Biebl <biebl@debian.org>,
+           Martin Pitt <mpitt@debian.org>,
 Build-Depends: debhelper (>= 9),
- pkg-config,
- xsltproc,
- gtk-doc-tools,
- intltool (>= 0.40.0),
- libglib2.0-dev (>= 2.31.13),
- udev (>= 147),
- libgudev-1.0-dev (>= 165),
- libpolkit-gobject-1-dev (>= 0.97),
- libpolkit-agent-1-dev (>= 0.97),
- libacl1-dev,
- libgirepository1.0-dev (>= 1.30),
- gobject-introspection (>= 1.30),
- libatasmart-dev (>= 0.17),
- libsystemd-dev (>= 209),
- dh-autoreconf
+               dh-autoreconf,
+               gobject-introspection (>= 1.30),
+               gtk-doc-tools,
+               intltool (>= 0.40.0),
+               libacl1-dev,
+               libatasmart-dev (>= 0.17),
+               libgirepository1.0-dev (>= 1.30),
+               libglib2.0-dev (>= 2.31.13),
+               libgudev-1.0-dev (>= 165),
+               libpolkit-agent-1-dev (>= 0.97),
+               libpolkit-gobject-1-dev (>= 0.97),
+               libsystemd-dev (>= 209),
+               pkg-config,
+               udev (>= 147),
+               xsltproc,
 Standards-Version: 3.9.7
 Vcs-Git: https://anonscm.debian.org/git/pkg-utopia/udisks2.git
 Vcs-Browser: https://anonscm.debian.org/cgit/pkg-utopia/udisks2.git
@@ -27,10 +28,24 @@ Homepage: http://www.freedesktop.org/wiki/Software/udisks
 Package: udisks2
 Architecture: linux-any
 Multi-Arch: foreign
-Depends: ${shlibs:Depends}, ${misc:Depends}, udev, dbus, parted, libpam-systemd
-Pre-Depends: ${misc:Pre-Depends}
-Recommends: policykit-1, dosfstools, ntfs-3g, eject, gdisk
-Suggests: xfsprogs, reiserfsprogs, exfat-utils, btrfs-tools, mdadm, cryptsetup-bin
+Depends: dbus,
+         libpam-systemd,
+         parted,
+         udev,
+         ${misc:Depends},
+         ${shlibs:Depends},
+Pre-Depends: ${misc:Pre-Depends},
+Recommends: dosfstools,
+            eject,
+            gdisk,
+            ntfs-3g,
+            policykit-1,
+Suggests: btrfs-tools,
+          cryptsetup-bin,
+          exfat-utils,
+          mdadm,
+          reiserfsprogs,
+          xfsprogs,
 Description: D-Bus service to access and manipulate storage devices
  The udisks daemon serves as an interface to system block devices,
  implemented via D-Bus. It handles operations such as querying, mounting,
@@ -48,8 +63,8 @@ Description: D-Bus service to access and manipulate storage devices
 Package: udisks2-doc
 Architecture: all
 Section: doc
-Depends: ${misc:Depends}
-Suggests: devhelp
+Depends: ${misc:Depends},
+Suggests: devhelp,
 Description: udisks2 documentation
  The udisks daemon serves as an interface to system block devices,
  implemented via D-Bus. It handles operations such as querying, mounting,
@@ -62,8 +77,9 @@ Package: libudisks2-0
 Section: libs
 Architecture: linux-any
 Multi-Arch: same
-Pre-Depends: ${misc:Pre-Depends}
-Depends: ${shlibs:Depends}, ${misc:Depends}
+Pre-Depends: ${misc:Pre-Depends},
+Depends: ${misc:Depends},
+         ${shlibs:Depends},
 Description: GObject based library to access udisks2
  The udisks daemon serves as an interface to system block devices,
  implemented via D-Bus. It handles operations such as querying, mounting,
@@ -77,10 +93,10 @@ Package: libudisks2-dev
 Section: libdevel
 Architecture: linux-any
 Multi-Arch: same
-Depends: ${shlibs:Depends},
- ${misc:Depends},
- gir1.2-udisks-2.0 (= ${binary:Version}),
- libudisks2-0 (= ${binary:Version})
+Depends: gir1.2-udisks-2.0 (= ${binary:Version}),
+         libudisks2-0 (= ${binary:Version}),
+         ${misc:Depends},
+         ${shlibs:Depends},
 Description: GObject based library to access udisks2 - development files
  The udisks daemon serves as an interface to system block devices,
  implemented via D-Bus. It handles operations such as querying, mounting,
@@ -95,8 +111,8 @@ Section: introspection
 Architecture: linux-any
 Multi-Arch: same
 Depends: ${gir:Depends},
- ${shlibs:Depends},
- ${misc:Depends}
+         ${misc:Depends},
+         ${shlibs:Depends},
 Description: GObject based library to access udisks2 - introspection data
  The udisks daemon serves as an interface to system block devices,
  implemented via D-Bus. It handles operations such as querying, mounting,
@@ -105,4 +121,3 @@ Description: GObject based library to access udisks2 - introspection data
  .
  This package provides introspection data for libudisks. It can be used
  by packages using the GIRepository format to generate dynamic bindings.
-
