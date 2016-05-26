@@ -1,4 +1,4 @@
-udisks2 (2.1.7-2) UNRELEASED; urgency=medium
+udisks2 (2.1.7-2) unstable; urgency=medium
 
   [ Simon McVittie ]
   * Avoid using "dh_install -X.la". This would suppress installation of
@@ -15,7 +15,7 @@ udisks2 (2.1.7-2) UNRELEASED; urgency=medium
     directly depending on whether the DH_QUIET environment variable is set.
   * Bump Standards-Version to 3.9.8.
 
- -- Simon McVittie <smcv@debian.org>  Tue, 26 Apr 2016 15:46:07 +0100
+ -- Michael Biebl <biebl@debian.org>  Thu, 26 May 2016 05:39:47 +0200
 
 udisks2 (2.1.7-1) unstable; urgency=medium
 
