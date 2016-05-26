@@ -1,7 +1,7 @@
 Format: http://www.debian.org/doc/packaging-manuals/copyright-format/1.0/
 Upstream-Name: UDisks2
 Upstream-Contact: David Zeuthen <zeuthen@gmail.com>
-Source: http://udisks.freedesktop.org/releases/
+Source: https://udisks.freedesktop.org/releases/
 
 Files: *
 Copyright: 2007-2011 David Zeuthen <zeuthen@gmail.com>

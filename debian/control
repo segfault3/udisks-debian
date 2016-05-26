@@ -23,7 +23,7 @@ Build-Depends: debhelper (>= 9),
 Standards-Version: 3.9.7
 Vcs-Git: https://anonscm.debian.org/git/pkg-utopia/udisks2.git
 Vcs-Browser: https://anonscm.debian.org/cgit/pkg-utopia/udisks2.git
-Homepage: http://www.freedesktop.org/wiki/Software/udisks
+Homepage: https://www.freedesktop.org/wiki/Software/udisks
 
 Package: udisks2
 Architecture: linux-any

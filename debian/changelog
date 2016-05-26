@@ -10,6 +10,7 @@ udisks2 (2.1.7-2) UNRELEASED; urgency=medium
 
   [ Michael Biebl ]
   * Run wrap-and-sort -at.
+  * Use https for upstream homepage.
 
  -- Simon McVittie <smcv@debian.org>  Tue, 26 Apr 2016 15:46:07 +0100
 
