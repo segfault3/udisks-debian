@@ -3,6 +3,8 @@ udisks2 (2.1.7-3) UNRELEASED; urgency=medium
   * Drop no longer needed migration code from before jessie.
   * Add explicit Build-Depends on gnome-common. Required for the
     GNOME_COMPILE_WARNINGS macro. (Closes: #837828)
+  * Ensure that /var/lib/udisks2 exists when running the upstream integration
+    test.
 
  -- Michael Biebl <biebl@debian.org>  Thu, 20 Oct 2016 17:05:39 +0200
 
