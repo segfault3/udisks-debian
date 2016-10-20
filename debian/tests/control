@@ -1,6 +1,6 @@
 Tests: upstream-system
 Depends: cryptsetup-bin,
-         dbus-x11,
+         dbus (>= 1.8),
          dosfstools,
          gir1.2-glib-2.0,
          kpartx,

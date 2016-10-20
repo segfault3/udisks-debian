@@ -8,6 +8,7 @@ udisks2 (2.1.7-3) UNRELEASED; urgency=medium
   * Promote exfat-utils from Suggests to Recommends. The exFAT file system is
     more widely used these days so we want to have support installed by
     default. (Closes: #812467)
+  * Use dbus-run-session to run tests. (Closes: #836042)
 
  -- Michael Biebl <biebl@debian.org>  Thu, 20 Oct 2016 17:05:39 +0200
 
