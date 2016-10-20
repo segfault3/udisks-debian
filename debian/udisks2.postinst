@@ -16,14 +16,6 @@ if [ "$1" = "configure" ]; then
     pid=$(get_pid org.freedesktop.UDisks2)
     kill $pid 2>/dev/null || true
 
-    # in that version, the mounted-fs file moved
-    if dpkg --compare-versions "$2" lt-nl "1.99.0-4" &&
-        [ -e /run/udisks2/mounted-fs ] &&
-        [ -d /var/lib/udisks2 ] &&
-        [ ! -e /var/lib/udisks2/mounted-fs ]; then
-        mv /run/udisks2/mounted-fs /var/lib/udisks2/
-    fi
-
     # restart daemon if it was running before
     [ -z "$pid" ] || udisksctl status >/dev/null || true # will trigger through D-Bus activation
 
