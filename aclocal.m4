@@ -584,7 +584,7 @@ fi])
 
 # gnome-compiler-flags.m4
 #
-# serial 2
+# serial 4
 #
 
 dnl GNOME_COMPILE_WARNINGS
@@ -596,7 +596,7 @@ dnl the first argument to the macro, defaulting to 'yes'.
 dnl Additional warning/error flags can be passed as an optional second argument.
 dnl
 dnl For example: GNOME_COMPILE_WARNINGS([maximum],[-Werror=some-flag -Wfoobar])
-AC_DEFUN([GNOME_COMPILE_WARNINGS],[
+AU_DEFUN([GNOME_COMPILE_WARNINGS],[
     dnl ******************************
     dnl More compiler warnings
     dnl ******************************
@@ -633,6 +633,7 @@ AC_DEFUN([GNOME_COMPILE_WARNINGS],[
         -Werror=format-security \
         -Werror=format=2 \
         -Werror=missing-include-dirs \
+        -Werror=return-type \
     "
 
     dnl Additional warning or error flags provided by the module author to
@@ -703,11 +704,14 @@ AC_DEFUN([GNOME_COMPILE_WARNINGS],[
 
     WARN_CFLAGS="$tested_warning_flags $complCFLAGS"
     AC_SUBST(WARN_CFLAGS)
-])
+],
+[[$0: This macro is deprecated. You should use AX_COMPILER_FLAGS instead and
+eliminate use of --enable-iso-c.
+See: http://www.gnu.org/software/autoconf-archive/ax_compiler_flags.html#ax_compiler_flags]])
 
 dnl For C++, do basically the same thing.
 
-AC_DEFUN([GNOME_CXX_WARNINGS],[
+AU_DEFUN([GNOME_CXX_WARNINGS],[
   AC_ARG_ENABLE(cxx-warnings,
                 AS_HELP_STRING([--enable-cxx-warnings=@<:@no/minimum/yes@:>@]
                                [Turn on compiler warnings.]),,
@@ -758,7 +762,10 @@ AC_DEFUN([GNOME_CXX_WARNINGS],[
 
   WARN_CXXFLAGS="$CXXFLAGS $warnCXXFLAGS $complCXXFLAGS"
   AC_SUBST(WARN_CXXFLAGS)
-])
+],
+[[$0: This macro is deprecated. You should use AX_COMPILER_FLAGS instead and
+eliminate use of --enable-iso-cxx.
+See: http://www.gnu.org/software/autoconf-archive/ax_compiler_flags.html#ax_compiler_flags]])
 
 dnl -*- mode: autoconf -*-
 dnl Copyright 2009 Johan Dahlin
@@ -858,8 +865,8 @@ AC_DEFUN([GOBJECT_INTROSPECTION_REQUIRE],
 ])
 
 # nls.m4 serial 5 (gettext-0.18)
-dnl Copyright (C) 1995-2003, 2005-2006, 2008-2014 Free Software Foundation,
-dnl Inc.
+dnl Copyright (C) 1995-2003, 2005-2006, 2008-2014, 2016 Free Software
+dnl Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
 dnl with or without modifications, as long as this notice is preserved.
@@ -891,7 +898,7 @@ AC_DEFUN([AM_NLS],
 ])
 
 dnl pkg.m4 - Macros to locate and utilise pkg-config.   -*- Autoconf -*-
-dnl serial 11 (pkg-config-0.29)
+dnl serial 11 (pkg-config-0.29.1)
 dnl
 dnl Copyright © 2004 Scott James Remnant <scott@netsplit.com>.
 dnl Copyright © 2012-2015 Dan Nicholson <dbn.lists@gmail.com>
@@ -933,7 +940,7 @@ dnl
 dnl See the "Since" comment for each macro you use to see what version
 dnl of the macros you require.
 m4_defun([PKG_PREREQ],
-[m4_define([PKG_MACROS_VERSION], [0.29])
+[m4_define([PKG_MACROS_VERSION], [0.29.1])
 m4_if(m4_version_compare(PKG_MACROS_VERSION, [$1]), -1,
     [m4_fatal([pkg.m4 version $1 or higher is required but ]PKG_MACROS_VERSION[ found])])
 ])dnl PKG_PREREQ

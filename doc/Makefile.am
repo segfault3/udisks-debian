@@ -47,7 +47,11 @@ MKDB_OPTIONS = --output-format=xml --sgml-mode --name-space=udisks
 HTML_IMAGES =			\
 	$(NULL)
 
-content_files =			\
+content_files =						\
+	../data/org.freedesktop.udisks2.policy.in	\
+	man/udisks.xml					\
+	man/udisksd.xml					\
+	man/udisksctl.xml				\
 	$(NULL)
 
 expand_content_files =		\
