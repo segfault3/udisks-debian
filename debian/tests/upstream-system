@@ -8,4 +8,4 @@ dpkg -P ntfs-3g 2>&1|| true
 # succeeding test must not write anything to stderr, as per DEP-8
 mkdir -p /var/run/udisks2
 mkdir -p /var/lib/udisks2
-dbus-run-session -- src/tests/integration-test 2>&1
+src/tests/integration-test 2>&1
