@@ -1,3 +1,16 @@
+udisks2 (2.1.8-1) UNRELEASED; urgency=medium
+
+  * New upstream version:
+    - Fixes race condition with creating and formatting partitions.
+      (Closes: #767457, LP: #1460602)
+  * debian/tests/upstream-system: Drop unnecessary dbus-run-session.
+  * debian/tests/upstream-system: Collect core dump when the test crashes.
+    This ought to help with tracking down https://launchpad.net/bugs/1585382.
+  * Suggest btrfs-progs as preferred alternative to btrfs-tools
+    (Closes: #842436)
+
+ -- Martin Pitt <mpitt@debian.org>  Fri, 25 Nov 2016 10:58:01 +0100
+
 udisks2 (2.1.7-3) unstable; urgency=medium
 
   * Drop no longer needed migration code from before jessie.
