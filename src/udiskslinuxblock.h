@@ -33,6 +33,11 @@ GType        udisks_linux_block_get_type (void) G_GNUC_CONST;
 UDisksBlock *udisks_linux_block_new      (void);
 void         udisks_linux_block_update   (UDisksLinuxBlock       *block,
                                           UDisksLinuxBlockObject *object);
+gboolean     udisks_linux_block_is_luks (UDisksBlock *block);
+
+gboolean     udisks_linux_block_is_tcrypt (UDisksBlock *block);
+
+gboolean     udisks_linux_block_is_unknown_crypto (UDisksBlock *block);
 
 G_END_DECLS
 

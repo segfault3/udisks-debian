@@ -732,6 +732,64 @@ update_configuration (UDisksLinuxBlock  *block,
 /* ---------------------------------------------------------------------------------------------------- */
 
 /**
+ * Determines whether a block device seems to be encrypted.
+ *
+ * TCRYPT volumes are not easily identifiable, because they have no
+ * cleartext header, but are completely encrypted. This function is
+ * used to determine whether a block device is a candidate for being
+ * TCRYPT encrypted.
+ *
+ * To achieve this, we calculate the chi square value of the first
+ * 512 Bytes and treat devices with a chi square value between 136
+ * and 426 as candidates for being encrypted.
+ * For the reasoning, see: https://tails.boum.org/blueprint/veracrypt/
+ */
+
+#define CHI_SQUARE_LOWER_LIMIT 136
+#define CHI_SQUARE_UPPER_LIMIT 426
+#define BYTES_TO_CHECK 512
+
+static gboolean
+block_seems_encrypted (UDisksBlock *block)
+{
+  const gchar *device = NULL;
+  gint fd = -1;
+  guchar buf[BYTES_TO_CHECK];
+  guint symbols[256] = {0};
+  gfloat chi_square = 0.0;
+  gfloat e = (gfloat) sizeof(buf) / (gfloat) 256.0;
+  guint i;
+
+  device = udisks_block_get_device (block);
+
+  fd = open (device, O_RDONLY);
+  if (fd == -1) {
+    udisks_info("Can't determine if device '%s' seems to be encrypted: Failed to open", device);
+    return FALSE;
+  }
+
+  if (read (fd, buf, sizeof(buf)) != sizeof(buf)) {
+    udisks_info("Can't determine if device '%s' seems to be encrypted: Failed to read", device);
+    close(fd);
+    return FALSE;
+  }
+
+  close(fd);
+
+  /* Calculate Chi Square */
+  for (i = 0; i < sizeof(buf); i++)
+    /* This is safe because the max value of buf[i] is < sizeof(symbols). */
+    symbols[buf[i]]++;
+  for (i = 0; i < 256; i++)
+    chi_square += (symbols[i] - e) * (symbols[i] - e);
+  chi_square /= e;
+
+  return CHI_SQUARE_LOWER_LIMIT < chi_square && chi_square < CHI_SQUARE_UPPER_LIMIT;
+}
+
+/* ---------------------------------------------------------------------------------------------------- */
+
+/**
  * udisks_linux_block_update:
  * @block: A #UDisksLinuxBlock.
  * @object: The enclosing #UDisksLinuxBlockObject instance.
@@ -799,7 +857,8 @@ udisks_linux_block_update (UDisksLinuxBlock        *block,
     {
       gchar *dm_uuid;
       dm_uuid = get_sysfs_attr (device->udev_device, "dm/uuid");
-      if (dm_uuid != NULL && g_str_has_prefix (dm_uuid, "CRYPT-LUKS1"))
+      if (dm_uuid != NULL &&
+              (g_str_has_prefix (dm_uuid, "CRYPT-LUKS1") || g_str_has_prefix (dm_uuid, "CRYPT-TCRYPT")))
         {
           gchar **slaves;
           slaves = udisks_daemon_util_resolve_links (g_udev_device_get_sysfs_path (device->udev_device),
@@ -975,8 +1034,17 @@ udisks_linux_block_update (UDisksLinuxBlock        *block,
       udisks_block_set_id (iface, NULL);
     }
 
-  udisks_block_set_id_usage (iface, g_udev_device_get_property (device->udev_device, "ID_FS_USAGE"));
-  udisks_block_set_id_type (iface, g_udev_device_get_property (device->udev_device, "ID_FS_TYPE"));
+  if (block_seems_encrypted (iface))
+    {
+      udisks_block_set_id_usage (iface, "crypto");
+      udisks_block_set_id_type (iface, "crypto_unknown");
+    }
+  else
+    {
+      udisks_block_set_id_usage (iface, g_udev_device_get_property (device->udev_device, "ID_FS_USAGE"));
+      udisks_block_set_id_type (iface, g_udev_device_get_property (device->udev_device, "ID_FS_TYPE"));
+    }
+
   s = udisks_decode_udev_string (g_udev_device_get_property (device->udev_device, "ID_FS_VERSION"));
   udisks_block_set_id_version (iface, s);
   g_free (s);
@@ -2148,6 +2216,29 @@ determine_partition_type_for_id (const gchar *table_type,
     }
  out:
   return ret;
+}
+
+/* ---------------------------------------------------------------------------------------------------- */
+
+gboolean
+udisks_linux_block_is_luks (UDisksBlock *block)
+{
+  return g_strcmp0 (udisks_block_get_id_usage (block), "crypto") == 0 &&
+         g_strcmp0 (udisks_block_get_id_type (block), "crypto_LUKS") == 0;
+}
+
+gboolean
+udisks_linux_block_is_tcrypt (UDisksBlock *block)
+{
+  return g_strcmp0 (udisks_block_get_id_usage (block), "crypto") == 0 &&
+         g_strcmp0 (udisks_block_get_id_type (block), "crypto_TCRYPT") == 0;
+}
+
+gboolean
+udisks_linux_block_is_unknown_crypto (UDisksBlock *block)
+{
+  return g_strcmp0 (udisks_block_get_id_usage (block), "crypto") == 0 &&
+         g_strcmp0 (udisks_block_get_id_type (block), "crypto_unknown") == 0;
 }
 
 /* ---------------------------------------------------------------------------------------------------- */

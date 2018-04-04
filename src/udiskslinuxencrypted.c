@@ -36,6 +36,7 @@
 #include "udisksdaemonutil.h"
 #include "udisksstate.h"
 #include "udiskslinuxdevice.h"
+#include "udiskslinuxblock.h"
 
 /**
  * SECTION:udiskslinuxencrypted
@@ -255,6 +256,8 @@ handle_unlock (UDisksEncrypted        *encrypted,
   gchar *crypttab_options = NULL;
   gchar *escaped_device = NULL;
   gboolean read_only = FALSE;
+  gboolean is_luks;
+  gboolean handle_as_tcrypt;
 
   object = udisks_daemon_util_dup_object (encrypted, &error);
   if (object == NULL)
@@ -266,20 +269,21 @@ handle_unlock (UDisksEncrypted        *encrypted,
   block = udisks_object_peek_block (object);
   daemon = udisks_linux_block_object_get_daemon (UDISKS_LINUX_BLOCK_OBJECT (object));
   state = udisks_daemon_get_state (daemon);
+  is_luks = udisks_linux_block_is_luks (block);
+  handle_as_tcrypt = udisks_linux_block_is_tcrypt (block) || udisks_linux_block_is_unknown_crypto (block);
 
   /* TODO: check if the device is mentioned in /etc/crypttab (see crypttab(5)) - if so use that
    *
    *       Of course cryptsetup(8) don't support that, see https://bugzilla.redhat.com/show_bug.cgi?id=692258
    */
 
-  /* Fail if the device is not a LUKS device */
-  if (!(g_strcmp0 (udisks_block_get_id_usage (block), "crypto") == 0 &&
-        g_strcmp0 (udisks_block_get_id_type (block), "crypto_LUKS") == 0))
+  /* Fail if the device is not a LUKS or possible TCRYPT device */
+  if (!(is_luks || handle_as_tcrypt))
     {
       g_dbus_method_invocation_return_error (invocation,
                                              UDISKS_ERROR,
                                              UDISKS_ERROR_FAILED,
-                                             "Device %s does not appear to be a LUKS device",
+                                             "Device %s does not appear to be a LUKS or TCRYPT device",
                                              udisks_block_get_device (block));
       goto out;
     }
@@ -475,6 +479,8 @@ handle_lock (UDisksEncrypted        *encrypted,
   dev_t cleartext_device_from_file;
   GError *error;
   uid_t caller_uid;
+  gboolean is_luks;
+  gboolean handle_as_tcrypt;
 
   object = NULL;
   daemon = NULL;
@@ -495,20 +501,22 @@ handle_lock (UDisksEncrypted        *encrypted,
   block = udisks_object_peek_block (object);
   daemon = udisks_linux_block_object_get_daemon (UDISKS_LINUX_BLOCK_OBJECT (object));
   state = udisks_daemon_get_state (daemon);
+  is_luks = udisks_linux_block_is_luks (block);
+  handle_as_tcrypt = udisks_linux_block_is_tcrypt (block) || udisks_linux_block_is_unknown_crypto (block);
+
 
   /* TODO: check if the device is mentioned in /etc/crypttab (see crypttab(5)) - if so use that
    *
    *       Of course cryptsetup(8) don't support that, see https://bugzilla.redhat.com/show_bug.cgi?id=692258
    */
 
-  /* Fail if the device is not a LUKS device */
-  if (!(g_strcmp0 (udisks_block_get_id_usage (block), "crypto") == 0 &&
-        g_strcmp0 (udisks_block_get_id_type (block), "crypto_LUKS") == 0))
+  /* Fail if the device is not a LUKS or possible TCRYPT device */
+  if (!(is_luks || handle_as_tcrypt))
     {
       g_dbus_method_invocation_return_error (invocation,
                                              UDISKS_ERROR,
                                              UDISKS_ERROR_FAILED,
-                                             "Device %s does not appear to be a LUKS device",
+                                             "Device %s does not appear to be a LUKS or TCRYPT device",
                                              udisks_block_get_device (block));
       goto out;
     }
@@ -650,9 +658,8 @@ handle_change_passphrase (UDisksEncrypted        *encrypted,
    *       Of course cryptsetup(8) don't support that, see https://bugzilla.redhat.com/show_bug.cgi?id=692258
    */
 
-  /* Fail if the device is not a LUKS device */
-  if (!(g_strcmp0 (udisks_block_get_id_usage (block), "crypto") == 0 &&
-        g_strcmp0 (udisks_block_get_id_type (block), "crypto_LUKS") == 0))
+  /* Fail if the device is not a LUKS device (changing passphrase is currently not supported for TCRYPT devices) */
+  if (!udisks_linux_block_is_luks (block))
     {
       g_dbus_method_invocation_return_error (invocation,
                                              UDISKS_ERROR,
