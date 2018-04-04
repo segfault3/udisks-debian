@@ -368,8 +368,14 @@ handle_unlock (UDisksEncrypted        *encrypted,
   /* calculate the name to use */
   if (is_in_crypttab && crypttab_name != NULL)
     name = g_strdup (crypttab_name);
-  else
-    name = g_strdup_printf ("luks-%s", udisks_block_get_id_uuid (block));
+  else {
+    if (is_luks)
+      name = g_strdup_printf ("luks-%s", udisks_block_get_id_uuid (block));
+    else
+      // TCRYPT devices don't have a UUID, so we use the device number instead
+      name = g_strdup_printf ("tcrypt-%lu", udisks_block_get_device_number (block));
+  }
+
   escaped_name = udisks_daemon_util_escape_and_quote (name);
 
   /* if available, use and prefer the /etc/crypttab passphrase */
