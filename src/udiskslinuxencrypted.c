@@ -36,6 +36,9 @@
 #include "udisksdaemonutil.h"
 #include "udisksstate.h"
 #include "udiskslinuxdevice.h"
+#include "udiskslinuxblock.h"
+
+#define MAX_TCRYPT_KEYFILES 256
 
 /**
  * SECTION:udiskslinuxencrypted
@@ -109,7 +112,14 @@ void
 udisks_linux_encrypted_update (UDisksLinuxEncrypted   *encrypted,
                                UDisksLinuxBlockObject *object)
 {
-  /* do nothing */
+  UDisksBlock *block = udisks_object_peek_block (UDISKS_OBJECT (object));
+
+  /* set block type according to hint_encryption_type */
+  if (udisks_linux_block_is_unknown_crypto (block))
+    {
+      if (g_strcmp0(udisks_encrypted_get_hint_encryption_type(UDISKS_ENCRYPTED(encrypted)), "TCRYPT") == 0)
+        udisks_block_set_id_type (block, "crypto_TCRYPT");
+    }
 }
 
 /* ---------------------------------------------------------------------------------------------------- */
@@ -254,7 +264,16 @@ handle_unlock (UDisksEncrypted        *encrypted,
   gchar *crypttab_passphrase = NULL;
   gchar *crypttab_options = NULL;
   gchar *escaped_device = NULL;
+  gchar *old_hint_encryption_type;
   gboolean read_only = FALSE;
+  gboolean hidden = FALSE;
+  gboolean system = FALSE;
+  guint32 pim = 0;
+  GVariant *keyfiles_variant = NULL;
+  const gchar *keyfiles[MAX_TCRYPT_KEYFILES] = { NULL };
+  gboolean result = FALSE;
+  gboolean is_luks;
+  gboolean handle_as_tcrypt;
 
   object = udisks_daemon_util_dup_object (encrypted, &error);
   if (object == NULL)
@@ -266,20 +285,56 @@ handle_unlock (UDisksEncrypted        *encrypted,
   block = udisks_object_peek_block (object);
   daemon = udisks_linux_block_object_get_daemon (UDISKS_LINUX_BLOCK_OBJECT (object));
   state = udisks_daemon_get_state (daemon);
+  is_luks = udisks_linux_block_is_luks (block);
+  handle_as_tcrypt = udisks_linux_block_is_tcrypt (block) || udisks_linux_block_is_unknown_crypto (block);
+
+  /* get TCRYPT options */
+  if (handle_as_tcrypt)
+  {
+    g_variant_lookup (options, "hidden", "b", &hidden);
+    g_variant_lookup (options, "system", "b", &system);
+    g_variant_lookup (options, "pim", "u", &pim);
+
+    if (pim != 0)
+      {
+        g_dbus_method_invocation_return_error (invocation,
+                                               UDISKS_ERROR,
+                                               UDISKS_ERROR_FAILED,
+                                               "The VeraCrypt PIM setting is not supported in this version of udisks");
+        goto out;
+      }
+
+    /* get keyfiles */
+    keyfiles_variant = g_variant_lookup_value(options, "keyfiles", G_VARIANT_TYPE_ARRAY);
+    if (keyfiles_variant)
+    {
+      GVariantIter iter;
+      const gchar *path;
+      uint i = 0;
+
+      g_variant_iter_init (&iter, keyfiles_variant);
+      while (g_variant_iter_next (&iter, "&s", &path))
+      {
+        if (i >= MAX_TCRYPT_KEYFILES)
+          break;
+        keyfiles[i] = path;
+        i++;
+      }
+    }
+  }
 
   /* TODO: check if the device is mentioned in /etc/crypttab (see crypttab(5)) - if so use that
    *
    *       Of course cryptsetup(8) don't support that, see https://bugzilla.redhat.com/show_bug.cgi?id=692258
    */
 
-  /* Fail if the device is not a LUKS device */
-  if (!(g_strcmp0 (udisks_block_get_id_usage (block), "crypto") == 0 &&
-        g_strcmp0 (udisks_block_get_id_type (block), "crypto_LUKS") == 0))
+  /* Fail if the device is not a LUKS or possible TCRYPT device */
+  if (!(is_luks || handle_as_tcrypt))
     {
       g_dbus_method_invocation_return_error (invocation,
                                              UDISKS_ERROR,
                                              UDISKS_ERROR_FAILED,
-                                             "Device %s does not appear to be a LUKS device",
+                                             "Device %s does not appear to be a LUKS or TCRYPT device",
                                              udisks_block_get_device (block));
       goto out;
     }
@@ -313,18 +368,21 @@ handle_unlock (UDisksEncrypted        *encrypted,
       goto out;
     }
 
-  /* check if in crypttab file */
-  error = NULL;
-  if (!check_crypttab (block,
-                       TRUE,
-                       &is_in_crypttab,
-                       &crypttab_name,
-                       &crypttab_passphrase,
-                       &crypttab_options,
-                       &error))
+  /* check if in crypttab file (currently only supported for LUKS) */
+  if (is_luks)
     {
-      g_dbus_method_invocation_take_error (invocation, error);
-      goto out;
+      error = NULL;
+      if (!check_crypttab (block,
+                           TRUE,
+                           &is_in_crypttab,
+                           &crypttab_name,
+                           &crypttab_passphrase,
+                           &crypttab_options,
+                           &error))
+        {
+          g_dbus_method_invocation_take_error (invocation, error);
+          goto out;
+        }
     }
 
   /* Now, check that the user is actually authorized to unlock the device.
@@ -364,8 +422,14 @@ handle_unlock (UDisksEncrypted        *encrypted,
   /* calculate the name to use */
   if (is_in_crypttab && crypttab_name != NULL)
     name = g_strdup (crypttab_name);
-  else
-    name = g_strdup_printf ("luks-%s", udisks_block_get_id_uuid (block));
+  else {
+    if (is_luks)
+      name = g_strdup_printf ("luks-%s", udisks_block_get_id_uuid (block));
+    else
+      // TCRYPT devices don't have a UUID, so we use the device number instead
+      name = g_strdup_printf ("tcrypt-%" G_GUINT64_FORMAT, udisks_block_get_device_number (block));
+  }
+
   escaped_name = udisks_daemon_util_escape_and_quote (name);
 
   /* if available, use and prefer the /etc/crypttab passphrase */
@@ -380,19 +444,70 @@ handle_unlock (UDisksEncrypted        *encrypted,
   if (udisks_block_get_read_only (block))
     read_only = TRUE;
 
-  if (!udisks_daemon_launch_spawned_job_sync (daemon,
-                                              object,
-                                              "encrypted-unlock", caller_uid,
-                                              NULL, /* GCancellable */
-                                              0,    /* uid_t run_as_uid */
-                                              0,    /* uid_t run_as_euid */
-                                              NULL, /* gint *out_status */
-                                              &error_message,
-                                              passphrase,  /* input_string */
-                                              "cryptsetup luksOpen %s %s %s",
-                                              escaped_device,
-                                              escaped_name,
-                                              read_only ? "--readonly" : ""))
+  /* save old encryption type to be able to restore it */
+  old_hint_encryption_type = udisks_encrypted_dup_hint_encryption_type(encrypted);
+
+  /* Set hint_encryption type. We have to do this before the
+   * actual unlock, in order to have this set before the device
+   * update triggered by the unlock. */
+  if (is_luks)
+    {} /* LUKS is detectable, so we don't have to set the hint */
+  else
+    udisks_encrypted_set_hint_encryption_type(encrypted, "TCRYPT");
+
+  if (is_luks)
+    result = udisks_daemon_launch_spawned_job_sync (daemon,
+                                                    object,
+                                                    "encrypted-unlock", caller_uid,
+                                                    NULL, /* GCancellable */
+                                                    0,    /* uid_t run_as_uid */
+                                                    0,    /* uid_t run_as_euid */
+                                                    NULL, /* gint *out_status */
+                                                    &error_message,
+                                                    passphrase,  /* input_string */
+                                                    "cryptsetup luksOpen %s %s %s",
+                                                    escaped_device,
+                                                    escaped_name,
+                                                    read_only ? "--readonly" : "");
+  else if (handle_as_tcrypt)
+    {
+      gchar *keyfiles_string;
+      uint keyfiles_string_length = 0;
+      uint i;
+
+      /* build keyfiles string */
+      for (i = 0; i < MAX_TCRYPT_KEYFILES && keyfiles[i]; i++)
+        keyfiles_string_length += strlen(keyfiles[i]) + strlen(" --key-file ");
+
+      keyfiles_string = g_malloc (keyfiles_string_length + 1);
+      strcpy (keyfiles_string, "");
+
+      for (i = 0; i < MAX_TCRYPT_KEYFILES && keyfiles[i]; i++)
+        {
+          strcat (keyfiles_string, " --key-file ");
+          strcat (keyfiles_string, keyfiles[i]);
+        }
+
+      result = udisks_daemon_launch_spawned_job_sync (daemon,
+                                                      object,
+                                                      "encrypted-unlock", caller_uid,
+                                                      NULL, /* GCancellable */
+                                                      0,    /* uid_t run_as_uid */
+                                                      0,    /* uid_t run_as_euid */
+                                                      NULL, /* gint *out_status */
+                                                      &error_message,
+                                                      strlen(passphrase) > 0 ? passphrase : "\n",  /* input_string */
+                                                      "cryptsetup tcryptOpen %s %s %s %s %s %s %s",
+                                                      escaped_device,
+                                                      escaped_name,
+                                                      read_only ? "--readonly" : "",
+                                                      "--veracrypt",
+                                                      hidden ? "--tcrypt-hidden" : "",
+                                                      system ? "--tcrypt-system" : "",
+                                                      keyfiles_string);
+    }
+
+  if (!result)
     {
       g_dbus_method_invocation_return_error (invocation,
                                              UDISKS_ERROR,
@@ -400,7 +515,19 @@ handle_unlock (UDisksEncrypted        *encrypted,
                                              "Error unlocking %s: %s",
                                              udisks_block_get_device (block),
                                              error_message);
+
+      /* Restore the old encryption type if the unlock failed, because
+       * in this case we don't know for sure if we used the correct
+       * encryption type. */
+      udisks_encrypted_set_hint_encryption_type(encrypted, old_hint_encryption_type);
+
       goto out;
+    }
+  else
+    {
+      /* We have to free old_hint_encryption_type if and only if it was not
+       * used in udisks_encrypted_set_hint_encryption_type() */
+      g_free(old_hint_encryption_type);
     }
 
   /* Determine the resulting cleartext object */
@@ -475,6 +602,8 @@ handle_lock (UDisksEncrypted        *encrypted,
   dev_t cleartext_device_from_file;
   GError *error;
   uid_t caller_uid;
+  gboolean is_luks;
+  gboolean handle_as_tcrypt;
 
   object = NULL;
   daemon = NULL;
@@ -495,20 +624,22 @@ handle_lock (UDisksEncrypted        *encrypted,
   block = udisks_object_peek_block (object);
   daemon = udisks_linux_block_object_get_daemon (UDISKS_LINUX_BLOCK_OBJECT (object));
   state = udisks_daemon_get_state (daemon);
+  is_luks = udisks_linux_block_is_luks (block);
+  handle_as_tcrypt = udisks_linux_block_is_tcrypt (block) || udisks_linux_block_is_unknown_crypto (block);
+
 
   /* TODO: check if the device is mentioned in /etc/crypttab (see crypttab(5)) - if so use that
    *
    *       Of course cryptsetup(8) don't support that, see https://bugzilla.redhat.com/show_bug.cgi?id=692258
    */
 
-  /* Fail if the device is not a LUKS device */
-  if (!(g_strcmp0 (udisks_block_get_id_usage (block), "crypto") == 0 &&
-        g_strcmp0 (udisks_block_get_id_type (block), "crypto_LUKS") == 0))
+  /* Fail if the device is not a LUKS or possible TCRYPT device */
+  if (!(is_luks || handle_as_tcrypt))
     {
       g_dbus_method_invocation_return_error (invocation,
                                              UDISKS_ERROR,
                                              UDISKS_ERROR_FAILED,
-                                             "Device %s does not appear to be a LUKS device",
+                                             "Device %s does not appear to be a LUKS or TCRYPT device",
                                              udisks_block_get_device (block));
       goto out;
     }
@@ -650,9 +781,8 @@ handle_change_passphrase (UDisksEncrypted        *encrypted,
    *       Of course cryptsetup(8) don't support that, see https://bugzilla.redhat.com/show_bug.cgi?id=692258
    */
 
-  /* Fail if the device is not a LUKS device */
-  if (!(g_strcmp0 (udisks_block_get_id_usage (block), "crypto") == 0 &&
-        g_strcmp0 (udisks_block_get_id_type (block), "crypto_LUKS") == 0))
+  /* Fail if the device is not a LUKS device (changing passphrase is currently not supported for TCRYPT devices) */
+  if (!udisks_linux_block_is_luks (block))
     {
       g_dbus_method_invocation_return_error (invocation,
                                              UDISKS_ERROR,

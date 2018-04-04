@@ -1655,6 +1655,15 @@
   <interface name="org.freedesktop.UDisks2.Encrypted">
     <!-- prereq: org.freedesktop.UDisks2.Block -->
 
+    <!-- HintEncryptionType:
+         If not blank, the type of the encryption used to encrypt this device.
+
+         This is set during successful unlocking of an encrypted device, whose encryption
+         type can only be determined by decrypting the device (currently only used
+         for TCRYPT devices).
+    -->
+    <property name="HintEncryptionType" type="s" access="read"/>
+
     <!--
         Unlock:
         @passphrase: The passphrase to use.
