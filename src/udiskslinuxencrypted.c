@@ -357,18 +357,21 @@ handle_unlock (UDisksEncrypted        *encrypted,
       goto out;
     }
 
-  /* check if in crypttab file */
-  error = NULL;
-  if (!check_crypttab (block,
-                       TRUE,
-                       &is_in_crypttab,
-                       &crypttab_name,
-                       &crypttab_passphrase,
-                       &crypttab_options,
-                       &error))
+  /* check if in crypttab file (currently only supported for LUKS) */
+  if (is_luks (UDISKS_BLOCK (block)))
     {
-      g_dbus_method_invocation_take_error (invocation, error);
-      goto out;
+      error = NULL;
+      if (!check_crypttab (block,
+                           TRUE,
+                           &is_in_crypttab,
+                           &crypttab_name,
+                           &crypttab_passphrase,
+                           &crypttab_options,
+                           &error))
+        {
+          g_dbus_method_invocation_take_error (invocation, error);
+          goto out;
+        }
     }
 
   /* Now, check that the user is actually authorized to unlock the device.
