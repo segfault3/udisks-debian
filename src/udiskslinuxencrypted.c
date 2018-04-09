@@ -264,6 +264,7 @@ handle_unlock (UDisksEncrypted        *encrypted,
   gchar *crypttab_passphrase = NULL;
   gchar *crypttab_options = NULL;
   gchar *escaped_device = NULL;
+  gchar *old_hint_encryption_type;
   gboolean read_only = FALSE;
   gboolean hidden = FALSE;
   gboolean system = FALSE;
@@ -429,6 +430,17 @@ handle_unlock (UDisksEncrypted        *encrypted,
   if (udisks_block_get_read_only (block))
     read_only = TRUE;
 
+  /* save old encryption type to be able to restore it */
+  old_hint_encryption_type = udisks_encrypted_dup_hint_encryption_type(encrypted);
+
+  /* Set hint_encryption type. We have to do this before the
+   * actual unlock, in order to have this set before the device
+   * update triggered by the unlock. */
+  if (is_luks)
+    {} /* LUKS is detectable, so we don't have to set the hint */
+  else
+    udisks_encrypted_set_hint_encryption_type(encrypted, "TCRYPT");
+
   if (is_luks)
     result = udisks_daemon_launch_spawned_job_sync (daemon,
                                                     object,
@@ -489,7 +501,19 @@ handle_unlock (UDisksEncrypted        *encrypted,
                                              "Error unlocking %s: %s",
                                              udisks_block_get_device (block),
                                              error_message);
+
+      /* Restore the old encryption type if the unlock failed, because
+       * in this case we don't know for sure if we used the correct
+       * encryption type. */
+      udisks_encrypted_set_hint_encryption_type(encrypted, old_hint_encryption_type);
+
       goto out;
+    }
+  else
+    {
+      /* We have to free old_hint_encryption_type if and only if it was not
+       * used in udisks_encrypted_set_hint_encryption_type() */
+      g_free(old_hint_encryption_type);
     }
 
   /* Determine the resulting cleartext object */
