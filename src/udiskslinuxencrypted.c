@@ -482,7 +482,7 @@ handle_unlock (UDisksEncrypted        *encrypted,
                                                       0,    /* uid_t run_as_euid */
                                                       NULL, /* gint *out_status */
                                                       &error_message,
-                                                      passphrase,  /* input_string */
+                                                      strlen(passphrase) > 0 ? passphrase : "\n",  /* input_string */
                                                       "cryptsetup tcryptOpen %s %s %s %s %s %s %s",
                                                       escaped_device,
                                                       escaped_name,
