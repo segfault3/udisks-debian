@@ -38,6 +38,8 @@
 #include "udiskslinuxdevice.h"
 #include "udiskslinuxblock.h"
 
+#define MAX_TCRYPT_KEYFILES 256
+
 /**
  * SECTION:udiskslinuxencrypted
  * @title: UDisksLinuxEncrypted
@@ -256,6 +258,11 @@ handle_unlock (UDisksEncrypted        *encrypted,
   gchar *crypttab_options = NULL;
   gchar *escaped_device = NULL;
   gboolean read_only = FALSE;
+  gboolean hidden = FALSE;
+  gboolean system = FALSE;
+  GVariant *keyfiles_variant = NULL;
+  const gchar *keyfiles[MAX_TCRYPT_KEYFILES] = { NULL };
+  gboolean result = FALSE;
   gboolean is_luks;
   gboolean handle_as_tcrypt;
 
@@ -271,6 +278,31 @@ handle_unlock (UDisksEncrypted        *encrypted,
   state = udisks_daemon_get_state (daemon);
   is_luks = udisks_linux_block_is_luks (block);
   handle_as_tcrypt = udisks_linux_block_is_tcrypt (block) || udisks_linux_block_is_unknown_crypto (block);
+
+  /* get TCRYPT options */
+  if (handle_as_tcrypt)
+  {
+    g_variant_lookup (options, "hidden", "b", &hidden);
+    g_variant_lookup (options, "system", "b", &system);
+
+    /* get keyfiles */
+    keyfiles_variant = g_variant_lookup_value(options, "keyfiles", G_VARIANT_TYPE_ARRAY);
+    if (keyfiles_variant)
+    {
+      GVariantIter iter;
+      const gchar *path;
+      uint i = 0;
+
+      g_variant_iter_init (&iter, keyfiles_variant);
+      while (g_variant_iter_next (&iter, "&s", &path))
+      {
+        if (i >= MAX_TCRYPT_KEYFILES)
+          break;
+        keyfiles[i] = path;
+        i++;
+      }
+    }
+  }
 
   /* TODO: check if the device is mentioned in /etc/crypttab (see crypttab(5)) - if so use that
    *
@@ -390,19 +422,59 @@ handle_unlock (UDisksEncrypted        *encrypted,
   if (udisks_block_get_read_only (block))
     read_only = TRUE;
 
-  if (!udisks_daemon_launch_spawned_job_sync (daemon,
-                                              object,
-                                              "encrypted-unlock", caller_uid,
-                                              NULL, /* GCancellable */
-                                              0,    /* uid_t run_as_uid */
-                                              0,    /* uid_t run_as_euid */
-                                              NULL, /* gint *out_status */
-                                              &error_message,
-                                              passphrase,  /* input_string */
-                                              "cryptsetup luksOpen %s %s %s",
-                                              escaped_device,
-                                              escaped_name,
-                                              read_only ? "--readonly" : ""))
+  if (is_luks)
+    result = udisks_daemon_launch_spawned_job_sync (daemon,
+                                                    object,
+                                                    "encrypted-unlock", caller_uid,
+                                                    NULL, /* GCancellable */
+                                                    0,    /* uid_t run_as_uid */
+                                                    0,    /* uid_t run_as_euid */
+                                                    NULL, /* gint *out_status */
+                                                    &error_message,
+                                                    passphrase,  /* input_string */
+                                                    "cryptsetup luksOpen %s %s %s",
+                                                    escaped_device,
+                                                    escaped_name,
+                                                    read_only ? "--readonly" : "");
+  else if (handle_as_tcrypt)
+    {
+      gchar *keyfiles_string;
+      uint keyfiles_string_length = 0;
+      uint i;
+
+      /* build keyfiles string */
+      for (i = 0; i < MAX_TCRYPT_KEYFILES && keyfiles[i]; i++)
+        keyfiles_string_length += strlen(keyfiles[i]) + strlen(" --key-file ");
+
+      keyfiles_string = g_malloc (keyfiles_string_length + 1);
+      strcpy (keyfiles_string, "");
+
+      for (i = 0; i < MAX_TCRYPT_KEYFILES && keyfiles[i]; i++)
+        {
+          strcat (keyfiles_string, " --key-file ");
+          strcat (keyfiles_string, keyfiles[i]);
+        }
+
+      result = udisks_daemon_launch_spawned_job_sync (daemon,
+                                                      object,
+                                                      "encrypted-unlock", caller_uid,
+                                                      NULL, /* GCancellable */
+                                                      0,    /* uid_t run_as_uid */
+                                                      0,    /* uid_t run_as_euid */
+                                                      NULL, /* gint *out_status */
+                                                      &error_message,
+                                                      passphrase,  /* input_string */
+                                                      "cryptsetup tcryptOpen %s %s %s %s %s %s %s",
+                                                      escaped_device,
+                                                      escaped_name,
+                                                      read_only ? "--readonly" : "",
+                                                      "--veracrypt",
+                                                      hidden ? "--tcrypt-hidden" : "",
+                                                      system ? "--tcrypt-system" : "",
+                                                      keyfiles_string);
+    }
+
+  if (!result)
     {
       g_dbus_method_invocation_return_error (invocation,
                                              UDISKS_ERROR,
