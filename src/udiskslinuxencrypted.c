@@ -112,7 +112,14 @@ void
 udisks_linux_encrypted_update (UDisksLinuxEncrypted   *encrypted,
                                UDisksLinuxBlockObject *object)
 {
-  /* do nothing */
+  UDisksBlock *block = udisks_object_peek_block (UDISKS_OBJECT (object));
+
+  /* set block type according to hint_encryption_type */
+  if (udisks_linux_block_is_unknown_crypto (block))
+    {
+      if (g_strcmp0(udisks_encrypted_get_hint_encryption_type(UDISKS_ENCRYPTED(encrypted)), "TCRYPT") == 0)
+        udisks_block_set_id_type (block, "crypto_TCRYPT");
+    }
 }
 
 /* ---------------------------------------------------------------------------------------------------- */
