@@ -1912,7 +1912,8 @@ wait_for_filesystem (UDisksDaemon *daemon,
 
   if (g_strcmp0 (data->type, "empty") == 0)
     {
-      if ((id_type == NULL || g_strcmp0 (id_type, "") == 0) && partition_table == NULL)
+      if ((id_type == NULL || g_strcmp0 (id_type, "") == 0 ||
+           g_strcmp0 (id_type, "crypto_unknown") == 0) && partition_table == NULL)
         {
           ret = g_object_ref (data->object);
           goto out;
