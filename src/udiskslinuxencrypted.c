@@ -416,7 +416,7 @@ handle_unlock (UDisksEncrypted        *encrypted,
       name = g_strdup_printf ("luks-%s", udisks_block_get_id_uuid (block));
     else
       // TCRYPT devices don't have a UUID, so we use the device number instead
-      name = g_strdup_printf ("tcrypt-%lu", udisks_block_get_device_number (block));
+      name = g_strdup_printf ("tcrypt-%" G_GUINT64_FORMAT, udisks_block_get_device_number (block));
   }
 
   escaped_name = udisks_daemon_util_escape_and_quote (name);
