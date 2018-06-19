@@ -477,15 +477,16 @@ handle_unlock (UDisksEncrypted        *encrypted,
 
       /* build keyfiles string */
       for (i = 0; i < MAX_TCRYPT_KEYFILES && keyfiles[i]; i++)
-        keyfiles_string_length += strlen(keyfiles[i]) + strlen(" --key-file ");
+        keyfiles_string_length += strlen(keyfiles[i]) + strlen(" --key-file \"\"");
 
       keyfiles_string = g_malloc (keyfiles_string_length + 1);
       strcpy (keyfiles_string, "");
 
       for (i = 0; i < MAX_TCRYPT_KEYFILES && keyfiles[i]; i++)
         {
-          strcat (keyfiles_string, " --key-file ");
+          strcat (keyfiles_string, " --key-file \"");
           strcat (keyfiles_string, keyfiles[i]);
+          strcat (keyfiles_string, "\"");
         }
 
       result = udisks_daemon_launch_spawned_job_sync (daemon,
